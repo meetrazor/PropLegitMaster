@@ -1,37 +1,121 @@
 <!-- ========== Left Sidebar Start ========== -->
 <ng-template #contentTemplate>
-    <!--- Sidemenu -->
-    <div id="sidebar-menu">
-        <ul class="metismenu" id="side-menu" #sideMenu>
+  <!--- Sidemenu -->
+  <div id="sidebar-menu">
+    <ul class="metismenu" id="side-menu" #sideMenu>
+      <li class="menu-title"><i class="mdi mdi-bank"></i> PropLegit</li>
 
-            <li class="menu-title">Navigation</li>
+      <li>
+        <a
+          href="javascript: void(0);"
+          class="waves-effect"
+          aria-expanded="false"
+        >
+          <i class="fe-airplay"></i>
+          <span class="badge badge-success badge-pill float-right"></span>
+          <span> Property Management </span>
+        </a>
+        <ul class="nav-second-level collapse" aria-expanded="false">
+          <li>
+            <a
+              routerLink="/dashboard/"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-2"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Properties</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-3"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Taxes</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Court Cases</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Lawyers</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Rent</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Maintenance</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Trust</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Documents</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Users</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Ownership</a
+            >
+          </li>
+          <li>
+            <a
+              routerLink="/dashboards/dashboard-4"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Offices</a
+            >
+          </li>
+        </ul>
+      </li>
 
-            <li>
-                <a href="javascript: void(0);" class="waves-effect" aria-expanded="false">
-                    <i class="fe-airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">2</span>
-                    <span> Dashboards </span>
-                </a>
-                <ul class="nav-second-level collapse" aria-expanded="false">
-                    <li>
-                        <a routerLink="/dashboards/dashboard-1" routerLinkActive="active" class="side-nav-link-ref">Dashboard 1</a>
-                    </li>
-                    <li>
-                        <a routerLink="/dashboards/dashboard-2" routerLinkActive="active"
-                            class="side-nav-link-ref">Dashboard 2</a>
-                    </li>
-                    <li>
-                        <a routerLink="/dashboards/dashboard-3" routerLinkActive="active"
-                            class="side-nav-link-ref">Dashboard 3</a>
-                    </li>
-                    <li>
-                        <a routerLink="/dashboards/dashboard-4" routerLinkActive="active"
-                            class="side-nav-link-ref">Dashboard 4</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
+      <!-- <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-pocket"></i>
                     <span> Apps </span>
@@ -59,9 +143,9 @@
                             class="side-nav-link-ref">Companies</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
-            <li>
+      <!-- <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-users"></i>
                     <span> CRM </span>
@@ -85,9 +169,9 @@
                         <a routerLink="/crm/customers" routerLinkActive="active" class="side-nav-link-ref">Customers</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
-            <li>
+      <!-- <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-shopping-cart"></i>
                     <span> eCommerce </span>
@@ -118,8 +202,8 @@
                             class="side-nav-link-ref">Sellers</a>
                     </li>
                 </ul>
-            </li>
-
+            </li> -->
+      <!-- 
             <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-sidebar"></i>
@@ -148,8 +232,8 @@
                             class="side-nav-link-ref">Boxed</a>
                     </li>
                 </ul>
-            </li>
-
+            </li> -->
+      <!-- 
             <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-mail"></i>
@@ -218,11 +302,11 @@
                         <a routerLink="/extras/gallery" routerLinkActive="active" class="side-nav-link-ref">Gallery</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
-            <li class="menu-title mt-2">Components</li>
+      <!-- <li class="menu-title mt-2">Components</li> -->
 
-            <li>
+      <!-- <li>
                 <a href="javascript: void(0);" class="waves-effect">
                     <i class="fe-briefcase"></i>
                     <span> UI Elements </span>
@@ -461,23 +545,21 @@
                         </ul>
                     </li>
                 </ul>
-            </li>
-        </ul>
+            </li> -->
+    </ul>
+  </div>
+  <!-- End Sidebar -->
 
-    </div>
-    <!-- End Sidebar -->
-
-    <div class="clearfix"></div>
+  <div class="clearfix"></div>
 </ng-template>
 
-
 <div class="left-side-menu">
-    <div class="slimscroll-menu" appSlimScroll *ngIf="!isCondensed">
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </div>
+  <div class="slimscroll-menu" appSlimScroll *ngIf="!isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
 
-    <div class="slimscroll-menu" *ngIf="isCondensed">
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-    </div>
+  <div class="slimscroll-menu" *ngIf="isCondensed">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </div>
 </div>
 <!-- Left Sidebar End -->
