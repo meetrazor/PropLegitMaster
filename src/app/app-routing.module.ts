@@ -11,6 +11,22 @@ const routes: Routes = [
     path: '', component: LayoutComponent, loadChildren: () => import('./treasurer/treasurer.module')
       .then(m => m.TreasurerModule), canActivate: [AuthGuard]
   },
+  {
+    path: 'property', component: LayoutComponent, loadChildren: () => import('./property/property.module')
+      .then(m => m.PropertyModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'property-document', component: LayoutComponent, loadChildren: () => import('./property-document/property-document.module')
+      .then(m => m.PropertyDocumentModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'property-legal-case', component: LayoutComponent, loadChildren: () => import('./legal-case/legal-case.module')
+      .then(m => m.LegalCaseModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
+      .then(m => m.TenantModule), canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

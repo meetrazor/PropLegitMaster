@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   hidden: boolean;
   selected: any;
   color: string;
+  isdropdownShow : boolean = false;
   @Input() fromDate: Date;
   @Input() toDate: Date;
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
