@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-
-import { AuthenticationService } from '../../../core/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-login',
@@ -18,17 +17,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
   error = '';
   loading = false;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
-              private authenticationService: AuthenticationService) { }
+  constructor(
+    private formBuilder: FormBuilder, private route: ActivatedRoute,
+    private router: Router, private service: GeneralService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      EmailORMobile: ['', [Validators.required,
+      Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|^([0-9]{10})+$/)]],
+      // MobileNumber: ['', Validators.required],
+      Password: ['', Validators.required],
     });
 
     // reset login status
-    this.authenticationService.logout();
+    // this.authenticationService.logout();
 
     // get return url from route parameters or default to '/'
     // tslint:disable-next-line: no-string-literal
@@ -55,15 +57,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
+    this.service.login(this.loginForm.value)
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
+          if (data.error) {
+            this.error = data.error;
+            this.loading = false;
+            return;
+          } else {
+            console.log(data);
+            this.router.navigate([this.returnUrl]);
+          }
         });
   }
 }

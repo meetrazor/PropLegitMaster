@@ -1,6 +1,9 @@
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-confirm',
@@ -9,6 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ConfirmComponent implements OnInit, AfterViewInit {
   userID: number;
+  resendOTP = false;
   obj = {
     TransactionType: 'For Login',
     CreatedBy: 1
@@ -17,24 +21,37 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
   submitted = false;
   error = '';
   loading = false;
-  router: any;
-  constructor(private service: GeneralService, private formBuilder: FormBuilder) { }
+  submitdata = {
+    Email: {
+      ID: '',
+      OTP: '',
+    },
+    SMS: {
+      ID: '',
+      OTP: ''
+    },
+    ModifiedBy: '1'
+  };
+  time = 5 * 60;
+  response: any;
+  constructor(private service: GeneralService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit() {
     this.userID = this.service.getUserID();
+    // this.userID = 16;
     this.service.generateOTP(this.userID, this.obj).subscribe((res) => {
-      console.log(res);
+      this.submitdata.Email.ID = res.data[0].ID;
+      this.submitdata.SMS.ID = res.data[1].ID;
     });
     this.OTPform = this.formBuilder.group({
-      FirstName: ['', Validators.required],
-      EmailAddress: ['', [Validators.required, Validators.email]],
-      Password: ['', Validators.required],
-      LastName: ['', Validators.required],
-      MobileNumber: ['', Validators.required],
+      SMSOTP: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]{6}')])],
+      EMAILOTP: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9]{6}')])],
       StateID: ['1', Validators.required],
       CreatedBy: ['1', Validators.required],
     });
+    this.timer();
   }
+
   get f() { return this.OTPform.controls; }
 
   /**
@@ -42,23 +59,67 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
    */
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.OTPform.invalid) {
       return;
     }
-
+    this.submitdata.Email.OTP = this.OTPform.value.EMAILOTP;
+    this.submitdata.SMS.OTP = this.OTPform.value.SMSOTP;
     this.loading = true;
-    this.service.userRegister(this.OTPform.value).subscribe((res) => {
+    this.service.validateOTP(this.submitdata).subscribe((res) => {
+      if (res.error) {
+        this.error = res.error;
+        this.loading = false;
+        return;
+      } else {
+        Swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: res.message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.loading = false;
+        this.router.navigate(['/account/login']);
+      }
 
-      this.loading = false;
-
-      this.router.navigate(['/account/confirm']);
     });
   }
   ngAfterViewInit() {
     document.body.classList.add('authentication-bg');
     document.body.classList.add('authentication-bg-pattern');
+  }
+  onSMSOtpChange(event) {
+    this.OTPform.controls.SMSOTP.setValue(event);
+  }
+  onEmailOtpChange(event) {
+    this.OTPform.controls.EMAILOTP.setValue(event);
+  }
+  reSendOTP() {
+    this.time = 5 * 60;
+    this.resendOTP = false;
+    this.timer();
+    this.service.generateOTP(this.userID, this.obj).subscribe((res) => {
+      this.submitdata.Email.ID = res.data[0].ID;
+      this.submitdata.SMS.ID = res.data[1].ID;
+      Swal.fire({
+        position: 'top-end',
+        type: 'success',
+        title: res.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    });
+  }
+  timer() {
+    const intervel = setInterval(() => {
+      if (this.time > 0.5) {
+        this.time -= 1;
+      } else {
+        clearInterval(intervel);
+        this.resendOTP = true;
+      }
+    }, 1000);
   }
 
 }

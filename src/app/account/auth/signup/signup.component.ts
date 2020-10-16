@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import Swal from 'sweetalert2';
 
@@ -16,14 +16,13 @@ export class SignupComponent implements OnInit, AfterViewInit {
   error = '';
   loading = false;
   userId: number;
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private service: GeneralService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private service: GeneralService) { }
 
   ngOnInit() {
-
     this.signupForm = this.formBuilder.group({
       FirstName: ['', Validators.required],
       EmailAddress: ['', [Validators.required, Validators.email]],
-      Password: ['', Validators.required],
+      Password: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}')]],
       LastName: ['', Validators.required],
       MobileNumber: ['', Validators.required],
       StateID: ['1', Validators.required],
@@ -52,18 +51,24 @@ export class SignupComponent implements OnInit, AfterViewInit {
 
     this.loading = true;
     this.service.userRegister(this.signupForm.value).subscribe((res) => {
-      this.userId = res.data[0].UserID;
-      this.service.setUserID(this.userId);
-      this.loading = false;
-      Swal.fire({
-        title: 'Success',
-        text: `A email has been send to ${this.signupForm.value.EmailAddress},
-        and A message has been send to ${this.signupForm.value.MobileNumber} Please
-        check for an email and message from company and enter OTP.`,
-        type: 'success',
-        confirmButtonClass: 'btn btn-confirm mt-2'
-      });
-      this.router.navigate(['/account/confirm']);
+      if (res.error) {
+        this.error = res.error;
+        this.loading = false;
+        return;
+      } else {
+        this.userId = res.data[0].UserID;
+        this.service.setUserID(this.userId);
+        this.loading = false;
+        Swal.fire({
+          title: 'Success',
+          text: `A email has been send to ${this.signupForm.value.EmailAddress},
+          and A message has been send to ${this.signupForm.value.MobileNumber} Please
+          check for an email and message from company and enter OTP.`,
+          type: 'success',
+          confirmButtonClass: 'btn btn-confirm mt-2'
+        });
+        this.router.navigate(['/account/confirm']);
+      }
     });
   }
 }
