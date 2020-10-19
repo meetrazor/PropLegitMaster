@@ -31,14 +31,36 @@
             <div class="card-body">
               <div class="card-widgets">
               </div>
-              <h5 class="header-title mb-0" style="color: darkgrey;font-size: 18px;padding-top: 2%;">Property
+              <h5 class="header-title mb-0" style="color: darkgrey;font-size: 18px;">Property
                 Information</h5>
               <hr>
               <div id="cardCollpase4" class="collapse pt-3 show">
 
                 <div class="pn-main">
                   <div class="form-row">
-
+                    <div class="form-group col-md-12">
+                      <label for="">Area/Pin Code</label>
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="areas"
+                        [searchKeyword]="keyword"
+                        placeHolder="Enter Area/Pin code"
+                        (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)'
+                        (inputFocused)='onFocused($event)'
+                        historyIdentifier="areas"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+                    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.Area"></a>
+                      </ng-template>
+                    
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                    </div></div>
                     <div class="form-group col-md-6">
                       <label for="">PropertyTypeID</label>
                       <select class="custom-select " formControlName="PropertyTypeID">
@@ -47,43 +69,6 @@
                       <span *ngIf="myForm.controls['PropertyTypeID'].touched && myForm.controls['PropertyTypeID'].invalid && myForm.controls['PropertyTypeID'].errors &&
                                   myForm.controls['PropertyTypeID'].errors.required"
                         style="color:red;font-size:smaller;">*Required</span>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="">State</label>
-                      <select class="custom-select " formControlName="StateID" (change)="fetchdist()">
-                        <option *ngFor="let State of StateArray" [value]="State.StateID"> {{ State.StateName }}</option>
-                      </select>
-                      <span *ngIf="myForm.controls['StateID'].touched && myForm.controls['StateID'].invalid && myForm.controls['StateID'].errors &&
-                                  myForm.controls['StateID'].errors.required"
-                        style="color:red;font-size:smaller;">*Required</span>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">District</label>
-                      <select class="custom-select " formControlName="DistrictID" (change)="fetchtaluka()">
-                        <option *ngFor="let Ary of Array2" [value]="Ary.DistrictID"> {{ Ary.DistrictName }}</option>
-                      </select>
-                      <span *ngIf="myForm.controls['DistrictID'].touched && myForm.controls['DistrictID'].invalid && myForm.controls['DistrictID'].errors &&
-                                    myForm.controls['DistrictID'].errors.required"
-                        style="color:red;font-size:smaller;">*Required</span>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">Taluka</label>
-                      <select class="custom-select" formControlName="TalukaID" (change)="fetchtvillage()">
-                        <option *ngFor="let Ary of Array3" [value]="Ary.TalukaID"> {{ Ary.TalukaName }}</option>
-                      </select>
-                      <span *ngIf="myForm.controls['TalukaID'].touched && myForm.controls['TalukaID'].invalid && myForm.controls['TalukaID'].errors &&
-                    myForm.controls['TalukaID'].errors.required" style="color:red;font-size:smaller;">*Required</span>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">Village</label>
-                      <select class="custom-select" formControlName="VillageID">
-                        <option *ngFor="let Ary of Array4" [value]="Ary.VillageID"> {{ Ary.VillageName }}</option>
-                      </select>
-                      <span *ngIf="myForm.controls['VillageID'].touched && myForm.controls['VillageID'].invalid && myForm.controls['VillageID'].errors &&
-                    myForm.controls['VillageID'].errors.required" style="color:red;font-size:smaller;">*Required</span>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -176,10 +161,10 @@
                     <div class="form-group col-md-6">
                       <label for="">Revenew Office Type </label>
                       <select class="custom-select " formControlName="RevenewOfficeType">
-                        <option value="1" selected id="4">Talati</option>
-                        <option value="2" id="5">Gram Panchayat</option>
-                        <option value="3" id="6">Municipal Corporation</option>
-                        <option value="4" id="7">Nagarpalika Office</option>
+                        <option value="Talati" selected id="4">Talati</option>
+                        <option value="Gram Panchayat" id="5">Gram Panchayat</option>
+                        <option value="Municipal Corporation" id="6">Municipal Corporation</option>
+                        <option value="Nagarpalika Office" id="7">Nagarpalika Office</option>
                       </select>
                       <span *ngIf="myForm.controls['RevenewOfficeType'].touched && myForm.controls['RevenewOfficeType'].invalid && myForm.controls['RevenewOfficeType'].errors &&
                     myForm.controls['RevenewOfficeType'].errors.required"
@@ -220,7 +205,7 @@
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="">Land Size</label>
-                      <input class="form-control" placeholder="Enter Landsize" type="number"
+                      <input class="form-control" placeholder="Enter Landsize"
                         formControlName="LandSize" />
                       <span *ngIf="myForm.controls['LandSize'].touched && myForm.controls['LandSize'].invalid && myForm.controls['LandSize'].errors &&
                     myForm.controls['LandSize'].errors.required" style="color:red;font-size:smaller;">*Required</span>
@@ -238,9 +223,9 @@
                     <div class="form-group col-md-6">
                       <label for="">Furnish Type </label>
                       <select class="custom-select " formControlName="FurnishType">
-                        <option value="1" id="4" selected>Full Furnished</option>
-                        <option value="2" id="9">Semi Furnished</option>
-                        <option value="3" id="3">UnFurnished</option>
+                        <option value="Full Furnished" id="4" selected>Full Furnished</option>
+                        <option value="Semi Furnished" id="9">Semi Furnished</option>
+                        <option value="UnFurnished" id="3">UnFurnished</option>
                       </select>
                       <span *ngIf="myForm.controls['FurnishType'].touched && myForm.controls['FurnishType'].invalid && myForm.controls['FurnishType'].errors &&
                     myForm.controls['FurnishType'].errors.required"
@@ -250,9 +235,9 @@
                     <div class="form-group col-md-6">
                       <label for="">Status Of Electricity </label>
                       <select class="custom-select " formControlName="StatusOfElectricity">
-                        <option value="1" id="3" selected>No PowerCut</option>
-                        <option value="2" id="5">Rare PoweCut</option>
-                        <option value="3" id="1">Every Sunday Power Cut</option>
+                        <option value="No PowerCut" id="3" selected>No PowerCut</option>
+                        <option value="Rare PoweCut" id="5">Rare PoweCut</option>
+                        <option value="Every Sunday Power Cut" id="1">Every Sunday Power Cut</option>
                       </select>
                       <span *ngIf="myForm.controls['StatusOfElectricity'].touched && myForm.controls['StatusOfElectricity'].invalid && myForm.controls['StatusOfElectricity'].errors &&
                     myForm.controls['StatusOfElectricity'].errors.required"
@@ -261,13 +246,16 @@
 
                     <div class="form-group mb-2 col-md-6 col-xl-6">
                       <label for="example-textarea">Description</label>
-                      <textarea class="form-control" id="example-textarea" rows="2"
+                      <textarea class="form-control"  rows="2"
                         formControlName="Description"></textarea>
+                        <span *ngIf="myForm.controls['Description'].touched && myForm.controls['Description'].invalid && myForm.controls['Description'].errors &&
+                        myForm.controls['Description'].errors.required"
+                          style="color:red;font-size:smaller;">*Required</span>
                     </div>
 
                     <div class="form-group mb-2 col-md-6 col-xl-6">
                       <label for="example-textarea">Postal Address</label>
-                      <textarea class="form-control" id="example-textarea" rows="2"
+                      <textarea class="form-control"  rows="2"
                         formControlName="PostalAddress"></textarea>
                       <span *ngIf="myForm.controls['PostalAddress'].touched && myForm.controls['PostalAddress'].invalid && myForm.controls['PostalAddress'].errors &&
                       myForm.controls['PostalAddress'].errors.required"
@@ -277,7 +265,7 @@
 
 
                     <div class="form-group col-md-6">
-                      <label for="">Age Of Property</label>
+                      <label for="">Age Of Property <small>(In Years)</small></label>
                       <input class="form-control" placeholder="Enter Age of property" type="number"
                         formControlName="AgeOfProperty" />
 
@@ -292,9 +280,9 @@
                         <option value="1" id="4" selected>1</option>
                         <option value="2" id="1">2</option>
                         <option value="3" id="3">3</option>
-                        <option value="2" id="1">4</option>
-                        <option value="3" id="8">5</option>
-                        <option value="3" id="5">More than 5</option>
+                        <option value="4" id="4">4</option>
+                        <option value="5" id="8">5</option>
+                        <option value="6" id="5">More than 5</option>
                       </select>
                       <span *ngIf="myForm.controls['NoOfBHK'].touched && myForm.controls['NoOfBHK'].invalid && myForm.controls['NoOfBHK'].errors &&
                       myForm.controls['NoOfBHK'].errors.required" style="color:red;font-size:smaller;">*Required</span>
@@ -312,7 +300,7 @@
 
                         <div class="form-row" [formGroupName]="i">
                           <div class="form-group col-md-6">
-                            <label>Name</label>
+                            <label>Owner Name</label>
                             <input type="text" class="form-control" formControlName="OwnerName">
                             <span *ngIf="myForm.controls.OwnerShip.controls[i].controls.OwnerName.touched && 
                                     myForm.controls.OwnerShip.controls[i].controls.OwnerName.invalid && 
@@ -329,12 +317,12 @@
                                     myForm.controls.OwnerShip.controls[i].controls.SinceFrom.errors.required"
                               style="color:red;font-size:smaller;">*Required</span>
                           </div>
-                          <!--      <div class="form-group col-md-12">
+                              <div class="form-group col-md-12">
                                     <span class="glyphicon glyphicon-remove pull-right" style="cursor: pointer;color:red" 
                                     *ngIf="myForm.controls.OwnerShip.controls.length > 1" (click)="removeOwner(i)">
                                       (Remove -)
                                     </span>
-                                  </div>-->
+                                  </div>
                         </div>
                       </div>
                     </div>
@@ -363,15 +351,11 @@
                             <label>InChargeName</label>
                             <input type="text" class="form-control" formControlName="InChargeName">
 
-
-
-
                             <span *ngIf="myForm.controls.InCharge.controls[i].controls.InChargeName.touched && 
                                         myForm.controls.InCharge.controls[i].controls.InChargeName.invalid && 
                                         myForm.controls.InCharge.controls[i].controls.InChargeName.errors &&
                                         myForm.controls.InCharge.controls[i].controls.InChargeName.errors.required"
                                     style="color:red;font-size:smaller;">*Required</span>
-
 
                           </div>
                           <div class="form-group col-md-6">
@@ -449,14 +433,14 @@
                   <div class="text-center button-list mt-3">
                     <button class="btn btn-primary waves-effect waves-light btn-sm" type="button" data-toggle="collapse"
                       data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample" type="submit"
-                      disabled="myForm.invalid">
+                     [disabled]='!myForm.valid'>
                       + Add Property
                     </button>
                   </div>
-              <!--   <p>
+            <!--
                     Real-time data: {{ myForm.value | json }}
                     Your form status is : {{ myForm.status }}
-                  </p>-->
+                  -->
                 </div>
 
               </div> <!-- end collapse-->

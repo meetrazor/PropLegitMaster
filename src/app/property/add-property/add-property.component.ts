@@ -10,11 +10,9 @@ import { first } from 'rxjs/operators';
 export class AddPropertyComponent implements OnInit {
 
   public myForm: FormGroup;
-  StateArray: string[];
-  Array2: string[];
-  Array3: string[];
-  Array4: string[];
   Array5: string[];
+  keyword = 'Area';
+  areas: string[];
   constructor(private Fb: FormBuilder, private service: GeneralService) { }
   ngOnInit() {
     this.myForm = this.Fb.group({
@@ -23,10 +21,12 @@ export class AddPropertyComponent implements OnInit {
       ]),
       PropertyTypeID: new FormControl('', Validators.required),
       PropertyName: new FormControl('', Validators.required),
-      TalukaID: new FormControl('', Validators.required),
-      VillageID: new FormControl('', Validators.required),
-      DistrictID: new FormControl('', Validators.required),
-      StateID: new FormControl('', Validators.required),
+      TalukaID: '',
+      VillageID: '',
+      DistrictID: '',
+      StateID: '',
+      CreatedBy: '',
+      UserID: '',
       CitySurveyNo: new FormControl('', Validators.required),
       CitySurveyOffice: new FormControl('', Validators.required),
       CityWardNo: new FormControl('', Validators.required),
@@ -52,8 +52,9 @@ export class AddPropertyComponent implements OnInit {
         this.initIncharge(),
       ]),
     });
-    this.fetchstate();
     this.fetchpropertytype();
+    this.myForm.controls.CreatedBy.setValue('1');
+    this.myForm.controls.UserID.setValue('1');
   }
   save() {
     this.service.addproperty(this.myForm.value)
@@ -67,60 +68,7 @@ export class AddPropertyComponent implements OnInit {
             console.log(data, 'response');
           }
         });
-  }
-  fetchstate(){
-    this.service.states()
-    .pipe(first())
-    .subscribe(
-      data => {
-        if (data.error) {
-          console.log(data.error)
-          return;
-        } else {
-          this.StateArray = data.data;
-        }
-      });
-  }
 
-  fetchdist() {
-    this.service.districts(this.myForm.controls.StateID.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            console.log(data.error)
-            return;
-          } else {
-            this.Array2 = data.data;
-          }
-        });
-  }
-
-  fetchtaluka() {
-    this.service.talukas(this.myForm.controls.DistrictID.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            console.log(data.error)
-            return;
-          } else {
-            this.Array3 = data.data;
-          }
-        });
-  }
-  fetchtvillage() {
-    this.service.villages(this.myForm.controls.TalukaID.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            console.log(data.error)
-            return;
-          } else {
-            this.Array4 = data.data;
-          }
-        });
   }
   fetchpropertytype() {
     this.service.propertytype()
@@ -170,5 +118,37 @@ export class AddPropertyComponent implements OnInit {
   removeIncharge(i: number) {
     const control = <FormArray>this.myForm.controls['InCharge'];
     control.removeAt(i);
+  }
+  selectEvent(item) {
+    // do something with selected item
+    this.myForm.controls.VillageID.setValue(item.VillageId);
+    this.myForm.controls.DistrictID.setValue(item.DistrictId);
+    this.myForm.controls.TalukaID.setValue(item.TalukaId);
+    this.myForm.controls.StateID.setValue(item.stateID);
+  }
+  fetcharea(search) {
+    this.service.area(search)
+    .pipe(first())
+    .subscribe(
+      data => {
+        if (data.error) {
+          console.log(data.error);
+          return;
+        } else {
+          this.areas = data.data;
+        }
+      });
+  }
+  onChangeSearch(search: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+    if (search.length >= 3) {
+      this.fetcharea(search);
+    } else if (search.length === 0) {
+      this.areas = null;
+      }
+    }
+  onFocused(e) {
+
   }
 }

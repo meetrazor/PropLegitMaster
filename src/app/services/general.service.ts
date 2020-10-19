@@ -81,22 +81,13 @@ export class GeneralService {
     this.cookieService.deleteCookie('currentUser');
     this.user = null;
   }
-  states() {
-    return  this.http.get<any>(stateInfo,httpOptions);
-  }
-  districts(id) {
-    return  this.http.get<any>('http://devapi.proplegit.com/api/state/list/' + id, httpOptions);
-  }
-  talukas(id) {
-    return  this.http.get<any>('http://devapi.proplegit.com/api/district/list/' + id, httpOptions);
-  }
-  villages(id) {
-    return  this.http.get<any>('http://devapi.proplegit.com/api/taluka/list/' + id, httpOptions);
-  }
   addproperty(data) {
-    return this.http.post<any>('http://devapi.proplegit.com/api/add/property', data, httpOptions);
+    return this.http.post<any>('http://devapi.proplegit.com/api/property/add', data, httpOptions);
   }
   propertytype() {
     return  this.http.get<any>('http://devapi.proplegit.com/api/propertytype/list', httpOptions);
+  }
+  area(search) {
+    return  this.http.get<any>('http://devapi.proplegit.com/api/area/list/' + search, httpOptions);
   }
 }
