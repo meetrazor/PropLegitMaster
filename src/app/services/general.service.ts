@@ -20,6 +20,7 @@ const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
 const validateOTP = `${apiUrl}validate/otp/`;
 const login = `${apiUrl}login/verify`;
+const stateInfo = `${apiUrl}state/list`;
 
 @Injectable({
   providedIn: 'root'
@@ -63,20 +64,39 @@ export class GeneralService {
   }
 
   login(data) {
+
     return this.http.post<any>(login, data, httpOptions)
       .pipe(map(user => {
-        if (user.error && user.status!= 200) {
+        if (user.error && user.status !== 200) {
           return user;
-        }else{
-          this.user = user;
-          this.cookieService.setCookie('currentUser', JSON.stringify(user.data), 1);
-          return user;
-        }
+      } else {
+        this.user = user;
+        this.cookieService.setCookie('currentUser', JSON.stringify(user.data), 1);
+        return user;
+      }
       }));
   }
 
   logout() {
     this.cookieService.deleteCookie('currentUser');
     this.user = null;
+  }
+  states() {
+    return  this.http.get<any>(stateInfo,httpOptions);
+  }
+  districts(id) {
+    return  this.http.get<any>('http://devapi.proplegit.com/api/state/list/' + id, httpOptions);
+  }
+  talukas(id) {
+    return  this.http.get<any>('http://devapi.proplegit.com/api/district/list/' + id, httpOptions);
+  }
+  villages(id) {
+    return  this.http.get<any>('http://devapi.proplegit.com/api/taluka/list/' + id, httpOptions);
+  }
+  addproperty(data) {
+    return this.http.post<any>('http://devapi.proplegit.com/api/add/property', data, httpOptions);
+  }
+  propertytype() {
+    return  this.http.get<any>('http://devapi.proplegit.com/api/propertytype/list', httpOptions);
   }
 }
