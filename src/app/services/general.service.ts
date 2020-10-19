@@ -23,6 +23,7 @@ const login = `${apiUrl}login/verify`;
 const stateWiseProperty = `${apiUrl}property/list`;
 const PropertyListByState = `${apiUrl}property/list/`;
 const deleteProperty = `${apiUrl}property/delete/`;
+const stateInfo = `${apiUrl}state/list`;
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,7 @@ export class GeneralService {
   }
 
   login(data) {
+
     return this.http.post<any>(login, data, httpOptions)
       .pipe(map(user => {
         // tslint:disable-next-line: triple-equals
@@ -93,5 +95,23 @@ export class GeneralService {
   }
   deleteProperty(id): any {
     return this.http.delete(`${deleteProperty}${id}`, httpOptions);
+  }
+  states() {
+    return this.http.get<any>(stateInfo, httpOptions);
+  }
+  districts(id) {
+    return this.http.get<any>('http://devapi.proplegit.com/api/state/list/' + id, httpOptions);
+  }
+  talukas(id) {
+    return this.http.get<any>('http://devapi.proplegit.com/api/district/list/' + id, httpOptions);
+  }
+  villages(id) {
+    return this.http.get<any>('http://devapi.proplegit.com/api/taluka/list/' + id, httpOptions);
+  }
+  addproperty(data) {
+    return this.http.post<any>('http://devapi.proplegit.com/api/add/property', data, httpOptions);
+  }
+  propertytype() {
+    return this.http.get<any>('http://devapi.proplegit.com/api/propertytype/list', httpOptions);
   }
 }
