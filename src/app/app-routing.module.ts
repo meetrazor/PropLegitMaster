@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
       .then(m => m.TenantModule), canActivate: [AuthGuard]
   },
+  {
+    path: 'test', component: LayoutComponent, loadChildren: () => import('./pages/pages.module')
+      .then(m => m.PagesModule), canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

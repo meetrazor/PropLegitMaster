@@ -1,21 +1,42 @@
 <div class="card" *ngIf="isVisible">
   <!-- card header -->
 
-  <div class="card-header bg-{{ color }} text-{{ text }} {{headerClass}}">
-    {{ title }}
-
+  <div class="card-header bg-{{ color }} text-{{ text }} {{ headerClass }}">
+    <a
+      href="javascript: void(0);"
+      (click)="onHeaderClick(id)"
+      style="color: black"
+      >{{ title }}</a
+    >
+    <a
+      class="another text-muted"
+      (click)="onHeaderClick(id)"
+      *ngIf="anotherTitle != ''"
+      href="javascript: void(0);"
+      style="color: black"
+      >{{ anotherTitle }} <i *ngIf="Icon != ''" [class]="Icon"></i
+    ></a>
     <div class="card-widgets">
-      <a href="javascript: void(0);" (click)="refreshContent()"><i class="mdi mdi-refresh"></i></a>
-      <a href="javascript: void(0);" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
-        aria-expanded="false" aria-controls="cardCollpase5" class="mdi mdi-minus" [ngClass]="
-           {
-             'mdi-minus': isCollapsed == false,
-             'mdi-plus': isCollapsed == true
-           }">
+      <!-- <a href="javascript: void(0);" (click)="refreshContent()"
+        ><i class="mdi mdi-refresh"></i
+      ></a> -->
+      <a
+        href="javascript: void(0);"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-expanded="false"
+        aria-controls="cardCollpase5"
+        class="mdi mdi-minus"
+        (click)="onHeaderClick(id)"
+        [ngClass]="{
+          'mdi-minus': isCollapsed == false,
+          'mdi-plus': isCollapsed == true
+        }"
+      >
       </a>
-      <a href="javascript: void(0);" (click)="remove()"><i class="mdi mdi-close"></i></a>
+      <!-- <a href="javascript: void(0);" (click)="remove()"
+        ><i class="mdi mdi-close"></i
+      ></a> -->
     </div>
-
   </div>
 
   <!-- End card header -->
@@ -27,5 +48,4 @@
   <div class="card-disabled" *ngIf="isLoading">
     <div class="card-portlets-loader"></div>
   </div>
-
 </div>

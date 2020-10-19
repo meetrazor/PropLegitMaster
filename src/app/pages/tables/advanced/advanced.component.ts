@@ -44,7 +44,7 @@ export class AdvancedComponent implements OnInit {
     /**
      * fetch data
      */
-    this._fetchData();
+    // this._fetchData();
   }
 
   /**

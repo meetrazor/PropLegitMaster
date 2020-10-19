@@ -20,6 +20,9 @@ const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
 const validateOTP = `${apiUrl}validate/otp/`;
 const login = `${apiUrl}login/verify`;
+const stateWiseProperty = `${apiUrl}property/list`;
+const PropertyListByState = `${apiUrl}property/list/`;
+const deleteProperty = `${apiUrl}property/delete/`;
 
 @Injectable({
   providedIn: 'root'
@@ -65,9 +68,10 @@ export class GeneralService {
   login(data) {
     return this.http.post<any>(login, data, httpOptions)
       .pipe(map(user => {
-        if (user.error && user.status!= 200) {
+        // tslint:disable-next-line: triple-equals
+        if (user.error && user.status != 200) {
           return user;
-        }else{
+        } else {
           this.user = user;
           this.cookieService.setCookie('currentUser', JSON.stringify(user.data), 1);
           return user;
@@ -78,5 +82,16 @@ export class GeneralService {
   logout() {
     this.cookieService.deleteCookie('currentUser');
     this.user = null;
+  }
+
+  getStateWisePropertyCount(): any {
+    return this.http.get(stateWiseProperty, httpOptions);
+  }
+
+  getPropertyListByState(id): any {
+    return this.http.get(`${PropertyListByState}${id}`, httpOptions);
+  }
+  deleteProperty(id): any {
+    return this.http.delete(`${deleteProperty}${id}`, httpOptions);
   }
 }
