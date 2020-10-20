@@ -109,9 +109,12 @@ export class GeneralService {
     return this.http.get<any>('http://devapi.proplegit.com/api/taluka/list/' + id, httpOptions);
   }
   addproperty(data) {
-    return this.http.post<any>('http://devapi.proplegit.com/api/add/property', data, httpOptions);
+    return this.http.post<any>('http://devapi.proplegit.com/api/property/add', data, httpOptions);
   }
   propertytype() {
     return this.http.get<any>('http://devapi.proplegit.com/api/propertytype/list', httpOptions);
+  }
+  area(search) {
+    return this.http.get<any>('http://devapi.proplegit.com/api/area/list/' + search, httpOptions);
   }
 }
