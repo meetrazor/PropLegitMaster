@@ -10,11 +10,22 @@ import { first } from 'rxjs/operators';
 export class AddPropertyComponent implements OnInit {
 
   public myForm: FormGroup;
-  Array5: string[];
+  Array5: any[];
   keyword = 'Area';
+  breadCrumbItems: Array<any>;
   areas: string[];
+  style: string;
+
   constructor(private Fb: FormBuilder, private service: GeneralService) { }
   ngOnInit() {
+    this.style = 'height: 100%; display: block; width: 100%; padding: 0.52rem 0.9rem; font-size: 0.875rem;font-weight: 400;';
+    this.style += 'border: 1px solid #ced4da; line-height: 1.5; color: #6c757d; background-color: #fff; background-clip: ';
+    this.style += 'padding-box; border-radius: 4px;';
+    this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
+    { label: 'Add New Property', path: '/property/create', active: true }];
+    document.querySelector('.autocomplete-container').setAttribute('style',
+      'box-shadow: none; height: calc(1.5em + 0.9rem + 2px)');
+    document.querySelector('.autocomplete-container .input-container input').setAttribute('style', this.style);
     this.myForm = this.Fb.group({
       OwnerShip: this.Fb.array([
         this.initOwner(),
@@ -62,7 +73,7 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(
         data => {
           if (data.error) {
-            console.log(data.error)
+            console.log(data.error);
             return;
           } else {
             console.log(data, 'response');
@@ -76,7 +87,7 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(
         data => {
           if (data.error) {
-            console.log(data.error)
+            console.log(data.error);
             return;
           } else {
             this.Array5 = data.data;
@@ -102,21 +113,21 @@ export class AddPropertyComponent implements OnInit {
     });
   }
   addOwner() {
-    const control = <FormArray>this.myForm.controls['OwnerShip'];
+    const control = this.myForm.controls.OwnerShip as FormArray;
     control.push(this.initOwner());
   }
 
   removeOwner(i: number) {
-    const control = <FormArray>this.myForm.controls['OwnerShip'];
+    const control = this.myForm.controls.OwnerShip as FormArray;
     control.removeAt(i);
   }
 
   addIncharge() {
-    const control = <FormArray>this.myForm.controls['InCharge'];
+    const control = this.myForm.controls.InCharge as FormArray;
     control.push(this.initIncharge());
   }
   removeIncharge(i: number) {
-    const control = <FormArray>this.myForm.controls['InCharge'];
+    const control = this.myForm.controls.InCharge as FormArray;
     control.removeAt(i);
   }
   selectEvent(item) {
@@ -128,16 +139,16 @@ export class AddPropertyComponent implements OnInit {
   }
   fetcharea(search) {
     this.service.area(search)
-    .pipe(first())
-    .subscribe(
-      data => {
-        if (data.error) {
-          console.log(data.error);
-          return;
-        } else {
-          this.areas = data.data;
-        }
-      });
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            console.log(data.error);
+            return;
+          } else {
+            this.areas = data.data;
+          }
+        });
   }
   onChangeSearch(search: string) {
     // fetch remote data from here
@@ -146,8 +157,8 @@ export class AddPropertyComponent implements OnInit {
       this.fetcharea(search);
     } else if (search.length === 0) {
       this.areas = null;
-      }
     }
+  }
   onFocused(e) {
 
   }
