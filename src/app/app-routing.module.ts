@@ -26,6 +26,9 @@ const routes: Routes = [
   {
     path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
       .then(m => m.TenantModule), canActivate: [AuthGuard]
+  }, {
+    path: 'photograph', component: LayoutComponent, loadChildren: () => import('./photograph/photograph.module')
+      .then(m => m.PhotographModule), canActivate: [AuthGuard]
   },
 ];
 

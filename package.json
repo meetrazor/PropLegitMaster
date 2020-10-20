@@ -43,7 +43,7 @@
     "ng2-charts": "^2.3.0",
     "ng2-search-filter": "^0.5.1",
     "ng5-slider": "^1.2.4",
-    "ngx-bootstrap": "^5.1.0",
+    "ngx-bootstrap": "5.1.0",
     "ngx-chartist": "^1.0.3",
     "ngx-color-picker": "^8.1.0",
     "ngx-drag-drop": "^2.0.0",

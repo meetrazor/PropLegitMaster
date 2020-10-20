@@ -4,7 +4,7 @@ import { AddPropertyComponent } from './add-property/add-property.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/create', pathMatch: 'full' },
-  { path : 'create', component : AddPropertyComponent}
+  { path : 'create', component : AddPropertyComponent},
 ];
 
 @NgModule({

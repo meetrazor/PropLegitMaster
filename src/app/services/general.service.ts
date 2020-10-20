@@ -79,4 +79,8 @@ export class GeneralService {
     this.cookieService.deleteCookie('currentUser');
     this.user = null;
   }
+
+  Addphotograph(PropertyID, data){
+    return this.http.post<any>(`${apiUrl}/property/${PropertyID}/document/add`, data)
+  }
 }
