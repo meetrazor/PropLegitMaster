@@ -6,9 +6,10 @@ import { PropertyRoutingModule } from './property-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { UIModule } from '../shared/ui/ui.module';
+import { EditPropertyComponent } from './edit-property/edit-property.component';
 
 @NgModule({
-  declarations: [AddPropertyComponent],
+  declarations: [AddPropertyComponent, EditPropertyComponent],
   imports: [
     CommonModule,
     PropertyRoutingModule,
