@@ -20,11 +20,12 @@ export class SignupComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
-      FirstName: ['', Validators.required],
-      EmailAddress: ['', [Validators.required, Validators.email]],
-      Password: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}')]],
-      LastName: ['', Validators.required],
-      MobileNumber: ['', Validators.required],
+      FirstName: ['', [Validators.required, Validators.maxLength(25)]],
+      EmailAddress: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
+      Password: ['', [Validators.required, Validators.pattern(
+        '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#/\$%?~\`\^\&*\)\(+=._-])[A-Za-z\d!@#/\$%?\`~\^\&*\)\(+=._-].{7,}')]],
+      LastName: ['', [Validators.required, Validators.maxLength(25)]],
+      MobileNumber: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       StateID: ['1', Validators.required],
       CreatedBy: ['1', Validators.required],
     });
@@ -70,5 +71,11 @@ export class SignupComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/account/confirm']);
       }
     });
+  }
+  isValid(event) {
+    if ((event.keyCode >= 48 && event.keyCode <= 57) && event.target.value.length < 10) {
+    } else {
+      return false;
+    }
   }
 }

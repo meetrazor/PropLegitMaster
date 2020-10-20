@@ -1,7 +1,8 @@
+import { CookieService } from './../../../core/services/cookie.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
@@ -11,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./confirm.component.scss']
 })
 export class ConfirmComponent implements OnInit, AfterViewInit {
+  @ViewChild('emailOtpInput', { static: false }) emailOtpInputRef: any;
+  @ViewChild('smsOtpInput', { static: false }) smsOtpInputRef: any;
   userID: number;
   resendOTP = false;
   obj = {
@@ -34,7 +37,8 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
   };
   time = 5 * 60;
   response: any;
-  constructor(private service: GeneralService, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(
+    private service: GeneralService, private formBuilder: FormBuilder, private router: Router, private cookieservice: CookieService) { }
 
   ngOnInit() {
     this.userID = this.service.getUserID();
@@ -80,7 +84,8 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
           timer: 1500
         });
         this.loading = false;
-        this.router.navigate(['/account/login']);
+        this.cookieservice.setCookie('currentUser', JSON.stringify(res.data), 1);
+        this.router.navigate(['/dashboard']);
       }
 
     });
@@ -96,12 +101,14 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
     this.OTPform.controls.EMAILOTP.setValue(event);
   }
   reSendOTP() {
+    this.cleanOTPBox();
     this.time = 5 * 60;
     this.resendOTP = false;
     this.timer();
     this.service.generateOTP(this.userID, this.obj).subscribe((res) => {
       this.submitdata.Email.ID = res.data[0].ID;
       this.submitdata.SMS.ID = res.data[1].ID;
+
       Swal.fire({
         position: 'top-end',
         type: 'success',
@@ -121,5 +128,8 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
       }
     }, 1000);
   }
-
+  cleanOTPBox() {
+    this.emailOtpInputRef.setValue('');
+    this.smsOtpInputRef.setValue('');
+  }
 }

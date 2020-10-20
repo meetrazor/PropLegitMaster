@@ -139,6 +139,7 @@
                 <div class="form-group mb-3">
                   <label for="emailotp">Email OTP</label>
                   <ng-otp-input
+                    #emailOtpInput
                     type="text"
                     [ngClass]="{
                       'is-invalid': submitted && f.EMAILOTP.errors
@@ -167,6 +168,7 @@
                 <div class="form-group mb-3">
                   <label for="smsotp">SMS OTP</label>
                   <ng-otp-input
+                    #smsOtpInput
                     type="text"
                     [ngClass]="{
                       'is-invalid': submitted && f.SMSOTP.errors

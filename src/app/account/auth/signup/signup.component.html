@@ -51,6 +51,9 @@
                   <div *ngIf="f.FirstName.errors.required">
                     First Name is required
                   </div>
+                  <div *ngIf="f.FirstName.errors.maxlength">
+                    First Name cannot exceed 25 characters.
+                  </div>
                 </div>
               </div>
 
@@ -72,6 +75,9 @@
                 >
                   <div *ngIf="f.LastName.errors.required">
                     Last Name is required
+                  </div>
+                  <div *ngIf="f.LastName.errors.maxlength">
+                    Last Name cannot exceed 25 characters.
                   </div>
                 </div>
               </div>
@@ -97,7 +103,7 @@
                   <div *ngIf="f.EmailAddress.errors.required">
                     Email is required
                   </div>
-                  <div *ngIf="f.EmailAddress.errors.email">
+                  <div *ngIf="f.EmailAddress.errors.pattern">
                     Email must be a valid email address
                   </div>
                 </div>
@@ -107,7 +113,7 @@
                 <label for="MobileNumber">Mobile Number *</label>
 
                 <input
-                  type="number"
+                  type="text"
                   formControlName="MobileNumber"
                   class="form-control"
                   [ngClass]="{
@@ -116,6 +122,8 @@
                   id="MobileNumber"
                   placeholder="Enter your Mobile Number"
                   pattern="[789][0-9]{9}"
+                  (paste)="(false)"
+                  (keypress)="isValid($event)"
                 />
 
                 <div
@@ -127,6 +135,14 @@
                   </div>
                   <div *ngIf="f.MobileNumber.errors.pattern">
                     Mobile Number must be a valid Mobile Number
+                  </div>
+                  <div
+                    *ngIf="
+                      f.MobileNumber.errors.maxlength ||
+                      f.MobileNumber.errors.minlength
+                    "
+                  >
+                    Mobile Number must be 10 Digit Only
                   </div>
                 </div>
               </div>
