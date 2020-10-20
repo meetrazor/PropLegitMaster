@@ -116,5 +116,20 @@ export class GeneralService {
   }
   area(search) {
     return this.http.get<any>('http://devapi.proplegit.com/api/area/list/' + search, httpOptions);
+
+  }
+  Addphotograph(PropertyID, data) {
+    return this.http.post<any>(`${apiUrl}property/${PropertyID}/document/add`, data)
+  }
+
+  listphotograph(PropertyID) {
+    return this.http.get<any>(`${apiUrl}property/${PropertyID}/photograph`)
+      .pipe(map(responce => {
+        if (responce.error && responce.status != 200) {
+          return responce;
+        } else {
+          return responce.data;
+        }
+      }))
   }
 }
