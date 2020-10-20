@@ -1,1 +1,27 @@
-<p>details-photograph works!</p>
+<div class="row">
+    <div class="col-lg-6" *ngFor="let item of photographList">
+        <div class="card">
+
+            <img class="card-img-bottom img-fluid" [src]="item.FileURL" alt="Card image cap"
+            *ngIf="item.FileType == 'Photo'"
+            >
+
+           
+            <!-- <iframe [src]="item.FileURL"
+            class="embed-responsive-item" *ngIf="item.FileType != 'Photo'"></iframe> -->
+
+        
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ item.FileName}}
+                </h5>
+                <p class="card-text">{{ item.Description }}</p>
+                <p class="card-text">
+                    <small class="text-muted">{{ item.CreatedAt | date  }}</small>
+                </p>
+            </div>
+            </div>
+
+    
+    </div>
+</div>

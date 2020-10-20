@@ -81,6 +81,17 @@ export class GeneralService {
   }
 
   Addphotograph(PropertyID, data){
-    return this.http.post<any>(`${apiUrl}/property/${PropertyID}/document/add`, data)
+    return this.http.post<any>(`${apiUrl}property/${PropertyID}/document/add`, data)
+  }
+
+  listphotograph(PropertyID){
+    return this.http.get<any>(`${apiUrl}property/${PropertyID}/photograph`)
+    .pipe(map(responce => {
+      if (responce.error && responce.status!= 200) {
+        return responce;
+      }else{
+        return responce.data;
+      }
+    }))
   }
 }

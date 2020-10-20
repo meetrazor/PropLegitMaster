@@ -9,6 +9,7 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class AddPhotographComponent implements OnInit {
   photographForm : FormGroup;
+  file : any;
 
   
 
@@ -25,55 +26,28 @@ export class AddPhotographComponent implements OnInit {
   ngOnInit() {
   }
 
-  UploadChange(event) {
-    debugger
-    // console.log(this.fileInput.nativeElement.value)
-    if(event.target.files.length > 0) {
-      let file = event.target.files[0];
-      this.photographForm.get('uploadfile').setValue(file);
-      this.photographForm.setErrors({ 'valid': true });
-    }else{
-      this.photographForm.setErrors({ 'invalid': true });
-    }
-
-    // if (event.target.files && event.target.files[0]) {
-     
-     
-    //     const file = event.target.files[0];
-    //     const mimeType = file.type;
-    //     if (((mimeType.match(/image\/jpg/) == null) && (mimeType.match(/image\/jpeg/) == null))) {
-         
-    //     } else {
-    //       this.imageGallery.push(event.target.files[i]);
-    //       // this.URLs.push(file);
-    //     }
-    //   }
-  }
-
   private prepareSave(): any {
     let input = new FormData();
     // This can be done a lot prettier; for example automatically assigning values by looping through `this.form.controls`, but we'll keep it as simple as possible here
     input.append('FileName', this.photographForm.get('FileName').value);
     input.append('FileType', this.photographForm.get('FileType').value);
     input.append('Description', this.photographForm.get('Description').value);
-    input.append('uploadfile', this.photographForm.get('uploadfile').value);
+    input.append('uploadfile', (this.photographForm.get('uploadfile').value)[0]);
 
     return input;
   }
 
   onSubmit(){
     if(this.photographForm.valid){
-     
+
+      // 1 is Property ID
       this.generalService.Addphotograph(1, this.prepareSave())
       .subscribe(data => {
         console.log(data);
+        this.photographForm.reset()
       })
 
     }
-  }
-
-  clearFile() {
-    this.photographForm.get('uploadfile').setValue(null);
   }
 
 }
