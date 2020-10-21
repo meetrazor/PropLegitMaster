@@ -64,8 +64,8 @@ export class AddPropertyComponent implements OnInit {
       ]),
     });
     this.fetchpropertytype();
-    this.myForm.controls.CreatedBy.setValue('1');
-    this.myForm.controls.UserID.setValue('1');
+    this.myForm.get('CreatedBy').setValue('1');
+    this.myForm.get('UserID').setValue('1');
   }
   save() {
     this.service.addproperty(this.myForm.value)
@@ -113,29 +113,30 @@ export class AddPropertyComponent implements OnInit {
     });
   }
   addOwner() {
-    const control = this.myForm.controls.OwnerShip as FormArray;
+
+    const control =  this.myForm.get('OwnerShip') as FormArray;
     control.push(this.initOwner());
   }
 
   removeOwner(i: number) {
-    const control = this.myForm.controls.OwnerShip as FormArray;
+    const control =  this.myForm.get('OwnerShip') as FormArray;
     control.removeAt(i);
   }
 
   addIncharge() {
-    const control = this.myForm.controls.InCharge as FormArray;
+    const control =  this.myForm.get('InCharge') as FormArray;
     control.push(this.initIncharge());
   }
   removeIncharge(i: number) {
-    const control = this.myForm.controls.InCharge as FormArray;
+    const control = this.myForm.get('InCharge') as FormArray;
     control.removeAt(i);
   }
   selectEvent(item) {
     // do something with selected item
-    this.myForm.controls.VillageID.setValue(item.VillageId);
-    this.myForm.controls.DistrictID.setValue(item.DistrictId);
-    this.myForm.controls.TalukaID.setValue(item.TalukaId);
-    this.myForm.controls.StateID.setValue(item.stateID);
+    this.myForm.get('VillageID').setValue(item.VillageId);
+    this.myForm.get('DistrictID').setValue(item.DistrictId);
+    this.myForm.get('TalukaID').setValue(item.TalukaId);
+    this.myForm.get('StateID').setValue(item.stateID);
   }
   fetcharea(search) {
     this.service.area(search)

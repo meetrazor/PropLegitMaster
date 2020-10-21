@@ -127,29 +127,29 @@ export class EditPropertyComponent implements OnInit {
   }
   }
   addOwner() {
-    const control = this.myForm.controls.OwnerShip as FormArray;
+    const control =  this.myForm.get('OwnerShip') as FormArray;
     control.push(this.initOwner());
   }
 
   removeOwner(i: number) {
-    const control = this.myForm.controls.OwnerShip as FormArray;
+    const control =  this.myForm.get('OwnerShip') as FormArray;
     control.removeAt(i);
   }
 
   addIncharge() {
-    const control = this.myForm.controls.InCharge as FormArray;
+    const control =  this.myForm.get('InCharge') as FormArray;
     control.push(this.initIncharge());
   }
   removeIncharge(i: number) {
-    const control = this.myForm.controls.InCharge as FormArray;
+    const control = this.myForm.get('InCharge') as FormArray;
     control.removeAt(i);
   }
   selectEvent(item) {
     // do something with selected item
-    this.myForm.controls.VillageID.setValue(item.VillageId);
-    this.myForm.controls.DistrictID.setValue(item.DistrictId);
-    this.myForm.controls.TalukaID.setValue(item.TalukaId);
-    this.myForm.controls.StateID.setValue(item.stateID);
+    this.myForm.get('VillageID').setValue(item.VillageId);
+    this.myForm.get('DistrictID').setValue(item.DistrictId);
+    this.myForm.get('TalukaID').setValue(item.TalukaId);
+    this.myForm.get('StateID').setValue(item.stateID);
   }
   fetcharea(search) {
     this.service.area(search)
@@ -181,45 +181,46 @@ export class EditPropertyComponent implements OnInit {
           console.log(data.error);
           return;
         } else {
-          this.myForm.controls.AgeOfProperty.setValue(data.data.AgeOfProperty);
-          this.myForm.controls.PropertyTypeID.setValue(data.data.PropertyTypeID);
-          this.myForm.controls.PropertyName.setValue(data.data.PropertyName);
-          this.myForm.controls.CitySurveyNo.setValue(data.data.CitySurveyNo);
-          this.myForm.controls.CitySurveyOffice.setValue(data.data.CitySurveyOffice);
-          this.myForm.controls.CityWardNo.setValue(data.data.CityWardNo);
-          this.myForm.controls.CityWardName.setValue(data.data.CityWardName);
-          this.myForm.controls.SheetNumber.setValue(data.data.SheetNumber);
-          this.myForm.controls.SurveyNo.setValue(data.data.SurveyNo);
-          this.myForm.controls.TPNo.setValue(data.data.TPNo);
-          this.myForm.controls.FPNo.setValue(data.data.FPNo);
-          this.myForm.controls.BuildingNo.setValue(data.data.BuildingNo);
-          this.myForm.controls.BuildingName.setValue(data.data.BuildingName);
-          this.myForm.controls.RecordDate.setValue(moment(data.data.RecordDate).format('YYYY-MM-DD'));
-          this.myForm.controls.milkatno_propId.setValue(data.data.milkatno_propId);
-          this.myForm.controls.RevenewOfficeType.setValue(data.data.RevenewOfficeType);
-          this.myForm.controls.PostalAddress.setValue(data.data.PostalAddress);
-          this.myForm.controls.Description.setValue(data.data.Description);
-          this.myForm.controls.LandSize.setValue(data.data.LandSize);
-          this.myForm.controls.StatusOfElectricity.setValue(data.data.StatusOfElectricity);
-          this.myForm.controls.WaterAvailability.setValue(data.data.WaterAvailability);
-          this.myForm.controls.NoOfBHK.setValue(data.data.NoOfBHK);
-          this.myForm.controls.FurnishType.setValue(data.data.FurnishType);
+          this.myForm.get('AgeOfProperty').setValue(data.data.AgeOfProperty);
+          this.myForm.get('PropertyTypeID').setValue(data.data.PropertyTypeID);
+          this.myForm.get('PropertyName').setValue(data.data.PropertyName);
+          this.myForm.get('CitySurveyNo').setValue(data.data.CitySurveyNo);
+          this.myForm.get('CitySurveyOffice').setValue(data.data.CitySurveyOffice);
+          this.myForm.get('CityWardNo').setValue(data.data.CityWardNo);
+          this.myForm.get('CityWardName').setValue(data.data.CityWardName);
+          this.myForm.get('SheetNumber').setValue(data.data.SheetNumber);
+          this.myForm.get('SurveyNo').setValue(data.data.SurveyNo);
+          this.myForm.get('TPNo').setValue(data.data.TPNo);
+          this.myForm.get('FPNo').setValue(data.data.FPNo);
+          this.myForm.get('BuildingNo').setValue(data.data.BuildingNo);
+          this.myForm.get('BuildingName').setValue(data.data.BuildingName);
+          this.myForm.get('RecordDate').setValue(moment(data.data.RecordDate).format('YYYY-MM-DD'));
+          this.myForm.get('milkatno_propId').setValue(data.data.milkatno_propId);
+          this.myForm.get('RevenewOfficeType').setValue(data.data.RevenewOfficeType);
+          this.myForm.get('PostalAddress').setValue(data.data.PostalAddress);
+          this.myForm.get('Description').setValue(data.data.Description);
+          this.myForm.get('LandSize').setValue(data.data.LandSize);
+          this.myForm.get('StatusOfElectricity').setValue(data.data.StatusOfElectricity);
+          this.myForm.get('WaterAvailability').setValue(data.data.WaterAvailability);
+          this.myForm.get('NoOfBHK').setValue(data.data.NoOfBHK);
+          this.myForm.get('FurnishType').setValue(data.data.FurnishType);
 
-          this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
-          this.myForm.controls.VillageID.setValue(data.data.VillageID);
-          this.myForm.controls.DistrictID.setValue(data.data.DistrictID);
-          this.myForm.controls.StateID.setValue(data.data.StateID);
-          this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
-          this.myForm.controls.UserID.setValue(data.data.UserID);
+          this.myForm.get('TalukaID').setValue(data.data.TalukaID);
+          this.myForm.get('VillageID').setValue(data.data.VillageID);
+          this.myForm.get('DistrictID').setValue(data.data.DistrictID);
+          this.myForm.get('StateID').setValue(data.data.StateID);
+          this.myForm.get('CreatedBy').setValue(data.data.CreatedBy);
+          this.myForm.get('UserID').setValue(data.data.UserID);
           this.initialValue = data.data.Area;
           this.isDataLoaded = true;
           this.onChangeSearch(data.data.Area);
+
           for ( const i of data.data.InCharge) {
-            const control = this.myForm.controls.InCharge as FormArray;
+            const control = this.myForm.get('InCharge') as FormArray;
             control.push(this.initIncharge(i));
           }
           for ( const i of data.data.Ownership) {
-            const control = this.myForm.controls.OwnerShip as FormArray;
+            const control = this.myForm.get('OwnerShip') as FormArray;
             control.push(this.initOwner(i));
           }
         }

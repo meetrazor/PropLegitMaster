@@ -67,10 +67,10 @@
                       </select>
                       <span
                         *ngIf="
-                          myForm.controls['PropertyTypeID'].touched &&
-                          myForm.controls['PropertyTypeID'].invalid &&
-                          myForm.controls['PropertyTypeID'].errors &&
-                          myForm.controls['PropertyTypeID'].errors.required
+                          myForm.get('PropertyTypeID').touched &&
+                          myForm.get('PropertyTypeID').invalid &&
+                          myForm.get('PropertyTypeID').errors &&
+                          myForm.get('PropertyTypeID').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -85,16 +85,13 @@
                         formControlName="PropertyName"
                       />
 
-                      <span
-                        *ngIf="
-                          myForm.controls['PropertyName'].touched &&
-                          myForm.controls['PropertyName'].invalid
-                        "
-                      >
+                      <span  *ngIf=" myForm.get('PropertyName').touched &&
+                      myForm.get('PropertyName').invalid">
+                      
                         <span
                           *ngIf="
-                            myForm.controls['PropertyName'].errors &&
-                            myForm.controls['PropertyName'].errors.required
+                            myForm.get('PropertyName').errors &&
+                            myForm.get('PropertyName').errors.required
                           "
                           style="color: red; font-size: smaller"
                         >
@@ -113,10 +110,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['CitySurveyNo'].touched &&
-                          myForm.controls['CitySurveyNo'].invalid &&
-                          myForm.controls['CitySurveyNo'].errors &&
-                          myForm.controls['CitySurveyNo'].errors.required
+                          myForm.get('CitySurveyNo').touched &&
+                          myForm.get('CitySurveyNo').invalid &&
+                          myForm.get('CitySurveyNo').errors &&
+                          myForm.get('CitySurveyNo').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -132,11 +129,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['CitySurveyOffice'].touched &&
-                          myForm.controls['CitySurveyOffice'].invalid &&
-                          myForm.controls['CitySurveyOffice'].errors &&
-                          myForm.controls['CitySurveyOffice'].errors.required
-                        "
+                          myForm.get('CitySurveyOffice').touched &&
+                          myForm.get('CitySurveyOffice').invalid &&
+                          myForm.get('CitySurveyOffice').errors &&
+                          myForm.get('CitySurveyOffice').errors.required"
                         style="color: red; font-size: smaller"
                         >*Required</span
                       >
@@ -151,12 +147,10 @@
                         formControlName="CityWardNo"
                       />
                       <span
-                        *ngIf="
-                          myForm.controls['CityWardNo'].touched &&
-                          myForm.controls['CityWardNo'].invalid &&
-                          myForm.controls['CityWardNo'].errors &&
-                          myForm.controls['CityWardNo'].errors.required
-                        "
+                        *ngIf=" myForm.get('CityWardNo').touched &&
+                        myForm.get('CityWardNo').invalid &&
+                        myForm.get('CityWardNo').errors &&
+                        myForm.get('CityWardNo').errors.required"
                         style="color: red; font-size: smaller"
                         >*Required</span
                       >
@@ -171,10 +165,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['CityWardName'].touched &&
-                          myForm.controls['CityWardName'].invalid &&
-                          myForm.controls['CityWardName'].errors &&
-                          myForm.controls['CityWardName'].errors.required
+                          myForm.get('CityWardName').touched &&
+                          myForm.get('CityWardName').invalid &&
+                          myForm.get('CityWardName').errors &&
+                          myForm.get('CityWardName').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -191,10 +185,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['SheetNumber'].touched &&
-                          myForm.controls['SheetNumber'].invalid &&
-                          myForm.controls['SheetNumber'].errors &&
-                          myForm.controls['SheetNumber'].errors.required
+                          myForm.get('SheetNumber').touched &&
+                          myForm.get('SheetNumber').invalid &&
+                          myForm.get('SheetNumber').errors &&
+                          myForm.get('SheetNumber').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -210,10 +204,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['BuildingNo'].touched &&
-                          myForm.controls['BuildingNo'].invalid &&
-                          myForm.controls['BuildingNo'].errors &&
-                          myForm.controls['BuildingNo'].errors.required
+                          myForm.get('BuildingNo').touched &&
+                          myForm.get('BuildingNo').invalid &&
+                          myForm.get('BuildingNo').errors &&
+                          myForm.get('BuildingNo').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -229,10 +223,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['BuildingName'].touched &&
-                          myForm.controls['BuildingName'].invalid &&
-                          myForm.controls['BuildingName'].errors &&
-                          myForm.controls['BuildingName'].errors.required
+                          myForm.get('BuildingName').touched &&
+                          myForm.get('BuildingName').invalid &&
+                          myForm.get('BuildingName').errors &&
+                          myForm.get('BuildingName').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -248,10 +242,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['RecordDate'].touched &&
-                          myForm.controls['RecordDate'].invalid &&
-                          myForm.controls['RecordDate'].errors &&
-                          myForm.controls['RecordDate'].errors.required
+                          myForm.get('RecordDate').touched &&
+                          myForm.get('RecordDate').invalid &&
+                          myForm.get('RecordDate').errors &&
+                          myForm.get('RecordDate').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -268,10 +262,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['milkatno_propId'].touched &&
-                          myForm.controls['milkatno_propId'].invalid &&
-                          myForm.controls['milkatno_propId'].errors &&
-                          myForm.controls['milkatno_propId'].errors.required
+                          myForm.get('milkatno_propId').touched &&
+                          myForm.get('milkatno_propId').invalid &&
+                          myForm.get('milkatno_propId').errors &&
+                          myForm.get('milkatno_propId').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -297,10 +291,10 @@
                       </select>
                       <span
                         *ngIf="
-                          myForm.controls['RevenewOfficeType'].touched &&
-                          myForm.controls['RevenewOfficeType'].invalid &&
-                          myForm.controls['RevenewOfficeType'].errors &&
-                          myForm.controls['RevenewOfficeType'].errors.required
+                          myForm.get('RevenewOfficeType').touched &&
+                          myForm.get('RevenewOfficeType').invalid &&
+                          myForm.get('RevenewOfficeType').errors &&
+                          myForm.get('RevenewOfficeType').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -317,10 +311,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['SurveyNo'].touched &&
-                          myForm.controls['SurveyNo'].invalid &&
-                          myForm.controls['SurveyNo'].errors &&
-                          myForm.controls['SurveyNo'].errors.required
+                          myForm.get('SurveyNo').touched &&
+                          myForm.get('SurveyNo').invalid &&
+                          myForm.get('SurveyNo').errors &&
+                          myForm.get('SurveyNo').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -337,10 +331,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['TPNo'].touched &&
-                          myForm.controls['TPNo'].invalid &&
-                          myForm.controls['TPNo'].errors &&
-                          myForm.controls['TPNo'].errors.required
+                          myForm.get('TPNo').touched &&
+                          myForm.get('TPNo').invalid &&
+                          myForm.get('TPNo').errors &&
+                          myForm.get('TPNo').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -357,10 +351,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['FPNo'].touched &&
-                          myForm.controls['FPNo'].invalid &&
-                          myForm.controls['FPNo'].errors &&
-                          myForm.controls['FPNo'].errors.required
+                          myForm.get('FPNo').touched &&
+                          myForm.get('FPNo').invalid &&
+                          myForm.get('FPNo').errors &&
+                          myForm.get('FPNo').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -386,10 +380,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['LandSize'].touched &&
-                          myForm.controls['LandSize'].invalid &&
-                          myForm.controls['LandSize'].errors &&
-                          myForm.controls['LandSize'].errors.required
+                          myForm.get('LandSize').touched &&
+                          myForm.get('LandSize').invalid &&
+                          myForm.get('LandSize').errors &&
+                          myForm.get('LandSize').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -405,10 +399,10 @@
                       />
                       <span
                         *ngIf="
-                          myForm.controls['WaterAvailability'].touched &&
-                          myForm.controls['WaterAvailability'].invalid &&
-                          myForm.controls['WaterAvailability'].errors &&
-                          myForm.controls['WaterAvailability'].errors.required
+                          myForm.get('WaterAvailability').touched &&
+                          myForm.get('WaterAvailability').invalid &&
+                          myForm.get('WaterAvailability').errors &&
+                          myForm.get('WaterAvailability').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -431,10 +425,10 @@
                       </select>
                       <span
                         *ngIf="
-                          myForm.controls['FurnishType'].touched &&
-                          myForm.controls['FurnishType'].invalid &&
-                          myForm.controls['FurnishType'].errors &&
-                          myForm.controls['FurnishType'].errors.required
+                          myForm.get('FurnishType').touched &&
+                          myForm.get('FurnishType').invalid &&
+                          myForm.get('FurnishType').errors &&
+                          myForm.get('FurnishType').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -459,10 +453,10 @@
                       </select>
                       <span
                         *ngIf="
-                          myForm.controls['StatusOfElectricity'].touched &&
-                          myForm.controls['StatusOfElectricity'].invalid &&
-                          myForm.controls['StatusOfElectricity'].errors &&
-                          myForm.controls['StatusOfElectricity'].errors.required
+                          myForm.get('StatusOfElectricity').touched &&
+                          myForm.get('StatusOfElectricity').invalid &&
+                          myForm.get('StatusOfElectricity').errors &&
+                          myForm.get('StatusOfElectricity').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -478,10 +472,10 @@
                       ></textarea>
                       <span
                         *ngIf="
-                          myForm.controls['Description'].touched &&
-                          myForm.controls['Description'].invalid &&
-                          myForm.controls['Description'].errors &&
-                          myForm.controls['Description'].errors.required
+                          myForm.get('Description').touched &&
+                          myForm.get('Description').invalid &&
+                          myForm.get('Description').errors &&
+                          myForm.get('Description').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -497,10 +491,10 @@
                       ></textarea>
                       <span
                         *ngIf="
-                          myForm.controls['PostalAddress'].touched &&
-                          myForm.controls['PostalAddress'].invalid &&
-                          myForm.controls['PostalAddress'].errors &&
-                          myForm.controls['PostalAddress'].errors.required
+                          myForm.get('PostalAddress').touched &&
+                          myForm.get('PostalAddress').invalid &&
+                          myForm.get('PostalAddress').errors &&
+                          myForm.get('PostalAddress').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -520,10 +514,10 @@
 
                       <span
                         *ngIf="
-                          myForm.controls['AgeOfProperty'].touched &&
-                          myForm.controls['AgeOfProperty'].invalid &&
-                          myForm.controls['AgeOfProperty'].errors &&
-                          myForm.controls['AgeOfProperty'].errors.required
+                          myForm.get('AgeOfProperty').touched &&
+                          myForm.get('AgeOfProperty').invalid &&
+                          myForm.get('AgeOfProperty').errors &&
+                          myForm.get('AgeOfProperty').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -542,10 +536,10 @@
                       </select>
                       <span
                         *ngIf="
-                          myForm.controls['NoOfBHK'].touched &&
-                          myForm.controls['NoOfBHK'].invalid &&
-                          myForm.controls['NoOfBHK'].errors &&
-                          myForm.controls['NoOfBHK'].errors.required
+                          myForm.get('NoOfBHK').touched &&
+                          myForm.get('NoOfBHK').invalid &&
+                          myForm.get('NoOfBHK').errors &&
+                          myForm.get('NoOfBHK').errors.required
                         "
                         style="color: red; font-size: smaller"
                         >*Required</span
@@ -565,7 +559,7 @@
                     <div formArrayName="OwnerShip">
                       <div
                         *ngFor="
-                          let owner of myForm.controls.OwnerShip.controls;
+                          let owner of myForm.get('OwnerShip').controls;
                           let i = index
                         "
                       >
@@ -577,20 +571,7 @@
                               class="form-control"
                               formControlName="OwnerName"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.touched &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.invalid &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.errors &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                        
                           </div>
                           <div class="form-group col-md-6">
                             <label>Since From</label>
@@ -599,28 +580,13 @@
                               class="form-control"
                               formControlName="SinceFrom"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.touched &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.invalid &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.errors &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                           
                           </div>
                           <div class="form-group col-md-12">
                             <span
                               class="glyphicon glyphicon-remove pull-right"
                               style="cursor: pointer; color: red"
-                              *ngIf="
-                                myForm.controls.OwnerShip.controls.length > 1
-                              "
+                              *ngIf=" myForm.get('OwnerShip').length > 1"
                               (click)="removeOwner(i)"
                             >
                               (Remove -)
@@ -656,7 +622,7 @@
                           <span
                             class="glyphicon glyphicon-remove pull-right"
                             style="cursor: pointer; color: red"
-                            *ngIf="myForm.controls.InCharge.controls.length > 1"
+                            *ngIf="myForm.get('InCharge').length > 1"
                             (click)="removeIncharge(i)"
                           >
                             (Remove -)
@@ -671,20 +637,7 @@
                               formControlName="InChargeName"
                             />
 
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeName.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeName.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeName.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeName.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                          
                           </div>
                           <div class="form-group col-md-6">
                             <label>Designation</label>
@@ -693,20 +646,7 @@
                               class="form-control"
                               formControlName="Designation"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Designation.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Designation.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Designation.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Designation.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                            
                           </div>
                           <div class="form-group col-md-6">
                             <label>InChargeType</label>
@@ -715,20 +655,7 @@
                               class="form-control"
                               formControlName="InChargeType"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeType.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeType.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeType.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeType.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                          
                           </div>
                           <div class="form-group col-md-6">
                             <label>MobileNo</label>
@@ -737,20 +664,7 @@
                               class="form-control"
                               formControlName="MobileNo"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .MobileNo.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .MobileNo.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .MobileNo.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .MobileNo.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                           
                           </div>
 
                           <div class="form-group col-md-6">
@@ -760,20 +674,7 @@
                               class="form-control"
                               formControlName="Email"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Email.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Email.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Email.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Email.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                            
                           </div>
                           <div class="form-group col-md-6">
                             <label>Address</label>
@@ -782,20 +683,7 @@
                               class="form-control"
                               formControlName="Address"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Address.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Address.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Address.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .Address.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                          
                           </div>
                           <div class="form-group col-md-6">
                             <label>InChargeFromDate</label>
@@ -804,20 +692,7 @@
                               class="form-control"
                               formControlName="InChargeFromDate"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeFromDate.touched &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeFromDate.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeFromDate.errors &&
-                                myForm.controls.InCharge.controls[i].controls
-                                  .InChargeFromDate.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
+                            
                           </div>
                         </div>
                       </div>
