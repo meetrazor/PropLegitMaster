@@ -26,14 +26,19 @@ const routes: Routes = [
   {
     path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
       .then(m => m.TenantModule), canActivate: [AuthGuard]
-  }, {
+  },
+  {
     path: 'photograph', component: LayoutComponent, loadChildren: () => import('./photograph/photograph.module')
       .then(m => m.PhotographModule), canActivate: [AuthGuard]
   },
   {
     path: 'test', component: LayoutComponent, loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule), canActivate: [AuthGuard]
-  }
+  },
+  {
+    path: 'tax', component: LayoutComponent, loadChildren: () => import('./tax/tax.module')
+      .then(m => m.TaxModule), canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
