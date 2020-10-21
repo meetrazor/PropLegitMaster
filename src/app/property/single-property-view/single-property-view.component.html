@@ -7,35 +7,34 @@
 
   <div class="card-box">
     <ngb-tabset justify="justified" type="pills">
-      <ngb-tab title="Home" class="nav-item">
+      <ngb-tab title="Property" class="nav-item">
         <ng-template ngbTabContent class="nav-item">
-          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          <app-view-property propertyId="{{ propertyID }}"></app-view-property>
         </ng-template>
       </ngb-tab>
-      <ngb-tab title="profile" class="nav-item">
-        <ng-template ngbTabContent>
-          <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
-        </ng-template>
+      <ngb-tab title="Alert" class="nav-item">
+        <ng-template ngbTabContent> </ng-template>
       </ngb-tab>
-      <ngb-tab title="Messages" class="nav-item">
-        <ng-template ngbTabContent>
-          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
-        </ng-template>
+      <ngb-tab title="Photographs" class="nav-item">
+        <ng-template ngbTabContent
+          ><app-view-photograph propertyId="{{ propertyID }}">
+          </app-view-photograph
+        ></ng-template>
       </ngb-tab>
-      <ngb-tab title="Home" class="nav-item">
-        <ng-template ngbTabContent class="nav-item">
-          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
-        </ng-template>
+      <ngb-tab title="Taxes" class="nav-item">
+        <ng-template ngbTabContent class="nav-item"> </ng-template>
       </ngb-tab>
-      <ngb-tab title="profile" class="nav-item">
-        <ng-template ngbTabContent>
-          <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
-        </ng-template>
+      <ngb-tab title="Rent" class="nav-item">
+        <ng-template ngbTabContent> </ng-template>
       </ngb-tab>
-      <ngb-tab title="Messages" class="nav-item">
-        <ng-template ngbTabContent>
-          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
-        </ng-template>
+      <ngb-tab title="Maintenance" class="nav-item">
+        <ng-template ngbTabContent> </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Legal Case" class="nav-item">
+        <ng-template ngbTabContent> </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Trust" class="nav-item">
+        <ng-template ngbTabContent> </ng-template>
       </ngb-tab>
     </ngb-tabset>
   </div>

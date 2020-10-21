@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class DetailsPhotographComponent implements OnInit {
   photographList: any = [];
-
+  @Input() propertyId: number;
 
   constructor(private generalService: GeneralService) {
 
@@ -16,7 +16,7 @@ export class DetailsPhotographComponent implements OnInit {
 
   ngOnInit() {
     // 1 is Property ID
-    this.generalService.listphotograph(1)
+    this.generalService.listphotograph(this.propertyId)
       .subscribe((data) => {
         this.photographList = data.filter(e => e.FileType === 'Photo');
       });

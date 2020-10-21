@@ -15,6 +15,6 @@ import { DetailsPhotographComponent } from './details-photograph/details-photogr
     PhotographRoutingModule,
     FileUploadModule,
     FormsModule, ReactiveFormsModule
-  ]
+  ], exports: [ViewPhotographComponent, AddPhotographComponent, DetailsPhotographComponent]
 })
 export class PhotographModule { }

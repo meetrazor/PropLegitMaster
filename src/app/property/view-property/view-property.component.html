@@ -1,0 +1,81 @@
+<div class="col-12" *ngIf="!loading">
+  <div class="">
+    <div class="border-bottom">
+      <h5>Ownership</h5>
+    </div>
+    <h6>Current Ownership:</h6>
+    <p *ngFor="let item of data.Ownership">
+      {{ item.OwnerName }}<br /><small
+        ><b>Since: </b>{{ item.SinceFrom | date }}</small
+      >
+    </p>
+
+    <div class="border-bottom">
+      <h5>Location</h5>
+    </div>
+    <h6>Postal Address</h6>
+    <p>
+      <b>{{ data.BuildingName }}</b
+      ><br />{{ data.PostalAddress }} <br />{{ data.PinCode }}
+    </p>
+
+    <div class="border-bottom">
+      <h5 class="text-info">In Charge</h5>
+    </div>
+    <div *ngFor="let item of data.InCharge">
+      <h5>{{ item.InChargeType }}</h5>
+      <p>
+        <b>{{ item.InChargeName }}</b
+        ><br /><small><b>Cell: </b>{{ item.MobileNo }}</small
+        ><br /><small><b>Email: </b>{{ item.Email }}</small
+        ><br /><small><b>Since: </b>{{ item.InChargeFromDate | date }}</small>
+      </p>
+    </div>
+
+    <div class="border-bottom">
+      <h5 class="text-info">Short Description</h5>
+    </div>
+    <p>
+      {{ data.Description }}
+    </p>
+
+    <div class="border-bottom">
+      <h5 class="text-info">Other Details</h5>
+    </div>
+    <h6>Building</h6>
+    <p>
+      <small><b>Super Built up Area: </b></small>{{ data.LandSize }}<br />
+      <!-- <small><b>Floors: </b></small>4 + Mezzaine + Roof Top<br />
+      <small><b>Fencing: </b></small>Brick Wall<br />
+      <small><b>Lift: </b></small>Yes, uptil Terrace<br />
+      <small><b>Parking: </b></small>2 in Lawn and Open Street<br /> -->
+    </p>
+    <!-- <h6>Garden/Open Space</h6>
+    <p>
+      <small><b>Area: </b></small>4,000 sq ft<br />
+    </p> -->
+
+    <!-- <div class="border-bottom">
+      <h5>Govt. Record details</h5>
+    </div>
+    <h6></h6>
+    <p>
+      <small><b>As on Date:</b></small> Sept 12, 2019
+      <small
+        ><br /><span class="text-warning">Record is more than 1 Year Old. </span
+        ><a href="pm-prop-1-requestlandrecord"
+          ><span class="text-info">Click to request the Latest</span></a
+        ></small
+      ><br />
+    </p> -->
+    <p>
+      <small><b>Village: </b></small>{{ data.VillageName }}<br />
+      <small><b>Taluka: </b></small>{{ data.TalukaName }}<br />
+      <small><b>District: </b></small>{{ data.DistrictName }}<br />
+      <small><b>Survey: </b></small>{{ data.SurveyNo }}<br />
+      <small><b>TP: </b></small>{{ data.TPNo }}<br />
+      <small><b>FP: </b></small>{{ data.FPNo }}<br />
+      <small><b>Area: </b></small>{{ data.LandSize }}<br />
+    </p>
+  </div>
+</div>

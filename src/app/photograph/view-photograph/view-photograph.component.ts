@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-view-photograph',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-photograph.component.scss']
 })
 export class ViewPhotographComponent implements OnInit {
-
+  @Input() propertyId: number;
+  propertyID: number;
   constructor() { }
 
   ngOnInit() {
+    this.propertyID = this.propertyId;
   }
 
 }

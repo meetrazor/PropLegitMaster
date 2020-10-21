@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/services/general.service';
 
@@ -10,6 +10,7 @@ import { GeneralService } from 'src/app/services/general.service';
 export class AddPhotographComponent implements OnInit {
   photographForm: FormGroup;
   file: any;
+  @Input() propertyId: number;
 
 
 
@@ -41,7 +42,7 @@ export class AddPhotographComponent implements OnInit {
   onSubmit() {
     if (this.photographForm.valid) {
       // 1 is Property ID
-      this.generalService.Addphotograph(1, this.prepareSave())
+      this.generalService.Addphotograph(this.propertyId, this.prepareSave())
         .subscribe(data => {
           console.log(data);
           this.photographForm.reset();

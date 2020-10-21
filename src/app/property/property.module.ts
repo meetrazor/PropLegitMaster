@@ -1,3 +1,4 @@
+import { PhotographModule } from './../photograph/photograph.module';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,17 +10,18 @@ import { UIModule } from '../shared/ui/ui.module';
 import { SinglePropertyViewComponent } from './single-property-view/single-property-view.component';
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditPropertyComponent } from './edit-property/edit-property.component';
+import { ViewPropertyComponent } from './view-property/view-property.component';
 
 
 
 @NgModule({
-  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent],
+  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent],
   imports: [
     CommonModule,
     PropertyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AutocompleteLibModule, UIModule, NgbTabsetModule
+    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule
   ]
 })
 export class PropertyModule { }
