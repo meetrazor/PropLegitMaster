@@ -565,7 +565,7 @@
                     <div formArrayName="OwnerShip">
                       <div
                         *ngFor="
-                          let owner of myForm.controls.OwnerShip.controls;
+                          let owner of myForm.controls.OwnerShip['controls'];
                           let i = index
                         "
                       >
@@ -647,7 +647,7 @@
                       <div
                         class=""
                         *ngFor="
-                          let in_charge of myForm.controls.InCharge.controls;
+                          let in_charge of myForm.controls.InCharge['controls'];
                           let i = index
                         "
                         class="panel panel-default"

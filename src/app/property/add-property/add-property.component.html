@@ -563,7 +563,7 @@
                     <div formArrayName="OwnerShip">
                       <div
                         *ngFor="
-                          let owner of myForm.controls.OwnerShip.controls;
+                          let owner of myForm.controls.OwnerShip['controls'];
                           let i = index
                         "
                       >
@@ -645,7 +645,7 @@
                       <div
                         class=""
                         *ngFor="
-                          let in_charge of myForm.controls.InCharge.controls;
+                          let in_charge of myForm.controls.InCharge['controls'];
                           let i = index
                         "
                         class="panel panel-default"
@@ -654,7 +654,9 @@
                           <span
                             class="glyphicon glyphicon-remove pull-right"
                             style="cursor: pointer; color: red"
-                            *ngIf="myForm.controls.InCharge.controls.length > 1"
+                            *ngIf="
+                              myForm.controls.InCharge['controls'].length > 1
+                            "
                             (click)="removeIncharge(i)"
                           >
                             (Remove -)

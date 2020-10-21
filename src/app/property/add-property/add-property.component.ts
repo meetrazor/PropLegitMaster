@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { GeneralService } from 'src/app/services/general.service';
 import { first } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-property',
   templateUrl: './add-property.component.html',
@@ -16,7 +18,7 @@ export class AddPropertyComponent implements OnInit {
   areas: string[];
   style: string;
 
-  constructor(private Fb: FormBuilder, private service: GeneralService) { }
+  constructor(private Fb: FormBuilder, private service: GeneralService, private router: Router) { }
   ngOnInit() {
     this.style = 'height: 100%; display: block; width: 100%; padding: 0.52rem 0.9rem; font-size: 0.875rem;font-weight: 400;';
     this.style += 'border: 1px solid #ced4da; line-height: 1.5; color: #6c757d; background-color: #fff; background-clip: ';
@@ -73,10 +75,21 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(
         data => {
           if (data.error) {
-            console.log(data.error);
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
             return;
           } else {
-            console.log(data, 'response');
+            Swal.fire({
+              title: 'Property Added Successfully!',
+              text: data.message,
+              type: 'success',
+              timer: 2000
+            }).then(() => {
+              this.router.navigate(['property']);
+            });
           }
         });
 
@@ -87,7 +100,11 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(
         data => {
           if (data.error) {
-            console.log(data.error);
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
             return;
           } else {
             this.Array5 = data.data;
@@ -143,7 +160,6 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(
         data => {
           if (data.error) {
-            console.log(data.error);
             return;
           } else {
             this.areas = data.data;
