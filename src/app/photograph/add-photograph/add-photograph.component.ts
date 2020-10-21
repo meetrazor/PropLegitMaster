@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/services/general.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-photograph',
@@ -49,7 +50,22 @@ export class AddPhotographComponent implements OnInit {
           console.log(data);
           this.isLoading = false;
           this.photographForm.reset();
-          location.reload();
+          if (data.status === 200) {
+            Swal.fire({
+              title: 'Uploaded',
+              text: data.message,
+              type: 'success',
+              timer: 2000
+            }).then(() => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+          }
         });
     }
   }

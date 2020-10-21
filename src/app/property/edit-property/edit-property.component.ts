@@ -4,6 +4,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import * as moment from 'moment'; // add this 1 of 4
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-property',
@@ -11,7 +12,7 @@ import * as moment from 'moment'; // add this 1 of 4
   styleUrls: ['./edit-property.component.scss']
 })
 export class EditPropertyComponent implements OnInit {
-
+  isLoading: boolean;
   public myForm: FormGroup;
   Array5: any[];
   keyword = 'Area';
@@ -26,6 +27,7 @@ export class EditPropertyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.fetchproperty(this.route.snapshot.paramMap.get('id'));
     this.myForm = this.Fb.group({
       OwnerShip: this.Fb.array([]),
@@ -63,16 +65,28 @@ export class EditPropertyComponent implements OnInit {
     this.fetchpropertytype();
   }
   save() {
+    this.isLoading = true;
     this.service.editproperty(this.route.snapshot.paramMap.get('id'), this.myForm.value)
       .pipe(first())
       .subscribe(
         data => {
+          this.isLoading = false;
           if (data.error) {
-            console.log(data.error);
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
             return;
           } else {
-            alert('Data updated successfully');
-            this.router.navigate(['property']);
+            Swal.fire({
+              title: 'Property Updated Successfully!',
+              text: data.message,
+              type: 'success',
+              timer: 2000
+            }).then(() => {
+              this.router.navigate(['property']);
+            });
           }
         });
   }
@@ -177,8 +191,14 @@ export class EditPropertyComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.isLoading = false;
           if (data.error) {
-            console.log(data.error);
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+            this.isLoading = false;
             return;
           } else {
             this.myForm.controls.AgeOfProperty.setValue(data.data.AgeOfProperty);
@@ -222,6 +242,7 @@ export class EditPropertyComponent implements OnInit {
               const control = this.myForm.controls.OwnerShip as FormArray;
               control.push(this.initOwner(i));
             }
+
           }
         }
       );

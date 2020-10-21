@@ -832,7 +832,6 @@
                     style="height: 1px; background-color: #ccc; border: none"
                   />
 
-
                   <div class="text-center button-list mt-3">
                     <button
                       class="btn btn-primary waves-effect waves-light btn-sm"
@@ -860,3 +859,6 @@
     <!-- container -->
   </div>
 </form>
+<div class="card-disabled" *ngIf="isLoading">
+  <div class="card-portlets-loader"></div>
+</div>
