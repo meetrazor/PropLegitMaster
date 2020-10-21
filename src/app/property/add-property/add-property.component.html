@@ -577,14 +577,14 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.touched &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.invalid &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.errors &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .OwnerName.errors.required
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.OwnerName.touched &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.OwnerName.invalid &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.OwnerName.errors &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.OwnerName.errors.required
                               "
                               style="color: red; font-size: smaller"
                               >*Required</span
@@ -599,14 +599,14 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.touched &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.invalid &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.errors &&
-                                myForm.controls.OwnerShip.controls[i].controls
-                                  .SinceFrom.errors.required
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.SinceFrom.touched &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.SinceFrom.invalid &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.SinceFrom.errors &&
+                                myForm.controls.OwnerShip['controls'][i]
+                                  .controls.SinceFrom.errors.required
                               "
                               style="color: red; font-size: smaller"
                               >*Required</span
@@ -617,7 +617,7 @@
                               class="glyphicon glyphicon-remove pull-right"
                               style="cursor: pointer; color: red"
                               *ngIf="
-                                myForm.controls.OwnerShip.controls.length > 1
+                                myForm.controls.OwnerShip['controls'].length > 1
                               "
                               (click)="removeOwner(i)"
                             >
@@ -673,13 +673,13 @@
 
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeName.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeName.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeName.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeName.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -695,13 +695,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Designation.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Designation.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Designation.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Designation.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -717,13 +717,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeType.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeType.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeType.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeType.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -739,13 +739,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -762,13 +762,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Email.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Email.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Email.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Email.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -784,13 +784,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Address.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Address.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Address.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .Address.errors.required
                               "
                               style="color: red; font-size: smaller"
@@ -806,13 +806,13 @@
                             />
                             <span
                               *ngIf="
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeFromDate.touched &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeFromDate.invalid &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeFromDate.errors &&
-                                myForm.controls.InCharge.controls[i].controls
+                                myForm.controls.InCharge['controls'][i].controls
                                   .InChargeFromDate.errors.required
                               "
                               style="color: red; font-size: smaller"
