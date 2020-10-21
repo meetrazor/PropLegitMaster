@@ -99,37 +99,37 @@ export class GeneralService {
   states() {
     return this.http.get<any>(stateInfo, httpOptions);
   }
-  districts(id) {
-    return this.http.get<any>('http://devapi.proplegit.com/api/state/list/' + id, httpOptions);
+  districts(id): any {
+    return this.http.get(`${apiUrl}state/list/${id}`, httpOptions);
   }
-  talukas(id) {
-    return this.http.get<any>('http://devapi.proplegit.com/api/district/list/' + id, httpOptions);
+  talukas(id): any {
+    return this.http.get(`${apiUrl}district/list/${id}`, httpOptions);
   }
-  villages(id) {
-    return this.http.get<any>('http://devapi.proplegit.com/api/taluka/list/' + id, httpOptions);
+  villages(id): any {
+    return this.http.get(`${apiUrl}taluka/list/${id}`, httpOptions);
   }
-  addproperty(data) {
-    return this.http.post<any>('http://devapi.proplegit.com/api/property/add', data, httpOptions);
+  addproperty(data): any {
+    return this.http.post(`${apiUrl}property/add`, data, httpOptions);
   }
-  propertytype() {
-    return this.http.get<any>('http://devapi.proplegit.com/api/propertytype/list', httpOptions);
+  propertytype(): any {
+    return this.http.get(`${apiUrl}propertytype/list`, httpOptions);
   }
-  area(search) {
-    return this.http.get<any>('http://devapi.proplegit.com/api/area/list/' + search, httpOptions);
+  area(search): any {
+    return this.http.get(`${apiUrl}area/list/` + search, httpOptions);
 
   }
-  Addphotograph(PropertyID, data) {
-    return this.http.post<any>(`${apiUrl}property/${PropertyID}/document/add`, data)
+  Addphotograph(PropertyID, data): any {
+    return this.http.post(`${apiUrl}property/${PropertyID}/document/add`, data);
   }
 
-  listphotograph(PropertyID) {
+  listphotograph(PropertyID): any {
     return this.http.get<any>(`${apiUrl}property/${PropertyID}/photograph`)
       .pipe(map(responce => {
-        if (responce.error && responce.status != 200) {
+        if (responce.error && responce.status !== 200) {
           return responce;
         } else {
           return responce.data;
         }
-      }))
+      }));
   }
 }

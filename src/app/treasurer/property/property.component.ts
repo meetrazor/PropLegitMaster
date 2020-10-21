@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -15,7 +15,7 @@ export class PropertyComponent implements OnInit {
   stateList: Array<
     { StateName: string, NoOfProperty: number, StateID: number, data: Array<any>, collapsed: number, loading: number }
   >;
-  constructor(private service: GeneralService, private route: ActivatedRoute) { }
+  constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Properties', path: '/property', active: true }];
@@ -100,6 +100,6 @@ export class PropertyComponent implements OnInit {
   }
 
   onViewProperty(id) {
-    console.log(id);
+    this.router.navigate([`property/view/${id}`]);
   }
 }

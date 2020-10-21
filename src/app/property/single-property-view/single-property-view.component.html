@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <!-- breadCrums -->
+  <app-page-title
+    title="Property Name"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="card-box">
+    <ngb-tabset justify="justified" type="pills">
+      <ngb-tab title="Home" class="nav-item">
+        <ng-template ngbTabContent class="nav-item">
+          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="profile" class="nav-item">
+        <ng-template ngbTabContent>
+          <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Messages" class="nav-item">
+        <ng-template ngbTabContent>
+          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Home" class="nav-item">
+        <ng-template ngbTabContent class="nav-item">
+          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="profile" class="nav-item">
+        <ng-template ngbTabContent>
+          <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Messages" class="nav-item">
+        <ng-template ngbTabContent>
+          <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>
