@@ -11,12 +11,16 @@ import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AddPropertyComponent, SinglePropertyViewComponent],
-  imports: [
-    CommonModule,
-    PropertyRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AutocompleteLibModule, UIModule, NgbTabsetModule
-  ]
-})
+  import { EditPropertyComponent } from './edit-property/edit-property.component';
+
+@NgModule({
+    declarations: [AddPropertyComponent, EditPropertyComponent],
+    imports: [
+      CommonModule,
+      PropertyRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      AutocompleteLibModule, UIModule, NgbTabsetModule
+    ]
+  })
 export class PropertyModule { }

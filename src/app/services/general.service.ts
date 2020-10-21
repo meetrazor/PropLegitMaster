@@ -132,4 +132,12 @@ export class GeneralService {
         }
       }));
   }
+
+  viewproperty(propertyID) {
+    return this.http.get<any>(`${apiUrl}property/view/${propertyID}`, httpOptions);
+  }
+  editproperty(propertyID, data) {
+    return this.http.put<any>(`${apiUrl}/property/update/${propertyID}`, data, httpOptions);
+  }
+
 }
