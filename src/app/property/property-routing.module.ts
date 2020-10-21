@@ -6,7 +6,7 @@ import { EditPropertyComponent } from './edit-property/edit-property.component';
 const routes: Routes = [
   { path: '', redirectTo: '/create', pathMatch: 'full' },
   { path: 'create', component: AddPropertyComponent },
-  { path: 'view/:id', component: SinglePropertyViewComponent }
+  { path: 'view/:id', component: SinglePropertyViewComponent },
   { path: 'edit/:id', component: EditPropertyComponent }
 ];
 

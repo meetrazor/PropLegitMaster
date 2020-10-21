@@ -23,7 +23,7 @@ export class EditPropertyComponent implements OnInit {
   isDataLoaded = false;
 
   constructor(private Fb: FormBuilder, private service: GeneralService, private route: ActivatedRoute, private router: Router
-    ) {}
+  ) { }
 
   ngOnInit() {
     this.fetchproperty(this.route.snapshot.paramMap.get('id'));
@@ -91,40 +91,40 @@ export class EditPropertyComponent implements OnInit {
   }
 
   initOwner(i?) {
-    if ( i && i !== undefined) {
-    return this.Fb.group({
-      OwnerName: new FormControl(i.OwnerName, Validators.required),
-      SinceFrom: new FormControl(moment(i.SinceFrom).format('YYYY-MM-DD'), Validators.required)
-    });
-  } else {
-    return this.Fb.group({
-      OwnerName: new FormControl('', Validators.required),
-      SinceFrom: new FormControl('', Validators.required)
-    });
-  }
+    if (i && i !== undefined) {
+      return this.Fb.group({
+        OwnerName: new FormControl(i.OwnerName, Validators.required),
+        SinceFrom: new FormControl(moment(i.SinceFrom).format('YYYY-MM-DD'), Validators.required)
+      });
+    } else {
+      return this.Fb.group({
+        OwnerName: new FormControl('', Validators.required),
+        SinceFrom: new FormControl('', Validators.required)
+      });
+    }
   }
   initIncharge(i?) {
-    if ( i && i !== undefined) {
-    return this.Fb.group({
-      InChargeName: new FormControl(i.InChargeName, Validators.required),
-      Designation: new FormControl(i.Designation, Validators.required),
-      InChargeType: new FormControl(i.InChargeType, Validators.required),
-      MobileNo: new FormControl(i.MobileNo, Validators.required),
-      Email: new FormControl(i.Email, Validators.required),
-      Address: new FormControl(i.Address, Validators.required),
-      InChargeFromDate: new FormControl(moment(i.InChargeFromDate).format('YYYY-MM-DD'), Validators.required),
-    });
-  } else {
-    return this.Fb.group({
-      InChargeName: new FormControl('', Validators.required),
-      Designation: new FormControl('', Validators.required),
-      InChargeType: new FormControl('', Validators.required),
-      MobileNo: new FormControl('', Validators.required),
-      Email: new FormControl('', Validators.required),
-      Address: new FormControl('', Validators.required),
-      InChargeFromDate: new FormControl('', Validators.required),
-    });
-  }
+    if (i && i !== undefined) {
+      return this.Fb.group({
+        InChargeName: new FormControl(i.InChargeName, Validators.required),
+        Designation: new FormControl(i.Designation, Validators.required),
+        InChargeType: new FormControl(i.InChargeType, Validators.required),
+        MobileNo: new FormControl(i.MobileNo, Validators.required),
+        Email: new FormControl(i.Email, Validators.required),
+        Address: new FormControl(i.Address, Validators.required),
+        InChargeFromDate: new FormControl(moment(i.InChargeFromDate).format('YYYY-MM-DD'), Validators.required),
+      });
+    } else {
+      return this.Fb.group({
+        InChargeName: new FormControl('', Validators.required),
+        Designation: new FormControl('', Validators.required),
+        InChargeType: new FormControl('', Validators.required),
+        MobileNo: new FormControl('', Validators.required),
+        Email: new FormControl('', Validators.required),
+        Address: new FormControl('', Validators.required),
+        InChargeFromDate: new FormControl('', Validators.required),
+      });
+    }
   }
   addOwner() {
     const control = this.myForm.controls.OwnerShip as FormArray;
@@ -167,64 +167,64 @@ export class EditPropertyComponent implements OnInit {
   onChangeSearch(search: string) {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
-    if (search.length >= 3) {
+    if (search != null && search.length >= 3) {
       this.fetcharea(search);
     }
   }
 
   fetchproperty(propertyID) {
     this.service.viewproperty(propertyID)
-    .pipe(first())
-    .subscribe(
-      data => {
-        if (data.error) {
-          console.log(data.error);
-          return;
-        } else {
-          this.myForm.controls.AgeOfProperty.setValue(data.data.AgeOfProperty);
-          this.myForm.controls.PropertyTypeID.setValue(data.data.PropertyTypeID);
-          this.myForm.controls.PropertyName.setValue(data.data.PropertyName);
-          this.myForm.controls.CitySurveyNo.setValue(data.data.CitySurveyNo);
-          this.myForm.controls.CitySurveyOffice.setValue(data.data.CitySurveyOffice);
-          this.myForm.controls.CityWardNo.setValue(data.data.CityWardNo);
-          this.myForm.controls.CityWardName.setValue(data.data.CityWardName);
-          this.myForm.controls.SheetNumber.setValue(data.data.SheetNumber);
-          this.myForm.controls.SurveyNo.setValue(data.data.SurveyNo);
-          this.myForm.controls.TPNo.setValue(data.data.TPNo);
-          this.myForm.controls.FPNo.setValue(data.data.FPNo);
-          this.myForm.controls.BuildingNo.setValue(data.data.BuildingNo);
-          this.myForm.controls.BuildingName.setValue(data.data.BuildingName);
-          this.myForm.controls.RecordDate.setValue(moment(data.data.RecordDate).format('YYYY-MM-DD'));
-          this.myForm.controls.milkatno_propId.setValue(data.data.milkatno_propId);
-          this.myForm.controls.RevenewOfficeType.setValue(data.data.RevenewOfficeType);
-          this.myForm.controls.PostalAddress.setValue(data.data.PostalAddress);
-          this.myForm.controls.Description.setValue(data.data.Description);
-          this.myForm.controls.LandSize.setValue(data.data.LandSize);
-          this.myForm.controls.StatusOfElectricity.setValue(data.data.StatusOfElectricity);
-          this.myForm.controls.WaterAvailability.setValue(data.data.WaterAvailability);
-          this.myForm.controls.NoOfBHK.setValue(data.data.NoOfBHK);
-          this.myForm.controls.FurnishType.setValue(data.data.FurnishType);
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            console.log(data.error);
+            return;
+          } else {
+            this.myForm.controls.AgeOfProperty.setValue(data.data.AgeOfProperty);
+            this.myForm.controls.PropertyTypeID.setValue(data.data.PropertyTypeID);
+            this.myForm.controls.PropertyName.setValue(data.data.PropertyName);
+            this.myForm.controls.CitySurveyNo.setValue(data.data.CitySurveyNo);
+            this.myForm.controls.CitySurveyOffice.setValue(data.data.CitySurveyOffice);
+            this.myForm.controls.CityWardNo.setValue(data.data.CityWardNo);
+            this.myForm.controls.CityWardName.setValue(data.data.CityWardName);
+            this.myForm.controls.SheetNumber.setValue(data.data.SheetNumber);
+            this.myForm.controls.SurveyNo.setValue(data.data.SurveyNo);
+            this.myForm.controls.TPNo.setValue(data.data.TPNo);
+            this.myForm.controls.FPNo.setValue(data.data.FPNo);
+            this.myForm.controls.BuildingNo.setValue(data.data.BuildingNo);
+            this.myForm.controls.BuildingName.setValue(data.data.BuildingName);
+            this.myForm.controls.RecordDate.setValue(moment(data.data.RecordDate).format('YYYY-MM-DD'));
+            this.myForm.controls.milkatno_propId.setValue(data.data.milkatno_propId);
+            this.myForm.controls.RevenewOfficeType.setValue(data.data.RevenewOfficeType);
+            this.myForm.controls.PostalAddress.setValue(data.data.PostalAddress);
+            this.myForm.controls.Description.setValue(data.data.Description);
+            this.myForm.controls.LandSize.setValue(data.data.LandSize);
+            this.myForm.controls.StatusOfElectricity.setValue(data.data.StatusOfElectricity);
+            this.myForm.controls.WaterAvailability.setValue(data.data.WaterAvailability);
+            this.myForm.controls.NoOfBHK.setValue(data.data.NoOfBHK);
+            this.myForm.controls.FurnishType.setValue(data.data.FurnishType);
 
-          this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
-          this.myForm.controls.VillageID.setValue(data.data.VillageID);
-          this.myForm.controls.DistrictID.setValue(data.data.DistrictID);
-          this.myForm.controls.StateID.setValue(data.data.StateID);
-          this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
-          this.myForm.controls.UserID.setValue(data.data.UserID);
-          this.initialValue = data.data.Area;
-          this.isDataLoaded = true;
-          this.onChangeSearch(data.data.Area);
-          for ( const i of data.data.InCharge) {
-            const control = this.myForm.controls.InCharge as FormArray;
-            control.push(this.initIncharge(i));
-          }
-          for ( const i of data.data.Ownership) {
-            const control = this.myForm.controls.OwnerShip as FormArray;
-            control.push(this.initOwner(i));
+            this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
+            this.myForm.controls.VillageID.setValue(data.data.VillageID);
+            this.myForm.controls.DistrictID.setValue(data.data.DistrictID);
+            this.myForm.controls.StateID.setValue(data.data.StateID);
+            this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
+            this.myForm.controls.UserID.setValue(data.data.UserID);
+            this.initialValue = data.data.Area;
+            this.isDataLoaded = true;
+            this.onChangeSearch(data.data.Area);
+            for (const i of data.data.InCharge) {
+              const control = this.myForm.controls.InCharge as FormArray;
+              control.push(this.initIncharge(i));
+            }
+            for (const i of data.data.Ownership) {
+              const control = this.myForm.controls.OwnerShip as FormArray;
+              control.push(this.initOwner(i));
+            }
           }
         }
-      }
-    );
+      );
   }
   onFocused(e) {
   }
