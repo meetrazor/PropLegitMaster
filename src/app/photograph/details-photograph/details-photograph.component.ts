@@ -9,15 +9,17 @@ import { GeneralService } from 'src/app/services/general.service';
 export class DetailsPhotographComponent implements OnInit {
   photographList: any = [];
   @Input() propertyId: number;
-
+  isLoading: boolean;
   constructor(private generalService: GeneralService) {
 
   }
 
   ngOnInit() {
+    this.isLoading = true;
     // 1 is Property ID
     this.generalService.listphotograph(this.propertyId)
       .subscribe((data) => {
+        this.isLoading = false;
         this.photographList = data.filter(e => e.FileType === 'Photo');
       });
   }

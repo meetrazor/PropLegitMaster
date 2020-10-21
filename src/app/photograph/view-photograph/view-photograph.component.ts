@@ -8,9 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ViewPhotographComponent implements OnInit {
   @Input() propertyId: number;
   propertyID: number;
+  isLoading: boolean;
   constructor() { }
 
   ngOnInit() {
+    this.isLoading = false;
     this.propertyID = this.propertyId;
   }
 

@@ -11,7 +11,7 @@ export class AddPhotographComponent implements OnInit {
   photographForm: FormGroup;
   file: any;
   @Input() propertyId: number;
-
+  isLoading: boolean;
 
 
   constructor(private generalService: GeneralService) {
@@ -25,6 +25,7 @@ export class AddPhotographComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = false;
   }
 
   private prepareSave(): any {
@@ -42,10 +43,13 @@ export class AddPhotographComponent implements OnInit {
   onSubmit() {
     if (this.photographForm.valid) {
       // 1 is Property ID
+      this.isLoading = true;
       this.generalService.Addphotograph(this.propertyId, this.prepareSave())
         .subscribe(data => {
           console.log(data);
+          this.isLoading = false;
           this.photographForm.reset();
+          location.reload();
         });
     }
   }
