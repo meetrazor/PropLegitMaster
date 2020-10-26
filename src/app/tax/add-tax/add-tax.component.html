@@ -1,0 +1,143 @@
+<form [formGroup]="taxForm" (ngSubmit)="onSubmit()">
+ 
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">Property Id</h4>
+      <input
+        class="form-control"
+        placeholder="Enter PropertyID"
+        formControlName="PropertyId"
+        type="number"
+      />
+    </div>
+  </div>
+ 
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">Revenue office</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Revenue office"
+        formControlName="RevenueOffice"
+      />
+    </div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">Amount Due</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Amount Due"
+        formControlName="AmountDue"
+        type="number"
+      />
+    </div>
+  </div>
+ 
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">NextDueDate</h4>
+      <input
+        class="form-control"
+        placeholder="Enter NextDueDate"
+        formControlName="NextDueDate"
+        type="date"
+      />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">LastTaxAmount</h4>
+      <input
+        class="form-control"
+        placeholder="Enter LastTaxAmount"
+        formControlName="LastTaxAmount"
+        type="number"
+      />
+    </div>
+  </div>
+ 
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">LastTaxPaidDate</h4>
+      <input
+        class="form-control"
+        placeholder="Enter LastTaxPaidDate"
+        formControlName="LastTaxPaidDate"
+        type="date"
+      />
+    </div>
+  </div>
+ 
+  <div class="row">
+    <div class="col-lg-6 mb-2">
+      <h4 class="header-title">File Upload</h4>
+      <p class="text-muted font-13 m-b-30"></p>
+      <!-- file upload -->
+      <file-upload
+        class="dropzone"
+        multiple="false"
+        isAnimationDisabled="true"
+        listVisible="true"
+        zoomText="zoomOut"
+        accept="audio/*,video/*,image/*"
+        type="file"
+        formControlName="uploadfile"
+      ></file-upload>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">File Name</h4>
+      <input
+        class="form-control"
+        placeholder="Enter File Name"
+        formControlName="FileName"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">File Type</h4>
+
+      <select class="custom-select" formControlName="FileType">
+        <option selected>Select File Type</option>
+        <option value="Photo">Photo</option>
+        <option value="Video">Video</option>
+        <option value="Audio">Audio</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <h4 class="header-title">File Description</h4>
+
+      <textarea
+        class="form-control"
+        rows="3"
+        placeholder="Enter File Description"
+        formControlName="Description"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <button
+        class="btn btn-primary waves-effect waves-light btn-block"
+        type="submit"
+        [disabled]="taxForm.invalid"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+<div class="card-disabled" *ngIf="isLoading">
+  <div class="card-portlets-loader"></div>
+</div>

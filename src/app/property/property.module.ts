@@ -11,8 +11,7 @@ import { SinglePropertyViewComponent } from './single-property-view/single-prope
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { ViewPropertyComponent } from './view-property/view-property.component';
-
-
+import {TaxModule} from './../tax/tax.module';
 
 @NgModule({
   declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent],
@@ -21,7 +20,7 @@ import { ViewPropertyComponent } from './view-property/view-property.component';
     PropertyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule
+    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule
   ]
 })
 export class PropertyModule { }
