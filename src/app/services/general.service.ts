@@ -119,6 +119,9 @@ export class GeneralService {
     return this.http.get(`${apiUrl}area/list/` + search, httpOptions);
 
   }
+  areabyid(id): any {
+    return this.http.get(`${apiUrl}area/view/${id}`);
+  }
   Addphotograph(PropertyID, data): any {
     return this.http.post(`${apiUrl}property/${PropertyID}/document/add`, data);
   }
@@ -143,5 +146,19 @@ export class GeneralService {
   addtax(PropertyID, data): any {
     return this.http.post(`${apiUrl}/property/${PropertyID}/tax/add`, data, httpOptions);
   }
-
+  listLawyers(): any {
+    return this.http.get<any>(`${apiUrl}/lawyer/list`, httpOptions);
+  }
+  deleteLawyer(LawyerId): any {
+    return this.http.delete<any>(`${apiUrl}/lawyer/delete/${LawyerId}`);
+  }
+  addLawyer(data): any {
+    return this.http.post<any>(`${apiUrl}/lawyer/add`, data, httpOptions);
+  }
+  viewLawyer(LawyerId) {
+   return this.http.get<any>(`${apiUrl}/lawyer/view/${LawyerId}`, httpOptions);
+  }
+  updateLawyer(data, LawyerId): any {
+    return this.http.put<any>(`${apiUrl}/lawyer/update/${LawyerId}`, data, httpOptions);
+  }
 }

@@ -8,9 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbDatepickerModule, NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyComponent } from './property/property.component';
 import { UIModule } from '../shared/ui/ui.module';
+import { LawyerComponent } from './lawyer/lawyer.component';
 
 @NgModule({
-  declarations: [DashboardComponent, PropertyComponent],
+  declarations: [DashboardComponent, PropertyComponent, LawyerComponent],
   imports: [
     CommonModule,
     TreasurerRoutingModule,
