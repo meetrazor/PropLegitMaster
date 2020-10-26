@@ -224,14 +224,13 @@ export class EditPropertyComponent implements OnInit {
             this.myForm.controls.WaterAvailability.setValue(data.data.WaterAvailability);
             this.myForm.controls.NoOfBHK.setValue(data.data.NoOfBHK);
             this.myForm.controls.FurnishType.setValue(data.data.FurnishType);
-
             this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
             this.myForm.controls.VillageID.setValue(data.data.VillageID);
             this.myForm.controls.DistrictID.setValue(data.data.DistrictID);
             this.myForm.controls.StateID.setValue(data.data.StateID);
             this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
             this.myForm.controls.UserID.setValue(data.data.UserID);
-            this.initialValue = data.data.Area;
+            this.initialValue = `${data.data.DistrictName}, ${data.data.TalukaName}, ${data.data.VillageName}`;
             this.isDataLoaded = true;
             this.onChangeSearch(data.data.Area);
             for (const i of data.data.InCharge) {
