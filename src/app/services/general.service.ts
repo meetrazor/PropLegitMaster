@@ -13,7 +13,7 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
-
+// const baseurl = `http://localhost:3000/`;
 const baseurl = `http://devapi.proplegit.com/`;
 // const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
@@ -101,7 +101,7 @@ export class GeneralService {
     return this.http.get<any>(stateInfo, httpOptions);
   }
   districts(id): any {
-    return this.http.get(`${apiUrl}state/list/${id}`, httpOptions);
+    return this.http.get(`${apiUrl}states/list/${id}`, httpOptions);
   }
   talukas(id): any {
     return this.http.get(`${apiUrl}district/list/${id}`, httpOptions);
@@ -141,24 +141,40 @@ export class GeneralService {
     return this.http.get<any>(`${apiUrl}property/view/${propertyID}`, httpOptions);
   }
   editproperty(propertyID, data) {
-    return this.http.put<any>(`${apiUrl}/property/update/${propertyID}`, data, httpOptions);
+    return this.http.put<any>(`${apiUrl}property/update/${propertyID}`, data, httpOptions);
   }
   addtax(PropertyID, data): any {
     return this.http.post(`${apiUrl}/property/${PropertyID}/tax/add`, data, httpOptions);
   }
   listLawyers(): any {
-    return this.http.get<any>(`${apiUrl}/lawyer/list`, httpOptions);
+    return this.http.get<any>(`${apiUrl}lawyer/list`, httpOptions);
   }
   deleteLawyer(LawyerId): any {
-    return this.http.delete<any>(`${apiUrl}/lawyer/delete/${LawyerId}`);
+    return this.http.delete<any>(`${apiUrl}lawyer/delete/${LawyerId}`);
   }
   addLawyer(data): any {
-    return this.http.post<any>(`${apiUrl}/lawyer/add`, data, httpOptions);
+    return this.http.post<any>(`${apiUrl}lawyer/add`, data, httpOptions);
   }
   viewLawyer(LawyerId) {
-   return this.http.get<any>(`${apiUrl}/lawyer/view/${LawyerId}`, httpOptions);
+   return this.http.get<any>(`${apiUrl}lawyer/view/${LawyerId}`, httpOptions);
   }
   updateLawyer(data, LawyerId): any {
-    return this.http.put<any>(`${apiUrl}/lawyer/update/${LawyerId}`, data, httpOptions);
+    return this.http.put<any>(`${apiUrl}lawyer/update/${LawyerId}`, data, httpOptions);
+  }
+
+  listTenant(): any {
+    return this.http.get<any>(`${apiUrl}property/rent/list`, httpOptions);
+  }
+  deleteTenant(PropertyRentId): any {
+    return this.http.delete<any>(`${apiUrl}property/rent/delete/${PropertyRentId}`);
+  }
+  addTenant(data): any {
+    return this.http.post<any>(`${apiUrl}property/rent/add`, data, httpOptions);
+  }
+  viewTenant(PropertyRentId) {
+   return this.http.get<any>(`${apiUrl}property/rent/view/${PropertyRentId}`, httpOptions);
+  }
+  updateTenant(data, PropertyRentId): any {
+    return this.http.put<any>(`${apiUrl}property/rent/update/${PropertyRentId}`, data, httpOptions);
   }
 }

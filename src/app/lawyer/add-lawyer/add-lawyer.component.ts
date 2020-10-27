@@ -21,6 +21,13 @@ export class AddLawyerComponent implements OnInit {
   isEdit = false;
   isAreaLoaded = false;
   initialValue = '';
+
+  StateArray: string[];
+  Array2: string[];
+  Array3: string[];
+  Array4: string[];
+  Array5: string[];
+
    urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private service: GeneralService) {
     if (this.route.snapshot.routeConfig.path === 'edit/:id') {
@@ -39,67 +46,100 @@ export class AddLawyerComponent implements OnInit {
           Fax: new FormControl(null, Validators.required),
           EmailId: new FormControl(null, [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]),
           Website: new FormControl(null, [Validators.required, Validators.pattern(this.urlRegex)]),
-          TalukaId: '',
-          VillageId: '',
-          DistrictId: '',
+          TalukaId: new FormControl('', Validators.required),
+          VillageId: new FormControl('', Validators.required),
+          DistrictId: new FormControl('', Validators.required),
+          StateId: new FormControl('', Validators.required),
           City: new FormControl('', [Validators.required, Validators.maxLength(25)]),
           RecordDate: new FormControl(new Date(), Validators.required),
         });
+          this.fetchstate();
           if (this.isEdit === true) {
           this.setInitialValue();
         }
   }
-  setInitialValue() {
-    this.service.viewLawyer(this.route.snapshot.params.id).subscribe(Res => {
-
-      this.service.areabyid( Res.data[0].VillageId).subscribe(Res1 => {
-        this.initialValue = Res1.data[0];
-        this.isAreaLoaded = true;
-    });
-
-      this.lawyerForm.get('LawyerName').setValue(Res.data[0].LawyerName);
-      this.lawyerForm.get('Firm').setValue(Res.data[0].Firm);
-      this.lawyerForm.get('MobileNo').setValue(Res.data[0].MobileNo);
-      this.lawyerForm.get('LandlineNo').setValue(Res.data[0].LandlineNo);
-      this.lawyerForm.get('PinCode').setValue(Res.data[0].PinCode);
-      this.lawyerForm.get('Website').setValue(Res.data[0].Website);
-      this.lawyerForm.get('Fax').setValue(Res.data[0].Fax);
-      this.lawyerForm.get('Address').setValue(Res.data[0].Address);
-      this.lawyerForm.get('City').setValue(Res.data[0].City);
-      this.lawyerForm.get('EmailId').setValue(Res.data[0].EmailId);
-      this.lawyerForm.get('VillageId').setValue(Res.data[0].VillageId);
-      this.lawyerForm.get('DistrictId').setValue(Res.data[0].DistrictId);
-      this.lawyerForm.get('TalukaId').setValue(Res.data[0].TalukaId);
-    });
+  fetchstate() {
+    this.service.states()
+    .pipe(first())
+    .subscribe(
+      data => {
+        if (data.error) {
+          console.log(data.error);
+          return;
+        } else {
+          this.StateArray = data.data;
+        }
+      });
   }
-  selectEvent(item) {
-    this.lawyerForm.controls.VillageId.setValue(item.VillageId);
-    this.lawyerForm.controls.DistrictId.setValue(item.DistrictId);
-    this.lawyerForm.controls.TalukaId.setValue(item.TalukaId);
+
+  fetchdist() {
+  //  console.log(this.lawyerForm.controls.StateID.value);
+    this.service.districts(this.lawyerForm.controls.StateId.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          if (data.error) {
+            console.log(data.error);
+            return;
+          } else {
+            this.Array2 = data.data;
+          }
+        });
   }
-  fetcharea(search) {
-    this.service.area(search)
+
+  fetchtaluka() {
+    this.service.talukas(this.lawyerForm.controls.DistrictId.value)
       .pipe(first())
       .subscribe(
         data => {
           if (data.error) {
+            console.log(data.error);
             return;
           } else {
-            this.areas = data.data;
+            this.Array3 = data.data;
           }
         });
   }
-  onChangeSearch(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-    if (search.length >= 3) {
-      this.fetcharea(search);
-    } else if (search.length === 0) {
-      this.areas = null;
-    }
+  fetchtvillage() {
+    this.service.villages(this.lawyerForm.controls.TalukaId.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            console.log(data.error);
+            return;
+          } else {
+            this.Array4 = data.data;
+          }
+        });
   }
-      onFocused(e) {
+
+  setInitialValue() {
+    this.service.viewLawyer(this.route.snapshot.params.id).subscribe(Res => {
+    console.log(Res.data[0].VillageId);
+    console.log(Res.data[0].DistrictId);
+    console.log(Res.data[0].VillageId);
+    this.lawyerForm.get('LawyerName').setValue(Res.data[0].LawyerName);
+    this.lawyerForm.get('Firm').setValue(Res.data[0].Firm);
+    this.lawyerForm.get('MobileNo').setValue(Res.data[0].MobileNo);
+    this.lawyerForm.get('LandlineNo').setValue(Res.data[0].LandlineNo);
+    this.lawyerForm.get('PinCode').setValue(Res.data[0].PinCode);
+    this.lawyerForm.get('Website').setValue(Res.data[0].Website);
+    this.lawyerForm.get('Fax').setValue(Res.data[0].Fax);
+    this.lawyerForm.get('Address').setValue(Res.data[0].Address);
+    this.lawyerForm.get('City').setValue(Res.data[0].City);
+    this.lawyerForm.get('EmailId').setValue(Res.data[0].EmailId);
+    this.lawyerForm.get('StateId').setValue(7);
+    this.fetchdist();
+    this.lawyerForm.get('DistrictId').setValue(Res.data[0].DistrictId);
+    this.fetchtaluka();
+    this.lawyerForm.get('TalukaId').setValue(Res.data[0].TalukaId);
+    this.fetchtvillage();
+    this.lawyerForm.get('VillageId').setValue(Res.data[0].VillageId);
+    });
   }
+
   isValid(event) {
     if ((event.keyCode >= 48 && event.keyCode <= 57) && event.target.value.length < 10) {
     } else {
@@ -109,8 +149,7 @@ export class AddLawyerComponent implements OnInit {
   GoBack() {
     this.router.navigate(['lawyer']);
   }
-
-      onSubmit() {
+  onSubmit() {
         this.submitted = true;
         if (this.lawyerForm.valid && this.isEdit === false) {
             this.service.addLawyer(this.lawyerForm.value)

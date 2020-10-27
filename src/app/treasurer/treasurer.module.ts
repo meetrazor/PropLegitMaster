@@ -9,9 +9,10 @@ import { NgbDatepickerModule, NgbPaginationModule, NgbTypeaheadModule } from '@n
 import { PropertyComponent } from './property/property.component';
 import { UIModule } from '../shared/ui/ui.module';
 import { LawyerComponent } from './lawyer/lawyer.component';
+import { RentComponent } from './rent/rent.component';
 
 @NgModule({
-  declarations: [DashboardComponent, PropertyComponent, LawyerComponent],
+  declarations: [DashboardComponent, PropertyComponent, LawyerComponent, RentComponent],
   imports: [
     CommonModule,
     TreasurerRoutingModule,

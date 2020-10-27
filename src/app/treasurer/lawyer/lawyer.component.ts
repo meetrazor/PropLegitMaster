@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import {GeneralService} from '../../services/general.service';
 import Swal from 'sweetalert2';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-lawyer',

@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'lawyer', component: LayoutComponent, loadChildren: () => import('./lawyer/lawyer.module')
       .then(m => m.LawyerModule), canActivate: [AuthGuard]
   },
+  {
+    path: 'rent', component: LayoutComponent, loadChildren: () => import('./rent/rent.module')
+      .then(m => m.RentModule), canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({
