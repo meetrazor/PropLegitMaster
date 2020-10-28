@@ -23,7 +23,12 @@
       </ngb-tab>
       <ngb-tab title="Tax" class="nav-item">
         <ng-template ngbTabContent class="nav-item">
-          <app-add-tax> </app-add-tax>
+          <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+              <app-add-tax propertyID="{{ propertyID }}"> </app-add-tax>
+            </div>
+          </div>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Rent" class="nav-item">

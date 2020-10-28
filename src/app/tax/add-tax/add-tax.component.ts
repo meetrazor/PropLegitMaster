@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -11,20 +11,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-tax.component.scss']
 })
 export class AddTaxComponent implements OnInit {
-
+  @Input() propertyID;
   taxForm: FormGroup;
   submitted = false;
   error = '';
-  loading = false;
+  isLoading = false;
   userId: number;
   constructor(private formBuilder: FormBuilder, private router: Router, private service: GeneralService) { }
   ngOnInit() {
     this.taxForm = this.formBuilder.group({
-      PropertyId:  new FormControl('', Validators.required),
-      RevenueOffice:  new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      AmountDue:   new FormControl('', Validators.required),
-      NextDueDate:  new FormControl('', Validators.required),
-      LastTaxAmount:  new FormControl('', Validators.required),
+      RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      AmountDue: new FormControl('', Validators.required),
+      NextDueDate: new FormControl('', Validators.required),
+      LastTaxAmount: new FormControl('', Validators.required),
       LastTaxPaidDate: new FormControl('', Validators.required),
       FileName: new FormControl(null, Validators.required),
       FileType: new FormControl(null, Validators.required),
@@ -36,10 +35,12 @@ export class AddTaxComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.service.addtax(this.taxForm.get('PropertyId').value, this.taxForm.value)
+    this.isLoading = true;
+    this.service.addtax(this.propertyID, this.taxForm.value)
       .pipe(first())
       .subscribe(
         data => {
+          this.isLoading = false;
           if (data.error) {
             Swal.fire({
               title: data.error_code,
@@ -59,5 +60,6 @@ export class AddTaxComponent implements OnInit {
             });
           }
         });
-    }
+    this.isLoading = false;
+  }
 }
