@@ -156,23 +156,23 @@ export class GeneralService {
     return this.http.post<any>(`${apiUrl}lawyer/add`, data, httpOptions);
   }
   viewLawyer(LawyerId) {
-   return this.http.get<any>(`${apiUrl}lawyer/view/${LawyerId}`, httpOptions);
+    return this.http.get<any>(`${apiUrl}lawyer/view/${LawyerId}`, httpOptions);
   }
   updateLawyer(data, LawyerId): any {
     return this.http.put<any>(`${apiUrl}lawyer/update/${LawyerId}`, data, httpOptions);
   }
 
-  listTenant(): any {
-    return this.http.get<any>(`${apiUrl}property/rent/list`, httpOptions);
+  listTenant(id): any {
+    return this.http.get<any>(`${apiUrl}property/${id}/rent/list`, httpOptions);
   }
   deleteTenant(PropertyRentId): any {
     return this.http.delete<any>(`${apiUrl}property/rent/delete/${PropertyRentId}`);
   }
-  addTenant(data): any {
-    return this.http.post<any>(`${apiUrl}property/rent/add`, data, httpOptions);
+  addTenant(data, id): any {
+    return this.http.post<any>(`${apiUrl}property/${id}/rent/add`, data, httpOptions);
   }
   viewTenant(PropertyRentId) {
-   return this.http.get<any>(`${apiUrl}property/rent/view/${PropertyRentId}`, httpOptions);
+    return this.http.get<any>(`${apiUrl}property/rent/view/${PropertyRentId}`, httpOptions);
   }
   updateTenant(data, PropertyRentId): any {
     return this.http.put<any>(`${apiUrl}property/rent/update/${PropertyRentId}`, data, httpOptions);

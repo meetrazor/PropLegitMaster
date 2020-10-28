@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import {GeneralService} from '../../services/general.service';
+import { GeneralService } from '../../services/general.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./rent.component.scss']
 })
 export class RentComponent implements OnInit {
-
+  @Input() propertyID;
   datasource: null;
   isLoaded = false;
 
@@ -18,22 +18,22 @@ export class RentComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.service.listTenant()
-  .pipe(first())
-  .subscribe(
-    data => {
-      if (data.error) {
-        Swal.fire({
-          title: data.error_code,
-          text: data.message,
-          type: 'error'
+    this.service.listTenant(this.propertyID)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+            return;
+          } else {
+            this.datasource = data.data;
+            this.isLoaded = true;
+          }
         });
-        return;
-      } else {
-          this.datasource = data.data;
-          this.isLoaded = true;
-      }
-    });
   }
 
   onDeleteTenant(id) {
@@ -59,7 +59,7 @@ export class RentComponent implements OnInit {
               timer: 2000
             }).then(() => {
               location.reload();
-              //this.router.navigate(['rent']);
+              // this.router.navigate(['rent']);
             });
           } else {
             Swal.fire({
@@ -87,5 +87,7 @@ export class RentComponent implements OnInit {
       }
     });
   }
-
+  onSort(data) { }
+  onDeleteRent(id) { }
+  onViewRent(id) { }
 }

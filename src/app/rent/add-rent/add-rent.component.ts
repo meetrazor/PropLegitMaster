@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import * as moment from 'moment';
   styleUrls: ['./add-rent.component.scss']
 })
 export class AddRentComponent implements OnInit {
-
+  @Input() propertyId;
   tenantForm: FormGroup;
   submitted = false;
   error = '';
@@ -22,20 +22,20 @@ export class AddRentComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private service: GeneralService) {
     console.log(this.route.snapshot.routeConfig.path);
     if (this.route.snapshot.routeConfig.path === 'edit/:id') {
-    this.isEdit = true;
+      this.isEdit = true;
     }
-   }
+  }
 
   ngOnInit() {
     this.tenantForm = this.formBuilder.group({
-      TenantName:  new FormControl('', [Validators.required, Validators.maxLength(25)]),
-      TenantAddress:  new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      RentType:  new FormControl('Rent', Validators.required),
-      PropertyID:  new FormControl('', Validators.required),
-      TenantMobile :   new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
+      TenantName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
+      TenantAddress: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      RentType: new FormControl('Rent', Validators.required),
+      PropertyID: new FormControl(this.propertyId, Validators.required),
+      TenantMobile: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
       TenantEmail: new FormControl(null, [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]),
-      PropertySize:  new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      MonthlyRent:  new FormControl('', Validators.required),
+      PropertySize: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      MonthlyRent: new FormControl('', Validators.required),
       RentedSpace: new FormControl('Whole', Validators.required),
       RentedPart: new FormControl(null, Validators.required),
       AdvanceDeposite: new FormControl(null, Validators.required),
@@ -46,7 +46,7 @@ export class AddRentComponent implements OnInit {
     if (this.isEdit === true) {
       this.setInitialValue();
     }
-    this.service.getPropertyListByState(7).subscribe( data => {
+    this.service.getPropertyListByState(7).subscribe(data => {
       console.log(data.data);
       this.propertyData = data.data;
     });
@@ -82,29 +82,29 @@ export class AddRentComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.tenantForm.valid && this.isEdit === false) {
-        this.service.addTenant(this.tenantForm.value)
-          .subscribe(data => {
-            this.submitted = false;
-            this.tenantForm.reset();
-            if (data.status === 200) {
-              Swal.fire({
-                title: 'Added',
-                text: data.message,
-                type: 'success',
-                timer: 2000
-              }).then(() => {
-                this.router.navigate(['rent']);
-              });
-            } else {
-              Swal.fire({
-                title: data.error_code,
-                text: data.message,
-                type: 'error'
-              });
-            }
-          });
-    } else if ( this.tenantForm.valid && this.isEdit === true) {
-        this.service.updateTenant(this.tenantForm.value, this.route.snapshot.params.id)
+      this.service.addTenant(this.tenantForm.value, this.propertyId)
+        .subscribe(data => {
+          this.submitted = false;
+          this.tenantForm.reset();
+          if (data.status === 200) {
+            Swal.fire({
+              title: 'Added',
+              text: data.message,
+              type: 'success',
+              timer: 2000
+            }).then(() => {
+              this.router.navigate(['property']);
+            });
+          } else {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+          }
+        });
+    } else if (this.tenantForm.valid && this.isEdit === true) {
+      this.service.updateTenant(this.tenantForm.value, this.route.snapshot.params.id)
         .subscribe(data => {
           if (data.status === 200) {
             Swal.fire({
@@ -113,7 +113,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate(['rent']);
+              this.router.navigate(['property']);
             });
           } else {
             Swal.fire({
@@ -125,7 +125,7 @@ export class AddRentComponent implements OnInit {
         });
 
     }
-}
+  }
 
-get f() { return this.tenantForm.controls; }
+  get f() { return this.tenantForm.controls; }
 }

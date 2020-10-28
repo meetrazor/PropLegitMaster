@@ -1,3 +1,4 @@
+import { RentModule } from './../rent/rent.module';
 import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -17,7 +18,7 @@ import { RentComponent } from './rent/rent.component';
     CommonModule,
     TreasurerRoutingModule,
     NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule,
-    NgbTypeaheadModule
-  ]
+    NgbTypeaheadModule, RentModule
+  ], exports: [RentComponent, LawyerComponent]
 })
 export class TreasurerModule { }

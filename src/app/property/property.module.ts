@@ -1,3 +1,4 @@
+import { TreasurerModule } from './../treasurer/treasurer.module';
 import { PhotographModule } from './../photograph/photograph.module';
 
 import { NgModule } from '@angular/core';
@@ -11,7 +12,7 @@ import { SinglePropertyViewComponent } from './single-property-view/single-prope
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { ViewPropertyComponent } from './view-property/view-property.component';
-import {TaxModule} from './../tax/tax.module';
+import { TaxModule } from './../tax/tax.module';
 
 @NgModule({
   declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent],
@@ -20,7 +21,7 @@ import {TaxModule} from './../tax/tax.module';
     PropertyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule
+    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule
   ]
 })
 export class PropertyModule { }
