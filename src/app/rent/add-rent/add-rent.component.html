@@ -1,0 +1,412 @@
+<div class="content">
+  <!-- Start Content-->
+  <div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+      <div class="col-12">
+        <div class="page-title-box">
+          <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+              <!--<li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>-->
+              <!-- <li class="breadcrumb-item"><a href="ts-l-index.html"> Title Search</a></li> -->
+              <li class="breadcrumb-item"><a>Rahul Sharma SBI110</a></li>
+              <li class="breadcrumb-item active">Document Request</li>
+            </ol>
+          </div>
+
+          <h4 class="page-title">Rahul Sharma <small>Add Tenant</small> </h4>
+        </div>
+      </div>
+    </div>
+    <!-- end page title -->
+    <div class="row">
+      <div class="col-md-7 col-xl-7">
+        <div class="card">
+          <div class="card-body">
+            <div id="cardCollpase4" class="collapse pt-3 show">
+
+              <form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
+
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Property Id</h4>
+                    <select  formControlName="PropertyID"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.PropertyID.errors }"
+                    >
+                      <option  *ngFor="let item of propertyData;" [id]="item.PropertyID" 
+                      [value]='item.PropertyID'>{{item.PropertyID}}</option>
+                    </select>
+
+                    <div
+                    *ngIf="submitted && f.PropertyID.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.PropertyID.errors.required">
+                      Property Id is required
+                    </div>
+                  
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Tenant Name</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Tenant Name"
+                      formControlName="TenantName"
+                      type="text"
+                      [ngClass]="{ 'is-invalid': submitted && f.TenantName.errors }"
+                    />
+
+                    <div
+                    *ngIf="submitted && f.TenantName.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.TenantName.errors.required">
+                      First Name is required
+                    </div>
+                    <div *ngIf="f.TenantName.errors.maxlength">
+                      First Name cannot exceed 25 characters.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+              
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Property Size</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Property Size"
+                      formControlName="PropertySize"
+                      [ngClass]="{ 'is-invalid': submitted && f.PropertySize.errors }"
+                    />
+
+                    <div
+                    *ngIf="submitted && f.PropertySize.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.PropertySize.errors.required">
+                      Property Size is required
+                    </div>
+                    <div *ngIf="f.PropertySize.errors.maxlength">
+                      Property Size cannot exceed 50 characters.
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+           
+               
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Mobile No</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Mobile No"
+                      formControlName="TenantMobile"
+                      (keypress)="isValid($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.TenantMobile.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.TenantMobile.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.TenantMobile.errors.required">
+                      Mobile Number is required
+                    </div>
+                    <div   *ngIf="f.TenantMobile.errors.minlength || f.TenantMobile.errors.maxlength">
+                      Mobile Number must be 10 Digit Only
+                    </div>
+                  </div>
+                  </div>
+                </div>
+               
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <span class="header-title">Rent Type</span>
+                        <span> <input type="radio" formControlName="RentType" value="Rent" selected > Rent</span>
+                            <span><input type="radio" formControlName="RentType" value="Lease"> Lease</span>
+                  <div
+                  *ngIf="submitted && f.RentType.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.RentType.errors.required">
+                    RentType is required
+                  </div>
+                 
+                  
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Advance Deposite (Rs.)</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Advance Deposite"
+                      formControlName="AdvanceDeposite"
+                      (keypress)="isValid($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.AdvanceDeposite.errors
+                      }"
+                    />
+
+                    <div
+                    *ngIf="submitted && f.AdvanceDeposite.errors"
+                    class="invalid-feedback"
+                      >
+                    <div *ngIf="f.AdvanceDeposite.errors.required">
+                      AdvanceDeposite is required
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">EmailId</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter EmailId"
+                      formControlName="TenantEmail"
+                      type="email"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.TenantEmail.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.TenantEmail.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.TenantEmail.errors.required">
+                      Email is required
+                    </div>
+                    <div *ngIf="f.TenantEmail.errors.pattern">
+                      Email must be a valid email address
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Monthly Rent (Rs.)</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Monthly Rent"
+                      formControlName="MonthlyRent"
+                      (keypress)="isValid($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.MonthlyRent.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.MonthlyRent.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.MonthlyRent.errors.required">
+                      MonthlyRent is required
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Address</h4>
+                    <textarea
+                    class="form-control"
+                    placeholder="Enter Address"
+                    formControlName="TenantAddress"
+                    rows="3"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.TenantAddress.errors
+                    }"
+                  ></textarea>
+                  <div
+                  *ngIf="submitted && f.TenantAddress.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.TenantAddress.errors.required">
+                    Address is required
+                  </div>
+                  <div *ngIf="f.TenantAddress.errors.maxlength">
+                    Address cannot exceed 255 characters.
+                  </div>
+                </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                 <span class="header-title">Rented Space</span>
+                 <span><input type="radio" formControlName="RentedSpace" value="Whole"> Whole</span>
+                 <span><input type="radio" formControlName="RentedSpace" value="Part"> Part</span>
+                    <div
+                    *ngIf="submitted && f.RentedSpace.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.RentedSpace.errors.required">
+                      RentedSpace is required
+                    </div>
+                   
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Rented Part</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Rented Part"
+                      formControlName="RentedPart"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.RentedPart.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.RentedPart.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.RentedPart.errors.required">
+                      RentedPart is required
+                    </div>
+                   
+                  </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Contract Months</h4>
+                    <input
+                      class="form-control"
+                      placeholder="Enter Contract Months"
+                      formControlName="ContractMonths"
+                      (keypress)="isValid($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.ContractMonths.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.ContractMonths.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.ContractMonths.errors.required">
+                      ContractMonths is required
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Contract StartDate</h4>
+                    <input
+                      class="form-control"
+                      type="date"
+                      formControlName="ContractStartDate"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.ContractStartDate.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.ContractStartDate.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.ContractStartDate.errors.required">
+                      ContractStartDate is required
+                    </div>
+                   
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <h4 class="header-title">Contract EndDate</h4>
+                    <input
+                      class="form-control"
+                     type="date"
+                      formControlName="ContractEndDate"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.ContractEndDate.errors
+                      }"
+                    />
+                    <div
+                    *ngIf="submitted && f.ContractEndDate.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.ContractEndDate.errors.required">
+                      ContractEndDate is required
+                    </div>
+                   
+                  </div>
+                  </div>
+                </div>
+
+
+                <div class="row" *ngIf="!isEdit">
+                  <div class="col-md-3 mb-3">
+                    <button
+                      class="btn btn-primary waves-effect waves-light btn-block"
+                      type="submit"
+                    >
+                      Add Tenant
+                    </button>
+                  </div>
+                  <div class="col-sm-3 mb-3">
+                    <button
+                      class="btn btn-primary waves-effect waves-light btn-block"
+                      outline
+                      type="button"
+                      (click)="GoBack()"
+                    >
+                     Go Back
+                    </button>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="isEdit">
+                  <div class="col-md-3 mb-3">
+                    <button
+                   class="btn btn-primary waves-effect waves-light btn-block"
+                      type="submit"
+                    >
+                      Update Tenant
+                    </button>
+                  </div>
+
+                  <div class="col-sm-3 mb-3">
+                    <button
+                     class="btn btn-primary waves-effect waves-light btn-block"
+                      type="button"
+                      (click)="GoBack()"
+                    >
+                     Go Back
+                    </button>
+                  </div>
+                </div>
+               
+              </form>
+              {{tenantForm.value | json}}
+            </div>
+
+          </div> <!-- end collapse-->
+        </div> <!-- end card-body-->
+      </div> <!-- end card-->
+    </div>
+  </div>
+</div> <!-- container -->

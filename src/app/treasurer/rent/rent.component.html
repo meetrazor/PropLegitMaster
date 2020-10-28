@@ -1,0 +1,68 @@
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <div class="row">
+   <div class="col-12">
+     <div class="page-title-box">
+       <h4 class="page-title">AICC Tenants</h4>
+     </div>
+   </div>
+ </div>
+ <!-- end page title -->
+ 
+ <div class="row">
+  
+   <div class="col">
+         <table class="table table-hover table-striped">
+           <thead>
+           <tr class="table-active">
+            <th>Property RentID</th>
+            <th>Tenant Name</th>
+            <th> Address</th>
+            <th> Email </th>
+            <th> Mobile No</th>
+            <th>Monthly Rent </th>
+            <th>Detail</th>
+            <th>Edit</th>
+            <th>Delete</th>
+           </tr>
+          </thead>
+          <tbody>
+          
+           <tr *ngFor="let element of datasource">
+             <td>{{element.PropertyRentID}} </td>
+             <td class="mains"> {{element.TenantName  | titlecase }}</td>
+             <td> {{element.TenantAddress  | titlecase }}  </td>
+             <td> {{element.TenantEmail   }} </td>
+             <td> {{element.TenantMobile}} </td>
+             <td>{{element.MonthlyRent}} </td>
+          
+              <td><a href=#  [routerLink]="['/rent/view', element.PropertyRentID]">
+                <i class="mdi mdi-eye-check"></i></a>
+              </td>
+              <td>
+          <a href=# [routerLink]="['/rent/edit', element.PropertyRentID]">
+                <i class="mdi mdi-account-edit"></i>
+              </a>
+              </td>
+<td>
+              <a    href="javascript:void(0);" (click)="onDeleteTenant(element.PropertyRentID)">
+                <i class="mdi mdi-delete"></i></a>
+             </td>
+          
+            </tr>
+         
+          </tbody>
+         </table>
+       
+         <!-- Copyright 2020 Google LLC. All Rights Reserved.
+             Use of this source code is governed by an MIT-style license that
+             can be found in the LICENSE file at http://angular.io/license -->
+       </div>
+ 
+   <!-- end row -->
+ </div>
+
+ 
+ </div>
+ 
