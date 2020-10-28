@@ -1,0 +1,76 @@
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <div class="row">
+   <div class="col-12">
+     <div class="page-title-box">
+       <h4 class="page-title">AICC Lawyers</h4>
+     </div>
+   </div>
+ </div>
+ <!-- end page title -->
+ 
+ <div class="row" *ngIf="isLoaded">
+  
+   <div class="col">
+         <table class="table table-hover table-striped">
+           <thead>
+          <tr class="table-active">
+            <th>LegalCaseID</th>
+         
+            <th>CaseNumber</th>
+            <th>CaseType</th>
+            <th>CourtName </th>
+            <th>CaseDescription </th>
+            <th>Status</th>
+            <th>CaseStatus</th>
+            <th>Judge</th>
+            <th>FilingNumber</th>
+            <th>FilingDate</th>
+        
+            <th>CNRNumber</th>
+            <th>Detail</th>
+            <th>Edit</th>
+            <th>Delete</th>
+           </tr> 
+          </thead>
+          <tbody>
+
+           <tr *ngFor="let element of datasource">
+             <td>{{element.LegalCaseID}} </td>
+          
+             <td> {{element.CaseNumber  }}  </td>
+             <td> {{element.CaseType   }} </td>
+             <td> {{element.CourtName}} </td>
+             <td> {{element.CaseDescription  }}  </td>
+             <td> {{element.Status}} </td>
+             <td>{{element.CaseStatus}} </td>
+             <td> {{element.Judge   }} </td>
+             <td> {{element.FilingNumber}} </td>
+             <td>{{element.FilingDate | date:'dd/MM/yyyy'}} </td>
+          
+             <td>{{element.CNRNumber}} </td>
+              <td><a href=#  [routerLink]="['/legalcase/view', element.LegalCaseID]">
+                <i class="mdi mdi-eye-check"></i></a>
+              </td>
+              <td>
+  
+          <a href=# [routerLink]="['/legalcase/edit', element.LegalCaseID]">
+                <i class="mdi mdi-account-edit"></i>
+              </a>
+              </td>
+<td>
+              <a  href="javascript:void(0);" (click)="onDeleteLegalcase(element.LegalCaseID)">
+                <i class="mdi mdi-delete"></i></a>
+             </td>
+
+            </tr>
+
+          </tbody>
+         </table>
+
+        </div>
+ </div>
+
+</div>
+ 

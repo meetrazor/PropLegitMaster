@@ -10,9 +10,10 @@ import { PropertyComponent } from './property/property.component';
 import { UIModule } from '../shared/ui/ui.module';
 import { LawyerComponent } from './lawyer/lawyer.component';
 import { RentComponent } from './rent/rent.component';
+import { LegalCaseComponent } from './legal-case/legal-case.component';
 
 @NgModule({
-  declarations: [DashboardComponent, PropertyComponent, LawyerComponent, RentComponent],
+  declarations: [DashboardComponent, PropertyComponent, LawyerComponent, RentComponent, LegalCaseComponent],
   imports: [
     CommonModule,
     TreasurerRoutingModule,

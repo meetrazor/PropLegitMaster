@@ -1,0 +1,165 @@
+<ul *ngFor="let item of datasource;let j = index;" style="border:1px dashed grey" >
+  <li ngInit (trigger)="resetCounter()">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span> Registration: {{item.RegistrationNumber}},{{item.RegistrationDate | date:"MMM-dd-yyyy"}}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          <span>{{item.CourtName}} , {{item.CourtAddress | titlecase}} </span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="card-box">
+        <ngb-tabset justify="justified" type="pills" class="tabset1">
+          <ngb-tab title="Details & Acts" class="nav-item">
+            <ng-template ngbTabContent class="nav-item">
+
+              <table class="table table-striped" cellspacing="5">
+                <thead>
+                  <tr>
+                    <td colspan="2">
+                      <h1>Details</h1>
+                    </td>
+
+                  </tr>
+                </thead>
+
+                <tr>
+                  <td>LegalCaseId</td>
+                  <td>{{item.LegalCaseID}}</td>
+                </tr>
+
+
+                <tr>
+                  <td>Case Type</td>
+                  <td>{{item.CaseType}}</td>
+                </tr>
+
+                <tr>
+                  <td>Filing Number</td>
+                  <td>{{item.FilingNumber}}</td>
+                </tr>
+
+                <tr>
+                  <td>Filing Date</td>
+                  <td>{{item.FilingDate | date:"dd/MM/yyyy"}}</td>
+                </tr>
+
+                <tr>
+                  <td>Registration Number</td>
+                  <td>{{item.RegistrationNumber}}</td>
+                </tr>
+
+                <tr>
+                  <td>Registration Date</td>
+                  <td>{{item.RegistrationDate | date:"dd/MM/yyyy"}}</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    CNR Number
+                  </td>
+                  <td>
+                    {{item.CNRNumber}}
+                  </td>
+                </tr>
+
+              </table>
+            
+
+              <ng-container *ngFor="let act of actData[j]">
+                <table class="table table-striped" *ngIf="act!== undefined && act.LegalCaseID==item.LegalCaseID">
+                  <thead>
+                    <tr>
+                      <td colspan="2">
+                        <h1>Acts</h1>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td>UnderAct</td>
+                    <td>{{act.UnderAct}}</td>
+                  </tr>
+                  <tr>
+                    <td>UnderSection</td>
+                    <td>{{act.UnderSection}}</td>
+                  </tr>
+                </table>
+              </ng-container>
+             
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Status" class="nav-item" id="tab2">
+            <ng-template ngbTabContent>
+              <ng-container *ngFor="let i of hearingData[j]">
+            <table class="table table-striped" *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID">
+              
+                  <tr class="highlight" >
+                    <td> NextHearingDate </td>
+                    <td> {{i.NextHearingDate | date:"dd-MM-yyyy"}}</td>
+                  </tr>
+
+                  <tr>
+                    <td> DecisionDate </td>
+                    <td> {{i.DecisionDate | date:"dd-MM-yyyy"}}</td>
+                  </tr>
+
+                  <tr>
+                    <td> IsLastHearing </td>
+                    <td> {{i.IsLastHearing}}</td>
+                  </tr>
+             
+              </table>
+              </ng-container>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Advocate" class="nav-item">
+            <ng-template ngbTabContent>
+              <!-- <ng-container *ngFor="let i of lawyerData">
+                <table *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID">
+                  <thead>
+                    <tr>
+                      <td colspan="2">
+                        <h1>Advocate</h1>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tr>
+                    <td >{{i.LawyerName}}</td>
+                  </tr>
+                  <tr>
+                    <td>{{i.Firm}}</td>
+                  </tr>
+                  <tr>
+                    <td>Website:{{i.Website}}</td>
+                  </tr>
+                  <tr>
+                    <td>Cell:{{i.MobileNo}}</td>
+                  </tr>
+                  <tr>
+                    <td>Since:{{i.RecordDate | date:"MMM-dd-yyyy"}}</td>
+                  </tr>
+                </table>
+              </ng-container> -->
+            Advocate
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Respondent" class="nav-item">
+            <ng-template ngbTabContent class="nav-item">
+              Respondent & Advocate
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Documents" class="nav-item">
+            <ng-template ngbTabContent> Documents</ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+       
+      </div>
+    </mat-expansion-panel>
+  </li>
+</ul>
