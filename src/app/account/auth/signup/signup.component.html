@@ -41,6 +41,7 @@
                   class="form-control"
                   [ngClass]="{ 'is-invalid': submitted && f.FirstName.errors }"
                   id="FirstName"
+                  maxlength="25"
                   placeholder="Enter your FirstName"
                 />
 
@@ -67,6 +68,7 @@
                   [ngClass]="{ 'is-invalid': submitted && f.LastName.errors }"
                   id="LastName"
                   placeholder="Enter your LastName"
+                  maxlength="25"
                 />
 
                 <div
@@ -94,6 +96,7 @@
                   }"
                   id="email"
                   placeholder="Email"
+                  maxlength="50"
                 />
 
                 <div
@@ -157,6 +160,7 @@
                   [ngClass]="{ 'is-invalid': submitted && f.Password.errors }"
                   id="password"
                   placeholder="Password"
+                  maxlength="25"
                 />
 
                 <div

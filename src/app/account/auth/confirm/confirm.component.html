@@ -144,7 +144,11 @@
                     [ngClass]="{
                       'is-invalid': submitted && f.EMAILOTP.errors
                     }"
-                    [config]="{ length: 6, disableAutoFocus: false }"
+                    [config]="{
+                      length: 6,
+                      disableAutoFocus: false,
+                      allowNumbersOnly: true
+                    }"
                     (onInputChange)="onEmailOtpChange($event)"
                     formControlName="EMAILOTP"
                     id="emailotp"
@@ -173,7 +177,11 @@
                     [ngClass]="{
                       'is-invalid': submitted && f.SMSOTP.errors
                     }"
-                    [config]="{ length: 6, disableAutoFocus: true }"
+                    [config]="{
+                      length: 6,
+                      disableAutoFocus: true,
+                      allowNumbersOnly: true
+                    }"
                     (onInputChange)="onSMSOtpChange($event)"
                     formControlName="SMSOTP"
                     id="smsotp"
