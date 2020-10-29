@@ -7,7 +7,6 @@ Contact: support@coderthemes.com
 File: Main Css File
 */
 
-
 //Fonts
 @import "custom/fonts/fonts";
 
@@ -16,7 +15,6 @@ File: Main Css File
 @import "./node_modules/bootstrap/scss/variables";
 @import "variables";
 @import "./node_modules/bootstrap/scss/mixins.scss";
-
 
 // Structure
 @import "custom/structure/general";
@@ -55,7 +53,6 @@ File: Main Css File
 // Vendors
 @import "vendor/metisMenu";
 
-
 // Plugins
 @import "custom/plugins/waves";
 @import "custom/plugins/rangeslider";
@@ -88,3 +85,9 @@ File: Main Css File
 @import "custom/plugins/google-maps";
 @import "custom/plugins/datepicker";
 @import "custom/plugins/ui-switch";
+
+@media (max-width: 400px) {
+  .nav {
+    display: block;
+  }
+}
