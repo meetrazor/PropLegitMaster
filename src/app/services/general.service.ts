@@ -97,7 +97,7 @@ export class GeneralService {
   deleteProperty(id): any {
     return this.http.delete(`${deleteProperty}${id}`, httpOptions);
   }
-  states() {
+  fetchstatelist() {
     return this.http.get<any>(stateInfo, httpOptions);
   }
   districts(id): any {
@@ -121,6 +121,9 @@ export class GeneralService {
   }
   areabyid(id): any {
     return this.http.get(`${apiUrl}area/view/${id}`);
+  }
+  areabystateid(StateId, DistrictId, Search): any {
+    return this.http.get(`${apiUrl}area/list/state/${StateId}/district/${DistrictId}/area/${Search}`);
   }
   Addphotograph(PropertyID, data): any {
     return this.http.post(`${apiUrl}property/${PropertyID}/document/add`, data);

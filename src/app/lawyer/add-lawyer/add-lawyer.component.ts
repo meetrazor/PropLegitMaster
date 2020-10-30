@@ -53,23 +53,23 @@ export class AddLawyerComponent implements OnInit {
           City: new FormControl('', [Validators.required, Validators.maxLength(25)]),
           RecordDate: new FormControl(new Date(), Validators.required),
         });
-          this.fetchstate();
+          //this.fetchstate();
           if (this.isEdit === true) {
           this.setInitialValue();
         }
   }
   fetchstate() {
-    this.service.states()
-    .pipe(first())
-    .subscribe(
-      data => {
-        if (data.error) {
-          console.log(data.error);
-          return;
-        } else {
-          this.StateArray = data.data;
-        }
-      });
+    // this.service.states()
+    // .pipe(first())
+    // .subscribe(
+    //   data => {
+    //     if (data.error) {
+    //       console.log(data.error);
+    //       return;
+    //     } else {
+    //       this.StateArray = data.data;
+    //     }
+    //   });
   }
 
   fetchdist() {
