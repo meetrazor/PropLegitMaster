@@ -91,3 +91,20 @@ File: Main Css File
     display: block;
   }
 }
+.paginate_button {
+  border-radius: 30px !important;
+  margin: 0 3px;
+  border: none !important;
+}
+a.paginate_button.current {
+  color: white !important;
+  background: none !important;
+  background-color: #6658dd !important;
+  border-color: #6658dd !important;
+}
+#DataTables_Table_0_paginate > span > a.paginate_button.current {
+  color: white !important;
+}
+#DataTables_Table_0_filter > label > input[type="search"]:focus {
+  outline: none;
+}

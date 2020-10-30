@@ -37,7 +37,9 @@ export class GeneralService {
   userRegister(userData): any {
     return this.http.post(register, userData, httpOptions);
   }
-
+  GetBaseUrl() {
+    return apiUrl;
+  }
   getUserID() {
     return this.userID;
   }

@@ -17,7 +17,8 @@
     color="white"
     id="{{ item.StateID }}"
     (onLoad)="onShow($event)"
-    ><div class="container-fluid px-4">
+  >
+    <!-- <div class="container-fluid px-4">
       <p class="text-muted font-13 mb-4"></p>
       <div class="row mb-md-2">
         <div class="col-sm-12 col-md-6">
@@ -39,7 +40,6 @@
             >
           </div>
         </div>
-        <!-- Search -->
         <div class="col-sm-12 col-md-6">
           <div
             id="tickets-table_filter"
@@ -55,9 +55,7 @@
             /></label>
           </div>
         </div>
-        <!-- End search -->
       </div>
-      <!-- Table -->
       <div class="table-responsive">
         <table
           id="basic-datatable"
@@ -116,7 +114,6 @@
         </table>
       </div>
     </div>
-    <!-- End table -->
     <div class="row justify-content-md-between align-items-md-center mt-2">
       <div class="col-sm-12 col-md-5">
         <div
@@ -125,19 +122,16 @@
           role="status"
           aria-live="polite"
         >
-          Showing
-          <!-- {{service.startIndex}} to
-        {{service.endIndex}} of {{service.totalRecords}} -->
-          entries
+          Showing entries
         </div>
       </div>
-      <!-- Pagination -->
       <div class="col-sm-12 col-md-5">
         <div class="text-md-right float-md-right pagination-rounded">
           <ngb-pagination [collectionSize]="item.NoOfProperty">
           </ngb-pagination>
         </div>
       </div>
-    </div>
+    </div> -->
+    <app-datatable [item]="item"></app-datatable>
   </app-portlet>
 </div>

@@ -8,6 +8,8 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class DetailsPhotographComponent implements OnInit {
   photographList: any = [];
+  videoList: any = [];
+  audioList: any = [];
   @Input() propertyId: number;
   isLoading: boolean;
   constructor(private generalService: GeneralService) {
@@ -21,6 +23,8 @@ export class DetailsPhotographComponent implements OnInit {
       .subscribe((data) => {
         this.isLoading = false;
         this.photographList = data.filter(e => e.FileType === 'Photo');
+        this.videoList = data.filter(e => e.FileType === 'Video');
+        this.audioList = data.filter(e => e.FileType === 'Audio');
       });
   }
 

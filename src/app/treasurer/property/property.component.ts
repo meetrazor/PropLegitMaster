@@ -1,7 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, AfterViewInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -49,57 +50,5 @@ export class PropertyComponent implements OnInit {
     // this.service.sortColumn = column;
     // this.service.sortDirection = direction;
   }
-  onDeleteProperty(id) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You won\'t be able to revert this!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-      confirmButtonClass: 'btn btn-success mt-2',
-      cancelButtonClass: 'btn btn-danger ml-2 mt-2',
-      buttonsStyling: false
-    }).then((result) => {
-      if (result.value) {
-        this.service.deleteProperty(id).subscribe((res) => {
-          if (res.status === 200) {
-            Swal.fire({
-              title: 'Deleted!',
-              text: res.message,
-              type: 'success',
-              timer: 2000
-            }).then(() => {
-              location.reload();
-            });
-          } else {
-            Swal.fire({
-              title: res.error_code,
-              text: res.message,
-              type: 'error'
-            });
-          }
-        }, (err) => {
-          Swal.fire({
-            title: 'Oops Something Wrong while deleting',
-            text: err,
-            type: 'error'
-          });
-        });
-      } else if (
-        // Read more about handling dismissals
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        Swal.fire({
-          title: 'Cancelled',
-          text: 'Opration Cancelled by User!',
-          type: 'error'
-        });
-      }
-    });
-  }
 
-  onViewProperty(id) {
-    this.router.navigate([`property/view/${id}`]);
-  }
 }

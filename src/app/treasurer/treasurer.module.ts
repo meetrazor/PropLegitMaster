@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import { RentModule } from './../rent/rent.module';
 import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +18,7 @@ import { RentComponent } from './rent/rent.component';
   imports: [
     CommonModule,
     TreasurerRoutingModule,
-    NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule,
+    NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule, DataTablesModule, SharedModule,
     NgbTypeaheadModule, RentModule
   ], exports: [RentComponent, LawyerComponent]
 })

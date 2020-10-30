@@ -1,13 +1,17 @@
+import { RouterModule } from '@angular/router';
+import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UIModule } from './ui/ui.module';
+import { DatatableComponent } from './datatable/datatable.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [DatatableComponent],
   imports: [
     CommonModule,
-    UIModule
+    UIModule, DataTablesModule, RouterModule
   ],
+  exports: [DatatableComponent]
 })
 export class SharedModule { }

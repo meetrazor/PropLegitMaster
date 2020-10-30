@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { FakeBackendProvider } from './core/helpers/fake-backend';
-
+import { DataTablesModule } from 'angular-datatables';
 import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     LayoutsModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, DataTablesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
