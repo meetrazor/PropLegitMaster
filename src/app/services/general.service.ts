@@ -179,4 +179,10 @@ export class GeneralService {
   updateTenant(data, PropertyRentId): any {
     return this.http.put<any>(`${apiUrl}property/rent/update/${PropertyRentId}`, data, httpOptions);
   }
+  fetchstatelist() {
+    return this.http.get<any>(stateInfo, httpOptions);
+  }
+  areabystateid(StateId, DistrictId, Search): any {
+    return this.http.get(`${apiUrl}area/list/state/${StateId}/district/${DistrictId}/area/${Search}`);
+  }
 }

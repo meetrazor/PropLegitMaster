@@ -25,15 +25,74 @@
               <div id="cardCollpase4" class="collapse pt-3 show">
                 <div class="pn-main">
                   <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="">States</label>
+                      <select
+                        class="custom-select"
+                        formControlName="StateID"
+                        (change)="ChangeState($event)"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.StateID.errors
+                        }"
+                      >
+                        <option
+                          *ngFor="let state of StateList"
+                          [value]="state.StateID"
+                          [id]="state.StateID"
+                        >
+                          {{ state.StateName }}
+                        </option>
+                      </select>
+                      <div
+                        *ngIf="submitted && f.StateID.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.StateID.errors.required">
+                          State is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label for="">Districts</label>
+                      <select
+                        class="custom-select"
+                        formControlName="DistrictID"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.DistrictID.errors
+                        }"
+                      >
+                        <option
+                          *ngFor="let district of DistrictList"
+                          [value]="district.DistrictID"
+                          [id]="district.DistrictID"
+                        >
+                          {{ district.DistrictName }}
+                        </option>
+                      </select>
+                      <div
+                        *ngIf="submitted && f.DistrictID.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.DistrictID.errors.required">
+                          District is required
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="col-md-6">
-                      <label for="">Area/Pin Code</label>
+                      <label for="">Village/Pincode</label>
                       <div class="form-group">
                         <ng-autocomplete
                           [data]="areas"
                           [searchKeyword]="keyword"
-                          placeHolder="Enter Area/Pin code"
+                          placeHolder="Enter Village or Pincode"
                           (selected)="selectEvent($event)"
                           (inputChanged)="onChangeSearch($event)"
+                          formControlName="taluka"
+                          [ngClass]="{
+                            'is-invalid': submitted && f.taluka.errors
+                          }"
                           (inputFocused)="onFocused($event)"
                           historyIdentifier="areas"
                           [itemTemplate]="itemTemplate"
@@ -48,13 +107,27 @@
                         <ng-template #notFoundTemplate let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
+
+                        <div
+                          *ngIf="submitted && f.taluka.errors"
+                          class="invalid-feedback"
+                        >
+                          <div *ngIf="f.taluka.errors.required">
+                            Village is required
+                          </div>
+                        </div>
                       </div>
                     </div>
+
                     <div class="form-group col-md-6">
-                      <label for="">PropertyTypeID</label>
+                      <label for="">PropertyType</label>
                       <select
                         class="custom-select"
                         formControlName="PropertyTypeID"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.PropertyTypeID.errors
+                        }"
+                        (change)="ChangePropertyType($event)"
                       >
                         <option
                           *ngFor="let type of Array5"
@@ -63,16 +136,14 @@
                           {{ type.PropertyType }}
                         </option>
                       </select>
-                      <span
-                        *ngIf="
-                          myForm.controls['PropertyTypeID'].touched &&
-                          myForm.controls['PropertyTypeID'].invalid &&
-                          myForm.controls['PropertyTypeID'].errors &&
-                          myForm.controls['PropertyTypeID'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.PropertyTypeID.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.PropertyTypeID.errors.required">
+                          PropertyType is required
+                        </div>
+                      </div>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -81,205 +152,212 @@
                         class="form-control"
                         placeholder="Enter Property Name"
                         formControlName="PropertyName"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.PropertyName.errors
+                        }"
                       />
-
-                      <span
-                        *ngIf="
-                          myForm.controls['PropertyName'].touched &&
-                          myForm.controls['PropertyName'].invalid
-                        "
+                      <div
+                        *ngIf="submitted && f.PropertyName.errors"
+                        class="invalid-feedback"
                       >
-                        <span
-                          *ngIf="
-                            myForm.controls['PropertyName'].errors &&
-                            myForm.controls['PropertyName'].errors.required
-                          "
-                          style="color: red; font-size: smaller"
-                        >
-                          *Required</span
-                        >
-                      </span>
+                        <div *ngIf="f.PropertyName.errors.required">
+                          Property Name is required
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group col-md-6">
-                      <label for="">City Survey No</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Enter City Survey No"
-                        formControlName="CitySurveyNo"
-                      />
+                    <div class="form-group col-md-6" *ngIf="!IsOpenLand">
+                      <label for="">Type</label><br />
+                      <span>
+                        <input
+                          type="radio"
+                          formControlName="types"
+                          value="surveyno"
+                          (change)="ChangeSurveyType($event)"
+                        />
+                        Survey No</span
+                      >
                       <span
-                        *ngIf="
-                          myForm.controls['CitySurveyNo'].touched &&
-                          myForm.controls['CitySurveyNo'].invalid &&
-                          myForm.controls['CitySurveyNo'].errors &&
-                          myForm.controls['CitySurveyNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                        ><input
+                          type="radio"
+                          formControlName="types"
+                          value="citysurveyno"
+                          (change)="ChangeSurveyType($event)"
+                        />
+                        City Survey No</span
                       >
                     </div>
 
-                    <div class="form-group col-md-6">
-                      <label for="">City Survey Office</label>
-                      <input
-                        class="form-control"
-                        placeholder="Enter City Survey Office"
-                        formControlName="CitySurveyOffice"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['CitySurveyOffice'].touched &&
-                          myForm.controls['CitySurveyOffice'].invalid &&
-                          myForm.controls['CitySurveyOffice'].errors &&
-                          myForm.controls['CitySurveyOffice'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">City Ward No</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Enter City Ward No"
-                        formControlName="CityWardNo"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['CityWardNo'].touched &&
-                          myForm.controls['CityWardNo'].invalid &&
-                          myForm.controls['CityWardNo'].errors &&
-                          myForm.controls['CityWardNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">City Ward Name</label>
-                      <input
-                        class="form-control"
-                        placeholder="Enter City Ward Name"
-                        formControlName="CityWardName"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['CityWardName'].touched &&
-                          myForm.controls['CityWardName'].invalid &&
-                          myForm.controls['CityWardName'].errors &&
-                          myForm.controls['CityWardName'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">Sheet No</label>
-                      <input
-                        class="form-control"
-                        type="number"
-                        placeholder="Enter Sheet No"
-                        formControlName="SheetNumber"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['SheetNumber'].touched &&
-                          myForm.controls['SheetNumber'].invalid &&
-                          myForm.controls['SheetNumber'].errors &&
-                          myForm.controls['SheetNumber'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && !IsCitySurvey"
+                    >
                       <label for="">Building No</label>
                       <input
                         class="form-control"
                         placeholder="Enter Building No"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.BuildingNo.errors
+                        }"
                         formControlName="BuildingNo"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['BuildingNo'].touched &&
-                          myForm.controls['BuildingNo'].invalid &&
-                          myForm.controls['BuildingNo'].errors &&
-                          myForm.controls['BuildingNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.BuildingNo.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.BuildingNo.errors.required">
+                          Building No is required
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && !IsCitySurvey"
+                    >
                       <label for="">Building Name</label>
                       <input
                         class="form-control"
                         placeholder="Enter Building Name"
                         formControlName="BuildingName"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.BuildingName.errors
+                        }"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['BuildingName'].touched &&
-                          myForm.controls['BuildingName'].invalid &&
-                          myForm.controls['BuildingName'].errors &&
-                          myForm.controls['BuildingName'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.BuildingName.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.BuildingName.errors.required">
+                          Building Name is required
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group col-md-6">
-                      <label for="">Record Date</label>
-                      <input
-                        type="date"
-                        class="form-control"
-                        formControlName="RecordDate"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['RecordDate'].touched &&
-                          myForm.controls['RecordDate'].invalid &&
-                          myForm.controls['RecordDate'].errors &&
-                          myForm.controls['RecordDate'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
-                      <label for="">Milkatno PropId</label>
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && IsCitySurvey"
+                    >
+                      <label for="">Sheet No</label>
                       <input
                         class="form-control"
-                        placeholder="Enter Milkatno PropId"
-                        type="number"
-                        formControlName="milkatno_propId"
+                        placeholder="Enter Sheet No"
+                        formControlName="SheetNumber"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.SheetNumber.errors
+                        }"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['milkatno_propId'].touched &&
-                          myForm.controls['milkatno_propId'].invalid &&
-                          myForm.controls['milkatno_propId'].errors &&
-                          myForm.controls['milkatno_propId'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.SheetNumber.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.SheetNumber.errors.required">
+                          Sheet Number is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && IsCitySurvey"
+                    >
+                      <label for="">City Survey No</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter City Survey No"
+                        formControlName="CitySurveyNo"
+                        (keypress)="isValid($event, 5)"
+                        (paste)="(false)"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.CitySurveyNo.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.CitySurveyNo.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.CitySurveyNo.errors.required">
+                          City SurveyNo is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && IsCitySurvey"
+                    >
+                      <label for="">City Survey Office</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter City Survey Office"
+                        formControlName="CitySurveyOffice"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.CitySurveyOffice.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.CitySurveyOffice.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.CitySurveyOffice.errors.required">
+                          City Survey Office is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && IsCitySurvey"
+                    >
+                      <label for="">City Ward No</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter City Ward No"
+                        formControlName="CityWardNo"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.CityWardNo.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.CityWardNo.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.CityWardNo.errors.required">
+                          City WardNo is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="!IsOpenLand && IsCitySurvey"
+                    >
+                      <label for="">City Ward Name</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter City Ward Name"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.CityWardName.errors
+                        }"
+                        formControlName="CityWardName"
+                      />
+                      <div
+                        *ngIf="submitted && f.CityWardName.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.CityWardName.errors.required">
+                          City WardName is required
+                        </div>
+                      </div>
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">Revenew Office Type </label>
+                      <label for="">Revenue Office Type </label>
                       <select
                         class="custom-select"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.RevenewOfficeType.errors
+                        }"
                         formControlName="RevenewOfficeType"
                       >
                         <option value="Talati" selected id="4">Talati</option>
@@ -293,76 +371,112 @@
                           Nagarpalika Office
                         </option>
                       </select>
-                      <span
-                        *ngIf="
-                          myForm.controls['RevenewOfficeType'].touched &&
-                          myForm.controls['RevenewOfficeType'].invalid &&
-                          myForm.controls['RevenewOfficeType'].errors &&
-                          myForm.controls['RevenewOfficeType'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.RevenewOfficeType.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.RevenewOfficeType.errors.required">
+                          Revenue Office is required
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group col-md-6">
-                      <label for="">SurveyNo</label>
-                      <input
-                        class="form-control"
-                        placeholder="Enter Survey No"
-                        type="number"
-                        formControlName="SurveyNo"
-                      />
-                      <span
-                        *ngIf="
-                          myForm.controls['SurveyNo'].touched &&
-                          myForm.controls['SurveyNo'].invalid &&
-                          myForm.controls['SurveyNo'].errors &&
-                          myForm.controls['SurveyNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
-                    </div>
-
-                    <div class="form-group col-md-6">
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="IsOpenLand || !IsCitySurvey"
+                    >
                       <label for="">TP No</label>
                       <input
                         class="form-control"
                         placeholder="Enter TP No"
-                        type="number"
                         formControlName="TPNo"
+                        [ngClass]="{ 'is-invalid': submitted && f.TPNo.errors }"
+                        (keypress)="isValid($event, 5)"
+                        (paste)="(false)"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['TPNo'].touched &&
-                          myForm.controls['TPNo'].invalid &&
-                          myForm.controls['TPNo'].errors &&
-                          myForm.controls['TPNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.TPNo.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.TPNo.errors.required">
+                          TPNo is required
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="IsOpenLand || !IsCitySurvey"
+                    >
                       <label for="">FP No</label>
                       <input
                         class="form-control"
                         placeholder="Enter FP No"
-                        type="number"
                         formControlName="FPNo"
+                        (keypress)="isValid($event, 5)"
+                        (paste)="(false)"
+                        [ngClass]="{ 'is-invalid': submitted && f.FPNo.errors }"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['FPNo'].touched &&
-                          myForm.controls['FPNo'].invalid &&
-                          myForm.controls['FPNo'].errors &&
-                          myForm.controls['FPNo'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
+                      <div
+                        *ngIf="submitted && f.FPNo.errors"
+                        class="invalid-feedback"
                       >
+                        <div *ngIf="f.FPNo.errors.required">
+                          FPNo is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="IsOpenLand || !IsCitySurvey"
+                    >
+                      <label for="">SurveyNo</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter Survey No"
+                        formControlName="SurveyNo"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.SurveyNo.errors
+                        }"
+                        (keypress)="isValid($event, 25)"
+                        (paste)="(false)"
+                      />
+                      <div
+                        *ngIf="submitted && f.SurveyNo.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.SurveyNo.errors.required">
+                          Survey No is required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="
+                        myForm.controls['SurveyNo'].touched &&
+                        myForm.controls['SurveyNo'].valid
+                      "
+                    >
+                      <label for="">Milkat No(Property Id)</label>
+                      <input
+                        class="form-control"
+                        placeholder="Enter Milkat No (Property Id)"
+                        type="number"
+                        formControlName="milkatno_propId"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.milkatno_propId.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="submitted && f.milkatno_propId.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.milkatno_propId.errors.required">
+                          Milkatno_PropId is required
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -376,22 +490,12 @@
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="">Land Size</label>
+                      <label for="">Land Size(In Sq.Mtrs)</label>
                       <input
                         class="form-control"
                         placeholder="Enter Landsize"
                         formControlName="LandSize"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['LandSize'].touched &&
-                          myForm.controls['LandSize'].invalid &&
-                          myForm.controls['LandSize'].errors &&
-                          myForm.controls['LandSize'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group col-md-6">
@@ -401,16 +505,6 @@
                         placeholder="Water Availability"
                         formControlName="WaterAvailability"
                       />
-                      <span
-                        *ngIf="
-                          myForm.controls['WaterAvailability'].touched &&
-                          myForm.controls['WaterAvailability'].invalid &&
-                          myForm.controls['WaterAvailability'].errors &&
-                          myForm.controls['WaterAvailability'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group col-md-6">
@@ -427,16 +521,6 @@
                         </option>
                         <option value="UnFurnished" id="3">UnFurnished</option>
                       </select>
-                      <span
-                        *ngIf="
-                          myForm.controls['FurnishType'].touched &&
-                          myForm.controls['FurnishType'].invalid &&
-                          myForm.controls['FurnishType'].errors &&
-                          myForm.controls['FurnishType'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group col-md-6">
@@ -455,16 +539,6 @@
                           Every Sunday Power Cut
                         </option>
                       </select>
-                      <span
-                        *ngIf="
-                          myForm.controls['StatusOfElectricity'].touched &&
-                          myForm.controls['StatusOfElectricity'].invalid &&
-                          myForm.controls['StatusOfElectricity'].errors &&
-                          myForm.controls['StatusOfElectricity'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group mb-2 col-md-6 col-xl-6">
@@ -474,16 +548,6 @@
                         rows="2"
                         formControlName="Description"
                       ></textarea>
-                      <span
-                        *ngIf="
-                          myForm.controls['Description'].touched &&
-                          myForm.controls['Description'].invalid &&
-                          myForm.controls['Description'].errors &&
-                          myForm.controls['Description'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group mb-2 col-md-6 col-xl-6">
@@ -493,16 +557,6 @@
                         rows="2"
                         formControlName="PostalAddress"
                       ></textarea>
-                      <span
-                        *ngIf="
-                          myForm.controls['PostalAddress'].touched &&
-                          myForm.controls['PostalAddress'].invalid &&
-                          myForm.controls['PostalAddress'].errors &&
-                          myForm.controls['PostalAddress'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group col-md-6">
@@ -515,21 +569,10 @@
                         type="number"
                         formControlName="AgeOfProperty"
                       />
-
-                      <span
-                        *ngIf="
-                          myForm.controls['AgeOfProperty'].touched &&
-                          myForm.controls['AgeOfProperty'].invalid &&
-                          myForm.controls['AgeOfProperty'].errors &&
-                          myForm.controls['AgeOfProperty'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">No of BHK</label>
+                      <label for="">No. of BHK</label>
                       <select class="custom-select" formControlName="NoOfBHK">
                         <option value="1" id="4" selected>1</option>
                         <option value="2" id="1">2</option>
@@ -538,20 +581,11 @@
                         <option value="5" id="8">5</option>
                         <option value="6" id="5">More than 5</option>
                       </select>
-                      <span
-                        *ngIf="
-                          myForm.controls['NoOfBHK'].touched &&
-                          myForm.controls['NoOfBHK'].invalid &&
-                          myForm.controls['NoOfBHK'].errors &&
-                          myForm.controls['NoOfBHK'].errors.required
-                        "
-                        style="color: red; font-size: smaller"
-                        >*Required</span
-                      >
                     </div>
                   </div>
 
                   <h5
+                    *ngIf="myForm.controls.OwnerShip['controls'].length > 0"
                     class="header-title mb-0"
                     style="color: darkgrey; padding-top: 2%; font-size: 18px"
                   >
@@ -575,20 +609,6 @@
                               class="form-control"
                               formControlName="OwnerName"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.OwnerName.touched &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.OwnerName.invalid &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.OwnerName.errors &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.OwnerName.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
                           <div class="form-group col-md-6">
                             <label>Since From</label>
@@ -597,20 +617,6 @@
                               class="form-control"
                               formControlName="SinceFrom"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.SinceFrom.touched &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.SinceFrom.invalid &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.SinceFrom.errors &&
-                                myForm.controls.OwnerShip['controls'][i]
-                                  .controls.SinceFrom.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
                           <div class="form-group col-md-12">
                             <span
@@ -630,12 +636,13 @@
                   </div>
                   <div class="margin-20">
                     <a (click)="addOwner()" style="cursor: pointer">
-                      Add another owner +
+                      Add owner +
                     </a>
                   </div>
                   <h5
                     class="header-title mb-0"
                     style="color: darkgrey; padding-top: 2%; font-size: 18px"
+                    *ngIf="myForm.controls.InCharge['controls'].length > 0"
                   >
                     InCharge Information
                   </h5>
@@ -670,21 +677,6 @@
                               class="form-control"
                               formControlName="InChargeName"
                             />
-
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeName.touched &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeName.invalid &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeName.errors &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeName.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
                           <div class="form-group col-md-6">
                             <label>Designation</label>
@@ -693,63 +685,30 @@
                               class="form-control"
                               formControlName="Designation"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Designation.touched &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Designation.invalid &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Designation.errors &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Designation.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
-                          <div class="form-group col-md-6">
-                            <label>InChargeType</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              formControlName="InChargeType"
-                            />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeType.touched &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeType.invalid &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeType.errors &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeType.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
-                          </div>
+
                           <div class="form-group col-md-6">
                             <label>MobileNo</label>
                             <input
                               type="text"
                               class="form-control"
                               formControlName="MobileNo"
+                              (keypress)="isValidMobileNo($event)"
+                              (paste)="(false)"
                             />
+
                             <span
                               *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .MobileNo.touched &&
+                                submitted &&
                                 myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.invalid &&
                                 myForm.controls.InCharge['controls'][i].controls
                                   .MobileNo.errors &&
                                 myForm.controls.InCharge['controls'][i].controls
-                                  .MobileNo.errors.required
+                                  .MobileNo.errors.minlength
                               "
                               style="color: red; font-size: smaller"
-                              >*Required</span
+                              >Mobile no must be 10 digits only.</span
                             >
                           </div>
 
@@ -760,19 +719,19 @@
                               class="form-control"
                               formControlName="Email"
                             />
+
                             <span
                               *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Email.touched &&
+                                submitted &&
                                 myForm.controls.InCharge['controls'][i].controls
                                   .Email.invalid &&
                                 myForm.controls.InCharge['controls'][i].controls
                                   .Email.errors &&
                                 myForm.controls.InCharge['controls'][i].controls
-                                  .Email.errors.required
+                                  .Email.errors.pattern
                               "
                               style="color: red; font-size: smaller"
-                              >*Required</span
+                              >Email must be a valid email address</span
                             >
                           </div>
                           <div class="form-group col-md-6">
@@ -782,20 +741,6 @@
                               class="form-control"
                               formControlName="Address"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Address.touched &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Address.invalid &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Address.errors &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .Address.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
                           <div class="form-group col-md-6">
                             <label>InChargeFromDate</label>
@@ -804,20 +749,6 @@
                               class="form-control"
                               formControlName="InChargeFromDate"
                             />
-                            <span
-                              *ngIf="
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeFromDate.touched &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeFromDate.invalid &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeFromDate.errors &&
-                                myForm.controls.InCharge['controls'][i].controls
-                                  .InChargeFromDate.errors.required
-                              "
-                              style="color: red; font-size: smaller"
-                              >*Required</span
-                            >
                           </div>
                         </div>
                       </div>
@@ -825,7 +756,7 @@
                   </div>
                   <div class="">
                     <a (click)="addIncharge()" style="cursor: pointer">
-                      Add another InCharge +
+                      Add InCharge +
                     </a>
                   </div>
                   <hr
@@ -845,15 +776,25 @@
                       aria-expanded="true"
                       aria-controls="collapseExample"
                       type="submit"
-                      [disabled]="!myForm.valid"
                     >
                       + Add Property
                     </button>
                   </div>
-                  <!--
-                    Real-time data: {{ myForm.value | json }}
-                    Your form status is : {{ myForm.status }}
-                  -->
+
+                  <!-- <div class="text-center button-list mt-3">
+                    <button
+                      class="btn btn-warning waves-effect waves-light btn-sm"
+                      outline
+                      type="button"
+                      (click)="GoBack()"
+                    >
+                     Go Back
+                    </button>
+                  </div> -->
+
+                  <!-- Real-time data: {{ myForm.value | json }}
+
+                  Your form status is : {{ myForm.status }} -->
                 </div>
               </div>
               <!-- end collapse-->
