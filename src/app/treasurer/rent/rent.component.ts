@@ -1,41 +1,78 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, AfterContentChecked } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { GeneralService } from '../../services/general.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rent',
   templateUrl: './rent.component.html',
   styleUrls: ['./rent.component.scss']
 })
-export class RentComponent implements OnInit {
+export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked {
   @Input() propertyID;
   datasource: null;
   isLoaded = false;
-
-  constructor(private service: GeneralService, private router: Router) {
+  dtOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement: DataTableDirective;
+  dtTrigger = new Subject();
+  constructor(private service: GeneralService, private router: Router, private datepipe: DatePipe) {
   }
 
   ngOnInit() {
-    this.service.listTenant(this.propertyID)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            Swal.fire({
-              title: data.error_code,
-              text: data.message,
-              type: 'error'
-            });
-            return;
-          } else {
-            this.datasource = data.data;
-            this.isLoaded = true;
+    this.dtOptions = {
+      ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/rent/list` }, responsive: true,
+      columns: [
+        {
+          title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
+            return meta.row + 1;
           }
-        });
+        }, {
+          title: 'Name', data: 'TenantName'
+        }, {
+          title: 'Amount', data: 'MonthlyRent',
+        }, {
+          title: 'Tenant Address', data: 'TenantAddress',
+        }, {
+          title: 'Contract Start Date', data: 'ContractStartDate', render: ((data) => {
+            return this.datepipe.transform(data, 'MMM, dd yyyy');
+          })
+        }, {
+          title: 'Contract End Date', data: 'ContractEndDate', render: ((data) => {
+            return this.datepipe.transform(data, 'MMM, dd yyyy');
+          })
+        }
+      ],
+      autoWidth: false,
+      columnDefs: [{ width: '18%', targets: [0, 1] }],
+    };
+    // this.service.listTenant(this.propertyID)
+    //   .pipe(first())
+    //   .subscribe(
+    //     data => {
+    //       if (data.error) {
+    //         Swal.fire({
+    //           title: data.error_code,
+    //           text: data.message,
+    //           type: 'error'
+    //         });
+    //         return;
+    //       } else {
+    //         this.datasource = data.data;
+    //         this.isLoaded = true;
+    //       }
+    //     });
   }
-
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+  }
+  ngAfterContentChecked() {
+    this.isLoaded = true;
+  }
   onDeleteTenant(id) {
     Swal.fire({
       title: 'Are you sure?',

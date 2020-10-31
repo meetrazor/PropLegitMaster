@@ -2,6 +2,7 @@ import { GeneralService } from './../../services/general.service';
 import { Component, Input, OnInit, Output, ViewChild, AfterViewInit, AfterContentChecked } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-tax',
@@ -10,7 +11,7 @@ import { Subject } from 'rxjs';
 })
 export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChecked {
   @Input() propertyID: number;
-  constructor(private service: GeneralService) { }
+  constructor(private service: GeneralService, private datepipe: DatePipe) { }
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -27,7 +28,14 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
             return meta.row + 1;
           }
         }, {
-          title: 'Revenue Office', data: 'RevenueOffice'
+          title: 'Date', data: 'NextDueDate', render: ((data) => {
+            return this.datepipe.transform(data, 'MMM, dd yyyy');
+
+          })
+        }, {
+          title: 'Amount', data: 'AmountDue',
+        }, {
+          title: 'Revenue Office', data: 'RevenueOffice',
         }
       ],
       autoWidth: false,

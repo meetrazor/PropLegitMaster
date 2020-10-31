@@ -110,6 +110,8 @@ a.paginate_button.current {
 }
 body,
 html {
-  height: 100%;
-  margin: 0;
+  padding-bottom: 0;
+}
+thead {
+  background-color: rgb(241, 245, 247);
 }

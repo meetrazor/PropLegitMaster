@@ -3,7 +3,7 @@ import { RentModule } from './../rent/rent.module';
 import { SharedModule } from './../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { TreasurerRoutingModule } from './treasurer-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,8 +18,8 @@ import { RentComponent } from './rent/rent.component';
   imports: [
     CommonModule,
     TreasurerRoutingModule,
-    NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule, DataTablesModule, SharedModule,
+    NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule, DataTablesModule, SharedModule, DataTablesModule,
     NgbTypeaheadModule, RentModule
-  ], exports: [RentComponent, LawyerComponent]
+  ], exports: [RentComponent, LawyerComponent], providers: [DatePipe]
 })
 export class TreasurerModule { }

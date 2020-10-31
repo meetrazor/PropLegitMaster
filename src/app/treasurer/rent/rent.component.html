@@ -53,129 +53,18 @@
   </div>
 </div> -->
 <section class="row">
-  <div class="col-md-9">
-    <div class="container-fluid px-4">
-      <p class="text-muted font-13 mb-4"></p>
-      <div class="row mb-md-2">
-        <div class="col-sm-12 col-md-6">
-          <div class="dataTables_length" id="tickets-table_length">
-            <label class="d-inline-flex align-items-center"
-              >Show
-              <select
-                name="tickets-table_length"
-                aria-controls="tickets-table"
-                name="pageSize"
-                class="custom-select custom-select-sm form-control form-control-sm mx-2"
-              >
-                <option [ngValue]="10">10</option>
-                <option [ngValue]="25">25</option>
-                <option [ngValue]="50">50</option>
-                <option [ngValue]="100">100</option>
-              </select>
-              entries</label
-            >
-          </div>
-        </div>
-        <!-- Search -->
-        <div class="col-sm-12 col-md-6">
-          <div
-            id="tickets-table_filter"
-            class="dataTables_filter text-md-right"
-          >
-            <label class="d-inline-flex align-items-center"
-              >Search:
-              <input
-                type="text"
-                name="searchTerm"
-                class="form-control form-control-sm ml-2"
-                aria-controls="tickets-table"
-            /></label>
-          </div>
-        </div>
-        <!-- End search -->
-      </div>
-      <!-- Table -->
-      <div class="table-responsive">
-        <table
-          id="basic-datatable"
-          class="table datatables dt-responsive nowrap table-hover"
-        >
-          <thead style="background-color: #f1f5f7">
-            <tr>
-              <th sortable="property_name" (sort)="onSort($event)">
-                Tenant Name
-              </th>
-              <th sortable="location" (sort)="onSort($event)">Address</th>
-              <th sortable="status" (sort)="onSort($event)">Email</th>
-              <th sortable="summary" (sort)="onSort($event)">Mobile No</th>
-              <th sortable="rent" (sort)="onSort($event)">Monthly Rent</th>
-              <!-- <th>Action</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr tr *ngFor="let table of datasource">
-              <td style="width: 15%">
-                <ngb-highlight [result]="table.TenantName"></ngb-highlight>
-              </td>
-              <td style="width: 15%">
-                <ngb-highlight [result]="table.TenantAddress"></ngb-highlight>
-              </td>
-              <td style="width: 15%">
-                <ngb-highlight [result]="table.TenantEmail"></ngb-highlight>
-              </td>
-              <td style="width: 15%">
-                <ngb-highlight [result]="table.TenantMobile"></ngb-highlight>
-              </td>
-              <td style="width: 15%">
-                <ngb-highlight [result]="table.MonthlyRent"></ngb-highlight>
-              </td>
-              <!-- <td style="width: 15%; text-align: right">
-                <button
-                  (click)="onViewRent(table.PropertyID)"
-                  class="btn btn-primary mx-1"
-                >
-                  <i class="mdi mdi-eye-check"></i>
-                </button>
-
-                <button
-                  class="btn btn-secondary mx-1"
-                  [routerLink]="['/property/edit', table.PropertyID]"
-                >
-                  <i class="mdi mdi-account-edit"></i>
-                </button>
-              </td> -->
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- End table -->
-    <div class="row justify-content-md-between align-items-md-center mt-2">
-      <div class="col-sm-12 col-md-5">
-        <div
-          class="dataTables_info mb-2"
-          id="tickets-table_info"
-          role="status"
-          aria-live="polite"
-        >
-          Showing
-          <!-- {{service.startIndex}} to
-    {{service.endIndex}} of {{service.totalRecords}} -->
-          entries
-        </div>
-      </div>
-      <!-- Pagination -->
-      <div class="col-sm-12 col-md-5">
-        <div class="text-md-right float-md-right pagination-rounded">
-          <!-- <ngb-pagination [collectionSize]="item.NoOfProperty"> </ngb-pagination> -->
-        </div>
-      </div>
-    </div>
+  <div class="col-md-8">
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="table row-border hover thead-dark"
+    ></table>
     <div class="card-disabled" *ngIf="!isLoaded">
       <div class="card-portlets-loader"></div>
     </div>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-4">
     <app-add-rent propertyId="{{ this.propertyID }}"></app-add-rent>
   </div>
 </section>
