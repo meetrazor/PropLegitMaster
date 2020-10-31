@@ -8,15 +8,12 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ViewPropertyComponent implements OnInit {
   @Input() propertyId: number;
-  data: any;
+  @Input() data: any;
   loading = true;
   constructor(private service: GeneralService) { }
 
   ngOnInit() {
-    this.service.viewproperty(this.propertyId).subscribe(Res => {
-      this.data = Res.data;
-      this.loading = false;
-    });
+    this.loading = false;
   }
 
 }

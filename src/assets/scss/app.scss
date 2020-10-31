@@ -108,3 +108,8 @@ a.paginate_button.current {
 #DataTables_Table_0_filter > label > input[type="search"]:focus {
   outline: none;
 }
+body,
+html {
+  height: 100%;
+  margin: 0;
+}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CommingSoonComponent } from './comming-soon/comming-soon.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutComponent } from './layouts/layout.component';
@@ -46,7 +47,9 @@ const routes: Routes = [
   {
     path: 'rent', component: LayoutComponent, loadChildren: () => import('./rent/rent.module')
       .then(m => m.RentModule), canActivate: [AuthGuard]
-  },
+  }, {
+    path: '**', component: CommingSoonComponent,
+  }
 ];
 
 @NgModule({

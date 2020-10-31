@@ -1,3 +1,11 @@
-<p>
-  view-tax works!
-</p>
+<div class="container-fluid">
+  <table
+    datatable
+    [dtOptions]="dtOptions"
+    [dtTrigger]="dtTrigger"
+    class="table row-border hover"
+  ></table>
+  <div class="card-disabled" *ngIf="isLoading">
+    <div class="card-portlets-loader"></div>
+  </div>
+</div>

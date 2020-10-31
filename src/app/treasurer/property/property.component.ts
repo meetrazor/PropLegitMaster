@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-
+  tableLoad: boolean;
   breadCrumbItems: Array<{}>;
   stateList: Array<
     { StateName: string, NoOfProperty: number, StateID: number, data: Array<any>, collapsed: number, loading: number }
@@ -19,6 +19,7 @@ export class PropertyComponent implements OnInit {
   constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.tableLoad = false;
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Properties', path: '/property', active: true }];
     this.route.data.subscribe((res) => {
       this.stateList = res.obj.data;
@@ -33,22 +34,14 @@ export class PropertyComponent implements OnInit {
     // tslint:disable-next-line: triple-equals
     const obj = this.stateList.find(x => x.StateID == event);
     obj.loading = 1;
-    this.service.getPropertyListByState(event).subscribe((res) => {
-      obj.data = res.data;
-      obj.collapsed = 1;
-      obj.loading = 0;
-    });
-  }
-  onSort(data) {
-    console.log(data);
-    // resetting other headers
-    // this.headers.forEach(header => {
-    //   if (header.sortable !== column) {
-    //     header.direction = '';
-    //   }
+    // this.service.getPropertyListByState(event).subscribe((res) => {
+    //   obj.data = res.data;
+    obj.collapsed = 1;
+    obj.loading = 0;
+    this.tableLoad = true;
     // });
-    // this.service.sortColumn = column;
-    // this.service.sortDirection = direction;
   }
+  tableLoading(status) {
 
+  }
 }

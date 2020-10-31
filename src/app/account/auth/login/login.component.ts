@@ -66,7 +66,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.loading = false;
             return;
           } else {
-            console.log(data);
             this.router.navigate([this.returnUrl]);
           }
         });

@@ -1,8 +1,10 @@
+import { async } from '@angular/core/testing';
 import { GeneralService } from './../../services/general.service';
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-datatable',
@@ -13,10 +15,14 @@ export class DatatableComponent implements OnInit, AfterViewInit {
 
   constructor(private service: GeneralService, private router: Router) { }
   dtOptions: DataTables.Settings = {};
+  @ViewChild(DataTableDirective, { static: false })
+  dtElement: DataTableDirective;
   dtTrigger = new Subject();
   @Input() item: any;
-
+  @Output() isloading = new EventEmitter();
+  isLoading: boolean;
   ngOnInit() {
+    this.isLoading = true;
     this.dtOptions = {
       ajax: { url: this.service.GetBaseUrl() + `property/list/${this.item.StateID}` }, responsive: true,
       columns: [
@@ -33,40 +39,69 @@ export class DatatableComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Summary', data: 'Description'
         }, {
-          title: 'Action', data: null
+          title: 'Action', data: null, render(data) {
+            return `<div style="display:flex">
+            <a title="View Property" href="property/view/${data.PropertyID}" class="btn btn-primary m-1 viewProperty" >
+            <i class="mdi mdi-eye-check"></i></a>
+            <a title="Edit Property"  href="property/edit/${data.PropertyID}"
+            class="btn btn-secondary m-1 editProperty" ><i class="mdi mdi-account-edit"></i></a> </div>`;
+          }
         }
       ],
       autoWidth: false,
       columnDefs: [{ width: '18%', targets: [0, 1, 2, 3, 4] }],
-      rowCallback(row, data: any) {
-        // let deleteBtn = '';
-        // deleteBtn += '<a class="btn btn-danger deleteNotice m-1" title="Delete Notice" notice-id="' + data.content_temp_id + '">';
-        // deleteBtn += '<i class="fa fa-trash" aria-hidden="false" notice-id="' + data.content_temp_id + '"></i>';
-        // deleteBtn += '</a>';
 
-     
-        let viewBtn = '<button title="View Property" property-id=' + data.PropertyID;
-        viewBtn += ' class="btn btn-primary mx-1 viewProperty" ><i class="mdi mdi-eye-check"></i></button>';
-        let editBtn = '<button title="Edit Property" property-id=' + data.PropertyID;
-        editBtn += ' class="btn btn-secondary mx-1 editProperty" ><i class="mdi mdi-account-edit"></i></button>';
+      // rowCallback(row, data: any) {
 
-        $('td:eq(5)', row).html(viewBtn + editBtn);
-      },
-      drawCallback: () => {
-        $('.viewProperty').on('click', (e) => {
-          this.onViewProperty($(e.target).attr('property-id'));
-        });
-        $('.editProperty').on('click', (e) => {
-          this.onEditProperty($(e.target).attr('property-id'));
-        });
-      }
+      //   // let deleteBtn = '';
+      //   // deleteBtn += '<a class="btn btn-danger deleteNotice m-1" title="Delete Notice" notice-id="' + data.content_temp_id + '">';
+      //   // deleteBtn += '<i class="fa fa-trash" aria-hidden="false" notice-id="' + data.content_temp_id + '"></i>';
+      //   // deleteBtn += '</a>';
+      //   // tslint:disable-next-line: max-line-length
+      // tslint:disable-next-line: max-line-length
+      //   const viewBtn = '<button title="View Property" property-id=' + data.PropertyID + ' class="btn btn-primary mx-1 viewProperty" ><i class="mdi mdi-eye-check"></i></button>';
+      //   // tslint:disable-next-line: max-line-length
+      // tslint:disable-next-line: max-line-length
+      //   const editBtn = '<button title="Edit Property" property-id=' + data.PropertyID + ' class="btn btn-secondary mx-1 editProperty" ><i class="mdi mdi-account-edit"></i></button>';
+
+      //   // $('td:eq(6)', row).html(viewBtn + editBtn);
+      // },
+      // drawCallback: () => {
+      //   $('.table .viewProperty').on('click', (e) => {
+      //     const id = $(e.target).attr('property-id');
+      //     console.log(e);
+      //     if (id === undefined) {
+      //       return false;
+      //     } else {
+      //       this.router.navigate([`property/view/${id}`]);
+      //     }
+      //   });
+      //   $('.table .editProperty').on('click', (e) => {
+      //     const id = $(e.target).attr('property-id');
+      //     if (id === undefined) {
+      //       return false;
+      //     } else {
+      //       this.router.navigate([`property/edit/${id}`]);
+      //     }
+      //   });
+      // }
     };
+    this.isLoading = false;
   }
 
   ngAfterViewInit() {
     this.dtTrigger.next();
+    this.isloading.emit(false);
   }
 
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
   onDeleteProperty(id) {
     Swal.fire({
       title: 'Are you sure?',
@@ -117,10 +152,15 @@ export class DatatableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onViewProperty(id) {
-    this.router.navigate([`property/view/${id}`]);
-  }
-  onEditProperty(id) {
-    this.router.navigate([`property/edit/${id}`]);
+  // onViewProperty(id) {
+  //   console.log(id);
+  //   this.router.navigate([`property/view/${id}`]);
+  // }
+  // onEditProperty(id) {
+  //   console.log(id);
+  //   this.router.navigate([`property/edit/${id}`]);
+  // }
+  testClick(id) {
+    console.log(id);
   }
 }

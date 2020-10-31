@@ -20,7 +20,6 @@ export class AddRentComponent implements OnInit {
   propertyData = null;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private service: GeneralService) {
-    console.log(this.route.snapshot.routeConfig.path);
     if (this.route.snapshot.routeConfig.path === 'edit/:id') {
       this.isEdit = true;
     }
@@ -47,7 +46,6 @@ export class AddRentComponent implements OnInit {
       this.setInitialValue();
     }
     this.service.getPropertyListByState(7).subscribe(data => {
-      console.log(data.data);
       this.propertyData = data.data;
     });
   }

@@ -1,19 +1,25 @@
 <div class="container-fluid">
   <!-- breadCrums -->
   <app-page-title
-    title="Property Name"
+    *ngIf="!isloading"
+    title="{{ data.PropertyName }}"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
 
-  <div class="card-box">
+  <div class="card-box" *ngIf="!isloading">
     <ngb-tabset justify="justified" type="pills">
       <ngb-tab title="Property" class="nav-item">
         <ng-template ngbTabContent class="nav-item">
-          <app-view-property propertyId="{{ propertyID }}"></app-view-property>
+          <app-view-property
+            propertyId="{{ propertyID }} "
+            [data]="data"
+          ></app-view-property>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Alert" class="nav-item">
-        <ng-template ngbTabContent> </ng-template>
+        <ng-template ngbTabContent
+          ><app-coming-soon></app-coming-soon>
+        </ng-template>
       </ngb-tab>
       <ngb-tab title="Photographs" class="nav-item">
         <ng-template ngbTabContent
@@ -24,7 +30,9 @@
       <ngb-tab title="Tax" class="nav-item">
         <ng-template ngbTabContent class="nav-item">
           <div class="row">
-            <div class="col-md-8"></div>
+            <div class="col-md-8">
+              <app-view-tax propertyID="{{ propertyID }}"></app-view-tax>
+            </div>
             <div class="col-md-4">
               <app-add-tax propertyID="{{ propertyID }}"> </app-add-tax>
             </div>
@@ -37,14 +45,23 @@
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Maintenance" class="nav-item">
-        <ng-template ngbTabContent> </ng-template>
+        <ng-template ngbTabContent
+          ><app-coming-soon></app-coming-soon>
+        </ng-template>
       </ngb-tab>
       <ngb-tab title="Legal Case" class="nav-item">
-        <ng-template ngbTabContent> </ng-template>
+        <ng-template ngbTabContent
+          ><app-coming-soon></app-coming-soon>
+        </ng-template>
       </ngb-tab>
       <ngb-tab title="Trust" class="nav-item">
-        <ng-template ngbTabContent> </ng-template>
+        <ng-template ngbTabContent
+          ><app-coming-soon></app-coming-soon>
+        </ng-template>
       </ngb-tab>
     </ngb-tabset>
+  </div>
+  <div class="card-disabled" *ngIf="isloading">
+    <div class="card-portlets-loader"></div>
   </div>
 </div>

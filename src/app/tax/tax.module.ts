@@ -1,3 +1,4 @@
+import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddTaxComponent } from './add-tax/add-tax.component';
@@ -11,8 +12,8 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FileUploadModule
+    FileUploadModule, DataTablesModule
   ],
-  exports: [AddTaxComponent,ViewTaxComponent]
+  exports: [AddTaxComponent, ViewTaxComponent]
 })
 export class TaxModule { }
