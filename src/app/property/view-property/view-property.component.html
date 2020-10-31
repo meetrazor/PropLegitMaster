@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
     <div class="col-12" *ngIf="loading">
-      <table width="50%">
+      <table width="100%">
         <tr>
           <td colspan="2">
             <div class="border-bottom">
@@ -10,101 +10,101 @@
           </td>
         </tr>
         <tr *ngIf="data.PropertyName">
-          <td>Property Name:</td>
+          <th>Property Name:</th>
           <td>{{ data.PropertyName }}</td>
         </tr>
         <tr *ngIf="data.BuildingNo">
-          <td>Building No:</td>
+          <th>Building No:</th>
           <td>{{ data.BuildingNo }}</td>
         </tr>
         <tr *ngIf="data.BuildingName">
-          <td>Building Name:</td>
+          <th>Building Name:</th>
           <td>{{ data.BuildingName }}</td>
         </tr>
         <tr *ngIf="data.CitySurveyNo">
-          <td>CitySurvey No:</td>
+          <th>CitySurvey No:</th>
           <td>{{ data.CitySurveyNo }}</td>
         </tr>
         <tr *ngIf="data.CitySurveyOffice">
-          <td>CitySurveyOffice:</td>
+          <th>CitySurveyOffice:</th>
           <td>{{ data.CitySurveyOffice }}</td>
         </tr>
         <tr *ngIf="data.CityWardNo">
-          <td>CityWardNo:</td>
+          <th>CityWardNo:</th>
           <td>{{ data.CityWardNo }}</td>
         </tr>
         <tr *ngIf="data.CityWardName">
-          <td>CityWardName:</td>
+          <th>CityWardName:</th>
           <td>{{ data.CityWardName }}</td>
         </tr>
         <tr *ngIf="data.SheetNumber">
-          <td>SheetNumber :</td>
+          <th>SheetNumber :</th>
           <td>{{ data.SheetNumber }}</td>
         </tr>
 
         <tr *ngIf="data.SurveyNo">
-          <td>Survey No:</td>
+          <th>Survey No:</th>
           <td>{{ data.SurveyNo }}</td>
         </tr>
         <tr *ngIf="data.TPNo">
-          <td>TPNo:</td>
+          <th>TPNo:</th>
           <td>{{ data.TPNo }}</td>
         </tr>
         <tr *ngIf="data.FPNo">
-          <td>FPNo:</td>
+          <th>FPNo:</th>
           <td>{{ data.FPNo }}</td>
         </tr>
         <tr *ngIf="data.PostalAddress">
-          <td>PostalAddress:</td>
+          <th>PostalAddress:</th>
           <td>{{ data.PostalAddress }}</td>
         </tr>
         <tr *ngIf="data.PinCode">
-          <td>PinCode:</td>
+          <th>PinCode:</th>
           <td>{{ data.PinCode }}</td>
         </tr>
         <tr *ngIf="data.Description">
-          <td>Description:</td>
+          <th>Description:</th>
           <td>{{ data.Description }}</td>
         </tr>
         <tr *ngIf="data.LandSize">
-          <td>LandSize:</td>
+          <th>LandSize:</th>
           <td>{{ data.LandSize }}</td>
         </tr>
         <tr *ngIf="data.WaterAvailability">
-          <td>WaterAvailability:</td>
+          <th>WaterAvailability:</th>
           <td>{{ data.WaterAvailability }}</td>
         </tr>
         <tr *ngIf="data.StatusOfElectricity">
-          <td>StatusOfElectricity:</td>
+          <th>StatusOfElectricity:</th>
           <td>{{ data.StatusOfElectricity }}</td>
         </tr>
         <tr *ngIf="data.AgeOfProperty">
-          <td>AgeOfProperty:</td>
+          <th>AgeOfProperty:</th>
           <td>{{ data.AgeOfProperty }}</td>
         </tr>
         <tr *ngIf="data.NoOfBHK">
-          <td>NoOfBHK:</td>
+          <th>NoOfBHK:</th>
           <td>{{ data.NoOfBHK }}</td>
         </tr>
         <tr *ngIf="data.FurnishType">
-          <td>FurnishType:</td>
+          <th>FurnishType:</th>
           <td>{{ data.FurnishType }}</td>
         </tr>
 
         <tr *ngIf="data.VillageName">
-          <td>Village :</td>
+          <th>Village :</th>
           <td>{{ data.VillageName }}</td>
         </tr>
         <tr *ngIf="data.TalukaName">
-          <td>Taluka :</td>
+          <th>Taluka :</th>
           <td>{{ data.TalukaName }}</td>
         </tr>
         <tr *ngIf="data.DistrictName">
-          <td>District :</td>
+          <th>District :</th>
           <td>{{ data.DistrictName }}</td>
         </tr>
         <tr *ngIf="data.StateName">
-          <td>State :</td>
+          <th>State :</th>
           <td>{{ data.StateName }}</td>
         </tr>
       </table>
@@ -118,9 +118,9 @@
       <div class="border-bottom">
         <h5 class="text-info">Ownership</h5>
       </div>
-      <small><b>OwnerName: </b>{{ item.OwnerName }}</small
-      ><br />
-      <small><b>Since: </b>{{ item.SinceFrom | date }}</small>
+      <b>OwnerName: </b>{{ item.OwnerName }}
+      <br />
+      <b>Since: </b>{{ item.SinceFrom | date }}
     </ng-container>
   </div>
 
@@ -134,14 +134,13 @@
         </div>
 
         <div>
-          <small><b>InChargeName: </b>{{ item.InChargeName }}</small
-          ><br />
-          <small><b>MobileNo: </b>{{ item.MobileNo }}</small
-          ><br />
-          <small><b>Since: </b>{{ item.InChargeFromDate | date }}</small
-          ><br />
-          <small><b>Email: </b>{{ item.Email }}</small
-          ><br />
+          <b>InChargeName: </b> {{ item.InChargeName }}
+          <br />
+          <b>MobileNo: </b>{{ item.MobileNo }}<br />
+          <b>Since: </b>{{ item.InChargeFromDate | date }}
+          <br />
+          <b>Email: </b>{{ item.Email }}
+          <br />
         </div>
       </ng-container>
     </div>

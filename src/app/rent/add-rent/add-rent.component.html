@@ -340,22 +340,17 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div class="row" *ngIf="!isEdit">
-                  <div class="col-md-6 mb-3">
+                  <div class="pb-3">
                     <button
+                      *ngIf="!isEdit"
                       class="btn btn-primary waves-effect waves-light btn-block"
                       type="submit"
                     >
                       Add Tenant
                     </button>
-                  </div>
-                </div>
 
-                <div class="row" *ngIf="isEdit">
-                  <div class="col-md-6 mb-3">
                     <button
+                      *ngIf="isEdit"
                       class="btn btn-primary waves-effect waves-light btn-block"
                       type="submit"
                     >
