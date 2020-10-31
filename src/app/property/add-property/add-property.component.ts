@@ -40,8 +40,8 @@ export class AddPropertyComponent implements OnInit {
       ]),
       PropertyTypeID: new FormControl('', Validators.required),
       PropertyName: new FormControl('', Validators.required),
-      TalukaID:  new FormControl('', Validators.required),
-      VillageID:  new FormControl('', Validators.required),
+      TalukaID: new FormControl('', Validators.required),
+      VillageID: new FormControl('', Validators.required),
       DistrictID: new FormControl('', Validators.required),
       StateID: new FormControl('', Validators.required),
       CreatedBy: '',
@@ -82,65 +82,65 @@ export class AddPropertyComponent implements OnInit {
   }
   ChangeState(e) {
     this.service.districts(this.myForm.controls.StateID.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              if (data.error) {
-                Swal.fire({
-                  title: data.error_code,
-                  text: data.message,
-                  type: 'error'
-                });
-                return;
-              } else {
-                this.DistrictList = data.data;
-                if (this.DistrictList.length > 0) {
-                this.myForm.controls.DistrictID.enable();
-                } else {
-                this.myForm.controls.DistrictID.disable();
-                }
-              }
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
             });
+            return;
+          } else {
+            this.DistrictList = data.data;
+            if (this.DistrictList.length > 0) {
+              this.myForm.controls.DistrictID.enable();
+            } else {
+              this.myForm.controls.DistrictID.disable();
+            }
+          }
+        });
   }
 
-   handleChange() {
-     if (this.myForm.controls.PropertyTypeID.value == 1 || this.myForm.controls.PropertyTypeID.value == 3) {
-       this.myForm.controls.TPNo.enable();
-       this.myForm.controls.FPNo.enable();
-       this.myForm.controls.SurveyNo.enable();
+  handleChange() {
+    if (this.myForm.controls.PropertyTypeID.value == 1 || this.myForm.controls.PropertyTypeID.value == 3) {
+      this.myForm.controls.TPNo.enable();
+      this.myForm.controls.FPNo.enable();
+      this.myForm.controls.SurveyNo.enable();
 
-       this.myForm.controls.CitySurveyNo.disable();
-       this.myForm.controls.CitySurveyOffice.disable();
-       this.myForm.controls.CityWardNo.disable();
-       this.myForm.controls.CityWardName.disable();
-       this.myForm.controls.SheetNumber.disable();
-       this.myForm.controls.BuildingNo.disable();
-       this.myForm.controls.BuildingName.disable();
-     } else if (this.myForm.controls.types.value == 'surveyno') {
-       this.myForm.controls.TPNo.enable();
-       this.myForm.controls.FPNo.enable();
-       this.myForm.controls.BuildingNo.enable();
-       this.myForm.controls.BuildingName.enable();
-       this.myForm.controls.SurveyNo.enable();
-       this.myForm.controls.CitySurveyNo.disable();
-       this.myForm.controls.CitySurveyOffice.disable();
-       this.myForm.controls.CityWardNo.disable();
-       this.myForm.controls.CityWardName.disable();
-       this.myForm.controls.SheetNumber.disable();
-     } else if (this.myForm.controls.types.value == 'citysurveyno') {
-       this.myForm.controls.CitySurveyNo.enable();
-       this.myForm.controls.CitySurveyOffice.enable();
-       this.myForm.controls.CityWardNo.enable();
-       this.myForm.controls.CityWardName.enable();
-       this.myForm.controls.SheetNumber.enable();
-       this.myForm.controls.TPNo.disable();
-       this.myForm.controls.FPNo.disable();
-       this.myForm.controls.BuildingNo.disable();
-       this.myForm.controls.BuildingName.disable();
-       this.myForm.controls.SurveyNo.disable();
-     }
-     this.submitted = false;
-   }
+      this.myForm.controls.CitySurveyNo.disable();
+      this.myForm.controls.CitySurveyOffice.disable();
+      this.myForm.controls.CityWardNo.disable();
+      this.myForm.controls.CityWardName.disable();
+      this.myForm.controls.SheetNumber.disable();
+      this.myForm.controls.BuildingNo.disable();
+      this.myForm.controls.BuildingName.disable();
+    } else if (this.myForm.controls.types.value == 'surveyno') {
+      this.myForm.controls.TPNo.enable();
+      this.myForm.controls.FPNo.enable();
+      this.myForm.controls.BuildingNo.enable();
+      this.myForm.controls.BuildingName.enable();
+      this.myForm.controls.SurveyNo.enable();
+      this.myForm.controls.CitySurveyNo.disable();
+      this.myForm.controls.CitySurveyOffice.disable();
+      this.myForm.controls.CityWardNo.disable();
+      this.myForm.controls.CityWardName.disable();
+      this.myForm.controls.SheetNumber.disable();
+    } else if (this.myForm.controls.types.value == 'citysurveyno') {
+      this.myForm.controls.CitySurveyNo.enable();
+      this.myForm.controls.CitySurveyOffice.enable();
+      this.myForm.controls.CityWardNo.enable();
+      this.myForm.controls.CityWardName.enable();
+      this.myForm.controls.SheetNumber.enable();
+      this.myForm.controls.TPNo.disable();
+      this.myForm.controls.FPNo.disable();
+      this.myForm.controls.BuildingNo.disable();
+      this.myForm.controls.BuildingName.disable();
+      this.myForm.controls.SurveyNo.disable();
+    }
+    this.submitted = false;
+  }
 
   ChangePropertyType(e) {
 
@@ -152,7 +152,7 @@ export class AddPropertyComponent implements OnInit {
     this.handleChange();
   }
 
-ChangeSurveyType(e) {
+  ChangeSurveyType(e) {
     if (this.myForm.controls.types.value === 'citysurveyno') {
       this.IsCitySurvey = true;
     }
@@ -162,13 +162,13 @@ ChangeSurveyType(e) {
     }
     this.handleChange();
   }
-save() {
-  this.handleChange();
-  this.submitted = true;
-  if (this.myForm.invalid) {
-    return;
-  }
-  this.service.addproperty(this.myForm.value)
+  save() {
+    this.handleChange();
+    this.submitted = true;
+    if (this.myForm.invalid) {
+      return;
+    }
+    this.service.addproperty(this.myForm.value)
       .pipe(first())
       .subscribe(
         data => {
@@ -190,8 +190,8 @@ save() {
             });
           }
         });
-}
-fetchpropertytype() {
+  }
+  fetchpropertytype() {
     this.service.propertytype()
       .pipe(first())
       .subscribe(
@@ -209,67 +209,67 @@ fetchpropertytype() {
         });
   }
 
-fetchstatelist() {
+  fetchstatelist() {
     this.service.fetchstatelist()
-    .pipe(first())
-    .subscribe(
-      data => {
-        if (data.error) {
-          Swal.fire({
-            title: data.error_code,
-            text: data.message,
-            type: 'error'
-          });
-          return;
-        } else {
-          this.StateList = data.data;
-        }
-      });
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+            return;
+          } else {
+            this.StateList = data.data;
+          }
+        });
     this.myForm.controls.DistrictID.disable();
   }
 
-initOwner() {
+  initOwner() {
     return this.Fb.group({
       OwnerName: new FormControl(''),
       SinceFrom: new FormControl('')
     });
   }
-initIncharge() {
+  initIncharge() {
     return this.Fb.group({
       InChargeName: new FormControl(''),
       Designation: new FormControl(''),
       MobileNo: new FormControl('', [Validators.maxLength(10), Validators.minLength(10)]),
-      Email: new FormControl('', Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/) ),
+      Email: new FormControl('', Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)),
       Address: new FormControl(''),
       InChargeFromDate: new FormControl(''),
     });
   }
-addOwner() {
+  addOwner() {
     const control = this.myForm.controls.OwnerShip as FormArray;
     control.push(this.initOwner());
   }
 
-removeOwner(i: number) {
+  removeOwner(i: number) {
     const control = this.myForm.controls.OwnerShip as FormArray;
     control.removeAt(i);
   }
 
-addIncharge() {
+  addIncharge() {
     const control = this.myForm.controls.InCharge as FormArray;
     control.push(this.initIncharge());
   }
-removeIncharge(i: number) {
+  removeIncharge(i: number) {
     const control = this.myForm.controls.InCharge as FormArray;
     control.removeAt(i);
   }
-selectEvent(item) {
+  selectEvent(item) {
     // do something with selected item
     this.myForm.controls.VillageID.setValue(item.VillageId);
     this.myForm.controls.DistrictID.setValue(item.DistrictId);
     this.myForm.controls.TalukaID.setValue(item.TalukaId);
     this.myForm.controls.StateID.setValue(item.stateID);
   }
-fetcharea(search) {
+  fetcharea(search) {
     this.service.area(search)
       .pipe(first())
       .subscribe(
@@ -281,43 +281,51 @@ fetcharea(search) {
           }
         });
   }
-onChangeSearch(search: string) {
+  onChangeSearch(search: string) {
     //  fetch remote data from here
     //  And reassign the 'data' which is binded to 'data' property.
 
     if (!this.myForm.controls.StateID.value) {
-     alert('select State');
-     return;
+      Swal.fire({
+        title: 'Error',
+        text: 'Please Select State',
+        type: 'error'
+      });
+      return;
     }
 
     if (!this.myForm.controls.DistrictID.value) {
-     alert('select district');
-     return;
+      Swal.fire({
+        title: 'Error',
+        text: 'Please Select District',
+        type: 'error'
+      });
+      return;
     }
     if (search.length >= 3) {
-    this.service.areabystateid(this.myForm.controls.StateID.value, this.myForm.controls.DistrictID.value, search)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            return;
-          } else {
-            this.areas = data.data;
-          }
-        });
+      this.service.areabystateid(this.myForm.controls.StateID.value, this.myForm.controls.DistrictID.value, search)
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data.error) {
+              return;
+            } else {
+              this.areas = data.data;
+            }
+          });
     } else if (search.length === 0) {
       this.areas = null;
     }
   }
-onFocused(e) {
+  onFocused(e) {
   }
   get f() { return this.myForm.controls; }
 
   isValid(event, length) {
     if (((event.keyCode > 47 && event.keyCode < 58) || (event.keyCode > 64 && event.keyCode < 91) ||
-    (event.keyCode > 96 && event.keyCode < 123) ||
-    event.key == '/' || event.key == '.' || event.key === '+' || event.key == '-') && event.target.value.length < length) {
-    { }
+      (event.keyCode > 96 && event.keyCode < 123) ||
+      event.key == '/' || event.key == '.' || event.key === '+' || event.key == '-') && event.target.value.length < length) {
+      { }
     } else {
       return false;
     }
@@ -333,6 +341,6 @@ onFocused(e) {
   GoBack() {
     this.router.navigate(['property']);
   }
-  }
+}
 
 

@@ -36,7 +36,7 @@ export class AddRentComponent implements OnInit {
       PropertySize: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       MonthlyRent: new FormControl('', Validators.required),
       RentedSpace: new FormControl('Whole', Validators.required),
-      RentedPart: new FormControl(null, Validators.required),
+      RentedPart: new FormControl(null),
       AdvanceDeposite: new FormControl(null, Validators.required),
       ContractMonths: new FormControl(null, Validators.required),
       ContractStartDate: new FormControl('', Validators.required),

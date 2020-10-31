@@ -38,11 +38,14 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
         }, {
           title: 'Tenant Address', data: 'TenantAddress',
         }, {
+          title: 'Contract Months', data: 'ContractMonths',
+        },
+        {
           title: 'Contract Start Date', data: 'ContractStartDate', render: ((data) => {
             return this.datepipe.transform(data, 'MMM, dd yyyy');
           })
         }, {
-          title: 'Contract End Date', data: 'ContractEndDate', render: ((data) => {
+          title: 'Rent Due Date:', data: 'ContractEndDate', render: ((data) => {
             return this.datepipe.transform(data, 'MMM, dd yyyy');
           })
         }
