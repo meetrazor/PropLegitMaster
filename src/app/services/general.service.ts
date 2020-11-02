@@ -14,8 +14,8 @@ const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
 // const baseurl = `http://localhost:3000/`;
-const baseurl = `http://devapi.proplegit.com/`;
-// const baseurl = `http://qaapi.proplegit.com/`;
+// const baseurl = `http://devapi.proplegit.com/`;
+const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
