@@ -1,3 +1,4 @@
+import { GeneralService } from 'src/app/services/general.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
@@ -10,11 +11,12 @@ export class DashboardComponent implements OnInit {
   hoveredDate: NgbDate;
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
-
+  data: any;
   hidden: boolean;
   selected: any;
   color: string;
-  isdropdownShow : boolean = false;
+  isdropdownShow: boolean = false;
+  isLoading: boolean;
   @Input() fromDate: Date;
   @Input() toDate: Date;
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
@@ -23,9 +25,14 @@ export class DashboardComponent implements OnInit {
 
   // Select2 Dropdown
   selectValue: string[];
-  constructor() { }
+  constructor(private service: GeneralService) { }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.service.getDashboard().subscribe((res) => {
+      this.data = res.data[0][0];
+      this.isLoading = false;
+    });
     this.selected = '';
     this.hidden = true;
   }

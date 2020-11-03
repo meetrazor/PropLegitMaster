@@ -4,10 +4,15 @@
     <div class="container-fluid">
       <!-- start page title -->
       <app-page-title
+        *ngIf="!isUpdate"
         title="Add New Property"
         [breadcrumbItems]="breadCrumbItems"
       ></app-page-title>
-
+      <app-page-title
+        *ngIf="isUpdate"
+        title="Edit Property"
+        [breadcrumbItems]="breadCrumbItems"
+      ></app-page-title>
       <!-- end page title -->
 
       <div class="row">
@@ -26,7 +31,7 @@
                 <div class="pn-main">
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="">States</label>
+                      <label for="">States*</label>
                       <select
                         class="custom-select"
                         formControlName="StateID"
@@ -54,7 +59,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">Districts</label>
+                      <label for="">Districts*</label>
                       <select
                         class="custom-select"
                         formControlName="DistrictID"
@@ -81,10 +86,11 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="">Village/Pincode</label>
+                      <label for="">Village/Pincode*</label>
                       <div class="form-group">
                         <ng-autocomplete
                           [data]="areas"
+                          [initialValue]="initialValue"
                           [searchKeyword]="keyword"
                           placeHolder="Enter Village or Pincode"
                           (selected)="selectEvent($event)"
@@ -120,7 +126,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">PropertyType</label>
+                      <label for="">PropertyType*</label>
                       <select
                         class="custom-select"
                         formControlName="PropertyTypeID"
@@ -147,11 +153,12 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">Property Name</label>
+                      <label for="">Property Name*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Property Name"
                         formControlName="PropertyName"
+                        maxlength="55"
                         [ngClass]="{
                           'is-invalid': submitted && f.PropertyName.errors
                         }"
@@ -192,13 +199,14 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && !IsCitySurvey"
                     >
-                      <label for="">Building No</label>
+                      <label for="">Building No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Building No"
                         [ngClass]="{
                           'is-invalid': submitted && f.BuildingNo.errors
                         }"
+                        maxlength="25"
                         formControlName="BuildingNo"
                       />
                       <div
@@ -215,7 +223,7 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && !IsCitySurvey"
                     >
-                      <label for="">Building Name</label>
+                      <label for="">Building Name*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Building Name"
@@ -223,6 +231,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.BuildingName.errors
                         }"
+                        maxlength="25"
                       />
                       <div
                         *ngIf="submitted && f.BuildingName.errors"
@@ -238,7 +247,7 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && IsCitySurvey"
                     >
-                      <label for="">Sheet No</label>
+                      <label for="">Sheet No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Sheet No"
@@ -246,6 +255,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.SheetNumber.errors
                         }"
+                        maxlength="25"
                       />
                       <div
                         *ngIf="submitted && f.SheetNumber.errors"
@@ -261,7 +271,7 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && IsCitySurvey"
                     >
-                      <label for="">City Survey No</label>
+                      <label for="">City Survey No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter City Survey No"
@@ -271,6 +281,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.CitySurveyNo.errors
                         }"
+                        maxlength="25"
                       />
                       <div
                         *ngIf="submitted && f.CitySurveyNo.errors"
@@ -286,7 +297,7 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && IsCitySurvey"
                     >
-                      <label for="">City Survey Office</label>
+                      <label for="">City Survey Office*</label>
                       <input
                         class="form-control"
                         placeholder="Enter City Survey Office"
@@ -294,6 +305,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.CitySurveyOffice.errors
                         }"
+                        maxlength="25"
                       />
                       <div
                         *ngIf="submitted && f.CitySurveyOffice.errors"
@@ -309,7 +321,7 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && IsCitySurvey"
                     >
-                      <label for="">City Ward No</label>
+                      <label for="">City Ward No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter City Ward No"
@@ -317,6 +329,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.CityWardNo.errors
                         }"
+                        maxlength="25"
                       />
                       <div
                         *ngIf="submitted && f.CityWardNo.errors"
@@ -332,13 +345,14 @@
                       class="form-group col-md-6"
                       *ngIf="!IsOpenLand && IsCitySurvey"
                     >
-                      <label for="">City Ward Name</label>
+                      <label for="">City Ward Name*</label>
                       <input
                         class="form-control"
                         placeholder="Enter City Ward Name"
                         [ngClass]="{
                           'is-invalid': submitted && f.CityWardName.errors
                         }"
+                        maxlength="25"
                         formControlName="CityWardName"
                       />
                       <div
@@ -352,7 +366,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                      <label for="">Revenue Office Type </label>
+                      <label for="">Revenue Office Type*</label>
                       <select
                         class="custom-select"
                         [ngClass]="{
@@ -385,7 +399,7 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">TP No</label>
+                      <label for="">TP No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter TP No"
@@ -408,7 +422,7 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">FP No</label>
+                      <label for="">FP No*</label>
                       <input
                         class="form-control"
                         placeholder="Enter FP No"
@@ -431,7 +445,7 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">SurveyNo</label>
+                      <label for="">SurveyNo*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Survey No"
@@ -439,7 +453,7 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.SurveyNo.errors
                         }"
-                        (keypress)="isValid($event, 25)"
+                        (keypress)="isValid($event, 30)"
                         (paste)="(false)"
                       />
                       <div
@@ -459,7 +473,7 @@
                         myForm.controls['SurveyNo'].valid
                       "
                     >
-                      <label for="">Milkat No(Property Id)</label>
+                      <label for="">Milkat No(Property Id)*</label>
                       <input
                         class="form-control"
                         placeholder="Enter Milkat No (Property Id)"
@@ -468,6 +482,9 @@
                         [ngClass]="{
                           'is-invalid': submitted && f.milkatno_propId.errors
                         }"
+                        (keydown)="ageOfProperty($event)"
+                        min="0"
+                        maxlength="10"
                       />
                       <div
                         *ngIf="submitted && f.milkatno_propId.errors"
@@ -495,6 +512,7 @@
                         class="form-control"
                         placeholder="Enter Landsize"
                         formControlName="LandSize"
+                        maxlength="10"
                       />
                     </div>
 
@@ -504,6 +522,7 @@
                         class="form-control"
                         placeholder="Water Availability"
                         formControlName="WaterAvailability"
+                        maxlength="10"
                       />
                     </div>
 
@@ -547,6 +566,7 @@
                         class="form-control"
                         rows="2"
                         formControlName="Description"
+                        maxlength="250"
                       ></textarea>
                     </div>
 
@@ -556,6 +576,7 @@
                         class="form-control"
                         rows="2"
                         formControlName="PostalAddress"
+                        maxlength="250"
                       ></textarea>
                     </div>
 
@@ -568,6 +589,9 @@
                         placeholder="Enter Age of property"
                         type="number"
                         formControlName="AgeOfProperty"
+                        min="0"
+                        maxlength="3"
+                        (keydown)="ageOfProperty($event)"
                       />
                     </div>
 
@@ -608,7 +632,32 @@
                               type="text"
                               class="form-control"
                               formControlName="OwnerName"
+                              maxlength="25"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted &&
+                                  f.OwnerShip['controls'][i]['controls']
+                                    .OwnerName.errors
+                              }"
+                              pattern="[a-zA-Z][a-zA-Z ]+"
                             />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.OwnerShip['controls'][i]['controls'].OwnerName
+                                  .errors
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.OwnerShip['controls'][i]['controls']
+                                    .OwnerName.errors.pattern
+                                "
+                              >
+                                Only Alpha letters Allowed
+                              </div>
+                            </div>
                           </div>
                           <div class="form-group col-md-6">
                             <label>Since From</label>
@@ -676,7 +725,32 @@
                               type="text"
                               class="form-control"
                               formControlName="InChargeName"
+                              [ngClass]="{
+                                'is-invalid':
+                                  submitted &&
+                                  f.InCharge['controls'][i]['controls']
+                                    .InChargeName.errors
+                              }"
+                              maxlength="25"
+                              pattern="[a-zA-Z][a-zA-Z ]+"
                             />
+                            <div
+                              *ngIf="
+                                submitted &&
+                                f.InCharge['controls'][i]['controls']
+                                  .InChargeName.errors
+                              "
+                              class="invalid-feedback"
+                            >
+                              <div
+                                *ngIf="
+                                  f.InCharge['controls'][i]['controls']
+                                    .InChargeName.errors.pattern
+                                "
+                              >
+                                Only Alpha letters Allowed
+                              </div>
+                            </div>
                           </div>
                           <div class="form-group col-md-6">
                             <label>Designation</label>
@@ -684,6 +758,7 @@
                               type="text"
                               class="form-control"
                               formControlName="Designation"
+                              maxlength="25"
                             />
                           </div>
 
@@ -740,6 +815,7 @@
                               type="text"
                               class="form-control"
                               formControlName="Address"
+                              maxlength="55"
                             />
                           </div>
                           <div class="form-group col-md-6">
@@ -776,9 +852,25 @@
                       aria-expanded="true"
                       aria-controls="collapseExample"
                       type="submit"
+                      *ngIf="!isUpdate"
                     >
                       + Add Property
                     </button>
+                    <button
+                      class="btn btn-primary waves-effect waves-light btn-sm"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#collapseExample"
+                      aria-expanded="true"
+                      aria-controls="collapseExample"
+                      type="submit"
+                      *ngIf="isUpdate"
+                    >
+                      Edit Property
+                    </button>
+                  </div>
+                  <div class="card-disabled" *ngIf="isLoading">
+                    <div class="card-portlets-loader"></div>
                   </div>
 
                   <!-- <div class="text-center button-list mt-3">

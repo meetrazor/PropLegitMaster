@@ -18,9 +18,9 @@ export class AddPhotographComponent implements OnInit {
   constructor(private generalService: GeneralService) {
     this.photographForm = new FormGroup({
       FileName: new FormControl(null, Validators.required),
-      FileType: new FormControl(null, Validators.required),
+      FileType: new FormControl('', Validators.required),
       Description: new FormControl(null, Validators.required),
-      uploadfile: new FormControl(null)
+      uploadfile: new FormControl(null, Validators.required)
 
     });
   }
@@ -40,7 +40,7 @@ export class AddPhotographComponent implements OnInit {
 
     return input;
   }
-
+  get f() { return this.photographForm.controls; }
   onSubmit() {
     if (this.photographForm.valid) {
       // 1 is Property ID

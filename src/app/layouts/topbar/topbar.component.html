@@ -188,12 +188,13 @@
         aria-expanded="false"
       >
         <img
-          src="assets/images/users/user-1.jpg"
+          src="assets/images/users/user.png"
           alt="user-image"
           class="rounded-circle"
         />
-        <span class="pro-user-name ml-1">
-          Treasurer <i class="mdi mdi-chevron-down"></i>
+        <span class="pro-user-name ml-1" style="text-transform: capitalize">
+          {{ currentUser.FirstName }} {{ currentUser.LastName
+          }}<i class="mdi mdi-chevron-down"></i>
         </span>
       </a>
       <div

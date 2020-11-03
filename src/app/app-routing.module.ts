@@ -16,38 +16,39 @@ const routes: Routes = [
     path: 'property', component: LayoutComponent, loadChildren: () => import('./property/property.module')
       .then(m => m.PropertyModule), canActivate: [AuthGuard]
   },
+  // {
+  //   path: 'property-document', component: LayoutComponent, loadChildren: () => import('./property-document/property-document.module')
+  //     .then(m => m.PropertyDocumentModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'property-legal-case', component: LayoutComponent, loadChildren: () => import('./legal-case/legal-case.module')
+  //     .then(m => m.LegalCaseModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
+  //     .then(m => m.TenantModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'photograph', component: LayoutComponent, loadChildren: () => import('./photograph/photograph.module')
+  //     .then(m => m.PhotographModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'test', component: LayoutComponent, loadChildren: () => import('./pages/pages.module')
+  //     .then(m => m.PagesModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'tax', component: LayoutComponent, loadChildren: () => import('./tax/tax.module')
+  //     .then(m => m.TaxModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'lawyer', component: LayoutComponent, loadChildren: () => import('./lawyer/lawyer.module')
+  //     .then(m => m.LawyerModule), canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'rent', component: LayoutComponent, loadChildren: () => import('./rent/rent.module')
+  //     .then(m => m.RentModule), canActivate: [AuthGuard]
+  // },
   {
-    path: 'property-document', component: LayoutComponent, loadChildren: () => import('./property-document/property-document.module')
-      .then(m => m.PropertyDocumentModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'property-legal-case', component: LayoutComponent, loadChildren: () => import('./legal-case/legal-case.module')
-      .then(m => m.LegalCaseModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'tenant', component: LayoutComponent, loadChildren: () => import('./tenant/tenant.module')
-      .then(m => m.TenantModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'photograph', component: LayoutComponent, loadChildren: () => import('./photograph/photograph.module')
-      .then(m => m.PhotographModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'test', component: LayoutComponent, loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'tax', component: LayoutComponent, loadChildren: () => import('./tax/tax.module')
-      .then(m => m.TaxModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'lawyer', component: LayoutComponent, loadChildren: () => import('./lawyer/lawyer.module')
-      .then(m => m.LawyerModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'rent', component: LayoutComponent, loadChildren: () => import('./rent/rent.module')
-      .then(m => m.RentModule), canActivate: [AuthGuard]
-  }, {
     path: '**', component: CommingSoonComponent,
   }
 ];

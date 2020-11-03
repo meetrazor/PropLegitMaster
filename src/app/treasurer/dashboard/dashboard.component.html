@@ -4,7 +4,7 @@
     <div class="col-12">
       <div class="page-title-box">
         <div class="page-title-right">
-          <form class="form-inline">
+          <!-- <form class="form-inline">
             <div class="form-group mr-2">
               <div class="input-group">
                 <select
@@ -62,23 +62,20 @@
               </div>
             </div>
             <a href="javascript: void(0);" class="btn btn-blue btn-sm ml-2">
-              <!-- <i class="mdi mdi-autorenew"></i> --><i
-                _ngcontent-xpk-c6=""
-                class="mdi mdi-autorenew"
-              ></i>
+              <i _ngcontent-xpk-c6="" class="mdi mdi-autorenew"></i>
             </a>
-          </form>
+          </form> -->
         </div>
         <h4 class="page-title">AICC Dashboard</h4>
       </div>
     </div>
   </div>
   <!-- end page title -->
-  <div class="row">
+  <div class="row" *ngIf="!isLoading">
     <div class="col-12">
       <div class="card-box">
         <div class="row">
-          <div class="col-lg-6">
+          <!-- <div class="col-lg-6">
             <form class="form-inline">
               <div class="form-group">
                 <label for="inputPassword2" class="sr-only"
@@ -103,7 +100,7 @@
                 </select>
               </div>
             </form>
-          </div>
+          </div> -->
 
           <div class="col-lg-6">
             <div class="btn-group text-lg-right mt-3 mt-lg-0">
@@ -139,7 +136,12 @@
                   >Property</a
                 >
                 <a class="dropdown-item" href="#">Office</a>
-                <a class="dropdown-item" href="#" [routerLink]="['/lawyer/create']">Lawyer</a>
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  [routerLink]="['/lawyer/create']"
+                  >Lawyer</a
+                >
               </div>
             </div>
             <!-- end col-->
@@ -163,7 +165,7 @@
 
     <!-- end row -->
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!isLoading">
     <div class="col-md-6 col-xl-3">
       <div class="widget-rounded-circle card-box">
         <div class="row">
@@ -182,7 +184,9 @@
             <div class="text-right">
               <h3 class="mt-1">
                 &nbsp;<a class="text-body" href="pm-prop.html"
-                  ><span data-plugin="counterup">300</span></a
+                  ><span data-plugin="counterup">{{
+                    data.PropertyManaged
+                  }}</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -199,7 +203,9 @@
         <div class="mt-3">
           <h6 class="text-uppercase">
             <a class="text-body" href="pm-prop-doc-out.html"
-              >Outdated Records<span class="float-right">200</span></a
+              >Outdated Records<span class="float-right">{{
+                data.PropertyOutdated
+              }}</span></a
             >
           </h6>
           <div class="progress progress-sm mb-0">
@@ -212,7 +218,7 @@
               aria-valuemin="0"
               aria-valuemax="100"
             ></div>
-            <div
+            <!-- <div
               class="progress-bar bg-success"
               role="progressbar"
               style="width: 33%"
@@ -222,7 +228,7 @@
             ></div>
             <span class="sr-only"
               >100 Properties have up to date documents
-            </span>
+            </span> -->
           </div>
           <!-- <div class="progress progress-sm m-0">
                             <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">
@@ -309,7 +315,9 @@
             <div class="text-right">
               <h3 class="mt-1">
                 &nbsp;<a class="text-body" href="ts-l-sip-pn-p.html"
-                  ><span data-plugin="counterup">20</span></a
+                  ><span data-plugin="counterup">{{
+                    data.PropertyInRent
+                  }}</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -385,7 +393,9 @@
             <div class="text-right">
               <h3 class="text-dark mt-1">
                 <a href="ts-l-sip-tc.html" class="text-body">
-                  <span data-plugin="counterup">200</span></a
+                  <span data-plugin="counterup">{{
+                    data.PropertyTaxDue
+                  }}</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -441,7 +451,7 @@
 
   <!-- end row-->
 
-  <div class="row">
+  <div class="row" *ngIf="!isLoading">
     <div class="col-md-4 col-xl-4">
       <div class="widget-rounded-circle card-box">
         <div class="row">
@@ -512,7 +522,9 @@
             <div class="text-right">
               <h3 class="text-dark mt-1">
                 <a class="text-body" href="ts-l-sip-docs-new.html"
-                  ><span data-plugin="counterup">6</span></a
+                  ><span data-plugin="counterup">{{
+                    data.NewDocsReceived
+                  }}</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -611,4 +623,7 @@
     <!-- end col-->
   </div>
   <!-- container -->
+  <div class="card-disabled" *ngIf="isLoading">
+    <div class="card-portlets-loader"></div>
+  </div>
 </div>

@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/create', pathMatch: 'full' },
   { path: 'create', component: AddPropertyComponent },
   { path: 'view/:id', component: SinglePropertyViewComponent },
-  { path: 'edit/:id', component: EditPropertyComponent }
+  { path: 'edit/:id', component: AddPropertyComponent }
 ];
 
 @NgModule({

@@ -1,3 +1,4 @@
+import { CookieService } from './../../core/services/cookie.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
@@ -24,13 +25,14 @@ export class TopbarComponent implements OnInit {
   };
 
   openMobileMenu: boolean;
-
+  currentUser: any;
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, private service: GeneralService) { }
+  constructor(private router: Router, private service: GeneralService, private cookie: CookieService) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
     // get the notifications
     this._fetchNotifications();
     this.openMobileMenu = false;

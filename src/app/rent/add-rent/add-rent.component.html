@@ -1,150 +1,121 @@
-<div class="content">
-  <!-- Start Content-->
+<form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
   <div class="">
-    <!-- start page title -->
-    <!-- end page title -->
-    <div class="">
-      <div class="">
-        <div class="">
-          <div class="">
-            <div id="cardCollpase4" class="collapse pt-3 show">
-              <form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Tenant Name</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Tenant Name"
-                      formControlName="TenantName"
-                      type="text"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.TenantName.errors
-                      }"
-                    />
+    <div class="mb-3">
+      <h4 class="header-title">Tenant Name *</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Tenant Name"
+        formControlName="TenantName"
+        type="text"
+        [ngClass]="{
+          'is-invalid': submitted && f.TenantName.errors
+        }"
+        maxlength="25"
+      />
 
-                    <div
-                      *ngIf="submitted && f.TenantName.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.TenantName.errors.required">
-                        First Name is required
-                      </div>
-                      <div *ngIf="f.TenantName.errors.maxlength">
-                        First Name cannot exceed 25 characters.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <div *ngIf="submitted && f.TenantName.errors" class="invalid-feedback">
+        <div *ngIf="f.TenantName.errors.required">First Name is required</div>
+        <div *ngIf="f.TenantName.errors.maxlength">
+          First Name cannot exceed 25 characters.
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Address</h4>
-                    <textarea
-                      class="form-control"
-                      placeholder="Enter Address"
-                      formControlName="TenantAddress"
-                      rows="3"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.TenantAddress.errors
-                      }"
-                    ></textarea>
-                    <div
-                      *ngIf="submitted && f.TenantAddress.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.TenantAddress.errors.required">
-                        Address is required
-                      </div>
-                      <div *ngIf="f.TenantAddress.errors.maxlength">
-                        Address cannot exceed 255 characters.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Address *</h4>
+      <textarea
+        class="form-control"
+        placeholder="Enter Address"
+        formControlName="TenantAddress"
+        rows="3"
+        [ngClass]="{
+          'is-invalid': submitted && f.TenantAddress.errors
+        }"
+        maxlength="55"
+      ></textarea>
+      <div *ngIf="submitted && f.TenantAddress.errors" class="invalid-feedback">
+        <div *ngIf="f.TenantAddress.errors.required">Address is required</div>
+        <div *ngIf="f.TenantAddress.errors.maxlength">
+          Address cannot exceed 255 characters.
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Mobile No</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Mobile No"
-                      formControlName="TenantMobile"
-                      (keypress)="isValid($event)"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.TenantMobile.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.TenantMobile.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.TenantMobile.errors.required">
-                        Mobile Number is required
-                      </div>
-                      <div
-                        *ngIf="
-                          f.TenantMobile.errors.minlength ||
-                          f.TenantMobile.errors.maxlength
-                        "
-                      >
-                        Mobile Number must be 10 Digit Only
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">EmailId</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter EmailId"
-                      formControlName="TenantEmail"
-                      type="email"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.TenantEmail.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.TenantEmail.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.TenantEmail.errors.required">
-                        Email is required
-                      </div>
-                      <div *ngIf="f.TenantEmail.errors.pattern">
-                        Email must be a valid email address
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Mobile No *</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Mobile No"
+        formControlName="TenantMobile"
+        (keypress)="isValid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.TenantMobile.errors
+        }"
+        pattern="[789][0-9]{9}"
+      />
+      <div *ngIf="submitted && f.TenantMobile.errors" class="invalid-feedback">
+        <div *ngIf="f.TenantMobile.errors.required">
+          Mobile Number is required
+        </div>
+        <div *ngIf="f.TenantMobile.errors.pattern">
+          Mobile Number must be valid
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Email ID *</h4>
+      <input
+        class="form-control"
+        placeholder="Enter EmailId"
+        formControlName="TenantEmail"
+        type="email"
+        [ngClass]="{
+          'is-invalid': submitted && f.TenantEmail.errors
+        }"
+      />
+      <div *ngIf="submitted && f.TenantEmail.errors" class="invalid-feedback">
+        <div *ngIf="f.TenantEmail.errors.required">Email is required</div>
+        <div *ngIf="f.TenantEmail.errors.pattern">
+          Email must be a valid email address
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Property Size</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Property Size"
-                      formControlName="PropertySize"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.PropertySize.errors
-                      }"
-                    />
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Property Size (sqmtr)*</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Property Size"
+        formControlName="PropertySize"
+        type="number"
+        (keypress)="valid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.PropertySize.errors
+        }"
+        min="0"
+        maxlength="7"
+      />
 
-                    <div
-                      *ngIf="submitted && f.PropertySize.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.PropertySize.errors.required">
-                        Property Size is required
-                      </div>
-                      <div *ngIf="f.PropertySize.errors.maxlength">
-                        Property Size cannot exceed 50 characters.
-                      </div>
-                    </div>
-                  </div>
-                </div>
+      <div *ngIf="submitted && f.PropertySize.errors" class="invalid-feedback">
+        <div *ngIf="f.PropertySize.errors.required">
+          Property Size is required
+        </div>
+        <div *ngIf="f.PropertySize.errors.maxlength">
+          Property Size cannot exceed 50 characters.
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <!-- <div class="">
+  <!-- <div class="">
                   <div class="mb-3">
                     <span class="header-title">Rent Type</span>
                     <span>
@@ -175,197 +146,174 @@
                   </div>
                 </div> -->
 
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Advance Deposite (Rs.)</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Advance Deposite"
-                      formControlName="AdvanceDeposite"
-                      (keypress)="isValid($event)"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.AdvanceDeposite.errors
-                      }"
-                    />
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Advance Deposite (Rs.) *</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Advance Deposite"
+        formControlName="AdvanceDeposite"
+        (keypress)="isValid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.AdvanceDeposite.errors
+        }"
+      />
 
-                    <div
-                      *ngIf="submitted && f.AdvanceDeposite.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.AdvanceDeposite.errors.required">
-                        AdvanceDeposite is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Monthly Rent (Rs.)</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Monthly Rent"
-                      formControlName="MonthlyRent"
-                      (keypress)="isValid($event)"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.MonthlyRent.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.MonthlyRent.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.MonthlyRent.errors.required">
-                        MonthlyRent is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="">
-                  <div class="mb-3">
-                    <span class="header-title">Rented Space</span>
-                    <span
-                      ><input
-                        type="radio"
-                        formControlName="RentedSpace"
-                        value="Whole"
-                      />
-                      Whole</span
-                    >
-                    <span
-                      ><input
-                        type="radio"
-                        formControlName="RentedSpace"
-                        value="Part"
-                      />
-                      Part</span
-                    >
-                    <div
-                      *ngIf="submitted && f.RentedSpace.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.RentedSpace.errors.required">
-                        RentedSpace is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="" *ngIf="f.RentedSpace.value != 'Whole'">
-                  <div class="mb-3">
-                    <h4 class="header-title">Rented Part</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Rented Part"
-                      formControlName="RentedPart"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.RentedPart.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.RentedPart.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.RentedPart.errors.required">
-                        RentedPart is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Contract Months</h4>
-                    <input
-                      class="form-control"
-                      placeholder="Enter Contract Months"
-                      formControlName="ContractMonths"
-                      (keypress)="isValid($event)"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.ContractMonths.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.ContractMonths.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.ContractMonths.errors.required">
-                        ContractMonths is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Contract StartDate</h4>
-                    <input
-                      class="form-control"
-                      type="date"
-                      formControlName="ContractStartDate"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.ContractStartDate.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.ContractStartDate.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.ContractStartDate.errors.required">
-                        ContractStartDate is required
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="">
-                  <div class="mb-3">
-                    <h4 class="header-title">Rent Due Date:</h4>
-                    <input
-                      class="form-control"
-                      type="date"
-                      formControlName="ContractEndDate"
-                      [ngClass]="{
-                        'is-invalid': submitted && f.ContractEndDate.errors
-                      }"
-                    />
-                    <div
-                      *ngIf="submitted && f.ContractEndDate.errors"
-                      class="invalid-feedback"
-                    >
-                      <div *ngIf="f.ContractEndDate.errors.required">
-                        Rent Due Date: is required
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-3">
-                    <button
-                      *ngIf="!isEdit"
-                      class="btn btn-primary waves-effect waves-light btn-block"
-                      type="submit"
-                    >
-                      Add Tenant
-                    </button>
-
-                    <button
-                      *ngIf="isEdit"
-                      class="btn btn-primary waves-effect waves-light btn-block"
-                      type="submit"
-                    >
-                      Update Tenant
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <!-- end collapse-->
+      <div
+        *ngIf="submitted && f.AdvanceDeposite.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.AdvanceDeposite.errors.required">
+          AdvanceDeposite is required
         </div>
-        <!-- end card-body-->
       </div>
-      <!-- end card-->
     </div>
   </div>
-</div>
-<!-- container -->
+
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Monthly Rent (Rs.)*</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Monthly Rent"
+        formControlName="MonthlyRent"
+        (keypress)="isValid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.MonthlyRent.errors
+        }"
+      />
+      <div *ngIf="submitted && f.MonthlyRent.errors" class="invalid-feedback">
+        <div *ngIf="f.MonthlyRent.errors.required">MonthlyRent is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="mb-3">
+      <span class="header-title">Rented Space</span>
+      <span
+        ><input type="radio" formControlName="RentedSpace" value="Whole" />
+        Whole</span
+      >
+      <span
+        ><input type="radio" formControlName="RentedSpace" value="Part" />
+        Part</span
+      >
+      <div *ngIf="submitted && f.RentedSpace.errors" class="invalid-feedback">
+        <div *ngIf="f.RentedSpace.errors.required">RentedSpace is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" *ngIf="f.RentedSpace.value != 'Whole'">
+    <div class="mb-3">
+      <h4 class="header-title">Rented Part</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Rented Part"
+        formControlName="RentedPart"
+        [ngClass]="{
+          'is-invalid': submitted && f.RentedPart.errors
+        }"
+        maxlength="25"
+      />
+      <div *ngIf="submitted && f.RentedPart.errors" class="invalid-feedback">
+        <div *ngIf="f.RentedPart.errors.required">RentedPart is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Contract Months *</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Contract Months"
+        formControlName="ContractMonths"
+        (keypress)="isValid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.ContractMonths.errors
+        }"
+        maxlength="3"
+      />
+      <div
+        *ngIf="submitted && f.ContractMonths.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.ContractMonths.errors.required">
+          ContractMonths is required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Contract StartDate *</h4>
+      <input
+        class="form-control"
+        type="date"
+        formControlName="ContractStartDate"
+        [ngClass]="{
+          'is-invalid': submitted && f.ContractStartDate.errors
+        }"
+        (keypress)="callback()"
+        min="2000-01-01"
+        max="{{ maxDate | date: 'yyyy-MM-dd' }}"
+      />
+      <div
+        *ngIf="submitted && f.ContractStartDate.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.ContractStartDate.errors.required">
+          ContractStartDate is required
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Rent Due Date *</h4>
+      <input
+        class="form-control"
+        type="date"
+        formControlName="ContractEndDate"
+        [min]="f.ContractStartDate.value"
+        (keypress)="callback()"
+        [ngClass]="{
+          'is-invalid': submitted && f.ContractEndDate.errors
+        }"
+      />
+      <div
+        *ngIf="submitted && f.ContractEndDate.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.ContractEndDate.errors.required">
+          Rent Due Date: is required
+        </div>
+      </div>
+    </div>
+
+    <div class="pb-3">
+      <button
+        *ngIf="!isEdit"
+        class="btn btn-primary waves-effect waves-light btn-block"
+        type="submit"
+      >
+        Add Tenant
+      </button>
+
+      <button
+        *ngIf="isEdit"
+        class="btn btn-primary waves-effect waves-light btn-block"
+        type="submit"
+      >
+        Update Tenant
+      </button>
+    </div>
+    <div class="card-disabled" *ngIf="isLoading">
+      <div class="card-portlets-loader"></div>
+    </div>
+  </div>
+</form>

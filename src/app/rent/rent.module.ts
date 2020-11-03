@@ -1,3 +1,4 @@
+import { UIModule } from './../shared/ui/ui.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddRentComponent } from './add-rent/add-rent.component';
@@ -12,8 +13,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    RentRoutingModule,
-    AutocompleteLibModule
+    AutocompleteLibModule, UIModule
   ],
   exports: [AddRentComponent]
 })

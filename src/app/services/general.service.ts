@@ -14,8 +14,8 @@ const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
 // const baseurl = `http://localhost:3000/`;
-// const baseurl = `http://devapi.proplegit.com/`;
-const baseurl = `http://qaapi.proplegit.com/`;
+const baseurl = `http://devapi.proplegit.com/`;
+// const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -25,6 +25,7 @@ const stateWiseProperty = `${apiUrl}property/list`;
 const PropertyListByState = `${apiUrl}property/list/`;
 const deleteProperty = `${apiUrl}property/delete/`;
 const stateInfo = `${apiUrl}state/list`;
+const count = `${apiUrl}property/dashboard/count`;
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class GeneralService {
   }
   getUserID() {
     return this.userID;
+  }
+
+  getDashboard(): any {
+    return this.http.get(count, httpOptions);
   }
 
   setUserID(userid: number) {
@@ -78,7 +83,7 @@ export class GeneralService {
           return user;
         } else {
           this.user = user;
-          this.cookieService.setCookie('currentUser', JSON.stringify(user.data), 1);
+          this.cookieService.setCookie('currentUser', JSON.stringify(user.data[0]), 1);
           return user;
         }
       }));

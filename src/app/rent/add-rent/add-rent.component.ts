@@ -18,14 +18,22 @@ export class AddRentComponent implements OnInit {
   isEdit = false;
   urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
   propertyData = null;
+  minDate: Date;
+  maxDate: Date;
+  isLoading: boolean;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private service: GeneralService) {
     if (this.route.snapshot.routeConfig.path === 'edit/:id') {
       this.isEdit = true;
     }
   }
-
+  callback() {
+    return false;
+  }
   ngOnInit() {
+    this.isLoading = false;
+    this.maxDate = new Date();
+    this.minDate = new Date('2000-01-01');
     this.tenantForm = this.formBuilder.group({
       TenantName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
       TenantAddress: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -39,7 +47,7 @@ export class AddRentComponent implements OnInit {
       RentedPart: new FormControl(null),
       AdvanceDeposite: new FormControl(null, Validators.required),
       ContractMonths: new FormControl(null, Validators.required),
-      ContractStartDate: new FormControl('', Validators.required),
+      ContractStartDate: new FormControl('', [Validators.required]),
       ContractEndDate: new FormControl('', Validators.required),
     });
     if (this.isEdit === true) {
@@ -48,6 +56,23 @@ export class AddRentComponent implements OnInit {
     this.service.getPropertyListByState(7).subscribe(data => {
       this.propertyData = data.data;
     });
+  }
+
+  dateCheck() {
+
+  }
+
+  valid(e) {
+    if (!((e.keyCode > 95 && e.keyCode < 106)
+      || (e.keyCode > 47 && e.keyCode < 58)
+      || e.keyCode == 8)) {
+      return false;
+    }
+    if (e.target.value.length > 7) {
+      if (e.keyCode != 8) {
+        return false;
+      }
+    }
   }
 
   setInitialValue() {
@@ -80,8 +105,10 @@ export class AddRentComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.tenantForm.valid && this.isEdit === false) {
+      this.isLoading = true;
       this.service.addTenant(this.tenantForm.value, this.propertyId)
         .subscribe(data => {
+          this.isLoading = false;
           this.submitted = false;
           this.tenantForm.reset();
           if (data.status === 200) {
@@ -102,8 +129,10 @@ export class AddRentComponent implements OnInit {
           }
         });
     } else if (this.tenantForm.valid && this.isEdit === true) {
+      this.isLoading = true;
       this.service.updateTenant(this.tenantForm.value, this.route.snapshot.params.id)
         .subscribe(data => {
+          this.isLoading = false;
           if (data.status === 200) {
             Swal.fire({
               title: 'Updated',

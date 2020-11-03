@@ -1,3 +1,4 @@
+import { RentModule } from './../rent/rent.module';
 
 import { TreasurerModule } from './../treasurer/treasurer.module';
 import { PhotographModule } from './../photograph/photograph.module';
@@ -22,7 +23,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     PropertyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule,
+    AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule, RentModule
   ]
 })
 export class PropertyModule { }

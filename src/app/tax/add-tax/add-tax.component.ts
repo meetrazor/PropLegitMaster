@@ -17,8 +17,10 @@ export class AddTaxComponent implements OnInit {
   error = '';
   isLoading = false;
   userId: number;
+  maxDate: Date;
   constructor(private formBuilder: FormBuilder, private router: Router, private service: GeneralService) { }
   ngOnInit() {
+    this.maxDate = new Date();
     this.taxForm = this.formBuilder.group({
       RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       AmountDue: new FormControl('', Validators.required),
@@ -28,9 +30,28 @@ export class AddTaxComponent implements OnInit {
       FileName: new FormControl(null, Validators.required),
       FileType: new FormControl(null, Validators.required),
       Description: new FormControl(null, Validators.required),
-      uploadfile: new FormControl(null),
+      uploadfile: new FormControl(null, Validators.required),
       CreatedBy: new FormControl('1', Validators.required)
     });
+  }
+
+  get f() { return this.taxForm.controls; }
+
+  valid(e) {
+    if (!((e.keyCode > 95 && e.keyCode < 106)
+      || (e.keyCode > 47 && e.keyCode < 58)
+      || e.keyCode == 8)) {
+      return false;
+    }
+    if (e.target.value.length > 7) {
+      if (e.keyCode != 8) {
+        return false;
+      }
+    }
+  }
+
+  callback() {
+    return false;
   }
 
   onSubmit() {

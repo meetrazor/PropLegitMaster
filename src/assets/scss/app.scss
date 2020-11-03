@@ -113,7 +113,8 @@ a.paginate_button.current {
 }
 #DataTables_Table_1_filter > label > input[type="search"]:focus {
   outline: none;
-}#DataTables_Table_2_paginate > span > a.paginate_button.current {
+}
+#DataTables_Table_2_paginate > span > a.paginate_button.current {
   color: white !important;
 }
 #DataTables_Table_2_filter > label > input[type="search"]:focus {
@@ -137,10 +138,10 @@ a.paginate_button.current {
 #DataTables_Table_5_filter > label > input[type="search"]:focus {
   outline: none;
 }
-body,
-html {
-  padding-bottom: 0;
-}
+// body,
+// html {
+//   padding-bottom: 0;
+// }
 thead {
   background-color: rgb(241, 245, 247);
 }

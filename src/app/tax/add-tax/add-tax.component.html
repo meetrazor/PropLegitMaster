@@ -1,64 +1,73 @@
 <form [formGroup]="taxForm" (ngSubmit)="onSubmit()">
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Revenue office</h4>
+      <h4 class="header-title">Revenue office *</h4>
       <input
         class="form-control"
         placeholder="Enter Revenue office"
         formControlName="RevenueOffice"
+        maxlength="25"
       />
     </div>
   </div>
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">LastTaxAmount</h4>
+      <h4 class="header-title">LastTaxAmount *</h4>
       <input
         class="form-control"
         placeholder="Enter LastTaxAmount"
         formControlName="LastTaxAmount"
         type="number"
+        min="0"
+        (keypress)="valid($event)"
       />
     </div>
   </div>
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">LastTaxPaidDate</h4>
+      <h4 class="header-title">LastTaxPaidDate *</h4>
       <input
         class="form-control"
         placeholder="Enter LastTaxPaidDate"
         formControlName="LastTaxPaidDate"
         type="date"
+        max="{{ maxDate | date: 'yyyy-MM-dd' }}"
+        (keypress)="callback()"
       />
     </div>
   </div>
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Amount Due</h4>
+      <h4 class="header-title">Amount Due *</h4>
       <input
         class="form-control"
         placeholder="Enter Amount Due"
         formControlName="AmountDue"
         type="number"
+        min="0"
+        (keypress)="valid($event)"
       />
     </div>
   </div>
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">DueDate</h4>
+      <h4 class="header-title">DueDate *</h4>
       <input
         class="form-control"
         placeholder="Enter NextDueDate"
         formControlName="NextDueDate"
         type="date"
+        min="{{ maxDate | date: 'yyyy-MM-dd' }}"
+        (keypress)="callback()"
       />
     </div>
   </div>
 
   <div class="">
     <div class="mb-2">
-      <h4 class="header-title">Upload Current Demand Notice</h4>
+      <h4 class="header-title">Upload Current Demand Notice *</h4>
       <p class="text-muted font-13 m-b-30"></p>
       <!-- file upload -->
       <file-upload
@@ -69,26 +78,36 @@
         zoomText="zoomOut"
         accept="audio/*,video/*,image/*"
         type="file"
+        maxsize="20mb"
+        [ngClass]="{
+          'is-invalid': f.uploadfile.errors
+        }"
         formControlName="uploadfile"
       ></file-upload>
+      <div *ngIf="f.uploadfile.errors" class="invalid-feedback">
+        <div *ngIf="f.uploadfile.errors.sizeRange">
+          File size is exceed 20 Mb Limit
+        </div>
+      </div>
     </div>
   </div>
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">File Name</h4>
+      <h4 class="header-title">File Name *</h4>
       <input
         class="form-control"
         placeholder="Enter File Name"
         formControlName="FileName"
+        maxlength="25"
       />
     </div>
   </div>
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">File Type</h4>
+      <h4 class="header-title">File Type *</h4>
 
       <select class="custom-select" formControlName="FileType">
-        <option selected>Select File Type</option>
+        <option disabled>Select File Type</option>
         <option value="Photo">Photo</option>
         <option value="Video">Video</option>
         <option value="Audio">Audio</option>
@@ -97,13 +116,14 @@
   </div>
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">File Description</h4>
+      <h4 class="header-title">File Description *</h4>
 
       <textarea
         class="form-control"
         rows="3"
         placeholder="Enter File Description"
         formControlName="Description"
+        maxlength="55"
       ></textarea>
     </div>
   </div>

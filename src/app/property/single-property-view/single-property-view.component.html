@@ -40,8 +40,15 @@
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Rent" class="nav-item">
-        <ng-template ngbTabContent>
-          <app-rent propertyID="{{ propertyID }}"></app-rent>
+        <ng-template ngbTabContent class="nav-item">
+          <div class="row">
+            <div class="col-md-8">
+              <app-rent propertyID="{{ propertyID }}"></app-rent>
+            </div>
+            <div class="col-md-4">
+              <app-add-rent propertyId="{{ propertyID }}"></app-add-rent>
+            </div>
+          </div>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Maintenance" class="nav-item">

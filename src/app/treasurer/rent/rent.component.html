@@ -52,19 +52,15 @@
     </div>
   </div>
 </div> -->
-<section class="row">
-  <div class="col-md-8 table-responsive">
-    <table
-      datatable
-      [dtOptions]="dtOptions"
-      [dtTrigger]="dtTrigger"
-      class="table row-border hover thead-dark"
-    ></table>
-    <div class="card-disabled" *ngIf="!isLoaded">
-      <div class="card-portlets-loader"></div>
-    </div>
+
+<div class="col-md-12 table-responsive">
+  <table
+    datatable
+    [dtOptions]="dtOptions"
+    [dtTrigger]="dtTrigger"
+    class="table row-border hover thead-dark"
+  ></table>
+  <div class="card-disabled" *ngIf="!isLoaded">
+    <div class="card-portlets-loader"></div>
   </div>
-  <div class="col-md-4">
-    <app-add-rent propertyId="{{ this.propertyID }}"></app-add-rent>
-  </div>
-</section>
+</div>
