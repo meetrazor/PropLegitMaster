@@ -57,30 +57,31 @@ export class AddTaxComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.isLoading = true;
-    this.service.addtax(this.propertyID, this.taxForm.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.isLoading = false;
-          if (data.error) {
-            Swal.fire({
-              title: data.error_code,
-              text: data.message,
-              type: 'error'
-            });
-            return;
-          } else {
-            console.log(data, 'response');
-            Swal.fire({
-              title: 'Property Added Successfully!',
-              text: data.message,
-              type: 'success',
-              timer: 2000
-            }).then(() => {
-              this.router.navigate(['property']);
-            });
-          }
-        });
+    if (this.taxForm.valid) {
+      this.service.addtax(this.propertyID, this.taxForm.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            this.isLoading = false;
+            if (data.error) {
+              Swal.fire({
+                title: data.error_code,
+                text: data.message,
+                type: 'error'
+              });
+              return;
+            } else {
+              Swal.fire({
+                title: 'Tax Added Successfully!',
+                text: data.message,
+                type: 'success',
+                timer: 2000
+              }).then(() => {
+                location.reload();
+              });
+            }
+          });
+    }
     this.isLoading = false;
   }
 }

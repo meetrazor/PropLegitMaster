@@ -7,7 +7,15 @@
         placeholder="Enter Revenue office"
         formControlName="RevenueOffice"
         maxlength="25"
+        [ngClass]="{
+          'is-invalid': submitted && f.RevenueOffice.errors
+        }"
       />
+      <div *ngIf="submitted && f.RevenueOffice.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.RevenueOffice.errors.required">
+          Revenue office is Required
+        </div>
+      </div>
     </div>
   </div>
   <div class="">
@@ -20,7 +28,15 @@
         type="number"
         min="0"
         (keypress)="valid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.LastTaxAmount.errors
+        }"
       />
+      <div *ngIf="submitted && f.LastTaxAmount.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.LastTaxAmount.errors.required">
+          Last Tax Amount is Required
+        </div>
+      </div>
     </div>
   </div>
 
@@ -34,7 +50,18 @@
         type="date"
         max="{{ maxDate | date: 'yyyy-MM-dd' }}"
         (keypress)="callback()"
+        [ngClass]="{
+          'is-invalid': submitted && f.LastTaxPaidDate.errors
+        }"
       />
+      <div
+        *ngIf="submitted && f.LastTaxPaidDate.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="submitted && f.LastTaxPaidDate.errors.required">
+          Last Tax Paid Date is Required
+        </div>
+      </div>
     </div>
   </div>
   <div class="">
@@ -47,7 +74,15 @@
         type="number"
         min="0"
         (keypress)="valid($event)"
+        [ngClass]="{
+          'is-invalid': submitted && f.AmountDue.errors
+        }"
       />
+      <div *ngIf="submitted && f.AmountDue.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.AmountDue.errors.required">
+          Amount Due is Required
+        </div>
+      </div>
     </div>
   </div>
 
@@ -61,7 +96,15 @@
         type="date"
         min="{{ maxDate | date: 'yyyy-MM-dd' }}"
         (keypress)="callback()"
+        [ngClass]="{
+          'is-invalid': submitted && f.NextDueDate.errors
+        }"
       />
+      <div *ngIf="submitted && f.NextDueDate.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.NextDueDate.errors.required">
+          Next Due Date is Required
+        </div>
+      </div>
     </div>
   </div>
 
@@ -80,13 +123,16 @@
         type="file"
         maxsize="20mb"
         [ngClass]="{
-          'is-invalid': f.uploadfile.errors
+          'is-invalid': submitted && f.uploadfile.errors
         }"
         formControlName="uploadfile"
       ></file-upload>
-      <div *ngIf="f.uploadfile.errors" class="invalid-feedback">
-        <div *ngIf="f.uploadfile.errors.sizeRange">
+      <div *ngIf="submitted && f.uploadfile.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.uploadfile.errors.sizeRange">
           File size is exceed 20 Mb Limit
+        </div>
+        <div *ngIf="submitted && f.uploadfile.errors.required">
+          Current Demand Notice is Required
         </div>
       </div>
     </div>
@@ -99,19 +145,38 @@
         placeholder="Enter File Name"
         formControlName="FileName"
         maxlength="25"
+        [ngClass]="{
+          'is-invalid': submitted && f.FileName.errors
+        }"
       />
+      <div *ngIf="submitted && f.FileName.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.FileName.errors.required">
+          File Name is Required
+        </div>
+      </div>
     </div>
   </div>
   <div class="">
     <div class="mb-3">
       <h4 class="header-title">File Type *</h4>
 
-      <select class="custom-select" formControlName="FileType">
+      <select
+        class="custom-select"
+        formControlName="FileType"
+        [ngClass]="{
+          'is-invalid': submitted && f.FileType.errors
+        }"
+      >
         <option disabled>Select File Type</option>
         <option value="Photo">Photo</option>
         <option value="Video">Video</option>
         <option value="Audio">Audio</option>
       </select>
+      <div *ngIf="submitted && f.FileType.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.FileType.errors.required">
+          File Type is Required
+        </div>
+      </div>
     </div>
   </div>
   <div class="">
@@ -124,7 +189,15 @@
         placeholder="Enter File Description"
         formControlName="Description"
         maxlength="55"
+        [ngClass]="{
+          'is-invalid': submitted && f.Description.errors
+        }"
       ></textarea>
+      <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+        <div *ngIf="submitted && f.Description.errors.required">
+          File Description is Required
+        </div>
+      </div>
     </div>
   </div>
 
@@ -133,7 +206,6 @@
       <button
         class="btn btn-primary waves-effect waves-light btn-block"
         type="submit"
-        [disabled]="taxForm.invalid"
       >
         Save
       </button>

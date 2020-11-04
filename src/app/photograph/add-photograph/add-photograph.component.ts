@@ -13,7 +13,7 @@ export class AddPhotographComponent implements OnInit {
   file: any;
   @Input() propertyId: number;
   isLoading: boolean;
-
+  submited: boolean;
 
   constructor(private generalService: GeneralService) {
     this.photographForm = new FormGroup({
@@ -26,6 +26,7 @@ export class AddPhotographComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.submited = false;
     this.isLoading = false;
   }
 
@@ -42,6 +43,7 @@ export class AddPhotographComponent implements OnInit {
   }
   get f() { return this.photographForm.controls; }
   onSubmit() {
+    this.submited = true;
     if (this.photographForm.valid) {
       // 1 is Property ID
       this.isLoading = true;

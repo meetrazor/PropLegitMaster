@@ -395,7 +395,7 @@ export class AddPropertyComponent implements OnInit {
       return this.Fb.group({
         InChargeName: new FormControl(i.InChargeName),
         Designation: new FormControl(i.Designation),
-        MobileNo: new FormControl(i.MobileNo, [Validators.maxLength(10), Validators.minLength(10)]),
+        MobileNo: new FormControl(i.MobileNo !== '0' ? i.MobileNo : null, [Validators.maxLength(10), Validators.minLength(10)]),
         Email: new FormControl(i.Email, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)),
         Address: new FormControl(i.Address),
         InChargeFromDate: new FormControl(moment(i.InChargeFromDate).format('YYYY-MM-DD')),
