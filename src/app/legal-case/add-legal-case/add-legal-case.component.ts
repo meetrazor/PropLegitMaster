@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general.service';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-add-legal-case',
   templateUrl: './add-legal-case.component.html',
@@ -11,10 +12,13 @@ import Swal from 'sweetalert2';
 })
 export class AddLegalCaseComponent implements OnInit {
   legalcaseForm: FormGroup;
+
   submitted = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private service: GeneralService) {
+  constructor(private formBuilder: FormBuilder, private router: Router,
+              private route: ActivatedRoute, private service: GeneralService) {
 
    }
+
   ngOnInit() {
     this.legalcaseForm = this.formBuilder.group({
       PropertyId:  new FormControl(this.route.snapshot.params.id, Validators.required),
@@ -31,11 +35,11 @@ export class AddLegalCaseComponent implements OnInit {
       FilingDate: new FormControl('', Validators.required),
       RegistrationNumber: new FormControl('', Validators.required),
       RegistrationDate: new FormControl('', Validators.required),
-      CNRNumber: new FormControl('', Validators.required),
+      CNRNumber: new FormControl('', Validators.required)
     });
   }
-
   onSubmit() {
+
     this.submitted = true;
     if (this.legalcaseForm.valid) {
         this.service.addLegalCase(this.route.snapshot.params.id, this.legalcaseForm.value)
@@ -68,4 +72,8 @@ export class AddLegalCaseComponent implements OnInit {
     }
   }
   get f() { return this.legalcaseForm.controls; }
+
 }
+
+
+

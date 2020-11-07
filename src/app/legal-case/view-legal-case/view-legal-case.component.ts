@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import {GeneralService} from '../../services/general.service';
 import Swal from 'sweetalert2';

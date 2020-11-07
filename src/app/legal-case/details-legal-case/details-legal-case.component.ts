@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { first } from 'rxjs/operators';
 import {GeneralService} from '../../services/general.service';
-import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+import { HearingComponent } from '../hearing/hearing.component';
+import {LawyerComponent} from '../lawyer/lawyer.component';
+import {DocumentsComponent} from '../documents/documents.component';
 
 @Component({
   selector: 'app-details-legal-case',
@@ -14,9 +17,16 @@ export class DetailsLegalCaseComponent implements OnInit {
   isLoaded = false;
   hearingData: any[] = [];
   actData: any [] = [];
-  constructor( private route: ActivatedRoute, private service: GeneralService) { }
+  lawyerData: any [] = [];
+  lawyerList = [];
+  constructor( private route: ActivatedRoute, private service: GeneralService, public dialog: MatDialog) {
+    this.fetchLawyerlist();
+  }
 
   ngOnInit() {
+    this.hearingData = [];
+    this.actData = [];
+    this.lawyerData = [];
     this.service.listLegalcase(this.route.snapshot.params.id)
     .pipe(first())
     .subscribe(
@@ -29,9 +39,54 @@ export class DetailsLegalCaseComponent implements OnInit {
             for (const item of this.datasource) {
               this.getHearings(item.LegalCaseID);
               this.getLegalcaseActs(item.LegalCaseID);
+              this.getLawyers(item.LegalCaseID);
             }
           }
       });
+  }
+
+  fetchLawyerlist() {
+    this.service.listLawyers().
+    subscribe(data => {
+      if (data.status == 200) {
+      this.lawyerList = data.data;
+      } else {
+      console.log(data.error);
+      }
+    });
+  }
+
+  openHearingDialog(LegalCaseID) {
+    const dialogRef = this.dialog.open(HearingComponent, {
+      height: '450px',
+      width: '350px',
+      data: LegalCaseID,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
+
+  openLawyerDialog(LegalCaseID) {
+    const dialogRef = this.dialog.open(LawyerComponent, {
+      height: '350px',
+      width: '350px',
+      data: LegalCaseID,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
+
+  openDocumentDialog(id) {
+    const dialogRef = this.dialog.open(DocumentsComponent, {
+      height: '750px',
+      width: '400px',
+      data: {LegalCaseID: id, PropertyID: this.route.snapshot.params.id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
   }
 getLegalcaseActs(LegalCaseID) {
   this.service.getLegalcaseActs(LegalCaseID)
@@ -60,17 +115,17 @@ getHearings(id) {
           }
         });
 }
-// getLawyers(id) {
-//   this.service.getLawyers(id)
-//   .pipe(first())
-//   .subscribe(
-//     data => {
-//       if (data.error) {
-//         console.log(data.error);
-//         return;
-//       } else {
-//           this.lawyerData.push(data.data[0]);
-//       }
-//     });
-// }
+getLawyers(id) {
+  this.service.getLawyers(id)
+  .pipe(first())
+  .subscribe(
+    data => {
+      if (data.error) {
+        console.log(data.error);
+        return;
+      } else {
+          this.lawyerData.push(data.data);
+      }
+    });
+}
 }

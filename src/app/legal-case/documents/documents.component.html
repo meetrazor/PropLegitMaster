@@ -1,0 +1,115 @@
+
+<form [formGroup]="docsForm" (ngSubmit)="onSubmit()">
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4 class="header-title">LegalCase ID</h4>
+      <input class="form-control"  formControlName="LegalCaseID" 
+      [ngClass]="{ 'is-invalid': submit && f.LegalCaseID.errors }"
+      type="text" readonly
+      />
+      <div *ngIf="submit && f.LegalCaseID.errors" class="invalid-feedback">
+        <div *ngIf="f.LegalCaseID.errors.required">
+          LegalCaseID is required.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 mb-2">
+      <h4 class="header-title">Judgement Document</h4>
+      <p class="text-muted font-13 m-b-30"></p>
+      <!-- file upload -->
+      <file-upload
+        class="dropzone"
+        [ngClass]="{ 'is-invalid': submit && f.uploadfile.errors }"
+        multiple="false"
+        accept="application/pdf,image/*"
+        type="file"
+        formControlName="uploadfile"
+      ></file-upload>
+
+      <div *ngIf="submit && f.LegalCaseID.errors" class="invalid-feedback">
+        <div *ngIf="f.LegalCaseID.errors.required">
+          File is required.
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4 class="header-title">
+      PDF or JPG files Only. Max File size 1 MB</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4 class="header-title">Name of the document</h4>
+      <input
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submit && f.FileName.errors }"
+        id="example-input"
+        placeholder="Enter File Name"
+        formControlName="FileName"
+      />
+      <div *ngIf="submit && f.FileName.errors" class="invalid-feedback">
+        <div *ngIf="f.FileName.errors.required">
+          FileName is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4 class="header-title">Select Document Type</h4>
+      <select class="custom-select"
+      [ngClass]="{ 'is-invalid': submit && f.FileType.errors }"
+      formControlName="FileType">
+        <option value="1">Photo</option>
+        <option value="2">PDF</option>
+      </select>
+      <div *ngIf="submit && f.FileType.errors" class="invalid-feedback">
+        <div *ngIf="f.FileType.errors.required">
+          FileType is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <h4 class="header-title">Comments</h4>
+
+      <textarea
+        class="form-control"
+        id="example-textarea"
+        rows="3"
+        placeholder="Enter File Description"
+        formControlName="Description"
+        [ngClass]="{ 'is-invalid': submit && f.Description.errors }"
+      ></textarea>
+
+      <div *ngIf="submit && f.Description.errors" class="invalid-feedback">
+        <div *ngIf="f.Description.errors.required">
+          Description is required.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <button
+        class="btn btn-warning waves-effect waves-light btn-block"
+        type="submit"
+      >
+        Save
+      </button>
+
+      <!-- {{docsForm.value | json}} -->
+    </div>
+  </div>
+</form>

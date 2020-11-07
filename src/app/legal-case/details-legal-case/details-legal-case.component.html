@@ -1,4 +1,4 @@
-<ul *ngFor="let item of datasource;let j = index;" style="border:1px dashed grey" >
+<ul *ngFor="let item of datasource;let j = index;" style="border:1px solid blue" >
   <li ngInit (trigger)="resetCounter()">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -10,7 +10,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <div class="card-box">
+      <div class="row">
+        <div class="col-sm-11">
         <ngb-tabset justify="justified" type="pills" class="tabset1">
           <ngb-tab title="Details & Acts" class="nav-item">
             <ng-template ngbTabContent class="nav-item">
@@ -93,8 +94,9 @@
 
           <ngb-tab title="Status" class="nav-item" id="tab2">
             <ng-template ngbTabContent>
-              <ng-container *ngFor="let i of hearingData[j]">
-            <table class="table table-striped" *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID">
+              <ng-container *ngFor="let record of hearingData">
+              <ng-container *ngFor="let i of record">
+                <table class="table table-striped" *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID">
               
                   <tr class="highlight" >
                     <td> NextHearingDate </td>
@@ -113,53 +115,102 @@
              
               </table>
               </ng-container>
-            </ng-template>
-          </ngb-tab>
-
-          <ngb-tab title="Advocate" class="nav-item">
-            <ng-template ngbTabContent>
-              <!-- <ng-container *ngFor="let i of lawyerData">
-                <table *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID">
-                  <thead>
-                    <tr>
-                      <td colspan="2">
-                        <h1>Advocate</h1>
-                      </td>
-                    </tr>
-                  </thead>
-                  <tr>
-                    <td >{{i.LawyerName}}</td>
-                  </tr>
-                  <tr>
-                    <td>{{i.Firm}}</td>
-                  </tr>
-                  <tr>
-                    <td>Website:{{i.Website}}</td>
-                  </tr>
-                  <tr>
-                    <td>Cell:{{i.MobileNo}}</td>
-                  </tr>
-                  <tr>
-                    <td>Since:{{i.RecordDate | date:"MMM-dd-yyyy"}}</td>
-                  </tr>
-                </table>
-              </ng-container> -->
-            Advocate
+              </ng-container>
+             
             </ng-template>
           </ngb-tab>
 
           <ngb-tab title="Respondent" class="nav-item">
+            <ng-template ngbTabContent>
+
+              <ng-container *ngFor="let record of lawyerData">
+                <ng-container *ngFor="let i of record">
+               
+                  <table class="table table-striped"
+                  *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID && i.LawyerFor=='Respondent'">
+            
+            <ng-container *ngFor="let x of lawyerList"> 
+                    <tr class="highlight" *ngIf='i.LawyerID==x.LawyerId'>
+                      <td> LawyerName </td>
+                       <td> {{x.LawyerName}}</td> 
+                    </tr>
+  
+                    <tr *ngIf='i.LawyerID==x.LawyerId'>
+                      <td> Firm </td>
+                      <td> {{x.Firm}}</td>
+                    </tr>
+  
+                    <tr *ngIf='i.LawyerID==x.LawyerId'>
+                      <td> MobileNo </td>
+                      <td> {{x.MobileNo}}</td>
+                    </tr>
+              </ng-container>
+                </table>
+               
+                </ng-container>
+                </ng-container>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Petitioner" class="nav-item">
             <ng-template ngbTabContent class="nav-item">
-              Respondent & Advocate
+              <ng-container *ngFor="let record of lawyerData">
+                <ng-container *ngFor="let i of record">
+                  <table class="table table-striped" *ngIf="i!== undefined && i.LegalCaseID==item.LegalCaseID && i.LawyerFor=='Petitioner'">
+                
+                    <ng-container *ngFor="let x of lawyerList"> 
+                      <tr class="highlight" *ngIf='i.LawyerID==x.LawyerId'>
+                        <td> LawyerName </td>
+                         <td> {{x.LawyerName}}</td> 
+                      </tr>
+    
+                      <tr *ngIf='i.LawyerID==x.LawyerId'>
+                        <td> Firm </td>
+                        <td> {{x.Firm}}</td>
+                      </tr>
+    
+                      <tr *ngIf='i.LawyerID==x.LawyerId'>
+                        <td> MobileNo </td>
+                        <td> {{x.MobileNo}}</td>
+                      </tr>
+                </ng-container>
+               
+                </table>
+                </ng-container>
+                </ng-container>
             </ng-template>
           </ngb-tab>
 
           <ngb-tab title="Documents" class="nav-item">
-            <ng-template ngbTabContent> Documents</ng-template>
+            <ng-template ngbTabContent>  
+
+             Docs
+            </ng-template>
           </ngb-tab>
         </ngb-tabset>
-       
       </div>
+
+      <div class="col-sm-1">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="openHearingDialog(item.LegalCaseID)">
+            <mat-icon>add_task</mat-icon>
+            <span>Add hearing date</span>
+          </button>
+          <button mat-menu-item (click)="openLawyerDialog(item.LegalCaseID)">
+            <mat-icon>voicemail</mat-icon>
+            <span>Add lawyer</span>
+          </button>
+          <button mat-menu-item (click)="openDocumentDialog(item.LegalCaseID)">
+            <mat-icon>notifications_off</mat-icon>
+            <span>Add document</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
     </mat-expansion-panel>
   </li>
 </ul>
+
