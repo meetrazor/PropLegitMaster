@@ -49,7 +49,6 @@ export class AddPhotographComponent implements OnInit {
       this.isLoading = true;
       this.generalService.Addphotograph(this.propertyId, this.prepareSave())
         .subscribe(data => {
-          console.log(data);
           this.isLoading = false;
           this.photographForm.reset();
           if (data.status === 200) {

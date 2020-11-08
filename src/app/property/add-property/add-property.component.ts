@@ -291,8 +291,6 @@ export class AddPropertyComponent implements OnInit {
   }
 
   ChangeSurveyType(e?) {
-    console.log(this.myForm.controls.types.value);
-
     if (this.myForm.controls.types.value === 'citysurveyno') {
       this.IsCitySurvey = true;
     }
@@ -572,15 +570,12 @@ export class AddPropertyComponent implements OnInit {
             this.myForm.controls.StateID.setValue(data.data.StateID);
             this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
             this.myForm.controls.UserID.setValue(data.data.UserID);
-            console.log(this.f);
             this.myForm.controls.taluka.setValue(`${data.data.VillageName}, ${data.data.TalukaName}, ${data.data.DistrictName}`);
             if (data.data.CitySurveyNo && (data.data.PropertyTypeID != 1 && data.data.PropertyTypeID != 3)) {
               this.myForm.controls.types.setValue('citysurveyno');
-              console.log('setting survey');
 
             } else if (data.data.SurveyNo && (data.data.PropertyTypeID != 1 && data.data.PropertyTypeID != 3)) {
               this.myForm.controls.types.setValue('surveyno');
-              console.log('setting citysurvey');
             }
             // this.initialValue = `${data.data.DistrictName}, ${data.data.TalukaName}, ${data.data.VillageName}`;
             this.ChangeSurveyType();

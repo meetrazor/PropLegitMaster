@@ -57,7 +57,6 @@ export class AddTaxComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.isLoading = true;
-    console.log(this.f)
     if (this.taxForm.valid) {
       this.service.addtax(this.propertyID, this.taxForm.value)
         .pipe(first())
