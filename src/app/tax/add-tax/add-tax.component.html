@@ -72,7 +72,7 @@
         placeholder="Enter Amount Due"
         formControlName="AmountDue"
         type="number"
-        min="0"
+        min="1"
         (keypress)="valid($event)"
         [ngClass]="{
           'is-invalid': submitted && f.AmountDue.errors
@@ -81,6 +81,9 @@
       <div *ngIf="submitted && f.AmountDue.errors" class="invalid-feedback">
         <div *ngIf="submitted && f.AmountDue.errors.required">
           Amount Due is Required
+        </div>
+        <div *ngIf="submitted && f.AmountDue.errors.min">
+          Amount Due cannot be null or 0
         </div>
       </div>
     </div>

@@ -53,6 +53,7 @@ export class AddPhotographComponent implements OnInit {
           this.isLoading = false;
           this.photographForm.reset();
           if (data.status === 200) {
+            this.submited = false;
             Swal.fire({
               title: 'Uploaded',
               text: data.message,

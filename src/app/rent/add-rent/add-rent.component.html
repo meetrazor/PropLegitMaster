@@ -111,6 +111,7 @@
         <div *ngIf="f.PropertySize.errors.maxlength">
           Property Size cannot exceed 50 characters.
         </div>
+        <div *ngIf="f.PropertySize.errors.min">Property Size cannot be 0.</div>
       </div>
     </div>
   </div>
@@ -166,6 +167,9 @@
         <div *ngIf="f.AdvanceDeposite.errors.required">
           AdvanceDeposite is required
         </div>
+        <div *ngIf="f.AdvanceDeposite.errors.min">
+          AdvanceDeposite cannot be 0
+        </div>
       </div>
     </div>
   </div>
@@ -184,6 +188,7 @@
       />
       <div *ngIf="submitted && f.MonthlyRent.errors" class="invalid-feedback">
         <div *ngIf="f.MonthlyRent.errors.required">MonthlyRent is required</div>
+        <div *ngIf="f.MonthlyRent.errors.min">MonthlyRent cannot be 0</div>
       </div>
     </div>
   </div>
@@ -192,11 +197,21 @@
     <div class="mb-3">
       <span class="header-title">Rented Space</span>
       <span
-        ><input type="radio" formControlName="RentedSpace" value="Whole" />
+        ><input
+          class="mx-1"
+          type="radio"
+          formControlName="RentedSpace"
+          value="Whole"
+        />
         Whole</span
       >
       <span
-        ><input type="radio" formControlName="RentedSpace" value="Part" />
+        ><input
+          class="mx-1"
+          type="radio"
+          formControlName="RentedSpace"
+          value="Part"
+        />
         Part</span
       >
       <div *ngIf="submitted && f.RentedSpace.errors" class="invalid-feedback">
@@ -243,6 +258,9 @@
         <div *ngIf="f.ContractMonths.errors.required">
           ContractMonths is required
         </div>
+        <div *ngIf="f.ContractMonths.errors.min">
+          ContractMonths cannot be 0
+        </div>
       </div>
     </div>
   </div>
@@ -259,7 +277,6 @@
         }"
         (keypress)="callback()"
         min="2000-01-01"
-        max="{{ maxDate | date: 'yyyy-MM-dd' }}"
       />
       <div
         *ngIf="submitted && f.ContractStartDate.errors"

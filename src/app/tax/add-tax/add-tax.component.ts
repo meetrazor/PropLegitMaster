@@ -23,7 +23,7 @@ export class AddTaxComponent implements OnInit {
     this.maxDate = new Date();
     this.taxForm = this.formBuilder.group({
       RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      AmountDue: new FormControl('', Validators.required),
+      AmountDue: new FormControl('', [Validators.required, Validators.min(1)]),
       NextDueDate: new FormControl('', Validators.required),
       LastTaxAmount: new FormControl('', Validators.required),
       LastTaxPaidDate: new FormControl('', Validators.required),
@@ -57,6 +57,7 @@ export class AddTaxComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.isLoading = true;
+    console.log(this.f)
     if (this.taxForm.valid) {
       this.service.addtax(this.propertyID, this.taxForm.value)
         .pipe(first())

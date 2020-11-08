@@ -129,9 +129,9 @@ export class AddPropertyComponent implements OnInit {
         AgeOfProperty: new FormControl(''),
         NoOfBHK: new FormControl(''),
         FurnishType: new FormControl(''),
+        types: new FormControl(''),
         InCharge: this.Fb.array([
         ]),
-        types: new FormControl('surveyno')
       });
       this.fetchstatelist();
       this.fetchpropertytype();
@@ -217,7 +217,6 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.TPNo.enable();
       this.myForm.controls.FPNo.enable();
       this.myForm.controls.SurveyNo.enable();
-
       this.myForm.controls.CitySurveyNo.disable();
       this.myForm.controls.CitySurveyOffice.disable();
       this.myForm.controls.CityWardNo.disable();
@@ -225,6 +224,13 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.SheetNumber.disable();
       this.myForm.controls.BuildingNo.disable();
       this.myForm.controls.BuildingName.disable();
+      // unset value
+      this.myForm.controls.CitySurveyNo.setValue('');
+      this.myForm.controls.CitySurveyOffice.setValue('');
+      this.myForm.controls.CityWardNo.setValue('');
+      this.myForm.controls.CityWardName.setValue('');
+      this.myForm.controls.BuildingNo.setValue('');
+      this.myForm.controls.BuildingName.setValue('');
     } else if (this.myForm.controls.types.value == 'surveyno') {
       this.myForm.controls.TPNo.enable();
       this.myForm.controls.FPNo.enable();
@@ -236,6 +242,13 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.CityWardNo.disable();
       this.myForm.controls.CityWardName.disable();
       this.myForm.controls.SheetNumber.disable();
+      // unset value
+      this.myForm.controls.CitySurveyNo.setValue('');
+      this.myForm.controls.CitySurveyOffice.setValue('');
+      this.myForm.controls.CityWardNo.setValue('');
+      this.myForm.controls.CityWardName.setValue('');
+      this.myForm.controls.SheetNumber.setValue('');
+
     } else if (this.myForm.controls.types.value == 'citysurveyno') {
       this.myForm.controls.CitySurveyNo.enable();
       this.myForm.controls.CitySurveyOffice.enable();
@@ -247,6 +260,12 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.BuildingNo.disable();
       this.myForm.controls.BuildingName.disable();
       this.myForm.controls.SurveyNo.disable();
+      // unset value
+      this.myForm.controls.TPNo.setValue('');
+      this.myForm.controls.FPNo.setValue('');
+      this.myForm.controls.BuildingNo.setValue('');
+      this.myForm.controls.BuildingName.setValue('');
+      this.myForm.controls.SurveyNo.setValue('');
     }
     this.submitted = false;
   }
@@ -263,7 +282,6 @@ export class AddPropertyComponent implements OnInit {
     }
   }
   ChangePropertyType(e?) {
-
     if (this.myForm.controls.PropertyTypeID.value == 1 || this.myForm.controls.PropertyTypeID.value == 3) {
       this.IsOpenLand = true;
     } else {
@@ -272,7 +290,9 @@ export class AddPropertyComponent implements OnInit {
     this.handleChange();
   }
 
-  ChangeSurveyType(e) {
+  ChangeSurveyType(e?) {
+    console.log(this.myForm.controls.types.value);
+
     if (this.myForm.controls.types.value === 'citysurveyno') {
       this.IsCitySurvey = true;
     }
@@ -552,8 +572,19 @@ export class AddPropertyComponent implements OnInit {
             this.myForm.controls.StateID.setValue(data.data.StateID);
             this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
             this.myForm.controls.UserID.setValue(data.data.UserID);
+            console.log(this.f);
             this.myForm.controls.taluka.setValue(`${data.data.VillageName}, ${data.data.TalukaName}, ${data.data.DistrictName}`);
+            if (data.data.CitySurveyNo && (data.data.PropertyTypeID != 1 && data.data.PropertyTypeID != 3)) {
+              this.myForm.controls.types.setValue('citysurveyno');
+              console.log('setting survey');
+
+            } else if (data.data.SurveyNo && (data.data.PropertyTypeID != 1 && data.data.PropertyTypeID != 3)) {
+              this.myForm.controls.types.setValue('surveyno');
+              console.log('setting citysurvey');
+            }
             // this.initialValue = `${data.data.DistrictName}, ${data.data.TalukaName}, ${data.data.VillageName}`;
+            this.ChangeSurveyType();
+
             this.ChangeState(data.data.StateID);
             this.ChangePropertyType();
             // this.isDataLoaded = true;
