@@ -10,6 +10,8 @@ export class DetailsPhotographComponent implements OnInit {
   photographList: any = [];
   videoList: any = [];
   audioList: any = [];
+  pdfList: any = [];
+  docList: any = [];
   @Input() propertyId: number;
   isLoading: boolean;
   constructor(private generalService: GeneralService) {
@@ -25,6 +27,14 @@ export class DetailsPhotographComponent implements OnInit {
         this.photographList = data.filter(e => e.FileType === 'Photo');
         this.videoList = data.filter(e => e.FileType === 'Video');
         this.audioList = data.filter(e => e.FileType === 'Audio');
+        this.pdfList = data.filter(e => e.FileType === 'PDF');
+        this.docList = data.filter(e => e.FileType === 'DOC');
+        this.pdfList.map(ele => {
+          ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
+        });
+        this.docList.map(ele => {
+          ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
+        });
       });
   }
 

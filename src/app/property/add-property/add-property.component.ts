@@ -300,6 +300,52 @@ export class AddPropertyComponent implements OnInit {
     }
     this.handleChange();
   }
+
+  setUpdateProperty() {
+    if (this.myForm.controls.PropertyTypeID.value == 1 || this.myForm.controls.PropertyTypeID.value == 3) {
+      this.myForm.controls.CitySurveyNo.enable();
+      this.myForm.controls.CitySurveyOffice.enable();
+      this.myForm.controls.CityWardNo.enable();
+      this.myForm.controls.CityWardName.enable();
+      this.myForm.controls.SheetNumber.enable();
+      this.myForm.controls.BuildingNo.enable();
+      this.myForm.controls.BuildingName.enable();
+      // unset value
+      this.myForm.controls.CitySurveyNo.setValue(null);
+      this.myForm.controls.CitySurveyOffice.setValue(null);
+      this.myForm.controls.CityWardNo.setValue(null);
+      this.myForm.controls.CityWardName.setValue(null);
+      this.myForm.controls.BuildingNo.setValue(null);
+      this.myForm.controls.BuildingName.setValue(null);
+    } else if (this.myForm.controls.types.value == 'surveyno') {
+      this.myForm.controls.CitySurveyNo.enable();
+      this.myForm.controls.CitySurveyOffice.enable();
+      this.myForm.controls.CityWardNo.enable();
+      this.myForm.controls.CityWardName.enable();
+      this.myForm.controls.SheetNumber.enable();
+      // unset value
+      this.myForm.controls.CitySurveyNo.setValue(null);
+      this.myForm.controls.CitySurveyOffice.setValue(null);
+      this.myForm.controls.CityWardNo.setValue(null);
+      this.myForm.controls.CityWardName.setValue(null);
+      this.myForm.controls.SheetNumber.setValue(null);
+
+    } else if (this.myForm.controls.types.value == 'citysurveyno') {
+
+      this.myForm.controls.TPNo.enable();
+      this.myForm.controls.FPNo.enable();
+      this.myForm.controls.BuildingNo.enable();
+      this.myForm.controls.BuildingName.enable();
+      this.myForm.controls.SurveyNo.enable();
+      // unset value
+      this.myForm.controls.TPNo.setValue(null);
+      this.myForm.controls.FPNo.setValue(null);
+      this.myForm.controls.BuildingNo.setValue(null);
+      this.myForm.controls.BuildingName.setValue(null);
+      this.myForm.controls.SurveyNo.setValue(null);
+    }
+  }
+
   save() {
     this.handleChange();
     this.submitted = true;
@@ -332,6 +378,7 @@ export class AddPropertyComponent implements OnInit {
             }
           });
     } else if (this.isUpdate) {
+      this.setUpdateProperty();
       this.isLoading = true;
       this.service.editproperty(this.propertyID, this.myForm.value)
         .pipe(first())

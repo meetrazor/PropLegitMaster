@@ -10,7 +10,7 @@
         isAnimationDisabled="true"
         listVisible="true"
         zoomText="zoomOut"
-        accept="audio/*,video/*,image/*"
+        accept="audio/*,video/*,image/*,application/pdf,application/msword,.doc,.docx"
         type="file"
         maxsize="50mb"
         [ngClass]="{
@@ -55,10 +55,12 @@
           'is-invalid': submited && f.FileType.errors
         }"
       >
-        <option selected disabled>Select File Type</option>
+        <option selected disabled>Select File Type *</option>
         <option value="Photo">Photo</option>
         <option value="Video">Video</option>
         <option value="Audio">Audio</option>
+        <option value="PDF">PDF</option>
+        <option value="DOC">Document</option>
       </select>
       <div *ngIf="submited && f.FileType.errors" class="invalid-feedback">
         <div *ngIf="f.FileType.errors.required">File Type is Required</div>
