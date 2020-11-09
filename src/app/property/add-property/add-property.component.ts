@@ -225,12 +225,12 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.BuildingNo.disable();
       this.myForm.controls.BuildingName.disable();
       // unset value
-      this.myForm.controls.CitySurveyNo.setValue('');
-      this.myForm.controls.CitySurveyOffice.setValue('');
-      this.myForm.controls.CityWardNo.setValue('');
-      this.myForm.controls.CityWardName.setValue('');
-      this.myForm.controls.BuildingNo.setValue('');
-      this.myForm.controls.BuildingName.setValue('');
+      this.myForm.controls.CitySurveyNo.setValue(null);
+      this.myForm.controls.CitySurveyOffice.setValue(null);
+      this.myForm.controls.CityWardNo.setValue(null);
+      this.myForm.controls.CityWardName.setValue(null);
+      this.myForm.controls.BuildingNo.setValue(null);
+      this.myForm.controls.BuildingName.setValue(null);
     } else if (this.myForm.controls.types.value == 'surveyno') {
       this.myForm.controls.TPNo.enable();
       this.myForm.controls.FPNo.enable();
@@ -243,11 +243,11 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.CityWardName.disable();
       this.myForm.controls.SheetNumber.disable();
       // unset value
-      this.myForm.controls.CitySurveyNo.setValue('');
-      this.myForm.controls.CitySurveyOffice.setValue('');
-      this.myForm.controls.CityWardNo.setValue('');
-      this.myForm.controls.CityWardName.setValue('');
-      this.myForm.controls.SheetNumber.setValue('');
+      this.myForm.controls.CitySurveyNo.setValue(null);
+      this.myForm.controls.CitySurveyOffice.setValue(null);
+      this.myForm.controls.CityWardNo.setValue(null);
+      this.myForm.controls.CityWardName.setValue(null);
+      this.myForm.controls.SheetNumber.setValue(null);
 
     } else if (this.myForm.controls.types.value == 'citysurveyno') {
       this.myForm.controls.CitySurveyNo.enable();
@@ -261,11 +261,11 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.BuildingName.disable();
       this.myForm.controls.SurveyNo.disable();
       // unset value
-      this.myForm.controls.TPNo.setValue('');
-      this.myForm.controls.FPNo.setValue('');
-      this.myForm.controls.BuildingNo.setValue('');
-      this.myForm.controls.BuildingName.setValue('');
-      this.myForm.controls.SurveyNo.setValue('');
+      this.myForm.controls.TPNo.setValue(null);
+      this.myForm.controls.FPNo.setValue(null);
+      this.myForm.controls.BuildingNo.setValue(null);
+      this.myForm.controls.BuildingName.setValue(null);
+      this.myForm.controls.SurveyNo.setValue(null);
     }
     this.submitted = false;
   }

@@ -26,7 +26,7 @@
         placeholder="Enter LastTaxAmount"
         formControlName="LastTaxAmount"
         type="number"
-        min="0"
+        min="1"
         (keypress)="valid($event)"
         [ngClass]="{
           'is-invalid': submitted && f.LastTaxAmount.errors
@@ -35,6 +35,9 @@
       <div *ngIf="submitted && f.LastTaxAmount.errors" class="invalid-feedback">
         <div *ngIf="submitted && f.LastTaxAmount.errors.required">
           Last Tax Amount is Required
+        </div>
+          <div *ngIf="submitted && f.LastTaxAmount.errors.min">
+          Last Tax Amount cannot be 0
         </div>
       </div>
     </div>

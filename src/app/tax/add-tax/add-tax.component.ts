@@ -25,7 +25,7 @@ export class AddTaxComponent implements OnInit {
       RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       AmountDue: new FormControl('', [Validators.required, Validators.min(1)]),
       NextDueDate: new FormControl('', Validators.required),
-      LastTaxAmount: new FormControl('', Validators.required),
+      LastTaxAmount: new FormControl('', [Validators.required, Validators.min(1)]),
       LastTaxPaidDate: new FormControl('', Validators.required),
       FileName: new FormControl(null, Validators.required),
       FileType: new FormControl(null, Validators.required),
@@ -34,7 +34,17 @@ export class AddTaxComponent implements OnInit {
       CreatedBy: new FormControl('1', Validators.required)
     });
   }
+  // prepareSave(): any {
+  //   const input = new FormData();
+  //   // This can be done a lot prettier; for example automatically assigning values by
+  //   // looping through `this.form.controls`, but we'll keep it as simple as possible here
+  //   input.append('FileName', this.photographForm.get('FileName').value);
+  //   input.append('FileType', this.photographForm.get('FileType').value);
+  //   input.append('Description', this.photographForm.get('Description').value);
+  //   input.append('uploadfile', (this.photographForm.get('uploadfile').value)[0]);
 
+  //   return input;
+  // }
   get f() { return this.taxForm.controls; }
 
   valid(e) {
