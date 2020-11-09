@@ -31,20 +31,28 @@ export class AddTaxComponent implements OnInit {
       FileType: new FormControl(null, Validators.required),
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),
-      CreatedBy: new FormControl('1', Validators.required)
+      CreatedBy: new FormControl('1', Validators.required),
+      PropertyID: new FormControl(this.propertyID),
     });
   }
-  // prepareSave(): any {
-  //   const input = new FormData();
-  //   // This can be done a lot prettier; for example automatically assigning values by
-  //   // looping through `this.form.controls`, but we'll keep it as simple as possible here
-  //   input.append('FileName', this.photographForm.get('FileName').value);
-  //   input.append('FileType', this.photographForm.get('FileType').value);
-  //   input.append('Description', this.photographForm.get('Description').value);
-  //   input.append('uploadfile', (this.photographForm.get('uploadfile').value)[0]);
+  prepareSave(): any {
+    const input = new FormData();
+    // This can be done a lot prettier; for example automatically assigning values by
+    // looping through `this.form.controls`, but we'll keep it as simple as possible here
+    input.append('FileName', this.taxForm.get('FileName').value);
+    input.append('FileType', this.taxForm.get('FileType').value);
+    input.append('Description', this.taxForm.get('Description').value);
+    input.append('uploadfile', (this.taxForm.get('uploadfile').value)[0]);
+    input.append('RevenueOffice', (this.taxForm.get('RevenueOffice').value));
+    input.append('AmountDue', (this.taxForm.get('AmountDue').value));
+    input.append('NextDueDate', (this.taxForm.get('NextDueDate').value));
+    input.append('LastTaxAmount', (this.taxForm.get('LastTaxAmount').value));
+    input.append('CreatedBy', (this.taxForm.get('CreatedBy').value));
+    input.append('LastTaxPaidDate', (this.taxForm.get('LastTaxPaidDate').value));
+    input.append('PropertyID', (this.taxForm.get('PropertyID').value));
 
-  //   return input;
-  // }
+    return input;
+  }
   get f() { return this.taxForm.controls; }
 
   valid(e) {
@@ -65,10 +73,12 @@ export class AddTaxComponent implements OnInit {
   }
 
   onSubmit() {
+    // console.log(this.taxForm.value.uploadfile[0]);
+    // return;
     this.submitted = true;
     this.isLoading = true;
     if (this.taxForm.valid) {
-      this.service.addtax(this.propertyID, this.taxForm.value)
+      this.service.addtax(this.propertyID, this.prepareSave())
         .pipe(first())
         .subscribe(
           data => {

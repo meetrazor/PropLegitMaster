@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class DetailsPhotographComponent implements OnInit {
   docList: any = [];
   @Input() propertyId: number;
   isLoading: boolean;
-  constructor(private generalService: GeneralService) {
+  constructor(private generalService: GeneralService, private sanitizer: DomSanitizer) {
 
   }
 
