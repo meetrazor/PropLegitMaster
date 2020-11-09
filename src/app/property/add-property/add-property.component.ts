@@ -260,12 +260,14 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.BuildingNo.disable();
       this.myForm.controls.BuildingName.disable();
       this.myForm.controls.SurveyNo.disable();
+      this.myForm.controls.milkatno_propId.disable();
       // unset value
       this.myForm.controls.TPNo.setValue(null);
       this.myForm.controls.FPNo.setValue(null);
       this.myForm.controls.BuildingNo.setValue(null);
       this.myForm.controls.BuildingName.setValue(null);
       this.myForm.controls.SurveyNo.setValue(null);
+      this.myForm.controls.milkatno_propId.setValue(null);
     }
     this.submitted = false;
   }
@@ -337,12 +339,14 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.BuildingNo.enable();
       this.myForm.controls.BuildingName.enable();
       this.myForm.controls.SurveyNo.enable();
+      this.myForm.controls.milkatno_propId.enable();
       // unset value
       this.myForm.controls.TPNo.setValue(null);
       this.myForm.controls.FPNo.setValue(null);
       this.myForm.controls.BuildingNo.setValue(null);
       this.myForm.controls.BuildingName.setValue(null);
       this.myForm.controls.SurveyNo.setValue(null);
+      this.myForm.controls.milkatno_propId.setValue(null);
     }
   }
 

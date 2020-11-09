@@ -78,7 +78,9 @@
   </div>
   <div class="col-md-6" *ngFor="let item of pdfList">
     <div class="card" *ngIf="item.FileType == 'PDF'">
-      <a [href]="item.FileURL" target="_blank">
+      <a href="javascript:void(0);" [routerLink]="['/property/ViewPdf',item.FileURL,item.FileType]"
+                            target="_blank">
+   
         <img
           style="max-height: 30vh; min-height: 30vh; padding: 10% 20%"
           class="card-img-bottom img-fluid"
@@ -100,7 +102,8 @@
   </div>
   <div class="col-md-6" *ngFor="let item of docList">
     <div class="card" *ngIf="item.FileType == 'DOC'">
-      <a [href]="item.FileURL" target="_blank">
+      <a href="javascript:void(0);" [routerLink]="['/property/ViewPdf',item.FileURL,item.FileType]"
+                            target="_blank">
         <img
           style="max-height: 30vh; min-height: 30vh; padding: 10% 20%"
           class="card-img-bottom img-fluid"

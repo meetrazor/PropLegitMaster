@@ -15,11 +15,14 @@ import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { ViewPropertyComponent } from './view-property/view-property.component';
 import { TaxModule } from './../tax/tax.module';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { ViewPdfComponent } from './view-pdf/view-pdf.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
-  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent, ComingSoonComponent],
+  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent,
+    ViewPropertyComponent, ComingSoonComponent, ViewPdfComponent],
   imports: [
-    CommonModule,
+    CommonModule, PdfViewerModule,
     PropertyRoutingModule,
     FormsModule,
     ReactiveFormsModule,
