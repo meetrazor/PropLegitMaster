@@ -29,12 +29,12 @@ export class DetailsPhotographComponent implements OnInit {
         this.audioList = data.filter(e => e.FileType === 'Audio');
         this.pdfList = data.filter(e => e.FileType === 'PDF');
         this.docList = data.filter(e => e.FileType === 'DOC');
-        this.pdfList.map(ele => {
+   /*     this.pdfList.map(ele => {
           ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
-        });
-        this.docList.map(ele => {
+        });*/
+   /*     this.docList.map(ele => {
           ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
-        });
+        });*/
       });
   }
 

@@ -466,13 +466,8 @@
                       </div>
                     </div>
 
-                    <div
-                      class="form-group col-md-6"
-                      *ngIf="
-                        myForm.controls['SurveyNo'].touched &&
-                        myForm.controls['SurveyNo'].valid
-                      "
-                    >
+                    <div *ngIf="IsOpenLand || !IsCitySurvey"
+                      class="form-group col-md-6">
                       <label for="">Milkat No(Property Id)*</label>
                       <input
                         class="form-control"

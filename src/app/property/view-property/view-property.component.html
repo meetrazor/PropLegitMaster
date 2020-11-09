@@ -54,9 +54,20 @@
           <th>FPNo:</th>
           <td>{{ data.FPNo }}</td>
         </tr>
+
+        <tr *ngIf="data.milkatno_propId">
+          <th>Milkat No(Property Id)</th>
+          <td>{{ data.milkatno_propId }}</td>
+        </tr>
+
         <tr *ngIf="data.PostalAddress">
           <th>PostalAddress:</th>
           <td>{{ data.PostalAddress }}</td>
+        </tr>
+
+        <tr *ngIf="data.RevenewOfficeType">
+          <th>RevenewOffice Type</th>
+          <td>{{ data.RevenewOfficeType }}</td>
         </tr>
         <tr *ngIf="data.PinCode">
           <th>PinCode:</th>

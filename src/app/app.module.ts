@@ -13,8 +13,6 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommingSoonComponent } from './comming-soon/comming-soon.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent, CommingSoonComponent

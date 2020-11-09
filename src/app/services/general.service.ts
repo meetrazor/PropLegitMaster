@@ -151,7 +151,7 @@ export class GeneralService {
     return this.http.put<any>(`${apiUrl}property/update/${propertyID}`, data, httpOptions);
   }
   addtax(PropertyID, data): any {
-    return this.http.post(`${apiUrl}/property/${PropertyID}/tax/add`, data, httpOptions);
+    return this.http.post(`${apiUrl}property/${PropertyID}/tax/add`, data, httpOptions);
   }
   listLawyers(): any {
     return this.http.get<any>(`${apiUrl}lawyer/list`, httpOptions);
