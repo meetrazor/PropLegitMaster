@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <!-- breadCrums -->
+  <app-page-title
+    title="Upload Receipt"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <div class="container">
+    <app-upload-receipt-shared
+      propertyId="{{ propertyId }}"
+      taxId="{{ id }}"
+    ></app-upload-receipt-shared>
+  </div>
+</div>

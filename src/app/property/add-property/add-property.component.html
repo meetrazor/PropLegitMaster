@@ -466,8 +466,10 @@
                       </div>
                     </div>
 
-                    <div *ngIf="IsOpenLand || !IsCitySurvey"
-                      class="form-group col-md-6">
+                    <div
+                      *ngIf="IsOpenLand || !IsCitySurvey"
+                      class="form-group col-md-6"
+                    >
                       <label for="">Milkat No(Property Id)*</label>
                       <input
                         class="form-control"
@@ -810,7 +812,7 @@
                               type="text"
                               class="form-control"
                               formControlName="Address"
-                              maxlength="55"
+                              maxlength="255"
                             />
                           </div>
                           <div class="form-group col-md-6">

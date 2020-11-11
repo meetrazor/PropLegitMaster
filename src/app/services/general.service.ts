@@ -190,4 +190,11 @@ export class GeneralService {
   areabystateid(StateId, DistrictId, Search): any {
     return this.http.get(`${apiUrl}area/list/state/${StateId}/district/${DistrictId}/area/${Search}`);
   }
+
+  uploadTaxReceipt(propertyid, taxid, data): any {
+    return this.http.post(`${apiUrl}property/${propertyid}/tax/${taxid}/receipt/upload`, data, httpFileUploadOptions);
+  }
+  uploadRentReceipt(propertyid, rentid, data): any {
+    return this.http.post(`${apiUrl}property/${propertyid}/rent/${rentid}/receipt/upload`, data, httpFileUploadOptions);
+  }
 }

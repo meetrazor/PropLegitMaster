@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { GeneralService } from './../../services/general.service';
 import { Component, Input, OnInit, Output, ViewChild, AfterViewInit, AfterContentChecked } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-view-tax',
@@ -11,14 +13,16 @@ import { DatePipe } from '@angular/common';
 })
 export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChecked {
   @Input() propertyID: number;
-  constructor(private service: GeneralService, private datepipe: DatePipe) { }
+  constructor(private service: GeneralService, private datepipe: DatePipe, private router: Router) { }
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
   dtTrigger = new Subject();
   @Input() item: any;
   isLoading: boolean;
+  isUpload: boolean;
   ngOnInit() {
+    this.isUpload = false;
     this.isLoading = true;
     this.dtOptions = {
       ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/tax/list` }, responsive: true,
@@ -65,12 +69,9 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
     this.isLoading = false;
   }
   onUploadReceipt(id) {
-    document.getElementById('input').setAttribute('receipt_id', id);
-    document.getElementById('input').click();
+    this.router.navigate([`tax/uploadreceipt/${this.propertyID}/${id}`]);
   }
   upload(e) {
-    const id = e.target.attributes.receipt_id.value;
-    const file = e.target.files[0];
-    console.log(id, file);
+
   }
 }

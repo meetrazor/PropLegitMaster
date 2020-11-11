@@ -5,13 +5,16 @@ import { CommonModule } from '@angular/common';
 
 import { UIModule } from './ui/ui.module';
 import { DatatableComponent } from './datatable/datatable.component';
+import { UploadReceiptComponent } from './upload-receipt/upload-receipt.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 @NgModule({
-  declarations: [DatatableComponent],
+  declarations: [DatatableComponent, UploadReceiptComponent],
   imports: [
     CommonModule,
-    UIModule, DataTablesModule, RouterModule
+    UIModule, DataTablesModule, RouterModule, FormsModule, FileUploadModule, ReactiveFormsModule
   ],
-  exports: [DatatableComponent]
+  exports: [DatatableComponent, UploadReceiptComponent]
 })
 export class SharedModule { }

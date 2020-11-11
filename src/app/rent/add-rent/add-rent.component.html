@@ -33,7 +33,7 @@
         [ngClass]="{
           'is-invalid': submitted && f.TenantAddress.errors
         }"
-        maxlength="55"
+        maxlength="255"
       ></textarea>
       <div *ngIf="submitted && f.TenantAddress.errors" class="invalid-feedback">
         <div *ngIf="f.TenantAddress.errors.required">Address is required</div>

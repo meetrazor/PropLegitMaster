@@ -1,3 +1,5 @@
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,17 +10,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewPdfComponent implements OnInit {
 
-  url: string;
+  url: any;
   filetype: string;
-
-  constructor(private route: ActivatedRoute) {
-
+  headers = new HttpHeaders();
+  xhr: XMLHttpRequest;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private sanitizer: DomSanitizer) {
     this.url = this.route.snapshot.params.url;
+    // this.url = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
     this.filetype = this.route.snapshot.params.filetype.toLowerCase();
   }
   ngOnInit() {
+
+
   }
   onError(error: any) {
     // do anything
   }
+
 }
