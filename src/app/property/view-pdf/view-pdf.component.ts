@@ -12,12 +12,12 @@ export class ViewPdfComponent implements OnInit {
 
   url: any;
   filetype: string;
-  headers = new HttpHeaders();
-  xhr: XMLHttpRequest;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private sanitizer: DomSanitizer) {
     this.url = this.route.snapshot.params.url;
     // this.url = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
     this.filetype = this.route.snapshot.params.filetype.toLowerCase();
+
   }
   ngOnInit() {
 
