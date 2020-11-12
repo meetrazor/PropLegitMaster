@@ -36,7 +36,7 @@
         <div *ngIf="submitted && f.LastTaxAmount.errors.required">
           Last Tax Amount is Required
         </div>
-          <div *ngIf="submitted && f.LastTaxAmount.errors.min">
+        <div *ngIf="submitted && f.LastTaxAmount.errors.min">
           Last Tax Amount cannot be 0
         </div>
       </div>
@@ -120,19 +120,20 @@
       <p class="text-muted font-13 m-b-30"></p>
       <!-- file upload -->
       <file-upload
-      class="dropzone"
-      multiple="false"
-      isAnimationDisabled="true"
-      listVisible="true"
-      zoomText="zoomOut"
-      accept="audio/*,video/*,image/*,application/pdf,application/msword,.doc,.docx"
-      type="file"
-      maxsize="20mb"
-      [ngClass]="{
-        'is-invalid': submitted && f.uploadfile.errors
-      }"
-      formControlName="uploadfile"
-    ></file-upload>
+        class="dropzone"
+        multiple="false"
+        isAnimationDisabled="true"
+        listVisible="true"
+        zoomText="zoomOut"
+        (ngModelChange)="onchange($event)"
+        accept="audio/vnd.dlna.adts,audio/mpeg,video/mp4,image/gif,image/png,image/jpeg,application/pdf,application/msword,.doc,.docx"
+        type="file"
+        maxsize="20mb"
+        [ngClass]="{
+          'is-invalid': submitted && f.uploadfile.errors
+        }"
+        formControlName="uploadfile"
+      ></file-upload>
       <div *ngIf="submitted && f.uploadfile.errors" class="invalid-feedback">
         <div *ngIf="submitted && f.uploadfile.errors.sizeRange">
           File size is exceed 20 Mb Limit
@@ -173,12 +174,12 @@
           'is-invalid': submitted && f.FileType.errors
         }"
       >
-      <option selected disabled>Select File Type *</option>
-      <option value="Photo">Photo</option>
-      <option value="Video">Video</option>
-      <option value="Audio">Audio</option>
-      <option value="PDF">PDF</option>
-      <option value="DOC">Document</option>
+        <option selected disabled>Select File Type *</option>
+        <option value="Photo">Photo</option>
+        <option value="Video">Video</option>
+        <option value="Audio">Audio</option>
+        <option value="PDF">PDF</option>
+        <option value="DOC">Document</option>
       </select>
       <div *ngIf="submitted && f.FileType.errors" class="invalid-feedback">
         <div *ngIf="submitted && f.FileType.errors.required">

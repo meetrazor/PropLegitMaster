@@ -18,6 +18,7 @@ export class AddTaxComponent implements OnInit {
   isLoading = false;
   userId: number;
   maxDate: Date;
+  fileExtension: string;
   constructor(private formBuilder: FormBuilder, private router: Router, private service: GeneralService) { }
   ngOnInit() {
     this.maxDate = new Date();
@@ -28,18 +29,19 @@ export class AddTaxComponent implements OnInit {
       LastTaxAmount: new FormControl('', [Validators.required, Validators.min(1)]),
       LastTaxPaidDate: new FormControl('', Validators.required),
       FileName: new FormControl(null, Validators.required),
-      FileType: new FormControl(null, Validators.required),
+      FileType: new FormControl(null, Validators.required,),
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),
       CreatedBy: new FormControl('1', Validators.required),
       PropertyID: new FormControl(this.propertyID),
     });
+    this.taxForm.controls.FileType.disable();
   }
   prepareSave(): any {
     const input = new FormData();
     // This can be done a lot prettier; for example automatically assigning values by
     // looping through `this.form.controls`, but we'll keep it as simple as possible here
-    input.append('FileName', this.taxForm.get('FileName').value);
+    input.append('FileName', this.taxForm.get('FileName').value + '.' + this.fileExtension);
     input.append('FileType', this.taxForm.get('FileType').value);
     input.append('Description', this.taxForm.get('Description').value);
     input.append('uploadfile', (this.taxForm.get('uploadfile').value)[0]);
@@ -103,5 +105,57 @@ export class AddTaxComponent implements OnInit {
           });
     }
     this.isLoading = false;
+  }
+
+  onchange(e) {
+    if (e && e.length > 0) {
+      const file = e[0];
+      let fileName = file.name;
+      fileName = fileName.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9]/g, '');
+      fileName = fileName.length > 25 ? fileName.substring(0, 25) : fileName;
+      const filetype = file.type;
+      const fileExtension = file.name.split('.').pop();
+      this.setform(fileName, filetype, fileExtension);
+    } else {
+      this.taxForm.controls.FileType.setValue('');
+      this.taxForm.controls.FileName.setValue('');
+      this.taxForm.controls.Description.setValue('');
+      this.fileExtension = '';
+    }
+  }
+  setform(fileName, filetype, extension) {
+    if (filetype.toLowerCase() === 'video/mp4' && extension.toLowerCase() === 'mp4') {
+      this.taxForm.controls.FileType.setValue('Video');
+      this.taxForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'audio/vnd.dlna.adts' && extension.toLowerCase() === 'aac') ||
+      (filetype.toLowerCase() === 'audio/mpeg' && extension.toLowerCase() === 'mp3')) {
+      this.taxForm.controls.FileType.setValue('Audio');
+      this.taxForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
+      (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
+      (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
+      this.taxForm.controls.FileType.setValue('Photo');
+      this.taxForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'application/pdf' && extension.toLowerCase() === 'pdf')) {
+      this.taxForm.controls.FileType.setValue('PDF');
+      this.taxForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'application/msword' && extension.toLowerCase() === 'doc') ||
+      (filetype.toLowerCase() === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
+        extension.toLowerCase() === 'docx')) {
+      this.taxForm.controls.FileType.setValue('DOC');
+      this.taxForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else {
+      this.taxForm.controls.uploadfile.setValue([]);
+      Swal.fire({
+        title: `Error`,
+        text: `${extension} File Are Not Supported`,
+        type: 'error'
+      });
+    }
   }
 }

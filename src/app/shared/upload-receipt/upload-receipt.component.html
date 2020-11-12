@@ -10,9 +10,10 @@
         isAnimationDisabled="true"
         listVisible="true"
         zoomText="zoomOut"
-        accept="audio/*,video/*,image/*,application/pdf,application/msword,.doc,.docx"
+        accept="audio/vnd.dlna.adts,audio/mpeg,video/mp4,image/gif,image/png,image/jpeg,application/pdf,application/msword,.doc,.docx"
         type="file"
-        maxsize="50mb"
+        maxsize="20mb"
+        (ngModelChange)="onchange($event)"
         [ngClass]="{
           'is-invalid': submited && f.uploadfile.errors
         }"
@@ -20,7 +21,7 @@
       ></file-upload>
       <div *ngIf="submited && f.uploadfile.errors" class="invalid-feedback">
         <div *ngIf="f.uploadfile.errors.sizeRange">
-          File size is exceed 50 Mb Limit
+          File size is exceed 20 Mb Limit
         </div>
         <div *ngIf="f.uploadfile.errors.required">Please Add file</div>
       </div>

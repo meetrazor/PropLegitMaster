@@ -17,7 +17,7 @@ export class UploadReceiptComponent implements OnInit {
   @Input() rentId: string;
   isLoading: boolean;
   submited: boolean;
-
+  fileExtension: string;
   constructor(private generalService: GeneralService, private router: Router) {
   }
 
@@ -31,12 +31,13 @@ export class UploadReceiptComponent implements OnInit {
     });
     this.submited = false;
     this.isLoading = false;
+    this.photographForm.controls.FileType.disable();
   }
   private prepareSave(): any {
     const input = new FormData();
     // This can be done a lot prettier; for example automatically assigning values by
     // looping through `this.form.controls`, but we'll keep it as simple as possible here
-    input.append('FileName', this.photographForm.get('FileName').value);
+    input.append('FileName', this.photographForm.get('FileName').value + '.' + this.fileExtension);
     input.append('FileType', this.photographForm.get('FileType').value);
     input.append('Description', this.photographForm.get('Description').value);
     input.append('PropertyID', this.propertyId);
@@ -46,7 +47,6 @@ export class UploadReceiptComponent implements OnInit {
   }
   get f() { return this.photographForm.controls; }
   onSubmit() {
-    console.log(this.photographForm);
     this.submited = true;
     if (this.photographForm.valid) {
       // 1 is Property ID
@@ -99,6 +99,57 @@ export class UploadReceiptComponent implements OnInit {
             }
           });
       }
+    }
+  }
+  onchange(e) {
+    if (e && e.length > 0) {
+      const file = e[0];
+      let fileName = file.name;
+      fileName = fileName.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9]/g, '');
+      fileName = fileName.length > 25 ? fileName.substring(0, 25) : fileName;
+      const filetype = file.type;
+      const fileExtension = file.name.split('.').pop();
+      this.setform(fileName, filetype, fileExtension);
+    } else {
+      this.photographForm.controls.FileType.setValue('');
+      this.photographForm.controls.FileName.setValue('');
+      this.photographForm.controls.Description.setValue('');
+      this.fileExtension = '';
+    }
+  }
+  setform(fileName, filetype, extension) {
+    if (filetype.toLowerCase() === 'video/mp4' && extension.toLowerCase() === 'mp4') {
+      this.photographForm.controls.FileType.setValue('Video');
+      this.photographForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'audio/vnd.dlna.adts' && extension.toLowerCase() === 'aac') ||
+      (filetype.toLowerCase() === 'audio/mpeg' && extension.toLowerCase() === 'mp3')) {
+      this.photographForm.controls.FileType.setValue('Audio');
+      this.photographForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
+      (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
+      (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
+      this.photographForm.controls.FileType.setValue('Photo');
+      this.photographForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'application/pdf' && extension.toLowerCase() === 'pdf')) {
+      this.photographForm.controls.FileType.setValue('PDF');
+      this.photographForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else if ((filetype.toLowerCase() === 'application/msword' && extension.toLowerCase() === 'doc') ||
+      (filetype.toLowerCase() === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
+        extension.toLowerCase() === 'docx')) {
+      this.photographForm.controls.FileType.setValue('DOC');
+      this.photographForm.controls.FileName.setValue(fileName);
+      this.fileExtension = extension.toLowerCase();
+    } else {
+      this.photographForm.controls.uploadfile.setValue([]);
+      Swal.fire({
+        title: `Error`,
+        text: `${extension} File Are Not Supported`,
+        type: 'error'
+      });
     }
   }
 }

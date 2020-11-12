@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GeneralService } from 'src/app/services/general.service';
@@ -15,7 +16,7 @@ export class DetailsPhotographComponent implements OnInit {
   docList: any = [];
   @Input() propertyId: number;
   isLoading: boolean;
-  constructor(private generalService: GeneralService, private sanitizer: DomSanitizer) {
+  constructor(private generalService: GeneralService, private sanitizer: DomSanitizer, private router: Router) {
 
   }
 
@@ -30,15 +31,17 @@ export class DetailsPhotographComponent implements OnInit {
         this.audioList = data.filter(e => e.FileType === 'Audio');
         this.pdfList = data.filter(e => e.FileType === 'PDF');
         this.docList = data.filter(e => e.FileType === 'DOC');
-   /*     this.pdfList.map(ele => {
-          ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
-        });*/
-   /*     this.docList.map(ele => {
-          ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
-        });*/
+        /*     this.pdfList.map(ele => {
+               ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
+             });*/
+        /*     this.docList.map(ele => {
+               ele.FileURL = `https://docs.google.com/gview?url=${ele.FileURL}&embedded=true`;
+             });*/
       });
   }
-
+  onClickImage(e) {
+    this.router.navigate(['/property/ViewPdf', e, 'photo']);
+  }
 
 
 }

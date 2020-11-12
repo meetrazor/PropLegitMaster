@@ -6,6 +6,7 @@
         style="max-height: 30vh; min-height: 30vh"
         [src]="item.FileURL"
         alt="Card image cap"
+        (click)="onClickImage(item.FileURL)"
       />
       <div class="card-body">
         <h5 class="card-title">
