@@ -197,4 +197,7 @@ export class GeneralService {
   uploadRentReceipt(propertyid, rentid, data): any {
     return this.http.post(`${apiUrl}property/${propertyid}/rent/${rentid}/receipt/upload`, data, httpFileUploadOptions);
   }
+  getDocument(propertyid, id): any {
+    return this.http.get(`${apiUrl}property/${propertyid}/photograph/view/${id}`, httpOptions);
+  }
 }

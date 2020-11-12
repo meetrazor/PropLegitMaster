@@ -61,12 +61,19 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
           upload += '<a class="btn btn-primary uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyRentID + '">';
           upload += '<i class="mdi mdi-cloud-upload" aria-hidden="false" receipt-id="' + data.PropertyRentID + '"></i>';
           upload += '</a>';
+        } else if (data.ReceiptID !== null) {
+          upload += '<a class="btn btn-secondary viewReceipt m-1" title="View Receipt" receipt-id="' + data.ReceiptID + '">';
+          upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
+          upload += '</a>';
         }
         $('td:eq(7)', row).html(upload);
       },
       drawCallback: () => {
         $('.uploadReceipt').on('click', (e) => {
           this.onUploadReceipt($(e.target).attr('receipt-id'));
+        });
+        $('.viewReceipt').on('click', (e) => {
+          this.onViewReceipt($(e.target).attr('receipt-id'));
         });
       }
     };
@@ -150,5 +157,21 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
   onViewRent(id) { }
   onUploadReceipt(id) {
     this.router.navigate([`rent/uploadreceipt/${this.propertyID}/${id}`]);
+  }
+  onViewReceipt(id) {
+    this.service.getDocument(this.propertyID, id).subscribe((res) => {
+      if (res.status === 200) {
+        const data = res.data[0];
+        if (data) {
+          this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Something\'s Wrong',
+            type: 'error'
+          });
+        }
+      }
+    });
   }
 }

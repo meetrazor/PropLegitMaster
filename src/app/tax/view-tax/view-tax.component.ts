@@ -5,6 +5,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-tax',
@@ -13,7 +14,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChecked {
   @Input() propertyID: number;
-  constructor(private service: GeneralService, private datepipe: DatePipe, private router: Router) { }
+  constructor(
+    private service: GeneralService, private datepipe: DatePipe,
+    private router: Router
+  ) { }
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
@@ -52,12 +56,19 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
           upload += '<a class="btn btn-primary uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyTaxID + '">';
           upload += '<i class="mdi mdi-cloud-upload" aria-hidden="false" receipt-id="' + data.PropertyTaxID + '"></i>';
           upload += '</a>';
+        } else if (data.ReceiptID !== null) {
+          upload += '<a class="btn btn-secondary viewReceipt m-1" title="view Receipt" receipt-id="' + data.ReceiptID + '">';
+          upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
+          upload += '</a>';
         }
         $('td:eq(4)', row).html(upload);
       },
       drawCallback: () => {
         $('.uploadReceipt').on('click', (e) => {
           this.onUploadReceipt($(e.target).attr('receipt-id'));
+        });
+        $('.viewReceipt').on('click', (e) => {
+          this.onViewReceipt($(e.target).attr('receipt-id'));
         });
       }
     };
@@ -71,7 +82,20 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
   onUploadReceipt(id) {
     this.router.navigate([`tax/uploadreceipt/${this.propertyID}/${id}`]);
   }
-  upload(e) {
-
+  onViewReceipt(id) {
+    this.service.getDocument(this.propertyID, id).subscribe((res) => {
+      if (res.status === 200) {
+        const data = res.data[0];
+        if (data) {
+          this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Something\'s Wrong',
+            type: 'error'
+          });
+        }
+      }
+    });
   }
 }
