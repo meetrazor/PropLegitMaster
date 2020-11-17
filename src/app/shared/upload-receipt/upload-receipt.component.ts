@@ -23,7 +23,7 @@ export class UploadReceiptComponent implements OnInit {
 
   ngOnInit() {
     this.photographForm = new FormGroup({
-      FileName: new FormControl(null, Validators.required),
+      FileName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       FileType: new FormControl('', Validators.required),
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),

@@ -116,6 +116,50 @@
     </div>
   </div>
 
+  <div class="">
+    <div class="mb-3">
+      <span class="header-title">Rented Space</span>
+      <span
+        ><input
+          class="mx-1"
+          type="radio"
+          formControlName="RentedSpace"
+          value="Whole"
+        />
+        Whole</span
+      >
+      <span
+        ><input
+          class="mx-1"
+          type="radio"
+          formControlName="RentedSpace"
+          value="Part"
+        />
+        Part</span
+      >
+      <div *ngIf="submitted && f.RentedSpace.errors" class="invalid-feedback">
+        <div *ngIf="f.RentedSpace.errors.required">RentedSpace is required</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="" *ngIf="f.RentedSpace.value != 'Whole'">
+    <div class="mb-3">
+      <h4 class="header-title">Rented Part</h4>
+      <input
+        class="form-control"
+        placeholder="Enter Rented Part"
+        formControlName="RentedPart"
+        [ngClass]="{
+          'is-invalid': submitted && f.RentedPart.errors
+        }"
+        maxlength="25"
+      />
+      <div *ngIf="submitted && f.RentedPart.errors" class="invalid-feedback">
+        <div *ngIf="f.RentedPart.errors.required">RentedPart is required</div>
+      </div>
+    </div>
+  </div>
   <!-- <div class="">
                   <div class="mb-3">
                     <span class="header-title">Rent Type</span>
@@ -189,51 +233,6 @@
       <div *ngIf="submitted && f.MonthlyRent.errors" class="invalid-feedback">
         <div *ngIf="f.MonthlyRent.errors.required">MonthlyRent is required</div>
         <div *ngIf="f.MonthlyRent.errors.min">MonthlyRent cannot be 0</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="">
-    <div class="mb-3">
-      <span class="header-title">Rented Space</span>
-      <span
-        ><input
-          class="mx-1"
-          type="radio"
-          formControlName="RentedSpace"
-          value="Whole"
-        />
-        Whole</span
-      >
-      <span
-        ><input
-          class="mx-1"
-          type="radio"
-          formControlName="RentedSpace"
-          value="Part"
-        />
-        Part</span
-      >
-      <div *ngIf="submitted && f.RentedSpace.errors" class="invalid-feedback">
-        <div *ngIf="f.RentedSpace.errors.required">RentedSpace is required</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="" *ngIf="f.RentedSpace.value != 'Whole'">
-    <div class="mb-3">
-      <h4 class="header-title">Rented Part</h4>
-      <input
-        class="form-control"
-        placeholder="Enter Rented Part"
-        formControlName="RentedPart"
-        [ngClass]="{
-          'is-invalid': submitted && f.RentedPart.errors
-        }"
-        maxlength="25"
-      />
-      <div *ngIf="submitted && f.RentedPart.errors" class="invalid-feedback">
-        <div *ngIf="f.RentedPart.errors.required">RentedPart is required</div>
       </div>
     </div>
   </div>

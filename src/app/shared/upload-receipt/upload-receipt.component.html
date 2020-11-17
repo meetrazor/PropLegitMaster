@@ -42,6 +42,9 @@
       />
       <div *ngIf="submited && f.FileName.errors" class="invalid-feedback">
         <div *ngIf="f.FileName.errors.required">File Name is Required</div>
+        <div *ngIf="f.FileName.errors.pattern">
+          Only alphanumeric characters allowed
+        </div>
       </div>
     </div>
   </div>

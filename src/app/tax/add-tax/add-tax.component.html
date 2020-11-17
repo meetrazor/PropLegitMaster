@@ -160,6 +160,9 @@
         <div *ngIf="submitted && f.FileName.errors.required">
           File Name is Required
         </div>
+        <div *ngIf="submitted && f.FileName.errors.pattern">
+          Only alphanumeric characters allowed
+        </div>
       </div>
     </div>
   </div>

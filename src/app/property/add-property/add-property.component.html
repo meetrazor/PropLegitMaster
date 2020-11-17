@@ -470,7 +470,7 @@
                       *ngIf="IsOpenLand || !IsCitySurvey"
                       class="form-group col-md-6"
                     >
-                      <label for="">Milkat No(Property Id)*</label>
+                      <label for="">Milkat No(Property Id)</label>
                       <input
                         class="form-control"
                         placeholder="Enter Milkat No (Property Id)"
@@ -592,7 +592,10 @@
                       />
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div
+                      class="form-group col-md-6"
+                      *ngIf="f.types.value !== 'surveyno'"
+                    >
                       <label for="">No. of BHK</label>
                       <select class="custom-select" formControlName="NoOfBHK">
                         <option value="1" id="4" selected>1</option>
@@ -629,7 +632,7 @@
                               type="text"
                               class="form-control"
                               formControlName="OwnerName"
-                              maxlength="25"
+                              maxlength="75"
                               [ngClass]="{
                                 'is-invalid':
                                   submitted &&

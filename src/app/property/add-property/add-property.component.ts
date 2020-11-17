@@ -213,6 +213,7 @@ export class AddPropertyComponent implements OnInit {
   }
 
   handleChange() {
+
     if (this.myForm.controls.PropertyTypeID.value == 1 || this.myForm.controls.PropertyTypeID.value == 3) {
       this.myForm.controls.TPNo.enable();
       this.myForm.controls.FPNo.enable();
@@ -242,12 +243,14 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.CityWardNo.disable();
       this.myForm.controls.CityWardName.disable();
       this.myForm.controls.SheetNumber.disable();
+      this.myForm.controls.NoOfBHK.enable();
       // unset value
       this.myForm.controls.CitySurveyNo.setValue(null);
       this.myForm.controls.CitySurveyOffice.setValue(null);
       this.myForm.controls.CityWardNo.setValue(null);
       this.myForm.controls.CityWardName.setValue(null);
       this.myForm.controls.SheetNumber.setValue(null);
+      this.myForm.controls.NoOfBHK.setValue(null);
 
     } else if (this.myForm.controls.types.value == 'citysurveyno') {
       this.myForm.controls.CitySurveyNo.enable();
@@ -325,12 +328,14 @@ export class AddPropertyComponent implements OnInit {
       this.myForm.controls.CityWardNo.enable();
       this.myForm.controls.CityWardName.enable();
       this.myForm.controls.SheetNumber.enable();
+      this.myForm.controls.NoOfBHK.enable();
       // unset value
       this.myForm.controls.CitySurveyNo.setValue(null);
       this.myForm.controls.CitySurveyOffice.setValue(null);
       this.myForm.controls.CityWardNo.setValue(null);
       this.myForm.controls.CityWardName.setValue(null);
       this.myForm.controls.SheetNumber.setValue(null);
+      this.myForm.controls.NoOfBHK.setValue(null);
 
     } else if (this.myForm.controls.types.value == 'citysurveyno') {
 

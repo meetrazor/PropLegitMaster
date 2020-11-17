@@ -108,13 +108,13 @@ export class GeneralService {
     return this.http.get<any>(stateInfo, httpOptions);
   }
   districts(id): any {
-    return this.http.get(`${apiUrl}states/list/${id}`, httpOptions);
-  }
-  talukas(id): any {
     return this.http.get(`${apiUrl}district/list/${id}`, httpOptions);
   }
-  villages(id): any {
+  talukas(id): any {
     return this.http.get(`${apiUrl}taluka/list/${id}`, httpOptions);
+  }
+  villages(id): any {
+    return this.http.get(`${apiUrl}village/list/${id}`, httpOptions);
   }
   addproperty(data): any {
     return this.http.post(`${apiUrl}property/add`, data, httpOptions);

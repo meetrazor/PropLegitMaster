@@ -28,7 +28,7 @@ export class AddTaxComponent implements OnInit {
       NextDueDate: new FormControl('', Validators.required),
       LastTaxAmount: new FormControl('', [Validators.required, Validators.min(1)]),
       LastTaxPaidDate: new FormControl('', Validators.required),
-      FileName: new FormControl(null, Validators.required),
+      FileName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       FileType: new FormControl(null, Validators.required,),
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),

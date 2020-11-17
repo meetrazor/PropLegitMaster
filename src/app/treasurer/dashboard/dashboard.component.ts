@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.service.getDashboard().subscribe((res) => {
-      this.data = res.data[0][0];
+      this.data = res.data[0];
       this.isLoading = false;
     });
     this.selected = '';

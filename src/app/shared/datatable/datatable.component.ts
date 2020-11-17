@@ -33,11 +33,13 @@ export class DatatableComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Property Name', data: 'PropertyName'
         }, {
-          title: 'Location', data: 'PostalAddress'
+          title: 'City Survey No / Survey No ', data: null, render: (data) => {
+            return data.CitySurveyNo ? data.CitySurveyNo : data.SurveyNo;
+          }
         }, {
-          title: 'Status', data: 'StatusOfElectricity'
+          title: 'Ownername(s)', data: 'PropertyOwner'
         }, {
-          title: 'Summary', data: 'Description'
+          title: 'In-Charge Name(s)', data: 'PropertyIncharge'
         }, {
           title: 'Action', data: null, render(data) {
             return `<div style="display:flex">

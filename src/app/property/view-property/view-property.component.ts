@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
 export class ViewPropertyComponent implements OnInit {
   @Input() propertyId: number;
   @Input() data: any;
-  loading = true;
+  loading: boolean;
+  propertyType: any;
   constructor(private service: GeneralService, private router: Router) { }
 
   ngOnInit() {
-    this.service.viewproperty(this.propertyId).subscribe(Res => {
-      this.data = Res.data;
+    this.service.propertytype().subscribe((Res) => {
       this.loading = true;
+      this.propertyType = Res.data.find(item => item.PropertyTypeID = this.data.PropertyTypeID);
+      this.loading = false;
     });
   }
   GoBack() {

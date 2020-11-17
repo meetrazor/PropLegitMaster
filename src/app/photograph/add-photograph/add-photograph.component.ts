@@ -18,7 +18,7 @@ export class AddPhotographComponent implements OnInit {
   @ViewChild('Files', { static: false }) files: any;
   constructor(private generalService: GeneralService) {
     this.photographForm = new FormGroup({
-      FileName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9.]*$')]),
+      FileName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       FileType: new FormControl('', Validators.required),
       Description: new FormControl('', Validators.required),
       uploadfile: new FormControl(null, Validators.required)
