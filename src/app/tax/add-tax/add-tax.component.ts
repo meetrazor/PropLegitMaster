@@ -29,11 +29,12 @@ export class AddTaxComponent implements OnInit {
       LastTaxAmount: new FormControl('', [Validators.required, Validators.min(1)]),
       LastTaxPaidDate: new FormControl('', Validators.required),
       FileName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
-      FileType: new FormControl(null, Validators.required,),
+      FileType: new FormControl(null, Validators.required),
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),
       CreatedBy: new FormControl('1', Validators.required),
       PropertyID: new FormControl(this.propertyID),
+      DocumentTypeId: new FormControl(3),
     });
     this.taxForm.controls.FileType.disable();
   }
@@ -52,7 +53,7 @@ export class AddTaxComponent implements OnInit {
     input.append('CreatedBy', (this.taxForm.get('CreatedBy').value));
     input.append('LastTaxPaidDate', (this.taxForm.get('LastTaxPaidDate').value));
     input.append('PropertyID', (this.taxForm.get('PropertyID').value));
-
+    input.append('DocumentTypeId', this.taxForm.get('DocumentTypeId').value);
     return input;
   }
   get f() { return this.taxForm.controls; }
@@ -99,7 +100,7 @@ export class AddTaxComponent implements OnInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                location.reload();
+                this.router.navigate([`/property/view/${this.propertyID}`]);
               });
             }
           });
@@ -124,16 +125,7 @@ export class AddTaxComponent implements OnInit {
     }
   }
   setform(fileName, filetype, extension) {
-    if (filetype.toLowerCase() === 'video/mp4' && extension.toLowerCase() === 'mp4') {
-      this.taxForm.controls.FileType.setValue('Video');
-      this.taxForm.controls.FileName.setValue(fileName);
-      this.fileExtension = extension.toLowerCase();
-    } else if ((filetype.toLowerCase() === 'audio/vnd.dlna.adts' && extension.toLowerCase() === 'aac') ||
-      (filetype.toLowerCase() === 'audio/mpeg' && extension.toLowerCase() === 'mp3')) {
-      this.taxForm.controls.FileType.setValue('Audio');
-      this.taxForm.controls.FileName.setValue(fileName);
-      this.fileExtension = extension.toLowerCase();
-    } else if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
+    if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
       (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
       (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
       this.taxForm.controls.FileType.setValue('Photo');

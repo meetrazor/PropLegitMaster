@@ -105,6 +105,7 @@ export class AddPropertyComponent implements OnInit {
         StateID: new FormControl('', Validators.required),
         CreatedBy: '',
         UserID: '',
+        ModifiedBy:'',  
         taluka: new FormControl('', Validators.required),
         CitySurveyNo: new FormControl('', Validators.required),
         CitySurveyOffice: new FormControl('', Validators.required),
@@ -135,7 +136,7 @@ export class AddPropertyComponent implements OnInit {
       });
       this.fetchstatelist();
       this.fetchpropertytype();
-      this.myForm.controls.CreatedBy.setValue('1');
+      this.myForm.controls.ModifiedBy.setValue('1');
       this.myForm.controls.UserID.setValue('1');
       this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
       { label: 'Edit Property', path: '/property/create', active: true }];

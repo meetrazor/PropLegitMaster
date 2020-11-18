@@ -118,7 +118,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate(['property']);
+              this.router.navigate([`/property/view/${this.propertyId}`]);
             });
           } else {
             Swal.fire({

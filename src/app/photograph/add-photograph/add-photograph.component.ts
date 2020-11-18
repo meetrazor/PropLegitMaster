@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GeneralService } from 'src/app/services/general.service';
@@ -16,13 +17,13 @@ export class AddPhotographComponent implements OnInit {
   submited: boolean;
   fileExtension: string;
   @ViewChild('Files', { static: false }) files: any;
-  constructor(private generalService: GeneralService) {
+  constructor(private generalService: GeneralService, private router: Router) {
     this.photographForm = new FormGroup({
       FileName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       FileType: new FormControl('', Validators.required),
       Description: new FormControl('', Validators.required),
-      uploadfile: new FormControl(null, Validators.required)
-
+      uploadfile: new FormControl(null, Validators.required),
+      DocumentTypeId: new FormControl(null)
     });
   }
 
@@ -40,7 +41,9 @@ export class AddPhotographComponent implements OnInit {
     input.append('FileType', this.photographForm.get('FileType').value);
     input.append('Description', this.photographForm.get('Description').value);
     input.append('uploadfile', (this.photographForm.get('uploadfile').value)[0]);
-
+    if (this.photographForm.get('DocumentTypeId').value !== null) {
+      input.append('DocumentTypeId', this.photographForm.get('DocumentTypeId').value);
+    }
     return input;
   }
   get f() { return this.photographForm.controls; }
@@ -57,6 +60,7 @@ export class AddPhotographComponent implements OnInit {
       this.photographForm.controls.FileType.setValue('');
       this.photographForm.controls.FileName.setValue('');
       this.photographForm.controls.Description.setValue('');
+      this.photographForm.controls.DocumentTypeId.setValue(null);
       this.fileExtension = '';
     }
   }
@@ -64,27 +68,32 @@ export class AddPhotographComponent implements OnInit {
     if (filetype.toLowerCase() === 'video/mp4' && extension.toLowerCase() === 'mp4') {
       this.photographForm.controls.FileType.setValue('Video');
       this.photographForm.controls.FileName.setValue(fileName);
+      this.photographForm.controls.DocumentTypeId.setValue(null);
       this.fileExtension = extension.toLowerCase();
     } else if ((filetype.toLowerCase() === 'audio/vnd.dlna.adts' && extension.toLowerCase() === 'aac') ||
       (filetype.toLowerCase() === 'audio/mpeg' && extension.toLowerCase() === 'mp3')) {
       this.photographForm.controls.FileType.setValue('Audio');
       this.photographForm.controls.FileName.setValue(fileName);
+      this.photographForm.controls.DocumentTypeId.setValue(null);
       this.fileExtension = extension.toLowerCase();
     } else if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
       (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
       (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
       this.photographForm.controls.FileType.setValue('Photo');
       this.photographForm.controls.FileName.setValue(fileName);
+      this.photographForm.controls.DocumentTypeId.setValue(null);
       this.fileExtension = extension.toLowerCase();
     } else if ((filetype.toLowerCase() === 'application/pdf' && extension.toLowerCase() === 'pdf')) {
       this.photographForm.controls.FileType.setValue('PDF');
       this.photographForm.controls.FileName.setValue(fileName);
+      this.photographForm.controls.DocumentTypeId.setValue(1);
       this.fileExtension = extension.toLowerCase();
     } else if ((filetype.toLowerCase() === 'application/msword' && extension.toLowerCase() === 'doc') ||
       (filetype.toLowerCase() === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' &&
         extension.toLowerCase() === 'docx')) {
       this.photographForm.controls.FileType.setValue('DOC');
       this.photographForm.controls.FileName.setValue(fileName);
+      this.photographForm.controls.DocumentTypeId.setValue(1);
       this.fileExtension = extension.toLowerCase();
     } else {
       this.photographForm.controls.uploadfile.setValue([]);
@@ -112,7 +121,7 @@ export class AddPhotographComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              location.reload();
+              this.router.navigate([`/property/view/${this.propertyId}`]);
             });
           } else {
             Swal.fire({

@@ -28,10 +28,16 @@ export class UploadReceiptComponent implements OnInit {
       Description: new FormControl(null, Validators.required),
       uploadfile: new FormControl(null, Validators.required),
       PropertyID: new FormControl(this.propertyId, Validators.required),
+      DocumentTypeId: new FormControl(null),
     });
     this.submited = false;
     this.isLoading = false;
     this.photographForm.controls.FileType.disable();
+    if (this.taxId && !this.rentId) {
+      this.photographForm.controls.DocumentTypeId.setValue(3);
+    } else if (!this.taxId && this.rentId) {
+      this.photographForm.controls.DocumentTypeId.setValue(2);
+    }
   }
   private prepareSave(): any {
     const input = new FormData();
@@ -42,6 +48,7 @@ export class UploadReceiptComponent implements OnInit {
     input.append('Description', this.photographForm.get('Description').value);
     input.append('PropertyID', this.propertyId);
     input.append('uploadfile', (this.photographForm.get('uploadfile').value)[0]);
+    input.append('DocumentTypeId', this.photographForm.get('DocumentTypeId').value);
 
     return input;
   }
@@ -118,16 +125,7 @@ export class UploadReceiptComponent implements OnInit {
     }
   }
   setform(fileName, filetype, extension) {
-    if (filetype.toLowerCase() === 'video/mp4' && extension.toLowerCase() === 'mp4') {
-      this.photographForm.controls.FileType.setValue('Video');
-      this.photographForm.controls.FileName.setValue(fileName);
-      this.fileExtension = extension.toLowerCase();
-    } else if ((filetype.toLowerCase() === 'audio/vnd.dlna.adts' && extension.toLowerCase() === 'aac') ||
-      (filetype.toLowerCase() === 'audio/mpeg' && extension.toLowerCase() === 'mp3')) {
-      this.photographForm.controls.FileType.setValue('Audio');
-      this.photographForm.controls.FileName.setValue(fileName);
-      this.fileExtension = extension.toLowerCase();
-    } else if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
+    if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
       (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
       (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
       this.photographForm.controls.FileType.setValue('Photo');

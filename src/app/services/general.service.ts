@@ -14,8 +14,8 @@ const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
 // const baseurl = `http://localhost:3000/`;
-const baseurl = `http://devapi.proplegit.com/`;
-// const baseurl = `http://qaapi.proplegit.com/`;
+// const baseurl = `http://devapi.proplegit.com/`;
+const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -130,7 +130,7 @@ export class GeneralService {
     return this.http.get(`${apiUrl}area/view/${id}`);
   }
   Addphotograph(PropertyID, data): any {
-    return this.http.post(`${apiUrl}property/${PropertyID}/document/add`, data);
+    return this.http.post(`${apiUrl}property/${PropertyID}/document/add`, data, httpFileUploadOptions);
   }
 
   listphotograph(PropertyID): any {
@@ -198,6 +198,6 @@ export class GeneralService {
     return this.http.post(`${apiUrl}property/${propertyid}/rent/${rentid}/receipt/upload`, data, httpFileUploadOptions);
   }
   getDocument(propertyid, id): any {
-    return this.http.get(`${apiUrl}property/${propertyid}/photograph/view/${id}`, httpOptions);
+    return this.http.get(`${apiUrl}property/${propertyid}/Document/view/${id}`, httpOptions);
   }
 }
