@@ -163,7 +163,11 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
       if (res.status === 200) {
         const data = res.data[0];
         if (data) {
-          this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+          if (data.FileType === 'DOC') {
+            window.location.href = data.FileURL;
+          } else {
+            this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+          }
         } else {
           Swal.fire({
             title: 'Error',

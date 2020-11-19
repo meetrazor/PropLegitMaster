@@ -53,9 +53,6 @@ export class AddRentComponent implements OnInit {
     if (this.isEdit === true) {
       this.setInitialValue();
     }
-    this.service.getPropertyListByState(7).subscribe(data => {
-      this.propertyData = data.data;
-    });
   }
 
   dateCheck() {
@@ -118,7 +115,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate([`/property/view/${this.propertyId}`]);
+              location.reload();
             });
           } else {
             Swal.fire({
@@ -140,7 +137,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate(['property']);
+              location.reload()
             });
           } else {
             Swal.fire({

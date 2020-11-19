@@ -121,7 +121,7 @@ export class AddPhotographComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate([`/property/view/${this.propertyId}`]);
+              location.reload();
             });
           } else {
             Swal.fire({

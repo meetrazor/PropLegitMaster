@@ -45,6 +45,8 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
         }, {
           title: 'Revenue Office', data: 'RevenueOffice',
         }, {
+          title: 'Demand Notice', data: null,
+        }, {
           title: 'Receipt', data: null,
         }
       ],
@@ -52,6 +54,7 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
       columnDefs: [{ width: '18%', targets: [0, 1] }],
       rowCallback(row, data: any) {
         let upload = '';
+        let demandNoticebtn = '';
         if (data.ReceiptID === null) {
           upload += '<a class="btn btn-primary uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyTaxID + '">';
           upload += '<i class="mdi mdi-cloud-upload" aria-hidden="false" receipt-id="' + data.PropertyTaxID + '"></i>';
@@ -61,7 +64,16 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
           upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
           upload += '</a>';
         }
-        $('td:eq(4)', row).html(upload);
+        if (data.DemandNoticeID === null) {
+
+        } else if (data.DemandNoticeID !== null) {
+          // tslint:disable-next-line: max-line-length
+          demandNoticebtn += '<a class="btn btn-secondary viewDemandNotice m-1" title="view Demand Notice" notice-id="' + data.DemandNoticeID + '">';
+          demandNoticebtn += '<i class="mdi mdi-eye" aria-hidden="false" notice-id="' + data.DemandNoticeID + '"></i>';
+          demandNoticebtn += '</a>';
+        }
+        $('td:eq(5)', row).html(upload);
+        $('td:eq(4)', row).html(demandNoticebtn);
       },
       drawCallback: () => {
         $('.uploadReceipt').on('click', (e) => {
@@ -69,6 +81,9 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
         });
         $('.viewReceipt').on('click', (e) => {
           this.onViewReceipt($(e.target).attr('receipt-id'));
+        });
+        $('.viewDemandNotice').on('click', (e) => {
+          this.onViewDemandNotice($(e.target).attr('notice-id'));
         });
       }
     };
@@ -87,7 +102,31 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
       if (res.status === 200) {
         const data = res.data[0];
         if (data) {
-          this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+          if (data.FileType === 'DOC') {
+            window.location.href = data.FileURL;
+          } else {
+            this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+          }
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Something\'s Wrong',
+            type: 'error'
+          });
+        }
+      }
+    });
+  }
+  onViewDemandNotice(id) {
+    this.service.getDocument(this.propertyID, id).subscribe((res) => {
+      if (res.status === 200) {
+        const data = res.data[0];
+        if (data) {
+          if (data.FileType === 'DOC') {
+            window.location.href = data.FileURL;
+          } else {
+            this.router.navigate(['/property/ViewPdf', data.FileURL, data.FileType]);
+          }
         } else {
           Swal.fire({
             title: 'Error',

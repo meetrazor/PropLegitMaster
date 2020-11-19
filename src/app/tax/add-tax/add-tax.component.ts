@@ -21,6 +21,7 @@ export class AddTaxComponent implements OnInit {
   fileExtension: string;
   constructor(private formBuilder: FormBuilder, private router: Router, private service: GeneralService) { }
   ngOnInit() {
+
     this.maxDate = new Date();
     this.taxForm = this.formBuilder.group({
       RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
@@ -79,12 +80,11 @@ export class AddTaxComponent implements OnInit {
     // console.log(this.taxForm.value.uploadfile[0]);
     // return;
     this.submitted = true;
-    this.isLoading = true;
     if (this.taxForm.valid) {
+      this.isLoading = true;
       this.service.addtax(this.propertyID, this.prepareSave())
-        .pipe(first())
         .subscribe(
-          data => {
+          (data) => {
             this.isLoading = false;
             if (data.error) {
               Swal.fire({
@@ -100,12 +100,12 @@ export class AddTaxComponent implements OnInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                this.router.navigate([`/property/view/${this.propertyID}`]);
+                location.reload();
               });
             }
           });
     }
-    this.isLoading = false;
+    // this.isLoading = false;
   }
 
   onchange(e) {
