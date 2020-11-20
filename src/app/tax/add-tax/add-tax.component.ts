@@ -26,7 +26,7 @@ export class AddTaxComponent implements OnInit {
     this.taxForm = this.formBuilder.group({
       RevenueOffice: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       AmountDue: new FormControl('', [Validators.required, Validators.min(1)]),
-      NextDueDate: new FormControl('', Validators.required),
+      DueDate: new FormControl('', Validators.required),
       LastTaxAmount: new FormControl('', [Validators.required, Validators.min(1)]),
       LastTaxPaidDate: new FormControl('', Validators.required),
       FileName: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
@@ -49,7 +49,7 @@ export class AddTaxComponent implements OnInit {
     input.append('uploadfile', (this.taxForm.get('uploadfile').value)[0]);
     input.append('RevenueOffice', (this.taxForm.get('RevenueOffice').value));
     input.append('AmountDue', (this.taxForm.get('AmountDue').value));
-    input.append('NextDueDate', (this.taxForm.get('NextDueDate').value));
+    input.append('DueDate', (this.taxForm.get('DueDate').value));
     input.append('LastTaxAmount', (this.taxForm.get('LastTaxAmount').value));
     input.append('CreatedBy', (this.taxForm.get('CreatedBy').value));
     input.append('LastTaxPaidDate', (this.taxForm.get('LastTaxPaidDate').value));

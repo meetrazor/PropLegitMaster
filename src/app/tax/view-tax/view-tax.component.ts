@@ -36,12 +36,12 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
             return meta.row + 1;
           }
         }, {
-          title: 'Amount Due Date', data: 'NextDueDate', render: ((data) => {
+          title: 'Amount Due Date', data: 'DueDate', render: ((data) => {
             return this.datepipe.transform(data, 'MMM, dd yyyy');
 
           })
         }, {
-          title: 'Amount Due,', data: 'AmountDue',
+          title: 'Amount Due', data: 'AmountDue',
         }, {
           title: 'Revenue Office', data: 'RevenueOffice',
         }, {

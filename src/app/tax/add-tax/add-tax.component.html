@@ -104,17 +104,17 @@
         <h4 class="header-title">DueDate *</h4>
         <input
           class="form-control"
-          placeholder="Enter NextDueDate"
-          formControlName="NextDueDate"
+          placeholder="Enter DueDate"
+          formControlName="DueDate"
           type="date"
           min="{{ maxDate | date: 'yyyy-MM-dd' }}"
           (keypress)="callback()"
           [ngClass]="{
-            'is-invalid': submitted && f.NextDueDate.errors
+            'is-invalid': submitted && f.DueDate.errors
           }"
         />
-        <div *ngIf="submitted && f.NextDueDate.errors" class="invalid-feedback">
-          <div *ngIf="submitted && f.NextDueDate.errors.required">
+        <div *ngIf="submitted && f.DueDate.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.DueDate.errors.required">
             Next Due Date is Required
           </div>
         </div>
