@@ -87,7 +87,9 @@
         }"
       ></textarea>
       <div *ngIf="submited && f.Description.errors" class="invalid-feedback">
-        <div *ngIf="f.Description.errors.required">File Type is Required</div>
+        <div *ngIf="f.Description.errors.required">
+          File Description is Required
+        </div>
       </div>
     </div>
   </div>

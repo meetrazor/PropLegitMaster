@@ -399,21 +399,30 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">TP No*</label>
+                      <label for="">TP No</label>
                       <input
                         class="form-control"
                         placeholder="Enter TP No"
                         formControlName="TPNo"
-                        [ngClass]="{ 'is-invalid': submitted && f.TPNo.errors }"
+                        [ngClass]="{
+                          'is-invalid':
+                            submitted &&
+                            !f.TPNo.value &&
+                            myForm.hasError('TPFPrequired')
+                        }"
                         (keypress)="isValid($event, 5)"
                         (paste)="(false)"
                       />
                       <div
-                        *ngIf="submitted && f.TPNo.errors"
+                        *ngIf="
+                          submitted &&
+                          !f.TPNo.value &&
+                          myForm.hasError('TPFPrequired')
+                        "
                         class="invalid-feedback"
                       >
-                        <div *ngIf="f.TPNo.errors.required">
-                          TPNo is required
+                        <div *ngIf="myForm.hasError('TPFPrequired')">
+                          TPNo is required When FPNo is Added
                         </div>
                       </div>
                     </div>
@@ -422,21 +431,30 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">FP No*</label>
+                      <label for="">FP No</label>
                       <input
                         class="form-control"
                         placeholder="Enter FP No"
                         formControlName="FPNo"
                         (keypress)="isValid($event, 5)"
                         (paste)="(false)"
-                        [ngClass]="{ 'is-invalid': submitted && f.FPNo.errors }"
+                        [ngClass]="{
+                          'is-invalid':
+                            submitted &&
+                            !f.FPNo.value &&
+                            myForm.hasError('TPFPrequired')
+                        }"
                       />
                       <div
-                        *ngIf="submitted && f.FPNo.errors"
+                        *ngIf="
+                          submitted &&
+                          !f.FPNo.value &&
+                          myForm.hasError('TPFPrequired')
+                        "
                         class="invalid-feedback"
                       >
-                        <div *ngIf="f.FPNo.errors.required">
-                          FPNo is required
+                        <div *ngIf="myForm.hasError('TPFPrequired')">
+                          FPNo is required When TPNo Added
                         </div>
                       </div>
                     </div>
@@ -632,14 +650,14 @@
                               type="text"
                               class="form-control"
                               formControlName="OwnerName"
-                              maxlength="75"
+                              maxlength="500"
                               [ngClass]="{
                                 'is-invalid':
                                   submitted &&
                                   f.OwnerShip['controls'][i]['controls']
                                     .OwnerName.errors
                               }"
-                              pattern="[a-zA-Z][a-zA-Z ]+"
+                              pattern="[a-zA-Z][a-zA-Z, ]+"
                             />
                             <div
                               *ngIf="

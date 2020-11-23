@@ -28,7 +28,7 @@
           <div *ngIf="f.uploadfile.errors.required">Please Add file</div>
         </div>
       </div>
-      
+
       <div class="col-md-12 mb-3">
         <h4 class="header-title">File Name *</h4>
         <input
@@ -86,7 +86,9 @@
           }"
         ></textarea>
         <div *ngIf="submited && f.Description.errors" class="invalid-feedback">
-          <div *ngIf="f.Description.errors.required">File Type is Required</div>
+          <div *ngIf="f.Description.errors.required">
+            File Description is Required
+          </div>
         </div>
       </div>
 

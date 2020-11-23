@@ -1,10 +1,22 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { GeneralService } from 'src/app/services/general.service';
 import { first } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+
+const handlerequired = (control: AbstractControl) => {
+  let TP = control.get('TPNo').value;
+  let FP = control.get('FPNo').value;
+  if (TP !== '' && FP === '') {
+    return { TPFPrequired: true };
+  } else if (TP === '' && FP !== '') {
+    return { TPFPrequired: true };
+  } else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-add-property',
@@ -105,7 +117,7 @@ export class AddPropertyComponent implements OnInit {
         StateID: new FormControl('', Validators.required),
         CreatedBy: '',
         UserID: '',
-        ModifiedBy:'',  
+        ModifiedBy: '',
         taluka: new FormControl('', Validators.required),
         CitySurveyNo: new FormControl('', Validators.required),
         CitySurveyOffice: new FormControl('', Validators.required),
@@ -114,8 +126,8 @@ export class AddPropertyComponent implements OnInit {
         SheetNumber: new FormControl('', Validators.required),
 
         SurveyNo: new FormControl('', Validators.required),
-        TPNo: new FormControl('', Validators.required),
-        FPNo: new FormControl('', Validators.required),
+        TPNo: new FormControl(''),
+        FPNo: new FormControl(''),
         BuildingNo: new FormControl('', Validators.required),
         BuildingName: new FormControl('', Validators.required),
 
@@ -133,7 +145,7 @@ export class AddPropertyComponent implements OnInit {
         types: new FormControl(''),
         InCharge: this.Fb.array([
         ]),
-      });
+      }, { validators: handlerequired });
       this.fetchstatelist();
       this.fetchpropertytype();
       this.myForm.controls.ModifiedBy.setValue('1');
@@ -163,8 +175,8 @@ export class AddPropertyComponent implements OnInit {
         SheetNumber: new FormControl('', Validators.required),
 
         SurveyNo: new FormControl('', Validators.required),
-        TPNo: new FormControl('', Validators.required),
-        FPNo: new FormControl('', Validators.required),
+        TPNo: new FormControl(''),
+        FPNo: new FormControl(''),
         BuildingNo: new FormControl('', Validators.required),
         BuildingName: new FormControl('', Validators.required),
 
@@ -183,7 +195,7 @@ export class AddPropertyComponent implements OnInit {
           this.initIncharge()
         ]),
         types: new FormControl('surveyno')
-      });
+      }, { validators: handlerequired });
       this.fetchstatelist();
       this.fetchpropertytype();
       this.myForm.controls.CreatedBy.setValue('1');
