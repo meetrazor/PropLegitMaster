@@ -408,7 +408,8 @@
                           'is-invalid':
                             submitted &&
                             !f.TPNo.value &&
-                            myForm.hasError('TPFPrequired')
+                            (myForm.hasError('TPFPrequired') ||
+                              myForm.hasError('SurveyOrTPFPrequired'))
                         }"
                         (keypress)="isValid($event, 5)"
                         (paste)="(false)"
@@ -417,12 +418,17 @@
                         *ngIf="
                           submitted &&
                           !f.TPNo.value &&
-                          myForm.hasError('TPFPrequired')
+                          (myForm.hasError('TPFPrequired') ||
+                            myForm.hasError('SurveyOrTPFPrequired'))
                         "
                         class="invalid-feedback"
                       >
                         <div *ngIf="myForm.hasError('TPFPrequired')">
                           TPNo is required When FPNo is Added
+                        </div>
+                        <div *ngIf="myForm.hasError('SurveyOrTPFPrequired')">
+                          Either Survey Number or FP Number and TP Number
+                          Required
                         </div>
                       </div>
                     </div>
@@ -442,19 +448,25 @@
                           'is-invalid':
                             submitted &&
                             !f.FPNo.value &&
-                            myForm.hasError('TPFPrequired')
+                            (myForm.hasError('TPFPrequired') ||
+                              myForm.hasError('SurveyOrTPFPrequired'))
                         }"
                       />
                       <div
                         *ngIf="
                           submitted &&
                           !f.FPNo.value &&
-                          myForm.hasError('TPFPrequired')
+                          (myForm.hasError('TPFPrequired') ||
+                            myForm.hasError('SurveyOrTPFPrequired'))
                         "
                         class="invalid-feedback"
                       >
                         <div *ngIf="myForm.hasError('TPFPrequired')">
                           FPNo is required When TPNo Added
+                        </div>
+                        <div *ngIf="myForm.hasError('SurveyOrTPFPrequired')">
+                          Either Survey Number or FP Number and TP Number
+                          Required
                         </div>
                       </div>
                     </div>
@@ -463,23 +475,27 @@
                       class="form-group col-md-6"
                       *ngIf="IsOpenLand || !IsCitySurvey"
                     >
-                      <label for="">SurveyNo*</label>
+                      <label for="">SurveyNo </label>
                       <input
                         class="form-control"
                         placeholder="Enter Survey No"
                         formControlName="SurveyNo"
                         [ngClass]="{
-                          'is-invalid': submitted && f.SurveyNo.errors
+                          'is-invalid':
+                            submitted && myForm.hasError('SurveyOrTPFPrequired')
                         }"
                         (keypress)="isValid($event, 30)"
                         (paste)="(false)"
                       />
                       <div
-                        *ngIf="submitted && f.SurveyNo.errors"
+                        *ngIf="
+                          submitted && myForm.hasError('SurveyOrTPFPrequired')
+                        "
                         class="invalid-feedback"
                       >
-                        <div *ngIf="f.SurveyNo.errors.required">
-                          Survey No is required
+                        <div *ngIf="myForm.hasError('SurveyOrTPFPrequired')">
+                          Either Survey Number or FP Number and TP Number
+                          Required
                         </div>
                       </div>
                     </div>
@@ -657,7 +673,7 @@
                                   f.OwnerShip['controls'][i]['controls']
                                     .OwnerName.errors
                               }"
-                              pattern="[a-zA-Z][a-zA-Z, ]+"
+                              pattern="[a-zA-Z][a-zA-Z-, ]+"
                             />
                             <div
                               *ngIf="

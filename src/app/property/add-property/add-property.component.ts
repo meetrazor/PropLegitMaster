@@ -9,13 +9,19 @@ import * as moment from 'moment';
 const handlerequired = (control: AbstractControl) => {
   let TP = control.get('TPNo').value;
   let FP = control.get('FPNo').value;
-  if (TP !== '' && FP === '') {
-    return { TPFPrequired: true };
-  } else if (TP === '' && FP !== '') {
-    return { TPFPrequired: true };
+  let SurveyNo = control.get('SurveyNo').value;
+  if (SurveyNo === '' && (TP === '' && FP === '')) {
+    return { SurveyOrTPFPrequired: true }
   } else {
-    return null;
+    if (TP !== '' && FP === '') {
+      return { TPFPrequired: true };
+    } else if (TP === '' && FP !== '') {
+      return { TPFPrequired: true };
+    } else {
+      return null;
+    }
   }
+
 };
 
 @Component({
@@ -125,7 +131,7 @@ export class AddPropertyComponent implements OnInit {
         CityWardName: new FormControl('', Validators.required),
         SheetNumber: new FormControl('', Validators.required),
 
-        SurveyNo: new FormControl('', Validators.required),
+        SurveyNo: new FormControl(''),
         TPNo: new FormControl(''),
         FPNo: new FormControl(''),
         BuildingNo: new FormControl('', Validators.required),
@@ -174,7 +180,7 @@ export class AddPropertyComponent implements OnInit {
         CityWardName: new FormControl('', Validators.required),
         SheetNumber: new FormControl('', Validators.required),
 
-        SurveyNo: new FormControl('', Validators.required),
+        SurveyNo: new FormControl(''),
         TPNo: new FormControl(''),
         FPNo: new FormControl(''),
         BuildingNo: new FormControl('', Validators.required),
