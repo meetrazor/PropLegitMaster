@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { CookieService } from './../../core/services/cookie.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
@@ -9,6 +11,7 @@ import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DashboardComponent implements OnInit {
   hoveredDate: NgbDate;
+  currentUser: any;
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
   data: any;
@@ -25,9 +28,13 @@ export class DashboardComponent implements OnInit {
 
   // Select2 Dropdown
   selectValue: string[];
-  constructor(private service: GeneralService) { }
+  constructor(private service: GeneralService, private cookie: CookieService, private router: Router) { }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
+    if (!this.currentUser.UserID) {
+      this.router.navigate(['/account/login']);
+    }
     this.isLoading = true;
     this.service.getDashboard().subscribe((res) => {
       this.data = res.data[0];

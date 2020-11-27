@@ -1,8 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
+import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,14 @@ import { GeneralService } from 'src/app/services/general.service';
 export class LoginComponent implements OnInit, AfterViewInit {
 
   loginForm: FormGroup;
+  confirmForm: FormGroup;
   submitted = false;
   returnUrl: string;
   error = '';
+  success = '';
   loading = false;
+  @ViewChild('OtpInput', { static: false }) OtpRef: any;
+  @ViewChild('wizardForm', { static: false }) wizard: BaseWizardComponent;
 
   constructor(
     private formBuilder: FormBuilder, private route: ActivatedRoute,
@@ -28,7 +33,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
       // MobileNumber: ['', Validators.required],
       Password: ['', Validators.required],
     });
-
+    this.confirmForm = this.formBuilder.group({
+      OTP: ['', [Validators.required,
+      Validators.pattern('[a-zA-Z0-9]{6}')]],
+      // MobileNumber: ['', Validators.required],
+      OTPLogID: ['', Validators.required],
+    });
     // reset login status
     // this.authenticationService.logout();
 
@@ -44,6 +54,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
+  get e() { return this.confirmForm.controls; }
 
   /**
    * On submit form
@@ -61,13 +72,41 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.loading = false;
           if (data.error) {
             this.error = data.error;
-            this.loading = false;
             return;
           } else {
-            this.router.navigate([this.returnUrl]);
+            this.submitted = false;
+            this.error = '';
+            this.success = data.message;
+            this.e.OTPLogID.setValue(data.data.OTPLogID);
+            this.wizard.navigation.goToNextStep();
           }
         });
+  }
+  onConfirmSubmit() {
+    this.success = '';
+    this.error = '';
+    this.submitted = true;
+    // stop here if form is invalid
+    if (this.confirmForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    this.service.loginOTPVerify(this.confirmForm.value).subscribe((res) => {
+      this.loading = false;
+      if (res.status === 200) {
+        this.submitted = false;
+        this.router.navigate([this.returnUrl]);
+      } else {
+        this.error = res.error;
+      }
+    });
+
+  }
+  onOtpChange(event) {
+    this.e.OTP.setValue(event);
   }
 }

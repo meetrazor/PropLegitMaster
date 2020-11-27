@@ -1,3 +1,4 @@
+import { ArchwizardModule } from 'angular-archwizard';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,7 @@ import { TimePipe } from 'src/app/pipes/time.pipe';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgbAlertModule,
+    NgbAlertModule, ArchwizardModule,
     UIModule,
     AuthRoutingModule, NgOtpInputModule
   ]

@@ -26,6 +26,8 @@ const PropertyListByState = `${apiUrl}property/list/`;
 const deleteProperty = `${apiUrl}property/delete/`;
 const stateInfo = `${apiUrl}state/list`;
 const count = `${apiUrl}property/dashboard/count`;
+const forgotPassword = `${apiUrl}Forgot/Password`;
+const loginOTPVerify = `${apiUrl}login/otp/verify`;
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,7 @@ const count = `${apiUrl}property/dashboard/count`;
 export class GeneralService {
   private userID: number;
   private user;
+  private otpID;
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   userRegister(userData): any {
@@ -51,6 +54,12 @@ export class GeneralService {
 
   setUserID(userid: number) {
     this.userID = userid;
+  }
+  setOTPID(otp: number) {
+    this.otpID = otp;
+  }
+  getOTPID() {
+    return this.otpID;
   }
 
   generateOTP(id, data): any {
@@ -76,7 +85,20 @@ export class GeneralService {
 
   login(data) {
 
-    return this.http.post<any>(login, data, httpOptions)
+    return this.http.post<any>(login, data, httpOptions);
+    // .pipe(map(user => {
+    // tslint:disable-next-line: triple-equals
+    //   if (user.error && user.status != 200) {
+    //     return user;
+    //   } else {
+    //     this.user = user;
+    //     this.cookieService.setCookie('currentUser', JSON.stringify(user.data[0]), 1);
+    //     return user;
+    //   }
+    // }));
+  }
+  loginOTPVerify(data) {
+    return this.http.post<any>(loginOTPVerify, data, httpOptions)
       .pipe(map(user => {
         // tslint:disable-next-line: triple-equals
         if (user.error && user.status != 200) {
@@ -87,6 +109,10 @@ export class GeneralService {
           return user;
         }
       }));
+  }
+
+  saveCookie(data) {
+    this.cookieService.setCookie('currentUser', JSON.stringify(data), 1);
   }
 
   logout() {
@@ -199,5 +225,11 @@ export class GeneralService {
   }
   getDocument(propertyid, id): any {
     return this.http.get(`${apiUrl}property/${propertyid}/Document/view/${id}`, httpOptions);
+  }
+  forgotPassword(data): any {
+    return this.http.post(`${forgotPassword}`, data, httpOptions);
+  }
+  submitForgotPassword(data): any {
+    return this.http.put(`${forgotPassword}/update`, data, httpOptions);
   }
 }
