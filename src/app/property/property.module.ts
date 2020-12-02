@@ -1,3 +1,4 @@
+import { NgSelectModule } from '@ng-select/ng-select';
 import { RentModule } from './../rent/rent.module';
 
 import { TreasurerModule } from './../treasurer/treasurer.module';
@@ -25,7 +26,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CommonModule, PdfViewerModule,
     PropertyRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, NgSelectModule,
     AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule, RentModule
   ]
 })

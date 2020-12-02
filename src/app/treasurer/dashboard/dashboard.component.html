@@ -114,19 +114,19 @@
                 + Add New <i class="mdi mdi-chevron-down"></i>
               </button>
               <div class="dropdown-menu" [ngClass]="{ show: isdropdownShow }">
-                <a class="dropdown-item" href="#">Task</a>
-                <a class="dropdown-item" href="#">Maintenance</a>
+                <a class="dropdown-item" href="Task">Task</a>
+                <a class="dropdown-item" href="Maintenance">Maintenance</a>
                 <a class="dropdown-item" [routerLink]="['/rent/create']"
                   >Tenant</a
                 >
-                <a class="dropdown-item" href="#">Renewal</a>
+                <a class="dropdown-item" href="Renewal">Renewal</a>
                 <a
                   class="dropdown-item"
                   [routerLink]="['/property-legal-case/create']"
                   >Court Case</a
                 >
-                <a class="dropdown-item" href="#">Invoice</a>
-                <a class="dropdown-item" href="#">Receipt</a>
+                <a class="dropdown-item" href="Invoice">Invoice</a>
+                <a class="dropdown-item" href="Receipt">Receipt</a>
                 <a
                   class="dropdown-item"
                   [routerLink]="['/property-document/upload']"
@@ -135,7 +135,7 @@
                 <a class="dropdown-item" [routerLink]="['/property/create']"
                   >Property</a
                 >
-                <a class="dropdown-item" href="#">Office</a>
+                <a class="dropdown-item" href="Office">Office</a>
                 <a
                   class="dropdown-item"
                   href="#"
@@ -173,7 +173,7 @@
             <div
               class="avatar-lg rounded-circle bg-soft-primary border-primary border"
             >
-              <a href="pm-prop.html"
+              <a routerLink="/property"
                 ><i
                   class="mdi mdi-home-city-outline font-22 avatar-title text-primary"
                 ></i
@@ -183,7 +183,7 @@
           <div class="col-6">
             <div class="text-right">
               <h3 class="mt-1">
-                &nbsp;<a class="text-body" href="pm-prop.html"
+                &nbsp;<a class="text-body" routerLink="/property"
                   ><span data-plugin="counterup">{{
                     data.PropertyManaged
                   }}</span></a
@@ -191,7 +191,7 @@
               </h3>
               <p class="text-muted mb-1">
                 <small
-                  ><a class="text-body" href="pm-prop.html"
+                  ><a class="text-body" routerLink="/property"
                     >Properties Managed</a
                   ></small
                 >
@@ -202,7 +202,7 @@
         <!-- end row-->
         <div class="mt-3">
           <h6 class="text-uppercase">
-            <a class="text-body" href="pm-prop-doc-out.html"
+            <a class="text-body" routerLink="/property"
               >Outdated Records<span class="float-right">{{
                 data.PropertyOutdated
               }}</span></a
@@ -259,7 +259,7 @@
             <div class="text-right">
               <h3 class="text-dark mt-1">
                 <a href="ts-l-sip.html" class="text-body">
-                  <span data-plugin="counterup">10</span></a
+                  <span data-plugin="counterup">0</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -276,7 +276,7 @@
         <div class="mt-3">
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-f.html"
-              >Hearings this Week<span class="float-right">3</span></a
+              >Hearings this Week<span class="float-right">0</span></a
             >
           </h6>
           <div class="progress progress-sm m-0">
@@ -286,7 +286,7 @@
               aria-valuenow="33"
               aria-valuemin="0"
               aria-valuemax="100"
-              style="width: 33%"
+              style="width: 0"
             >
               <span class="sr-only">3 Hearings this week</span>
             </div>
@@ -339,9 +339,7 @@
           </h6>
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-pn-i.html"
-              >10 (&#8377; 2.5L)<span class="float-right"
-                >5 (&#8377; 50K)</span
-              ></a
+              >0 (&#8377; 0)<span class="float-right">0 (&#8377; 0)</span></a
             >
           </h6>
 
@@ -350,7 +348,7 @@
             <div
               class="progress-bar bg-success"
               role="progressbar"
-              style="width: 77%"
+              style="width: 50%"
               aria-valuenow="30"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -358,7 +356,7 @@
             <div
               class="progress-bar bg-soft-pink"
               role="progressbar"
-              style="width: 33%"
+              style="width: 50%"
               aria-valuenow="20"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -412,7 +410,7 @@
         <div class="mt-3">
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-tc.html"
-              >To Pay<span class="float-right">&#8377; 50K</span></a
+              >To Pay<span class="float-right">&#8377; 0</span></a
             >
           </h6>
           <div class="progress progress-sm mb-0">
@@ -420,7 +418,7 @@
             <div
               class="progress-bar bg-warning"
               role="progressbar"
-              style="width: 77%"
+              style="width: 0"
               aria-valuenow="30"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -428,7 +426,7 @@
             <div
               class="progress-bar bg-success"
               role="progressbar"
-              style="width: 33%"
+              style="width: 0"
               aria-valuenow="20"
               aria-valuemin="0"
               aria-valuemax="100"
@@ -468,7 +466,7 @@
             <div class="text-right">
               <h3 class="text-dark mt-1">
                 <a class="text-body" href="ts-l-sip-pvr.html"
-                  ><span data-plugin="counterup">30</span></a
+                  ><span data-plugin="counterup">0</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -485,7 +483,7 @@
         <div class="mt-3">
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-pvr.html"
-              >Resolved<span class="float-right">10<small></small></span
+              >Resolved<span class="float-right">0<small></small></span
             ></a>
           </h6>
           <div class="progress progress-sm m-0">
@@ -495,7 +493,7 @@
               aria-valuenow="30"
               aria-valuemin="0"
               aria-valuemax="100"
-              style="width: 30%"
+              style="width: 0"
             >
               <span class="sr-only">10 Alerts Resolved out of 30</span>
             </div>
@@ -542,7 +540,7 @@
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-docs-rp.html"
               >Docs Requested<span class="float-right"
-                >46/<small>72</small></span
+                >0/<small>{{ data.NewDocsReceived }}</small></span
               ></a
             >
           </h6>
@@ -553,7 +551,7 @@
               aria-valuenow="46"
               aria-valuemin="0"
               aria-valuemax="100"
-              style="width: 46%"
+              style="width: 0"
             >
               <span class="sr-only">46 Documents Pending Review</span>
             </div>
@@ -580,7 +578,7 @@
             <div class="text-right">
               <h3 class="text-dark mt-1">
                 <a class="text-body" href="ts-l-sip-docs-p.html"
-                  ><span data-plugin="counterup">7</span></a
+                  ><span data-plugin="counterup">0</span></a
                 >
               </h3>
               <p class="text-muted mb-1">
@@ -596,7 +594,7 @@
           <h6 class="text-uppercase">
             <a class="text-body" href="ts-l-sip-docs-r.html"
               >Allocation Pending<span class="float-right"
-                >12/<small>19</small></span
+                >0/<small>0</small></span
               ></a
             >
           </h6>
@@ -607,7 +605,7 @@
               aria-valuenow="30"
               aria-valuemin="0"
               aria-valuemax="100"
-              style="width: 93%"
+              style="width: 0"
             >
               <span class="sr-only">12 Documents Requested</span>
             </div>

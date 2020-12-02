@@ -11,13 +11,12 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommingSoonComponent } from './comming-soon/comming-soon.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, CommingSoonComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

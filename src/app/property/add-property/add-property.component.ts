@@ -30,7 +30,8 @@ const handlerequired = (control: AbstractControl) => {
   styleUrls: ['./add-property.component.scss']
 })
 export class AddPropertyComponent implements OnInit {
-
+  currentUser:any;
+  returnvalue;
   public myForm: FormGroup;
   Array5: any[];
   keyword = 'Area';
@@ -51,11 +52,14 @@ export class AddPropertyComponent implements OnInit {
 
   constructor(private Fb: FormBuilder, private service: GeneralService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
+    this.currentUser = this.service.getcurrentUser();
+    console.log(this.currentUser.UserID);
+    
     this.isUpdate = false;
     this.isLoading = false;
     this.propertyID = this.route.snapshot.params.id;
     this.style = 'height: 100%; display: block; width: 100%; padding: 0.52rem 0.9rem; font-size: 0.875rem;font-weight: 400;';
-    this.style += 'border: 1px solid #ced4da; line-height: 1.5; color: #6c757d; background-color: #fff; background-clip: ';
+    this.style += 'line-height: 1.5; color: #6c757d; background-color: #fff; background-clip: ';
     this.style += 'padding-box; border-radius: 4px;';
     if (!this.isUpdate) {
       this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
@@ -154,8 +158,8 @@ export class AddPropertyComponent implements OnInit {
       }, { validators: handlerequired });
       this.fetchstatelist();
       this.fetchpropertytype();
-      this.myForm.controls.ModifiedBy.setValue('1');
-      this.myForm.controls.UserID.setValue('1');
+      this.myForm.controls.ModifiedBy.setValue(this.currentUser.UserID);
+      this.myForm.controls.UserID.setValue(this.currentUser.UserID);
       this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
       { label: 'Edit Property', path: '/property/create', active: true }];
       this.fetchUpdateMode();
@@ -204,32 +208,44 @@ export class AddPropertyComponent implements OnInit {
       }, { validators: handlerequired });
       this.fetchstatelist();
       this.fetchpropertytype();
-      this.myForm.controls.CreatedBy.setValue('1');
-      this.myForm.controls.UserID.setValue('1');
+      this.myForm.controls.CreatedBy.setValue(this.currentUser.UserID);
+      this.myForm.controls.UserID.setValue(this.currentUser.UserID);
     }
   }
-  ChangeState(e) {
-    this.service.districts(this.myForm.controls.StateID.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          if (data.error) {
-            Swal.fire({
-              title: data.error_code,
-              text: data.message,
-              type: 'error'
-            });
-            return;
-          } else {
-            this.DistrictList = data.data;
-            if (this.DistrictList.length > 0) {
-              this.myForm.controls.DistrictID.enable();
-            } else {
-              this.myForm.controls.DistrictID.disable();
-            }
-          }
-        });
+  ChangeDistrict() {
+    this.myForm.controls.VillageID.setValue(null);
+    this.myForm.controls.TalukaID.setValue(null);
+    this.myForm.controls.taluka.setValue('');
   }
+  ChangeState(e) {
+    if (e !== undefined) {
+      this.service.districts(this.myForm.controls.StateID.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data.error) {
+              Swal.fire({
+                title: data.error_code,
+                text: data.message,
+                type: 'error'
+              });
+              return;
+            } else {
+              this.DistrictList = data.data;
+              if (this.DistrictList.length > 0) {
+                this.myForm.controls.DistrictID.enable();
+              } else {
+                this.myForm.controls.DistrictID.disable();
+              }
+            }
+          });
+    }
+    this.myForm.controls.VillageID.setValue(null);
+    this.myForm.controls.DistrictID.setValue(null);
+    this.myForm.controls.TalukaID.setValue(null);
+    this.myForm.controls.taluka.setValue('');
+  }
+
 
   handleChange() {
 
@@ -375,11 +391,14 @@ export class AddPropertyComponent implements OnInit {
   }
 
   save() {
+    console.log(this.myForm.value);
+
     this.handleChange();
     this.submitted = true;
     if (this.myForm.invalid) {
       return;
     }
+        // return;
     if (!this.isUpdate) {
       this.isLoading = true;
       this.service.addproperty(this.myForm.value)
@@ -541,7 +560,14 @@ export class AddPropertyComponent implements OnInit {
           }
         });
   }
+  onclear() {
+    this.myForm.controls.VillageID.setValue(null);
+    this.myForm.controls.TalukaID.setValue(null);
+  }
   onChangeSearch(search: string) {
+    this.myForm.controls.VillageID.setValue(null);
+    this.myForm.controls.TalukaID.setValue(null);
+    // this.myForm.controls.taluka.setValue('');
     //  fetch remote data from here
     //  And reassign the 'data' which is binded to 'data' property.
 
@@ -616,6 +642,9 @@ export class AddPropertyComponent implements OnInit {
             this.isLoading = false;
             return;
           } else {
+            this.isLoading = true;
+            this.myForm.controls.StateID.setValue(data.data.StateID);
+            this.ChangeState(data.data.StateID);
             this.myForm.controls.AgeOfProperty.setValue(data.data.AgeOfProperty);
             this.myForm.controls.PropertyTypeID.setValue(data.data.PropertyTypeID);
             this.myForm.controls.PropertyName.setValue(data.data.PropertyName);
@@ -639,12 +668,11 @@ export class AddPropertyComponent implements OnInit {
             this.myForm.controls.WaterAvailability.setValue(data.data.WaterAvailability);
             this.myForm.controls.NoOfBHK.setValue(data.data.NoOfBHK);
             this.myForm.controls.FurnishType.setValue(data.data.FurnishType);
-            this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
-            this.myForm.controls.VillageID.setValue(data.data.VillageID);
-            this.myForm.controls.DistrictID.setValue(data.data.DistrictID);
-            this.myForm.controls.StateID.setValue(data.data.StateID);
             this.myForm.controls.CreatedBy.setValue(data.data.CreatedBy);
             this.myForm.controls.UserID.setValue(data.data.UserID);
+            this.myForm.controls.DistrictID.setValue(parseInt(data.data.DistrictID));
+            this.myForm.controls.TalukaID.setValue(data.data.TalukaID);
+            this.myForm.controls.VillageID.setValue(data.data.VillageID);
             this.myForm.controls.taluka.setValue(`${data.data.VillageName}, ${data.data.TalukaName}, ${data.data.DistrictName}`);
             if (data.data.CitySurveyNo && (data.data.PropertyTypeID != 1 && data.data.PropertyTypeID != 3)) {
               this.myForm.controls.types.setValue('citysurveyno');
@@ -655,10 +683,10 @@ export class AddPropertyComponent implements OnInit {
             // this.initialValue = `${data.data.DistrictName}, ${data.data.TalukaName}, ${data.data.VillageName}`;
             this.ChangeSurveyType();
 
-            this.ChangeState(data.data.StateID);
+
             this.ChangePropertyType();
             // this.isDataLoaded = true;
-            this.onChangeSearch(data.data.Area);
+            // this.onChangeSearch(data.data.Area);
             for (const i of data.data.InCharge) {
               const control = this.myForm.controls.InCharge as FormArray;
               control.push(this.initIncharge(i));
@@ -667,6 +695,7 @@ export class AddPropertyComponent implements OnInit {
               const control = this.myForm.controls.OwnerShip as FormArray;
               control.push(this.initOwner(i));
             }
+      
             this.isLoading = false;
           }
         }

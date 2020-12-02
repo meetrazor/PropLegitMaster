@@ -57,7 +57,8 @@ const routes: Routes = [
   //     .then(m => m.RentModule), canActivate: [AuthGuard]
   // },
   {
-    path: '**', component: CommingSoonComponent,
+    path: '**', component: LayoutComponent, loadChildren: () => import('./comming-soon/comming-soon.module')
+      .then(m => m.CommingSoonModule), canActivate: [AuthGuard]
   }
 ];
 

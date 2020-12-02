@@ -1,4 +1,9 @@
-<form [formGroup]="myForm" novalidate (ngSubmit)="save()">
+<form
+  [formGroup]="myForm"
+  novalidate
+  (ngSubmit)="save()"
+  (keydown.enter)="$event.preventDefault()"
+>
   <div class="content pb-4">
     <!-- Start Content-->
     <div class="container-fluid">
@@ -32,7 +37,24 @@
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="">States*</label>
-                      <select
+                      <ng-select
+                        class="form-control"
+                        formControlName="StateID"
+                        (change)="ChangeState($event)"
+                        placeholder="
+                        Select State"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.StateID.errors
+                        }"
+                      >
+                        <ng-option
+                          *ngFor="let item of StateList"
+                          [value]="item.StateID"
+                          [id]="item.StateID"
+                          >{{ item.StateName }}</ng-option
+                        >
+                      </ng-select>
+                      <!-- <select
                         class="custom-select"
                         formControlName="StateID"
                         (change)="ChangeState($event)"
@@ -47,7 +69,7 @@
                         >
                           {{ state.StateName }}
                         </option>
-                      </select>
+                      </select> -->
                       <div
                         *ngIf="submitted && f.StateID.errors"
                         class="invalid-feedback"
@@ -60,7 +82,23 @@
 
                     <div class="form-group col-md-6">
                       <label for="">Districts*</label>
-                      <select
+                      <ng-select
+                        class="form-control"
+                        formControlName="DistrictID"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.DistrictID.errors
+                        }"
+                        placeholder="Select District"
+                        (change)="ChangeDistrict()"
+                      >
+                        <ng-option
+                          *ngFor="let item of DistrictList"
+                          [value]="item.DistrictID"
+                          [id]="item.DistrictID"
+                          >{{ item.DistrictName }}</ng-option
+                        >
+                      </ng-select>
+                      <!-- <select
                         class="custom-select"
                         formControlName="DistrictID"
                         [ngClass]="{
@@ -74,7 +112,7 @@
                         >
                           {{ district.DistrictName }}
                         </option>
-                      </select>
+                      </select> -->
                       <div
                         *ngIf="submitted && f.DistrictID.errors"
                         class="invalid-feedback"
@@ -87,42 +125,44 @@
 
                     <div class="col-md-6">
                       <label for="">Village/Pincode*</label>
-                      <div class="form-group">
-                        <ng-autocomplete
-                          [data]="areas"
-                          [initialValue]="initialValue"
-                          [searchKeyword]="keyword"
-                          placeHolder="Enter Village or Pincode"
-                          (selected)="selectEvent($event)"
-                          (inputChanged)="onChangeSearch($event)"
-                          formControlName="taluka"
-                          [ngClass]="{
-                            'is-invalid': submitted && f.taluka.errors
-                          }"
-                          (inputFocused)="onFocused($event)"
-                          historyIdentifier="areas"
-                          [itemTemplate]="itemTemplate"
-                          [notFoundTemplate]="notFoundTemplate"
-                        >
-                        </ng-autocomplete>
+                      <!-- <div class="form-group"> -->
+                      <ng-autocomplete
+                        style="width: 100%; margin: 0; padding: 0"
+                        [data]="areas"
+                        [initialValue]="initialValue"
+                        [searchKeyword]="keyword"
+                        placeHolder="Enter Village or Pincode"
+                        (selected)="selectEvent($event)"
+                        (inputChanged)="onChangeSearch($event)"
+                        formControlName="taluka"
+                        class="form-group form-control"
+                        [ngClass]="{
+                          'is-invalid': submitted && f.TalukaID.errors
+                        }"
+                        (inputCleared)="onclear()"
+                        (inputFocused)="onFocused($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                      >
+                      </ng-autocomplete>
 
-                        <ng-template #itemTemplate let-item>
-                          <a [innerHTML]="item.Area"></a>
-                        </ng-template>
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.Area"></a>
+                      </ng-template>
 
-                        <ng-template #notFoundTemplate let-notFound>
-                          <div [innerHTML]="notFound"></div>
-                        </ng-template>
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
 
-                        <div
-                          *ngIf="submitted && f.taluka.errors"
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="f.taluka.errors.required">
-                            Village is required
-                          </div>
+                      <div
+                        *ngIf="submitted && f.TalukaID.errors"
+                        class="invalid-feedback"
+                      >
+                        <div *ngIf="f.TalukaID.errors.required">
+                          Village is required
                         </div>
                       </div>
+                      <!-- </div> -->
                     </div>
 
                     <div class="form-group col-md-6">

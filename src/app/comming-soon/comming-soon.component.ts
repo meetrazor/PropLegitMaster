@@ -13,10 +13,13 @@ export class CommingSoonComponent implements OnInit {
   hours: number;
   minutes: number;
   seconds: number;
+  breadCrumbItems: any;
   constructor() { }
 
   ngOnInit() {
-    this.countDownDate = new Date('Nov 31, 2020 00:00:00').getTime();
+    this.breadCrumbItems = [{ label: 'Dashboard', path: '/' },
+    { label: 'Comming-Soon', path: '/', active: true }];
+    this.countDownDate = new Date('Dec 31, 2020 00:00:00').getTime();
     this.now = new Date().getTime();
     this.timer();
   }

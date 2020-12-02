@@ -13,7 +13,7 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
-// const baseurl = `http://localhost:3000/`;
+// const baseurl = `https://api.proplegit.com/`;
 // const baseurl = `http://devapi.proplegit.com/`;
 const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
@@ -118,6 +118,9 @@ export class GeneralService {
   logout() {
     this.cookieService.deleteCookie('currentUser');
     this.user = null;
+  }
+  getcurrentUser() {
+    return JSON.parse(this.cookieService.getCookie('currentUser'));
   }
 
   getStateWisePropertyCount(): any {
