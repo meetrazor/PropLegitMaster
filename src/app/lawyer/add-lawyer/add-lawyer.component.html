@@ -47,6 +47,29 @@
                 </div>
                 </div>
 
+                
+
+                <div class="form-group col-md-6">
+                  <label for="">State</label>
+                  <select class="custom-select " formControlName="StateId" (change)="fetchdist()" 
+                  [ngClass]="{
+                    'is-invalid': submitted && f.StateId.errors
+                  }"
+                  >
+                    <option *ngFor="let State of StateArray" [value]="State.StateID"> {{ State.StateName }}</option>
+                  </select>
+              
+                  <div
+                  *ngIf="submitted && f.StateId.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.StateId.errors.required">
+                    State is required
+                  </div>
+                 
+                </div>
+                </div>
+
                 <div class="form-group col-md-6">
                   <label for="">District</label>
                   <select class="custom-select " formControlName="DistrictId" (change)="fetchtaluka()"

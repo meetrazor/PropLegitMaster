@@ -11,12 +11,13 @@ import { SinglePropertyViewComponent } from './single-property-view/single-prope
 import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { ViewPropertyComponent } from './view-property/view-property.component';
+import {ViewPdfComponent} from './view-pdf/view-pdf.component';
 import {TaxModule} from './../tax/tax.module';
 import { LegalCaseModule } from '../legal-case/legal-case.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
 
 @NgModule({
-  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent],
+  declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent, ViewPdfComponent],
   imports: [
     CommonModule,
     PropertyRoutingModule,
