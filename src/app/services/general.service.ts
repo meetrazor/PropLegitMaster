@@ -13,9 +13,9 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
-// const baseurl = `http://localhost:3000/`;
-// const baseurl = `http://devapi.proplegit.com/`;
-const baseurl = `http://qaapi.proplegit.com/`;
+const baseurl = `http://localhost:3000/`;
+//const baseurl = `http://devapi.proplegit.com/`;
+//const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -199,5 +199,68 @@ export class GeneralService {
   }
   getDocument(propertyid, id): any {
     return this.http.get(`${apiUrl}property/${propertyid}/Document/view/${id}`, httpOptions);
+  }
+  listLegalcase(id): any {
+    return this.http.get<any>(`${apiUrl}property/${id}/case/list`, httpOptions);
+  }
+  deleteLegalcase(LegalCaseID): any {
+    return this.http.delete<any>(`${apiUrl}property/case/delete/${LegalCaseID}`);
+  }
+  getHearings(LegalCaseID) {
+    return this.http.get<any>(`${apiUrl}property/case/${LegalCaseID}/next-hearing/list`);
+  }
+  addLegalCase(PropertyID, data){
+    return this.http.post<any>(`${apiUrl}property/${PropertyID}/case/add`, data, httpOptions);
+  }
+  updateLegalCase(PropertyID, LegalCaseID, data) {
+    return this.http.put<any>(`${apiUrl}property/${PropertyID}/case/update/${LegalCaseID}`, data, httpOptions);
+  }
+  getLawyers(LegalCaseID) {
+    return this.http.get<any>(`${apiUrl}property/case/${LegalCaseID}/lawyer/list`);
+  }
+  getLegalcaseActs(LegalCaseID){
+    return this.http.get<any>(`${apiUrl}property/case/${LegalCaseID}/CaseActs/list`);
+  }
+  addLegalCaseHearing(data, LegalCaseID) {
+    return this.http.post<any>(`${apiUrl}property/case/${LegalCaseID}/next-hearing`, data, httpOptions);
+  }
+  addLegalCaseLawyer(data, LegalCaseID) {
+    return this.http.post<any>(`${apiUrl}property/case/${LegalCaseID}/lawyer`, data, httpOptions);
+  }
+  getLegalCaseDocuments(PropertyID, LegalCaseID) {
+    return this.http.get<any>(`http://localhost:3000/api/property/${PropertyID}/photograph/legalcase/${LegalCaseID}`);
+  }
+  addLegalCaseActs(LegalCaseID, data) {
+    return this.http.post<any>(`${apiUrl}property/case/${LegalCaseID}/CaseActs`, data, httpOptions);
+  }
+  getDistrictName(id) {
+    return this.http.get<any>(`http://localhost:3000/api/district/${id}`);
+  }
+  addLegalCasePetitioner(data, LegalCaseID) {
+    return this.http.post<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/petitioner`, data, httpOptions);
+  }
+  addLegalCaseRespondent(data, LegalCaseID) {
+    return this.http.post<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/respondent`, data, httpOptions);
+  }
+  getLegalCasePetitioners(LegalCaseID) {
+    return this.http.get<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/petitioner/list`, httpOptions);
+  }
+  getLegalCaseRespondents(LegalCaseID) {
+    return this.http.get<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/respondent/list`, httpOptions);
+  }
+  updateLegalCaseLawyer(LegalCaseID, LegalCaseLawyerID, data) {
+    return this.http.put<any>(`${apiUrl}property/case/${LegalCaseID}/update/lawyer/${LegalCaseLawyerID}`, data);
+  }
+  updateLegalCaseRespondent(LegalCaseID, LegalCaseRespondentID, data) {
+    return this.http.put<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/update/respondent/${LegalCaseRespondentID}`, data);
+  }
+  updateLegalCasePetitioner(LegalCaseID, LegalCasePetitionerID, data) {
+    return this.http.put<any>(`http://localhost:3000/api/property/case/${LegalCaseID}/update/petitioner/${LegalCasePetitionerID}`, data);
+  }
+  updateLegalCaseNextHearing(LegalCaseID, LegalcaseHearingID, data) {
+    return this.http.put<any>(`${apiUrl}property/case/${LegalCaseID}/update/next-hearing/${LegalcaseHearingID}`, data);
+  }
+  getDistrictList() {
+    return this.http.get<any>(`http://localhost:3000/api/property/case/district/list`);
   }
 }
