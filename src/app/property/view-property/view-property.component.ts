@@ -11,6 +11,7 @@ export class ViewPropertyComponent implements OnInit {
   @Input() propertyId: number;
   @Input() data: any;
   loading = true;
+  src = '';
   constructor(private service: GeneralService, private router: Router) { }
 
   ngOnInit() {
@@ -18,6 +19,7 @@ export class ViewPropertyComponent implements OnInit {
       this.data = Res.data;
       this.loading = true;
     });
+    this.src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
   }
   GoBack() {
     this.router.navigate(['property']);

@@ -15,13 +15,14 @@ import { EditPropertyComponent } from './edit-property/edit-property.component';
 import { ViewPropertyComponent } from './view-property/view-property.component';
 import { TaxModule } from './../tax/tax.module';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent, ViewPropertyComponent, ComingSoonComponent],
   imports: [
     CommonModule,
     PropertyRoutingModule,
-    FormsModule,
+    FormsModule,PdfViewerModule,
     ReactiveFormsModule,
     AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule, RentModule
   ]

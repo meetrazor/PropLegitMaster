@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-legal-case.component.scss']
 })
 export class AddLegalCaseComponent implements OnInit {
-
+  src = '';
   constructor() { }
 
   ngOnInit() {
+    this.src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
   }
 
 }
