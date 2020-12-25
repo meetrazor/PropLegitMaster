@@ -9,11 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SinglePropertyViewComponent implements OnInit {
   breadCrumbItems: Array<any>;
+
   constructor(private route: ActivatedRoute, private service: GeneralService) { }
   propertyID: number;
   isloading: boolean;
   data: any;
+  count: number;
   ngOnInit() {
+    this.count = 0;
     this.isloading = true;
     this.propertyID = this.route.snapshot.params.id;
     this.service.viewproperty(this.propertyID).subscribe((res) => {
@@ -24,5 +27,7 @@ export class SinglePropertyViewComponent implements OnInit {
     });
 
   }
-
+  refresh() {
+    this.count++;
+  }
 }

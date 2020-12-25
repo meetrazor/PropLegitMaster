@@ -1,7 +1,7 @@
 import { Observable, Subject, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { CookieService } from '../core/services/cookie.service';
 
 const httpOptions = {
@@ -14,8 +14,8 @@ const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
 // const baseurl = `https://api.proplegit.com/`;
-// const baseurl = `http://devapi.proplegit.com/`;
-const baseurl = `http://qaapi.proplegit.com/`;
+const baseurl = `http://devapi.proplegit.com/`;
+// const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -28,6 +28,10 @@ const stateInfo = `${apiUrl}state/list`;
 const count = `${apiUrl}property/dashboard/count`;
 const forgotPassword = `${apiUrl}Forgot/Password`;
 const loginOTPVerify = `${apiUrl}login/otp/verify`;
+const propertyTaxType = `${apiUrl}Property/Tax/List/`;
+const generateinvoice = `${apiUrl}Property/rent/generate/invoice/`;
+const uploadInvoice = `${apiUrl}property/rent/Upload/invoice/`;
+const generateReceipt = `${apiUrl}property/rent/generate/receipt/`;
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +40,9 @@ export class GeneralService {
   private userID: number;
   private user;
   private otpID;
+  // tslint:disable-next-line: variable-name
+  private _refresh = new Subject<void>();
+
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   userRegister(userData): any {
@@ -46,6 +53,9 @@ export class GeneralService {
   }
   getUserID() {
     return this.userID;
+  }
+  reFresh() {
+    return this._refresh;
   }
 
   getDashboard(): any {
@@ -182,6 +192,9 @@ export class GeneralService {
   addtax(PropertyID, data): any {
     return this.http.post(`${apiUrl}property/${PropertyID}/tax/add`, data, httpFileUploadOptions);
   }
+  addtaxconfirm(PropertyID, data): any {
+    return this.http.post(`${apiUrl}property/${PropertyID}/tax/add?FileExistenceCheck=1`, data, httpFileUploadOptions);
+  }
   listLawyers(): any {
     return this.http.get<any>(`${apiUrl}lawyer/list`, httpOptions);
   }
@@ -205,7 +218,7 @@ export class GeneralService {
     return this.http.delete<any>(`${apiUrl}property/rent/delete/${PropertyRentId}`);
   }
   addTenant(data, id): any {
-    return this.http.post<any>(`${apiUrl}property/${id}/rent/add`, data, httpOptions);
+    return this.http.post<any>(`${apiUrl}property/${id}/tenant/add`, data, httpFileUploadOptions);
   }
   viewTenant(PropertyRentId) {
     return this.http.get<any>(`${apiUrl}property/rent/view/${PropertyRentId}`, httpOptions);
@@ -223,8 +236,8 @@ export class GeneralService {
   uploadTaxReceipt(propertyid, taxid, data): any {
     return this.http.post(`${apiUrl}property/${propertyid}/tax/${taxid}/receipt/upload`, data, httpFileUploadOptions);
   }
-  uploadRentReceipt(propertyid, rentid, data): any {
-    return this.http.post(`${apiUrl}property/${propertyid}/rent/${rentid}/receipt/upload`, data, httpFileUploadOptions);
+  uploadRentReceipt(rentid, data): any {
+    return this.http.post(`${apiUrl}property/rent/Upload/receipt/${rentid}`, data, httpFileUploadOptions);
   }
   getDocument(propertyid, id): any {
     return this.http.get(`${apiUrl}property/${propertyid}/Document/view/${id}`, httpOptions);
@@ -234,5 +247,23 @@ export class GeneralService {
   }
   submitForgotPassword(data): any {
     return this.http.put(`${forgotPassword}/update`, data, httpOptions);
+  }
+  getpropertytaxtypeList(id): any {
+    return this.http.get(`${propertyTaxType}/${id}`, httpOptions);
+  }
+  getRentList(id): any {
+    return this.http.get(`${apiUrl}property/rent/view/${id}`, httpOptions);
+  }
+  GenerateInvoice(id, userId): any {
+    return this.http.post(`${generateinvoice}/${id}`, { CreatedBy: userId }, httpOptions);
+  }
+  UploadInvoice(PropertyRentID, data): any {
+    return this.http.post(`${uploadInvoice}${PropertyRentID}`, data, httpFileUploadOptions);
+  }
+  UploadInvoiceConfirm(PropertyRentID, data): any {
+    return this.http.post(`${uploadInvoice}${PropertyRentID}?FileExistenceCheck=0`, data, httpFileUploadOptions);
+  }
+  GenerateReceipt(id, data): any {
+    return this.http.post(`${generateReceipt}/${id}`, data, httpOptions);
   }
 }

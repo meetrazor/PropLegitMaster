@@ -31,10 +31,19 @@
         <ng-template ngbTabContent class="nav-item">
           <div class="row">
             <div class="col-md-8">
-              <app-view-tax propertyID="{{ propertyID }}"></app-view-tax>
+              <app-view-tax
+                propertyID="{{ propertyID }}"
+                [refresh]="count"
+              ></app-view-tax>
             </div>
             <div class="col-md-4">
-              <app-add-tax propertyID="{{ propertyID }}"> </app-add-tax>
+              <app-add-tax
+                (refresh)="refresh()"
+                propertyID="{{ propertyID }}"
+                propertyTypeID="{{ data.PropertyTypeID }}"
+                revenueOffice="{{ data.RevenewOfficeType }}"
+              >
+              </app-add-tax>
             </div>
           </div>
         </ng-template>
@@ -43,10 +52,16 @@
         <ng-template ngbTabContent class="nav-item">
           <div class="row">
             <div class="col-md-8">
-              <app-rent propertyID="{{ propertyID }}"></app-rent>
+              <app-rent
+                [refresh]="count"
+                propertyID="{{ propertyID }}"
+              ></app-rent>
             </div>
             <div class="col-md-4">
-              <app-add-rent propertyId="{{ propertyID }}"></app-add-rent>
+              <app-add-rent
+                (refreshrent)="refresh()"
+                propertyId="{{ propertyID }}"
+              ></app-add-rent>
             </div>
           </div>
         </ng-template>

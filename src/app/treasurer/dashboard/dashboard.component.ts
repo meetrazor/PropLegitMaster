@@ -31,15 +31,18 @@ export class DashboardComponent implements OnInit {
   constructor(private service: GeneralService, private cookie: CookieService, private router: Router) { }
 
   ngOnInit() {
+    this.data = {
+      PropertyManaged: 0
+    }
     this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
     if (!this.currentUser.UserID) {
       this.router.navigate(['/account/login']);
     }
-    this.isLoading = true;
-    this.service.getDashboard().subscribe((res) => {
-      this.data = res.data[0];
-      this.isLoading = false;
-    });
+    // this.isLoading = true;
+    // this.service.getDashboard().subscribe((res) => {
+    //   this.data = res.data[0];
+    //   this.isLoading = false;
+    // });
     this.selected = '';
     this.hidden = true;
   }

@@ -22,55 +22,30 @@
         </div>
       </div>
     </div>
-    <div class="">
-      <div class="mb-3">
-        <h4 class="header-title">LastTaxAmount *</h4>
-        <input
-          class="form-control"
-          placeholder="Enter LastTaxAmount"
-          formControlName="LastTaxAmount"
-          type="number"
-          min="1"
-          (keypress)="valid($event)"
-          [ngClass]="{
-            'is-invalid': submitted && f.LastTaxAmount.errors
-          }"
-        />
-        <div
-          *ngIf="submitted && f.LastTaxAmount.errors"
-          class="invalid-feedback"
+    <div class="mb-3">
+      <h4 class="header-title">Tax Type*</h4>
+      <ng-select
+        class="form-control"
+        formControlName="PropertyTaxTypeID"
+        placeholder="
+        Select Tax Type"
+        [ngClass]="{
+          'is-invalid': submitted && f.PropertyTaxTypeID.errors
+        }"
+      >
+        <ng-option
+          *ngFor="let item of PropertyTypeData"
+          [value]="item.PropertyTaxTypeID"
+          [id]="item.PropertyTaxTypeID"
+          >{{ item.PropertyTaxName }}</ng-option
         >
-          <div *ngIf="submitted && f.LastTaxAmount.errors.required">
-            Last Tax Amount is Required
-          </div>
-          <div *ngIf="submitted && f.LastTaxAmount.errors.min">
-            Last Tax Amount cannot be 0
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="">
-      <div class="mb-3">
-        <h4 class="header-title">LastTaxPaidDate *</h4>
-        <input
-          class="form-control"
-          placeholder="Enter LastTaxPaidDate"
-          formControlName="LastTaxPaidDate"
-          type="date"
-          max="{{ maxDate | date: 'yyyy-MM-dd' }}"
-          (keypress)="callback()"
-          [ngClass]="{
-            'is-invalid': submitted && f.LastTaxPaidDate.errors
-          }"
-        />
-        <div
-          *ngIf="submitted && f.LastTaxPaidDate.errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="submitted && f.LastTaxPaidDate.errors.required">
-            Last Tax Paid Date is Required
-          </div>
+      </ng-select>
+      <div
+        *ngIf="submitted && f.PropertyTaxTypeID.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.PropertyTaxTypeID.errors.required">
+          Tax Type is required
         </div>
       </div>
     </div>
@@ -98,6 +73,31 @@
         </div>
       </div>
     </div>
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Financial Tax Year *</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Financial Tax Year"
+          formControlName="FinancialTaxYear"
+          type="month"
+          [ngClass]="{
+            'is-invalid': submitted && f.FinancialTaxYear.errors
+          }"
+        />
+        <div
+          *ngIf="submitted && f.FinancialTaxYear.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="submitted && f.FinancialTaxYear.errors.required">
+            Amount Due is Required
+          </div>
+          <div *ngIf="submitted && f.FinancialTaxYear.errors.min">
+            Amount Due cannot be null or 0
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="">
       <div class="mb-3">
@@ -115,7 +115,7 @@
         />
         <div *ngIf="submitted && f.DueDate.errors" class="invalid-feedback">
           <div *ngIf="submitted && f.DueDate.errors.required">
-            Next Due Date is Required
+            Due Date is Required
           </div>
         </div>
       </div>

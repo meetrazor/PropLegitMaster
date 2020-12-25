@@ -11,13 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { UploadReceiptComponent } from './upload-receipt/upload-receipt.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [AddTaxComponent, ViewTaxComponent, UploadReceiptComponent],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule, SharedModule, UIModule,
+    ReactiveFormsModule, SharedModule, UIModule, NgSelectModule,
     FileUploadModule, DataTablesModule, TaxRoutingModule
   ], providers: [DatePipe],
   exports: [AddTaxComponent, ViewTaxComponent]

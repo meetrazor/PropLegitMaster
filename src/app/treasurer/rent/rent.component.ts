@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit, AfterContentChecked, SimpleChanges, OnChanges } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { GeneralService } from '../../services/general.service';
 import Swal from 'sweetalert2';
@@ -12,20 +12,27 @@ import { DatePipe } from '@angular/common';
   templateUrl: './rent.component.html',
   styleUrls: ['./rent.component.scss']
 })
-export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked {
+export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterContentChecked {
   @Input() propertyID;
+  @Input() refresh;
   datasource: null;
+  showntable: boolean;
+  tenatID: number;
   isLoaded = false;
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   dtElement: DataTableDirective;
   dtTrigger = new Subject();
+  toady: string;
+  tanentData: any;
   constructor(private service: GeneralService, private router: Router, private datepipe: DatePipe) {
   }
 
   ngOnInit() {
+    this.showntable = false;
+    this.toady = new Date().getFullYear() + '-' + ("0" + (new Date().getMonth() + 1)).slice(-2) + '-' + ("0" + new Date().getDate()).slice(-2)
     this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/rent/list` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/tenant/list?${this.toady}` }, responsive: true,
       columns: [
         {
           title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
@@ -34,11 +41,11 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
         }, {
           title: 'Name', data: 'TenantName'
         }, {
-          title: 'Amount', data: 'MonthlyRent',
+          title: 'Amount', data: 'MonthlyORDailyRent',
         }, {
           title: 'Tenant Address', data: 'TenantAddress',
         }, {
-          title: 'Contract Months', data: 'ContractMonths',
+          title: 'Rent Type', data: 'RentType',
         },
         {
           title: 'Contract Start Date', data: 'ContractStartDate', render: ((data) => {
@@ -49,7 +56,7 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
             return this.datepipe.transform(data, 'MMM, dd yyyy');
           })
         }, {
-          title: 'Receipt', data: null,
+          title: 'Action', data: null,
         }
       ],
 
@@ -57,23 +64,25 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
       columnDefs: [{ width: '18%', targets: [0, 1] }],
       rowCallback(row, data: any) {
         let upload = '';
-        if (data.ReceiptID === null) {
-          upload += '<a class="btn btn-primary uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyRentID + '">';
-          upload += '<i class="mdi mdi-cloud-upload" aria-hidden="false" receipt-id="' + data.PropertyRentID + '"></i>';
-          upload += '</a>';
-        } else if (data.ReceiptID !== null) {
-          upload += '<a class="btn btn-secondary viewReceipt m-1" title="View Receipt" receipt-id="' + data.ReceiptID + '">';
-          upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
-          upload += '</a>';
-        }
+        // if (data.ReceiptID === null) {
+        upload += '<a class="btn btn-primary ViewTanent m-1" title="View Tanent" receipt-id="' + data.PropertyTenantID + '">';
+        upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.PropertyTenantID + '"></i>';
+        upload += '</a>';
+        // } else if (data.ReceiptID !== null) {
+        // upload += '<a class="btn btn-secondary viewReceipt m-1" title="View Receipt" receipt-id="' + data.ReceiptID + '">';
+        // upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
+        // upload += '</a>';
+        // }
         $('td:eq(7)', row).html(upload);
       },
       drawCallback: () => {
-        $('.uploadReceipt').on('click', (e) => {
-          this.onUploadReceipt($(e.target).attr('receipt-id'));
-        });
-        $('.viewReceipt').on('click', (e) => {
-          this.onViewReceipt($(e.target).attr('receipt-id'));
+        // $('.uploadReceipt').on('click', (e) => {
+        //   this.onUploadReceipt($(e.target).attr('receipt-id'));
+        //   this.showntable = true;
+        // });
+        $('.ViewTanent').on('click', (e) => {
+          this.onViewRent(+$(e.target).attr('receipt-id'));
+
         });
       }
     };
@@ -154,7 +163,30 @@ export class RentComponent implements OnInit, AfterViewInit, AfterContentChecked
   }
   onSort(data) { }
   onDeleteRent(id) { }
-  onViewRent(id) { }
+  onViewRent(id) {
+    this.isLoaded = false;
+    this.service.getRentList(id).subscribe((res) => {
+      this.isLoaded = true;
+      this.tanentData = res.data.tenantinfo;
+      this.tenatID = id;
+      this.showntable = true;
+    });
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.refresh.firstChange) {
+      this.rerender();
+    }
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
+
   onUploadReceipt(id) {
     this.router.navigate([`rent/uploadreceipt/${this.propertyID}/${id}`]);
   }

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { GeneralService } from './../../services/general.service';
-import { Component, Input, OnInit, Output, ViewChild, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild, AfterViewInit, AfterContentChecked, OnChanges, SimpleChanges } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -12,8 +12,9 @@ import Swal from 'sweetalert2';
   templateUrl: './view-tax.component.html',
   styleUrls: ['./view-tax.component.scss']
 })
-export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChecked {
+export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChecked, OnChanges {
   @Input() propertyID: number;
+  @Input() refresh: number;
   constructor(
     private service: GeneralService, private datepipe: DatePipe,
     private router: Router
@@ -43,7 +44,7 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
         }, {
           title: 'Amount Due', data: 'AmountDue',
         }, {
-          title: 'Revenue Office', data: 'RevenueOffice',
+          title: 'Tax Type', data: 'PropertyTaxName',
         }, {
           title: 'Demand Notice', data: null,
         }, {
@@ -88,6 +89,7 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
       }
     };
   }
+
   ngAfterViewInit() {
     this.dtTrigger.next();
   }
@@ -137,4 +139,18 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
       }
     });
   }
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.refresh.firstChange) {
+      this.rerender();
+    }
+  }
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
+
 }

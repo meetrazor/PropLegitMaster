@@ -1,6 +1,52 @@
 <form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
   <div class="">
     <div class="mb-3">
+      <h4 class="header-title">Rent Type*</h4>
+      <ng-select
+        class="form-control"
+        formControlName="RentType"
+        placeholder="
+        Select Rent Type"
+        [ngClass]="{
+          'is-invalid': submitted && f.RentType.errors
+        }"
+      >
+        <ng-option *ngFor="let item of rentType" [value]="item" [id]="item">{{
+          item
+        }}</ng-option>
+      </ng-select>
+      <div *ngIf="submitted && f.RentType.errors" class="invalid-feedback">
+        <div *ngIf="f.RentType.errors.required">Rent Type is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Rent Based on Type*</h4>
+      <ng-select
+        (change)="onRentChange($event)"
+        class="form-control"
+        formControlName="RentBasedOn"
+        placeholder="
+        Select Rent Based on Type"
+        [ngClass]="{
+          'is-invalid': submitted && f.RentBasedOn.errors
+        }"
+      >
+        <ng-option
+          *ngFor="let item of rentBasedOn"
+          [value]="item"
+          [id]="item"
+          >{{ item }}</ng-option
+        >
+      </ng-select>
+      <div *ngIf="submitted && f.RentBasedOn.errors" class="invalid-feedback">
+        <div *ngIf="f.RentBasedOn.errors.required">Rent Type is required</div>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <div class="mb-3">
       <h4 class="header-title">Tenant Name *</h4>
       <input
         class="form-control"
@@ -90,37 +136,10 @@
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Property Size (sqmtr)*</h4>
-      <input
-        class="form-control"
-        placeholder="Enter Property Size"
-        formControlName="PropertySize"
-        type="number"
-        (keypress)="valid($event)"
-        [ngClass]="{
-          'is-invalid': submitted && f.PropertySize.errors
-        }"
-        min="0"
-        maxlength="7"
-      />
-
-      <div *ngIf="submitted && f.PropertySize.errors" class="invalid-feedback">
-        <div *ngIf="f.PropertySize.errors.required">
-          Property Size is required
-        </div>
-        <div *ngIf="f.PropertySize.errors.maxlength">
-          Property Size cannot exceed 50 characters.
-        </div>
-        <div *ngIf="f.PropertySize.errors.min">Property Size cannot be 0.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="">
-    <div class="mb-3">
       <span class="header-title">Rented Space</span>
       <span
         ><input
+          (change)="onSpaceChange($event.target.value)"
           class="mx-1"
           type="radio"
           formControlName="RentedSpace"
@@ -130,6 +149,7 @@
       >
       <span
         ><input
+          (change)="onSpaceChange($event.target.value)"
           class="mx-1"
           type="radio"
           formControlName="RentedSpace"
@@ -145,21 +165,37 @@
 
   <div class="" *ngIf="f.RentedSpace.value != 'Whole'">
     <div class="mb-3">
-      <h4 class="header-title">Rented Part</h4>
+      <h4 class="header-title">Property Size (sqmtr)*</h4>
       <input
         class="form-control"
-        placeholder="Enter Rented Part"
-        formControlName="RentedPart"
+        placeholder="Enter Property Size"
+        formControlName="RentedSpaceInSqmtr"
+        type="number"
+        (keypress)="valid($event)"
         [ngClass]="{
-          'is-invalid': submitted && f.RentedPart.errors
+          'is-invalid': submitted && f.RentedSpaceInSqmtr.errors
         }"
-        maxlength="25"
+        min="0"
+        maxlength="7"
       />
-      <div *ngIf="submitted && f.RentedPart.errors" class="invalid-feedback">
-        <div *ngIf="f.RentedPart.errors.required">RentedPart is required</div>
+
+      <div
+        *ngIf="submitted && f.RentedSpaceInSqmtr.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.RentedSpaceInSqmtr.errors.required">
+          Property Size is required
+        </div>
+        <div *ngIf="f.RentedSpaceInSqmtr.errors.maxlength">
+          Property Size cannot exceed 50 characters.
+        </div>
+        <div *ngIf="f.RentedSpaceInSqmtr.errors.min">
+          Property Size cannot be 0.
+        </div>
       </div>
     </div>
   </div>
+
   <!-- <div class="">
                   <div class="mb-3">
                     <span class="header-title">Rent Type</span>
@@ -220,53 +256,124 @@
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Monthly Rent (Rs.)*</h4>
+      <h4 class="header-title">Monthly/Daily Rent (Rs.)*</h4>
       <input
         class="form-control"
-        placeholder="Enter Monthly Rent"
-        formControlName="MonthlyRent"
+        placeholder="Enter Monthly/Daily Rent"
+        formControlName="MonthlyORDailyRent"
         (keypress)="isValid($event)"
         [ngClass]="{
-          'is-invalid': submitted && f.MonthlyRent.errors
+          'is-invalid': submitted && f.MonthlyORDailyRent.errors
         }"
       />
-      <div *ngIf="submitted && f.MonthlyRent.errors" class="invalid-feedback">
-        <div *ngIf="f.MonthlyRent.errors.required">MonthlyRent is required</div>
-        <div *ngIf="f.MonthlyRent.errors.min">MonthlyRent cannot be 0</div>
+      <div
+        *ngIf="submitted && f.MonthlyORDailyRent.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.MonthlyORDailyRent.errors.required">
+          Monthly / DailyRent is required
+        </div>
+        <div *ngIf="f.MonthlyORDailyRent.errors.min">
+          Monthly / Daily Rent cannot be 0
+        </div>
       </div>
     </div>
   </div>
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Contract Months *</h4>
+      <h4 class="header-title">Contract Months / Days*</h4>
       <input
         class="form-control"
-        placeholder="Enter Contract Months"
-        formControlName="ContractMonths"
+        placeholder="Enter Contract Months/Days"
+        formControlName="NoOfContractMonthsORDay"
         (keypress)="isValid($event)"
         [ngClass]="{
-          'is-invalid': submitted && f.ContractMonths.errors
+          'is-invalid': submitted && f.NoOfContractMonthsORDay.errors
         }"
         maxlength="3"
       />
       <div
-        *ngIf="submitted && f.ContractMonths.errors"
+        *ngIf="submitted && f.NoOfContractMonthsORDay.errors"
         class="invalid-feedback"
       >
-        <div *ngIf="f.ContractMonths.errors.required">
-          ContractMonths is required
+        <div *ngIf="f.NoOfContractMonthsORDay.errors.required">
+          ContractMonths/Days is required
         </div>
-        <div *ngIf="f.ContractMonths.errors.min">
-          ContractMonths cannot be 0
+        <div *ngIf="f.NoOfContractMonthsORDay.errors.min">
+          ContractMonths/Days cannot be 0
         </div>
       </div>
     </div>
   </div>
-
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Contract StartDate *</h4>
+      <h4 class="header-title">Contract Date *</h4>
+      <div class="form-group">
+        <div class="input-group input-group-sm">
+          <ng-template #t let-date let-focused="focused">
+            <span
+              class="custom-day"
+              [class.focused]="focused"
+              [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null"
+            >
+              {{ date.day }}
+            </span>
+          </ng-template>
+
+          <input
+            type="text"
+            name="contractDate"
+            formControlName="ContractStartDate"
+            class="form-control date"
+            (click)="hidden = !hidden"
+            name="daterange"
+            (keydown)="callback()"
+            autocomplete="off"
+            [ngClass]="{
+              'is-invalid': submitted && f.ContractStartDate.errors
+            }"
+          />
+          <div class="input-group-append" (click)="hidden = !hidden">
+            <span class="input-group-text bg-blue border-blue text-white">
+              <i _ngcontent-xpk-c6="" class="far fa-calendar-alt"></i>
+            </span>
+          </div>
+          <ngb-datepicker
+            style="
+              z-index: 50;
+              top: 50%;
+              left: 40%;
+              -ms-transform: translateX(-50%) translateY(-50%);
+              -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+            "
+            #dp
+            (select)="onDateSelection($event)"
+            [displayMonths]="2"
+            [dayTemplate]="t"
+            outsideDays="hidden"
+            [hidden]="hidden"
+          >
+          </ngb-datepicker>
+          <div
+            *ngIf="submitted && f.ContractStartDate.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.ContractStartDate.errors.required">
+              ContractMonths/Days is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="">
+    <div class="mb-3">
+      <h4 class="header-title">Contract Date *</h4>
       <input
         class="form-control"
         type="date"
@@ -282,14 +389,14 @@
         class="invalid-feedback"
       >
         <div *ngIf="f.ContractStartDate.errors.required">
-          ContractStartDate is required
+          Contract Date is required
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="">
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <h4 class="header-title">Rent Due Date *</h4>
       <input
         class="form-control"
@@ -307,6 +414,162 @@
       >
         <div *ngIf="f.ContractEndDate.errors.required">
           Rent Due Date: is required
+        </div>
+      </div>
+    </div> -->
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Rent Duration*</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Rent Duration"
+          formControlName="RentDuration"
+          type="number"
+          (keypress)="valid($event)"
+          [ngClass]="{
+            'is-invalid': submitted && f.RentDuration.errors
+          }"
+          min="0"
+          maxlength="7"
+        />
+
+        <div
+          *ngIf="submitted && f.RentDuration.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.RentDuration.errors.required">
+            Rent Duration is required
+          </div>
+          <div *ngIf="f.RentDuration.errors.maxlength">
+            Rent Duration cannot exceed 50 characters.
+          </div>
+          <div *ngIf="f.RentDuration.errors.min">
+            Rent Duration cannot be 0.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="" *ngIf="f.RentBasedOn.value == 'Month wise'">
+      <div class="mb-3">
+        <h4 class="header-title">Rent Due Day*</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Rent Due Day"
+          formControlName="RentDueDay"
+          type="number"
+          (keypress)="valid($event)"
+          [ngClass]="{
+            'is-invalid': submitted && f.RentDueDay.errors
+          }"
+          min="0"
+          maxlength="7"
+        />
+
+        <div *ngIf="submitted && f.RentDueDay.errors" class="invalid-feedback">
+          <div *ngIf="f.RentDueDay.errors.required">RentDueDay is required</div>
+          <div *ngIf="f.RentDueDay.errors.maxlength">
+            RentDueDay cannot exceed 50 characters.
+          </div>
+          <div *ngIf="f.RentDueDay.errors.min">RentDueDay cannot be 0.</div>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="mb-2">
+        <h4 class="header-title">Upload File *</h4>
+        <p class="text-muted font-13 m-b-30"></p>
+        <!-- file upload -->
+        <file-upload
+          class="dropzone"
+          multiple="false"
+          isAnimationDisabled="true"
+          listVisible="true"
+          zoomText="zoomOut"
+          (ngModelChange)="onchange($event)"
+          accept="image/gif,image/png,image/jpeg,application/pdf,application/msword,.doc,.docx"
+          type="file"
+          maxsize="20mb"
+          [ngClass]="{
+            'is-invalid': submitted && f.uploadfile.errors
+          }"
+          formControlName="uploadfile"
+        ></file-upload>
+        <div *ngIf="submitted && f.uploadfile.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.uploadfile.errors.sizeRange">
+            File size is exceed 20 Mb Limit
+          </div>
+          <div *ngIf="submitted && f.uploadfile.errors.required">
+            Current Demand Notice is Required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">File Name *</h4>
+        <input
+          class="form-control"
+          placeholder="Enter File Name"
+          formControlName="FileName"
+          maxlength="25"
+          [ngClass]="{
+            'is-invalid': submitted && f.FileName.errors
+          }"
+        />
+        <div *ngIf="submitted && f.FileName.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.FileName.errors.required">
+            File Name is Required
+          </div>
+          <div *ngIf="submitted && f.FileName.errors.pattern">
+            Only alphanumeric characters allowed
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">File Type *</h4>
+
+        <select
+          class="custom-select"
+          formControlName="FileType"
+          [ngClass]="{
+            'is-invalid': submitted && f.FileType.errors
+          }"
+        >
+          <option selected disabled>Select File Type *</option>
+          <option value="Photo">Photo</option>
+          <option value="Video">Video</option>
+          <option value="Audio">Audio</option>
+          <option value="PDF">PDF</option>
+          <option value="DOC">Document</option>
+        </select>
+        <div *ngIf="submitted && f.FileType.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.FileType.errors.required">
+            File Type is Required
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">File Description *</h4>
+
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder="Enter File Description"
+          formControlName="Description"
+          maxlength="55"
+          [ngClass]="{
+            'is-invalid': submitted && f.Description.errors
+          }"
+        ></textarea>
+        <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+          <div *ngIf="submitted && f.Description.errors.required">
+            File Description is Required
+          </div>
         </div>
       </div>
     </div>

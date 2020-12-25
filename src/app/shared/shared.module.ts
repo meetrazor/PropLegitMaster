@@ -1,3 +1,4 @@
+import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { NgModule } from '@angular/core';
@@ -13,7 +14,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
   declarations: [DatatableComponent, UploadReceiptComponent],
   imports: [
     CommonModule,
-    UIModule, DataTablesModule, RouterModule, FormsModule, FileUploadModule, ReactiveFormsModule
+    UIModule, DataTablesModule, RouterModule, FormsModule, FileUploadModule, ReactiveFormsModule, NgSelectModule
   ],
   exports: [DatatableComponent, UploadReceiptComponent]
 })

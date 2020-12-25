@@ -4,10 +4,12 @@
     title="Upload Receipt"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
-  <div class="container">
-    <app-upload-receipt-shared
-      propertyId="{{ propertyId }}"
-      rentId="{{ id }}"
-    ></app-upload-receipt-shared>
+  <div class="card">
+    <div class="p-2">
+      <app-upload-receipt-shared
+        propertyId="{{ propertyId }}"
+        rentId="{{ id }}"
+      ></app-upload-receipt-shared>
+    </div>
   </div>
 </div>
