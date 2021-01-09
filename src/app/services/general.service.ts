@@ -13,9 +13,9 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
-// const baseurl = `https://api.proplegit.com/`;
+//  const baseurl = `https://api.proplegit.com/`;
 const baseurl = `http://devapi.proplegit.com/`;
-// const baseurl = `http://qaapi.proplegit.com/`;
+//  const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -32,6 +32,7 @@ const propertyTaxType = `${apiUrl}Property/Tax/List/`;
 const generateinvoice = `${apiUrl}Property/rent/generate/invoice/`;
 const uploadInvoice = `${apiUrl}property/rent/Upload/invoice/`;
 const generateReceipt = `${apiUrl}property/rent/generate/receipt/`;
+const getLoanType = `${apiUrl}loan/application/types`;
 
 @Injectable({
   providedIn: 'root'
@@ -265,5 +266,14 @@ export class GeneralService {
   }
   GenerateReceipt(id, data): any {
     return this.http.post(`${generateReceipt}/${id}`, data, httpOptions);
+  }
+  addLegalCase(PropertyID, data) {
+    return this.http.post<any>(`${apiUrl}property/${PropertyID}/case/add`, data, httpOptions);
+  }
+  listLegalcase(id): any {
+    return this.http.get<any>(`${apiUrl}property/${id}/case/list`, httpOptions);
+  }
+  GetLoanTypes() {
+    return this.http.get<any>(`${getLoanType}`, httpOptions)
   }
 }

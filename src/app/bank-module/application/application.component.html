@@ -1,0 +1,278 @@
+<app-page-title
+  title="Application & Documents"
+  [breadcrumbItems]="breadCrumbItems"
+></app-page-title>
+<section id="loan-application-document">
+  <div class="loan-document-body m-3">
+    <div class="row">
+      <div class="col-md-3 mt-1 mb-1">
+        <form class="navbar-form" role="search">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control date"
+              placeholder="All Time"
+              (click)="hidden = !hidden"
+              name="daterange"
+              autocomplete="off"
+              [(ngModel)]="selected"
+            />
+
+            <ngb-datepicker
+              #dp
+              (select)="onDateSelection($event)"
+              [displayMonths]="2"
+              [dayTemplate]=""
+              outsideDays="hidden"
+              [hidden]="hidden"
+            >
+            </ngb-datepicker>
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <div class="input-group">
+          <ng-select
+            [items]="allLoanTypes"
+            class="form-control"
+            [placeholder]="'All Loan Types'"
+            style="margin: 0; padding: 0"
+          ></ng-select>
+          <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+              <i class="mdi mdi-filter-variant"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <form role="search">
+          <div class="input-group">
+            <ng-select
+              [items]="allStatus"
+              class="form-control"
+              [placeholder]="'All Status'"
+              style="margin: 0; padding: 0"
+            ></ng-select>
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <i class="mdi mdi-filter-variant"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <div class="input-group">
+          <ng-select
+            [items]="allApplicationNos"
+            class="form-control"
+            [placeholder]="'All Application Nos'"
+            style="margin: 0; padding: 0"
+          ></ng-select>
+          <div class="input-group-btn">
+            <button class="btn btn-success" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table mt-3">
+      <div class="card-box">
+        <h3 class="header-title" style="font-size: x-large">
+          Loan Applications & Documents Received Status
+        </h3>
+        <div class="table-responsive" style="height: 450px; overflow: scroll">
+          <table
+            class="table table-borderless table-hover mb-0 mt-3"
+            (click)="redirect()"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th>Primary Applicant</th>
+                <th>Type of Loan</th>
+                <th>Status</th>
+                <th>Amount (₹)</th>
+                <th>Jantri (₹)</th>
+                <th>Documents</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of tabledata">
+                <td>{{ item.name }}</td>
+                <td>{{ item.loan_type }}</td>
+                <td>
+                  <span
+                    class="badge badge-success p-1"
+                    *ngIf="item.status == 'Completed'"
+                    >{{ item.status }}</span
+                  >
+                  <span
+                    class="badge badge-secondary p-1"
+                    *ngIf="item.status == 'Pending Lawyer Assignment'"
+                    >{{ item.status }}</span
+                  >
+                  <span
+                    class="badge badge-pink p-1"
+                    *ngIf="item.status == 'Pending Title Search'"
+                    >{{ item.status }}</span
+                  >
+                  <span
+                    class="badge badge-warning p-1"
+                    *ngIf="
+                      item.status == 'Pending Valuation' ||
+                      item.status == 'Pending Review'
+                    "
+                    >{{ item.status }}</span
+                  >
+                  <span
+                    class="badge badge-success p-1"
+                    *ngIf="item.status == 'Received'"
+                    >{{ item.status }}</span
+                  >
+                </td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.jantri }}</td>
+                <td *ngIf="item.document == 1"><a href="">VIEW</a></td>
+                <td *ngIf="item.document == 2">
+                  <a href="">UPLOAD</a> | <a href="">REQUEST</a>
+                </td>
+                <td *ngIf="item.document == 3">
+                  <a href="">VIEW</a> | <a href="">UPLOAD</a> |
+                  <a href="">REQUEST</a>
+                </td>
+                <td *ngIf="item.document == 4">
+                  <a href="">VIEW</a> |
+                  <a href="">
+                    <img src="assets/svg-icons2/i-_i-Corp.svg" />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- end table-responsive-->
+      </div>
+      <div class="row">
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Received</h4>
+            <h2 class="text-primary text-center"><a href="">42</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Application Received<span class="float-right">500</span>
+              </h6>
+              <ngb-progressbar
+                [type]="'success'"
+                [value]="8"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Pending Title Search</h4>
+            <h2 class="text-primary text-center"><a href="">22</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Application Pending<span class="float-right">50</span>
+              </h6>
+              <ngb-progressbar
+                [type]="'blue'"
+                [value]="50"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Protection Notices</h4>
+            <h2 class="text-primary text-center"><a href="">3</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Protection Notices<span class="float-right">10</span>
+              </h6>
+              <ngb-progressbar
+                [type]="'warning'"
+                [value]="33"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Pending Review</h4>
+            <h2 class="text-primary text-center"><a href="">20</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Application Pending Review<span class="float-right"
+                  >150</span
+                >
+              </h6>
+              <ngb-progressbar
+                [type]="'warning'"
+                [value]="13"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Pending Lawyer Assignment</h4>
+            <h2 class="text-primary text-center"><a href="">12</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Pending Lawyer Assignment<span class="float-right"
+                  >20</span
+                >
+              </h6>
+              <ngb-progressbar
+                [type]="'info'"
+                [value]="50"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 mt-3">
+          <div class="card-box">
+            <h4 class="mt-0 font-16">Pending Valuation</h4>
+            <h2 class="text-primary text-center"><a href="">5</a></h2>
+            <div class="mt-3">
+              <h6 class="text-uppercase">
+                Total Pending Valuation<span class="float-right">24</span>
+              </h6>
+              <ngb-progressbar
+                [type]="'danger'"
+                [value]="13"
+                height="5px"
+                class="m-0"
+              >
+              </ngb-progressbar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

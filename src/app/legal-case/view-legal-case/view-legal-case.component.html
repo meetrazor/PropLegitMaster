@@ -1,0 +1,19 @@
+<app-custom-partlet
+  class="m-2"
+  *ngFor="let item of datasource"
+  title="Registration: {{ item.RegistrationNumber }}"
+  anotherTitle="{{ item.RegistrationDate | date: 'MMM-dd-yyyy' }}"
+  Icon=""
+  headerClass="header-title"
+  collapsed="{{ item.collapsed }}"
+  loading="{{ item.loading }}"
+  color=""
+  instyle="true"
+  text="green"
+  id="{{ item.StateID }}"
+  (onLoad)="onShow($event)"
+  courtname="{{ item.CourtName }}"
+  CaseStatus="{{ item.CaseStatus }}"
+>
+  <app-details-legal-case></app-details-legal-case>
+</app-custom-partlet>

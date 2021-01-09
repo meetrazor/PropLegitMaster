@@ -1,0 +1,130 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { GeneralService } from 'src/app/services/general.service';
+
+@Component({
+  selector: 'app-view-legal-case',
+  templateUrl: './view-legal-case.component.html',
+  styleUrls: ['./view-legal-case.component.scss']
+})
+export class ViewLegalCaseComponent implements OnInit {
+  datasource: any[];
+  isLoaded = false;
+  hearingData: any[] = [];
+  actData: any[] = [];
+  lawyerData: any[] = [];
+  lawyerList = [];
+  constructor(private route: ActivatedRoute, private service: GeneralService) { }
+
+  ngOnInit() {
+    this.hearingData = [];
+    this.actData = [];
+    this.lawyerData = [];
+    this.service.listLegalcase(56)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            console.log(data.error);
+            return;
+          } else {
+            this.datasource = data.data;
+            // for (const item of this.datasource) {
+            //   this.getHearings(item.LegalCaseID);
+            //   this.getLegalcaseActs(item.LegalCaseID);
+            //   this.getLawyers(item.LegalCaseID);
+            // }
+          }
+        });
+  }
+  fetchLawyerlist() {
+    this.service.listLawyers().
+      subscribe(data => {
+        if (data.status == 200) {
+          this.lawyerList = data.data;
+        } else {
+          console.log(data.error);
+        }
+      });
+  }
+
+  // openHearingDialog(LegalCaseID) {
+  //   const dialogRef = this.dialog.open(HearingComponent, {
+  //     height: '450px',
+  //     width: '350px',
+  //     data: LegalCaseID,
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.ngOnInit();
+  //   });
+  // }
+
+  // openLawyerDialog(LegalCaseID) {
+  //   const dialogRef = this.dialog.open(LawyerComponent, {
+  //     height: '350px',
+  //     width: '350px',
+  //     data: LegalCaseID,
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.ngOnInit();
+  //   });
+  // }
+
+  // openDocumentDialog(id) {
+  //   const dialogRef = this.dialog.open(DocumentsComponent, {
+  //     height: '750px',
+  //     width: '400px',
+  //     data: { LegalCaseID: id, PropertyID: this.route.snapshot.params.id }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     this.ngOnInit();
+  //   });
+  // }
+  // getLegalcaseActs(LegalCaseID) {
+  //   this.service.getLegalcaseActs(LegalCaseID)
+  //     .pipe(first())
+  //     .subscribe(
+  //       data => {
+  //         if (data.error) {
+  //           console.log(data.error);
+  //           return;
+  //         } else {
+  //           this.actData.push(data.data);
+  //         }
+  //       }
+  //     );
+  // }
+  // getHearings(id) {
+  //   this.service.getHearings(id)
+  //     .pipe(first())
+  //     .subscribe(
+  //       data => {
+  //         if (data.error) {
+  //           console.log(data.error);
+  //           return;
+  //         } else {
+  //           this.hearingData.push(data.data);
+  //         }
+  //       });
+  // }
+  // getLawyers(id) {
+  //   this.service.getLawyers(id)
+  //     .pipe(first())
+  //     .subscribe(
+  //       data => {
+  //         if (data.error) {
+  //           console.log(data.error);
+  //           return;
+  //         } else {
+  //           this.lawyerData.push(data.data);
+  //         }
+  //       });
+  // }
+  resetCounter() {
+
+  }
+  onShow(e) {
+
+  }
+}

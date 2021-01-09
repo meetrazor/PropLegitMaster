@@ -57,20 +57,20 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
         let upload = '';
         let demandNoticebtn = '';
         if (data.ReceiptID === null) {
-          upload += '<a class="btn btn-primary uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyTaxID + '">';
-          upload += '<i class="mdi mdi-cloud-upload" aria-hidden="false" receipt-id="' + data.PropertyTaxID + '"></i>';
+          upload += '<a href="javascript:void(0)" class="uploadReceipt m-1" title="Upload Receipt" receipt-id="' + data.PropertyTaxID + '">';
+          upload += '<i class="mdi mdi-file-upload-outline font-18 text-secondary" aria-hidden="false" receipt-id="' + data.PropertyTaxID + '"></i>';
           upload += '</a>';
         } else if (data.ReceiptID !== null) {
-          upload += '<a class="btn btn-secondary viewReceipt m-1" title="view Receipt" receipt-id="' + data.ReceiptID + '">';
-          upload += '<i class="mdi mdi-eye" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
+          upload += '<a href="javascript:void(0)" class="viewReceipt m-1" title="view Receipt" receipt-id="' + data.ReceiptID + '">';
+          upload += '<i class="mdi mdi-eye font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ReceiptID + '"></i>';
           upload += '</a>';
         }
         if (data.DemandNoticeID === null) {
 
         } else if (data.DemandNoticeID !== null) {
           // tslint:disable-next-line: max-line-length
-          demandNoticebtn += '<a class="btn btn-secondary viewDemandNotice m-1" title="view Demand Notice" notice-id="' + data.DemandNoticeID + '">';
-          demandNoticebtn += '<i class="mdi mdi-eye" aria-hidden="false" notice-id="' + data.DemandNoticeID + '"></i>';
+          demandNoticebtn += '<a href="javascript:void(0)" class="viewDemandNotice m-1" title="view Demand Notice" notice-id="' + data.DemandNoticeID + '">';
+          demandNoticebtn += '<i class="mdi mdi-eye font-18 text-secondary" aria-hidden="false" notice-id="' + data.DemandNoticeID + '"></i>';
           demandNoticebtn += '</a>';
         }
         $('td:eq(5)', row).html(upload);

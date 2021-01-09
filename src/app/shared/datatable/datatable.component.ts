@@ -43,10 +43,10 @@ export class DatatableComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Action', data: null, render(data) {
             return `<div style="display:flex">
-            <a title="View Property" href="property/view/${data.PropertyID}" class="btn btn-primary m-1 viewProperty" >
-            <i class="mdi mdi-eye-check"></i></a>
-            <a title="Edit Property"  href="property/edit/${data.PropertyID}"
-            class="btn btn-secondary m-1 editProperty" ><i class="mdi mdi-account-edit"></i></a> </div>`;
+            <a title="View Property text-secondary" href="property/view/${data.PropertyID}" class=" m-1 viewProperty" >
+            <i class=" font-18 mdi mdi-eye-check text-secondary"></i></a>
+            <a title="Edit Property text-secondary"  href="property/edit/${data.PropertyID}"
+            class=" m-1 editProperty" ><i class="font-18 mdi mdi-account-edit text-secondary"></i></a> </div>`;
           }
         }
       ],

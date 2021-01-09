@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'rent', component: LayoutComponent, loadChildren: () => import('./rent/rent.module')
       .then(m => m.RentModule), canActivate: [AuthGuard]
   },
+  {
+    path: 'loan', component: LayoutComponent, loadChildren: () => import('./bank-module/bank-module.module')
+      .then(m => m.BankModuleModule), canActivate: [AuthGuard]
+  },
   // {
   //   path: 'property-document', component: LayoutComponent, loadChildren: () => import('./property-document/property-document.module')
   //     .then(m => m.PropertyDocumentModule), canActivate: [AuthGuard]

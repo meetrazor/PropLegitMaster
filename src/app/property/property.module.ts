@@ -18,6 +18,7 @@ import { TaxModule } from './../tax/tax.module';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ViewPdfComponent } from './view-pdf/view-pdf.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LegalCaseModule } from '../legal-case/legal-case.module';
 
 @NgModule({
   declarations: [AddPropertyComponent, EditPropertyComponent, SinglePropertyViewComponent,
@@ -26,7 +27,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     CommonModule, PdfViewerModule,
     PropertyRoutingModule,
     FormsModule,
-    ReactiveFormsModule, NgSelectModule,
+    ReactiveFormsModule, NgSelectModule, LegalCaseModule,
     AutocompleteLibModule, UIModule, NgbTabsetModule, PhotographModule, TaxModule, TreasurerModule, RentModule
   ]
 })

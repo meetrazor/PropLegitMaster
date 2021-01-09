@@ -72,8 +72,16 @@
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Legal Case" class="nav-item">
-        <ng-template ngbTabContent
-          ><app-coming-soon></app-coming-soon>
+        <ng-template ngbTabContent>
+          <div class="row">
+            <div class="col-md-8">
+              <app-view-legal-case> </app-view-legal-case>
+            </div>
+            <div class="col-md-4">
+              <app-add-legal-case PropertyID="{{ propertyID }}">
+              </app-add-legal-case>
+            </div>
+          </div>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Trust" class="nav-item">

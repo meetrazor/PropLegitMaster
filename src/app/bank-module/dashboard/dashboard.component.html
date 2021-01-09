@@ -1,0 +1,444 @@
+<section id="loan-dashboard-manager">
+  <app-page-title
+    title="BankManager Dashboard"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+  <div class="loan-dashboard-body m-3">
+    <div class="row">
+      <div class="col-md-3 mt-1 mb-1">
+        <form class="navbar-form" role="search">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control date"
+              placeholder="All Time"
+              (click)="hidden = !hidden"
+              name="daterange"
+              autocomplete="off"
+              [(ngModel)]="selected"
+            />
+
+            <ngb-datepicker
+              #dp
+              (select)="onDateSelection($event)"
+              [displayMonths]="2"
+              [dayTemplate]=""
+              outsideDays="hidden"
+              [hidden]="hidden"
+            >
+            </ngb-datepicker>
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <div class="input-group">
+          <ng-select
+            [items]="allLoanTypes"
+            class="form-control"
+            [placeholder]="'All Loan Types'"
+            style="margin: 0; padding: 0"
+          ></ng-select>
+          <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+              <i class="mdi mdi-filter-variant"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <form role="search">
+          <div class="input-group">
+            <ng-select
+              [items]="allStatus"
+              class="form-control"
+              [placeholder]="'All Status'"
+              style="margin: 0; padding: 0"
+            ></ng-select>
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <i class="mdi mdi-filter-variant"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-3 mt-1 mb-1">
+        <div class="input-group">
+          <ng-select
+            [items]="allProperty"
+            class="form-control"
+            [placeholder]="'Any Property'"
+            style="margin: 0; padding: 0"
+          ></ng-select>
+          <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit">
+              <i class="mdi mdi-filter-variant"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Applications Received</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">42</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Application Received<span class="float-right">500</span>
+            </h6>
+            <ngb-progressbar
+              [type]="'success'"
+              [value]="8"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Documents Pending</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">2</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Documents Pending<span class="float-right">50</span>
+            </h6>
+            <ngb-progressbar
+              [type]="'blue'"
+              [value]="50"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Lawyer Assignment Pending</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">20</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Lawyer Assignment Pending<span class="float-right">30</span>
+            </h6>
+            <ngb-progressbar
+              [type]="'warning'"
+              [value]="33"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Approved for Physical Verification</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">10</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Application Approved for Physical Verification<span
+                class="float-right"
+                >25</span
+              >
+            </h6>
+            <ngb-progressbar
+              [type]="'warning'"
+              [value]="13"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Protection Notices</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">3</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Protection Notices<span class="float-right">20</span>
+            </h6>
+            <ngb-progressbar
+              [type]="'info'"
+              [value]="50"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <div class="card-box">
+          <h4 class="mt-0 font-16">Pending Valuation</h4>
+          <h2 class="text-primary text-center">
+            <a href="/loan/applications">5</a>
+          </h2>
+          <div class="mt-3">
+            <h6 class="text-uppercase">
+              Total Pending Valuation<span class="float-right">24</span>
+            </h6>
+            <ngb-progressbar
+              [type]="'danger'"
+              [value]="13"
+              height="5px"
+              class="m-0"
+            >
+            </ngb-progressbar>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <div class="card-box">
+          <h3 class="header-title" style="font-size: x-large">
+            Loanwise Performance
+          </h3>
+          <div class="table-responsive" style="height: 450px">
+            <table class="table table-borderless mb-0">
+              <tbody>
+                <tr>
+                  <td>Personal Loan</td>
+                  <td>12.0%</td>
+                </tr>
+                <tr>
+                  <td>Auto Loan</td>
+                  <td>10.7%</td>
+                </tr>
+                <tr>
+                  <td>Home Loan</td>
+                  <td>19.5%</td>
+                </tr>
+                <tr>
+                  <td>Business Loan</td>
+                  <td>10.8%</td>
+                </tr>
+                <tr>
+                  <td>MSME Loan</td>
+                  <td>18.2%</td>
+                </tr>
+                <tr>
+                  <td>Industrial Loan</td>
+                  <td>17.4%</td>
+                </tr>
+                <tr>
+                  <td>Mudra Loan</td>
+                  <td>11.4%</td>
+                </tr>
+                <tr class="text-center">
+                  <th colspan="2">
+                    Total Value
+                    <span style="font-weight: 800; font-size: x-large">
+                      ₹28 KCr <a class="fe-arrow-up text-success"></a
+                    ></span>
+                    2.1%
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end table-responsive-->
+        </div>
+        <!-- end card-box -->
+      </div>
+      <!-- end col -->
+      <div class="col-md-8">
+        <div class="card-box">
+          <h3 class="header-title" style="font-size: x-large">
+            Loan Applications Received Status
+          </h3>
+          <div class="table-responsive" style="height: 450px; overflow: scroll">
+            <table
+              class="table table-borderless table-hover mb-0"
+              (click)="redirect()"
+            >
+              <thead class="thead-light">
+                <tr>
+                  <th>Primary Applicant</th>
+                  <th>Type of Loan</th>
+                  <th>Status</th>
+                  <th>Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ram Kumar Sawan</td>
+                  <td>Personal</td>
+                  <td>
+                    <span class="badge badge-success p-1">Completed</span>
+                  </td>
+                  <td>6,23,000</td>
+                </tr>
+                <tr>
+                  <td>Prem Chand Thakur</td>
+                  <td>Auto</td>
+                  <td>
+                    <span class="badge badge-warning p-1">Review</span>
+                  </td>
+                  <td>24,99,539</td>
+                </tr>
+                <tr>
+                  <td>Ram Kumar Sawan</td>
+                  <td>Personal</td>
+                  <td>
+                    <span class="badge badge-success p-1">Completed</span>
+                  </td>
+                  <td>6,23,000</td>
+                </tr>
+                <tr>
+                  <td>Prem Chand Thakur</td>
+                  <td>Auto</td>
+                  <td>
+                    <span class="badge badge-warning p-1">Review</span>
+                  </td>
+                  <td>24,99,539</td>
+                </tr>
+                <tr>
+                  <td>Nitya P Shah</td>
+                  <td>Home</td>
+                  <td><span class="badge badge-pink p-1">Pending</span></td>
+                  <td>55,39,003</td>
+                </tr>
+                <tr>
+                  <td>Rahul Sharma</td>
+                  <td>Home Loan</td>
+                  <td>
+                    <span class="badge badge-secondary p-1">Assign Lawyer</span>
+                  </td>
+                  <td>10,00,910</td>
+                </tr>
+                <tr>
+                  <td>Sintara Brothers</td>
+                  <td>MSME</td>
+                  <td>
+                    <span class="badge badge-pink p-1">Pending</span>
+                  </td>
+                  <td>15,00,000</td>
+                </tr>
+                <tr>
+                  <td>Mega Manufacturers</td>
+                  <td>Industrial</td>
+                  <td><span class="badge badge-danger p-1">Warning</span></td>
+                  <td>25,00,000</td>
+                </tr>
+                <tr>
+                  <td>Soni Premkumar</td>
+                  <td>Mudra</td>
+                  <td>
+                    <span class="badge badge-secondary p-1"
+                      >Under Valuation</span
+                    >
+                  </td>
+                  <td>1,50,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- end table-responsive-->
+        </div>
+        <!-- end card-box -->
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-lg-4">
+        <app-portlet
+          loading="0"
+          title="Marketshare by Loan Amount"
+          color="white"
+          headerClass="title header-title border-0 mt-1"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="morris-chart mt-3" style="height: 276px">
+                <apx-chart
+                  [chart]="ChartType"
+                  [series]="ChartType.series"
+                  [colors]="ChartType.colors"
+                  [labels]="ChartType.labels"
+                  [dataLabels]="ChartType.dataLabels"
+                  [legend]="ChartType.legend"
+                ></apx-chart>
+              </div>
+              <h4 class="header-title mt-3">
+                <span style="font-size: x-large"> 42% </span>5 Lacs to 10 Lacs
+              </h4>
+            </div>
+          </div>
+        </app-portlet>
+      </div>
+      <div class="col-lg-4">
+        <app-portlet
+          loading="0"
+          title="Market Share by Loan Type"
+          color="white"
+          headerClass="title header-title border-0 mt-1"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="morris-chart mt-3" style="height: 276px">
+                <apx-chart
+                  [chart]="ChartType2"
+                  [series]="ChartType2.series"
+                  [colors]="ChartType2.colors"
+                  [labels]="ChartType2.labels"
+                  [dataLabels]="ChartType2.dataLabels"
+                  [legend]="ChartType2.legend"
+                ></apx-chart>
+              </div>
+              <h4 class="header-title mt-3">
+                <span style="font-size: x-large"> 50,012 </span>Total
+                Applications
+              </h4>
+            </div>
+          </div>
+        </app-portlet>
+      </div>
+      <div class="col-lg-4">
+        <app-portlet
+          loading="0"
+          title="Property Value Marketshare"
+          color="white"
+          headerClass="title header-title border-0 mt-1"
+        >
+          <div class="card">
+            <div class="card-body">
+              <div class="morris-chart mt-3" style="height: 276px">
+                <apx-chart
+                  [chart]="ChartType3"
+                  [series]="ChartType3.series"
+                  [colors]="ChartType3.colors"
+                  [labels]="ChartType3.labels"
+                  [dataLabels]="ChartType3.dataLabels"
+                  [legend]="ChartType3.legend"
+                ></apx-chart>
+              </div>
+              <h4 class="header-title mt-3">
+                <span style="font-size: x-large"> ₹1728 KCr </span>Total Value
+              </h4>
+            </div>
+          </div>
+        </app-portlet>
+      </div>
+    </div>
+  </div>
+</section>
