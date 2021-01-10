@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -88,15 +89,44 @@ export class DashboardComponent implements OnInit {
   user_type: number;
   @Input() fromDate: Date;
   @Input() toDate: Date;
+  dtOptions: DataTables.Settings = {};
+  currentUser: any;
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
 
   @ViewChild('dp', { static: true }) datePicker: any;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private service: GeneralService) { }
 
   ngOnInit() {
+    this.currentUser = this.service.getcurrentUser();
     this.selected = '7/1/2020-7/8/2020';
     this.hidden = true;
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }];
+    this.dtOptions = {
+      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Admin/${this.currentUser.UserID}` }, responsive: true,
+      columns: [{
+        title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
+          return meta.row + 1;
+        }
+      }, {
+        title: 'Name',
+        data: '', render: (data, type, row) => {
+          return `${row.FirstName} ${row.LastName}`;
+
+        }
+      }, {
+        title: 'Loan Type',
+        data: 'Type_of_Loan'
+      }, {
+        title: 'Amount (₹)',
+        data: 'LoanAmount'
+      }, {
+        title: 'Document',
+        data: null, render: (data, type, row) => {
+          return `<a href="loan/title-search/${row.AppID}">View</a>`;
+        }
+      }
+      ],
+    };
     this.ChartType = {
       type: 'donut',
       height: 260,

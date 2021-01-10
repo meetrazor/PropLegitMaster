@@ -1,6 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-application',
@@ -10,22 +14,217 @@ import { GeneralService } from 'src/app/services/general.service';
 export class AddApplicationComponent implements OnInit {
   breadCrumbItems: any;
   isLoading: boolean;
+  keyword = 'Area';
+  areas: string[];
+  propertyType: any;
+  initialValue = '';
   loanTypes: any;
+  currentUser: any;
+  DistrictList: any;
+  StateList: any[];
   public loan: FormGroup;
-  constructor(private service: GeneralService, private Fb: FormBuilder) {
+  submitted: boolean;
+  constructor(private service: GeneralService, private Fb: FormBuilder, private router: Router) {
     this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' },
     { label: 'Add New Application', path: '/loan/addapplication', active: true }];
     this.isLoading = false;
   }
 
   ngOnInit() {
+    this.submitted = false;
+    this.currentUser = this.service.getcurrentUser();
     this.service.GetLoanTypes().subscribe((res) => {
-      console.log(res.data);
+      this.loanTypes = res.data;
+    });
+    this.service.GetLoanPropertyTypes().subscribe((res) => {
+      this.propertyType = res.data;
+
     });
     this.loan = this.Fb.group({
-      OwnerShip: this.Fb.array([
-      ])
+      PropertyOwners: this.Fb.array([
+        this.initOwner()
+      ]),
+      ApplicationNo: new FormControl('', Validators.required),
+      taluka: new FormControl('', Validators.required),
+      BankName: new FormControl('', Validators.required),
+      BranchCode: new FormControl('', Validators.required),
+      ApplicantFirstName: new FormControl('', Validators.required),
+      ApplicantLastName: new FormControl('', Validators.required),
+      MobileNo: new FormControl('', Validators.required),
+      Email: new FormControl('', Validators.required),
+      LoanPropertyTypeID: new FormControl('', Validators.required),
+      IsOwnerSame: new FormControl('True', Validators.required),
+      PropertyAddress: new FormControl('', Validators.required),
+      TypeOfLoan: new FormControl('', Validators.required),
+      IsLien: new FormControl('True'),
+      TalukaID: new FormControl('', Validators.required),
+      VillageID: new FormControl('', Validators.required),
+      DistrictID: new FormControl('', Validators.required),
+      SurveyNo: new FormControl('', Validators.required),
+      TPNo: new FormControl(''),
+      FPNo: new FormControl(''),
+      LienAmount: new FormControl(''),
+      LienDate: new FormControl(''),
+      LienPersonName: new FormControl(''),
+      LienFrom: new FormControl(''),
+      LoanAmount: new FormControl('', Validators.required),
+      CreatedBy: new FormControl(this.currentUser.UserID),
+      StateID: new FormControl('', Validators.required),
     });
+    this.fetchstatelist();
   }
+  save() {
+    this.submitted = true;
+    if (this.loan.valid) {
+      this.isLoading = true;
+      this.service.AddLoanApplication(this.loan.value).subscribe((res) => {
+        this.isLoading = false;
+        if (res.error) {
+          Swal.fire({
+            title: res.error_code,
+            text: res.message,
+            type: 'error'
+          });
+          return;
+        } else {
+          Swal.fire({
+            title: 'Success',
+            text: res.message,
+            type: 'success'
+          }).then(() => {
+            this.router.navigate(['/loan']);
+          });
+        }
+        this.isLoading = false;
+      });
+    } else {
+      Swal.fire({
+        title: 'Invalid',
+        text: 'Invalid Form Data',
+        type: 'error'
+      });
+    }
+  }
+  ChangeState(e) {
+    if (e !== undefined) {
+      this.service.districts(this.loan.controls.StateID.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data.error) {
+              Swal.fire({
+                title: data.error_code,
+                text: data.message,
+                type: 'error'
+              });
+              return;
+            } else {
+              this.DistrictList = data.data;
+              if (this.DistrictList.length > 0) {
+                this.loan.controls.DistrictID.enable();
+              } else {
+                this.loan.controls.DistrictID.disable();
+              }
+            }
+          });
+    }
+    this.loan.controls.VillageID.setValue(null);
+    this.loan.controls.DistrictID.setValue(null);
+    this.loan.controls.TalukaID.setValue(null);
+    this.loan.controls.taluka.setValue('');
+  }
+  get f() { return this.loan.controls; }
 
+  fetchstatelist() {
+    this.service.fetchstatelist()
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data.error) {
+            Swal.fire({
+              title: data.error_code,
+              text: data.message,
+              type: 'error'
+            });
+            return;
+          } else {
+            this.StateList = data.data;
+          }
+        });
+    this.f.DistrictID.disable();
+  }
+  ChangeDistrict() {
+    this.f.VillageID.setValue(null);
+    this.f.TalukaID.setValue(null);
+    this.f.taluka.setValue('');
+  }
+  selectEvent(item) {
+    // do something with selected item
+    this.loan.controls.VillageID.setValue(item.VillageId);
+    this.loan.controls.DistrictID.setValue(item.DistrictId);
+    this.loan.controls.TalukaID.setValue(item.TalukaId);
+    this.loan.controls.StateID.setValue(item.stateID);
+  }
+  onChangeSearch(search: string) {
+    this.loan.controls.VillageID.setValue(null);
+    this.loan.controls.TalukaID.setValue(null);
+    // this.myForm.controls.taluka.setValue('');
+    //  fetch remote data from here
+    //  And reassign the 'data' which is binded to 'data' property.
+
+    if (!this.loan.controls.StateID.value) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Please Select State',
+        type: 'error'
+      });
+      return;
+    }
+
+    if (!this.loan.controls.DistrictID.value) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Please Select District',
+        type: 'error'
+      });
+      return;
+    }
+    if (search !== undefined && search.length >= 3) {
+      this.service.areabystateid(this.loan.controls.StateID.value, this.loan.controls.DistrictID.value, search)
+        .pipe(first())
+        .subscribe(
+          data => {
+            if (data.error) {
+              return;
+            } else {
+              this.areas = data.data;
+            }
+          });
+    } else if (search !== undefined && search.length === 0) {
+      this.areas = null;
+    }
+  }
+  onclear() {
+    this.loan.controls.VillageID.setValue(null);
+    this.loan.controls.TalukaID.setValue(null);
+  }
+  removeOwner(i: number) {
+    const control = this.f.PropertyOwners as FormArray;
+    control.removeAt(i);
+  }
+  addOwner() {
+    const control = this.f.PropertyOwners as FormArray;
+    control.push(this.initOwner());
+  }
+  initOwner(i?) {
+    if (i && i !== undefined) {
+      return this.Fb.group({
+        OwnerName: new FormControl(i.OwnerName),
+      });
+    } else {
+      return this.Fb.group({
+        OwnerName: new FormControl('')
+      });
+    }
+  }
 }

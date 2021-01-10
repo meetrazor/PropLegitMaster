@@ -269,90 +269,10 @@
           </h3>
           <div class="table-responsive" style="height: 450px; overflow: scroll">
             <table
-              class="table table-borderless table-hover mb-0"
-              (click)="redirect()"
-            >
-              <thead class="thead-light">
-                <tr>
-                  <th>Primary Applicant</th>
-                  <th>Type of Loan</th>
-                  <th>Status</th>
-                  <th>Amount (₹)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ram Kumar Sawan</td>
-                  <td>Personal</td>
-                  <td>
-                    <span class="badge badge-success p-1">Completed</span>
-                  </td>
-                  <td>6,23,000</td>
-                </tr>
-                <tr>
-                  <td>Prem Chand Thakur</td>
-                  <td>Auto</td>
-                  <td>
-                    <span class="badge badge-warning p-1">Review</span>
-                  </td>
-                  <td>24,99,539</td>
-                </tr>
-                <tr>
-                  <td>Ram Kumar Sawan</td>
-                  <td>Personal</td>
-                  <td>
-                    <span class="badge badge-success p-1">Completed</span>
-                  </td>
-                  <td>6,23,000</td>
-                </tr>
-                <tr>
-                  <td>Prem Chand Thakur</td>
-                  <td>Auto</td>
-                  <td>
-                    <span class="badge badge-warning p-1">Review</span>
-                  </td>
-                  <td>24,99,539</td>
-                </tr>
-                <tr>
-                  <td>Nitya P Shah</td>
-                  <td>Home</td>
-                  <td><span class="badge badge-pink p-1">Pending</span></td>
-                  <td>55,39,003</td>
-                </tr>
-                <tr>
-                  <td>Rahul Sharma</td>
-                  <td>Home Loan</td>
-                  <td>
-                    <span class="badge badge-secondary p-1">Assign Lawyer</span>
-                  </td>
-                  <td>10,00,910</td>
-                </tr>
-                <tr>
-                  <td>Sintara Brothers</td>
-                  <td>MSME</td>
-                  <td>
-                    <span class="badge badge-pink p-1">Pending</span>
-                  </td>
-                  <td>15,00,000</td>
-                </tr>
-                <tr>
-                  <td>Mega Manufacturers</td>
-                  <td>Industrial</td>
-                  <td><span class="badge badge-danger p-1">Warning</span></td>
-                  <td>25,00,000</td>
-                </tr>
-                <tr>
-                  <td>Soni Premkumar</td>
-                  <td>Mudra</td>
-                  <td>
-                    <span class="badge badge-secondary p-1"
-                      >Under Valuation</span
-                    >
-                  </td>
-                  <td>1,50,000</td>
-                </tr>
-              </tbody>
-            </table>
+              datatable
+              [dtOptions]="dtOptions"
+              class="table table-borderless hover"
+            ></table>
           </div>
           <!-- end table-responsive-->
         </div>

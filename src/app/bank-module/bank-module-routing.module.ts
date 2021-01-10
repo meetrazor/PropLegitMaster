@@ -1,3 +1,4 @@
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { AddApplicationComponent } from './add-application/add-application.component';
 
 import { ApplicantDashboardComponent } from './applicant-dashboard/applicant-dashboard.component';
@@ -5,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ApplicationComponent } from './application/application.component';
+import { ViewDocumentComponent } from './view-document/view-document.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -17,11 +19,17 @@ const routes: Routes = [
     component: ApplicationComponent
   },
   {
-    path: 'title-search',
+    path: 'title-search/:id',
     component: ApplicantDashboardComponent
   }, {
     path: 'addapplication',
     component: AddApplicationComponent
+  }, {
+    path: 'viewdocument/:url/:filetype',
+    component: ViewDocumentComponent
+  }, {
+    path: 'uploaddocument/:Appid',
+    component: UploadDocumentComponent
   }
 ];
 

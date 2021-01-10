@@ -3,9 +3,9 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-page-title>
 <div class="row">
-  <div class="col-xl-8">
+  <div class="col-xl-4">
     <div class="card-box">
-      <div class="widget-chart text-center" dir="ltr">
+      <div class="widget-chart text-center" dir="ltr" *ngIf="loaded">
         <apx-chart
           [chart]="revenueRadialChart.chart"
           [series]="revenueRadialChart.series"
@@ -19,7 +19,8 @@
             <tbody>
               <tr>
                 <td class="h4">
-                  Document Received <span class="text-success">6</span>
+                  Document Received
+                  <span class="text-success">{{ received }}</span>
                 </td>
                 <td>
                   <a
@@ -31,7 +32,8 @@
               </tr>
               <tr>
                 <td class="h4">
-                  Document Verified <span class="text-success">4</span>
+                  Document Verified
+                  <span class="text-success">{{ reviewd }}</span>
                 </td>
                 <td>
                   <a
@@ -43,7 +45,8 @@
               </tr>
               <tr>
                 <td class="h4">
-                  Document Pending <span class="text-danger">2</span>
+                  Document Pending
+                  <span class="text-danger">{{ pending }}</span>
                 </td>
                 <td>
                   <a href="" class="text-success h4">Request </a>|
@@ -54,9 +57,13 @@
           </table>
         </div>
 
-        <h5 class="text-muted">
+        <h5 class="text-muted" *ngIf="loaded">
           DOCUMENTS REVIEWED
-          <span class="text-primary" style="font-size: x-large">81%</span>
+          <span class="text-primary" style="font-size: x-large"
+            >{{
+              totaldocument ? ((reviewd / totaldocument) * 100).toFixed() : 0
+            }}%</span
+          >
         </h5>
         <h4><a href="" class="">VIEW COMMENTS</a></h4>
         <h2>Ownership Verification</h2>
@@ -80,6 +87,81 @@
   </div>
   <div class="col-xl-4">
     <div class="card-box">
+      <app-portlet
+        loading="0"
+        title="PropLegit PVR Summary"
+        color="light"
+        collapsed="1"
+        headerClass="title header-title "
+      >
+        <ngb-accordion
+          #acc="ngbAccordion"
+          activeIds="static-1"
+          [closeOthers]="true"
+        >
+          <ngb-panel id="static-1" class="my-1">
+            <ng-template ngbPanelTitle>
+              Property Verification
+              <!-- <i class="mdi mdi-chevron-down accordion-arrow"></i> -->
+            </ng-template>
+            <ng-template ngbPanelContent>
+              hello
+              <!-- <ng-template [ngTemplateOutlet]="TabContent"></ng-template> -->
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel id="static-2" class="my-1">
+            <ng-template ngbPanelTitle>Ownership Verification</ng-template>
+            <ng-template ngbPanelContent>
+              world
+              <!-- <ng-template [ngTemplateOutlet]="TabContent"></ng-template> -->
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel id="static-3" class="my-1">
+            <ng-template ngbPanelTitle>Encumbrance Verification</ng-template>
+            <ng-template ngbPanelContent> test</ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+        <div class="text-center mt-3">
+          <button class="btn bg-light text-dark">See Full Report</button>
+        </div>
+      </app-portlet>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="card-box">
+      <div class="widget-chart text-center" dir="ltr">
+        <h2>Property Information</h2>
+        <div class="row mt-3">
+          <div class="col-12">
+            <table class="table table-borderless mb-0" *ngIf="loaded">
+              <tbody>
+                <tr>
+                  <th class="h4">Property Village</th>
+                  <td>{{ applicationData.VillageName }}</td>
+                </tr>
+                <tr>
+                  <th class="h4">Property Address</th>
+                  <td>{{ applicationData.PostalAddress }}</td>
+                </tr>
+                <tr>
+                  <th class="h4">SurveyNo</th>
+                  <td>{{ applicationData.SurveyNo }}</td>
+                </tr>
+                <tr>
+                  <th class="h4">TP NO</th>
+                  <td>{{ applicationData.TPNo }}</td>
+                </tr>
+                <tr>
+                  <th class="h4">FP NO</th>
+                  <td>{{ applicationData.FPNo }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-box">
       <div class="widget-chart text-center" dir="ltr">
         <h5></h5>
         <h2>Title Certificate</h2>
@@ -88,7 +170,7 @@
       </div>
     </div>
     <!-- end card-box -->
-    <div class="card-box">
+    <!-- <div class="card-box">
       <div class="widget-chart text-center" dir="ltr">
         <h2>Physical Verification</h2>
         <div class="row mt-3">
@@ -98,26 +180,31 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- end card-box -->
   </div>
 </div>
 <div class="row">
   <div class="col-xl-4">
-    <div class="card-box" style="height: 100%">
+    <div class="card-box" style="height: 100%" *ngIf="loaded">
       <h4>Primary Contact</h4>
       <div class="user-info text-center mt-3">
         <img
           class="img-fluid rounded-circle"
-          src="assets/img/1.jpg"
+          src="assets/images/users/user.png"
           alt=""
           height="150"
           width="150"
         />
-        <h4>Rahul Sharma</h4>
-        <p><i class="fas fa-mail-bulk"> </i> Send e-Mail</p>
+        <h4>{{ applicationData.FirstName }} {{ applicationData.LastName }}</h4>
         <p>
-          <i class="fas fa-phone"> </i> <a href="tel:9825150532"> 9825150532</a>
+          <i class="fas fa-mail-bulk"> {{ applicationData.EmailAddress }}</i>
+        </p>
+        <p>
+          <i class="fas fa-phone"> </i>
+          <a href="tel:{{ applicationData.MobileNumber }}">
+            {{ applicationData.MobileNumber }}</a
+          >
         </p>
         <p>
           <i class="fas fa-video"></i
@@ -135,114 +222,16 @@
         Government Certified Land Revenue Records
       </h3>
       <div class="table-responsive" style="height: 360px">
-        <table class="table table-borderless mb-0">
-          <thead class="thead-light">
-            <tr>
-              <th>Document</th>
-              <th>Bank</th>
-              <th>Lawyer</th>
-              <th>Action</th>
-              <th>View Comments</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Construction Agreement</td>
-              <td><span class="badge badge-success p-1">Received</span></td>
-              <td>
-                <a
-                  href="assets/Sample_Documents_Home_Loan/Construction_Agreement.pdf"
-                  ><span class="badge badge-success p-1">View</span></a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>RERA Registration No.</td>
-              <td><span class="badge badge-success p-1">Received</span></td>
-
-              <td>
-                <a
-                  href="assets/Sample_Documents_Home_Loan/RERA_Registration.pdf"
-                  ><span class="badge badge-success p-1">View</span></a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>Copy of Sales Deed</td>
-              <td><span class="badge badge-success p-1">Received</span></td>
-              <td>
-                <a
-                  href="assets/Sample_Documents_Home_Loan/06-08-19_Sale Deed of Bahiyal.pdf"
-                  ><span class="badge badge-success p-1">View</span></a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>Latest copy of 7/12 or Property Card</td>
-              <td><span class="badge badge-success p-1">Received</span></td>
-              <td>
-                <a
-                  href="assets/Sample_Documents_Home_Loan/7_12_833_Bahiyal_Dehgam_Gandhinagar.pdf"
-                  ><span class="badge badge-success p-1">View</span></a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>Latest copy of Khata Extract (8/A)</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Copy of property tax/land revenue/other statutory dues</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Copy of approved plan / building plan</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Copy of Government Order for NA</td>
-              <td><span class="badge badge-success p-1">Received</span></td>
-              <td>
-                <a href="assets/Sample_Documents_Home_Loan/na copy_order.pdf"
-                  ><span class="badge badge-success p-1">View</span></a
-                >
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Letter from Builder/Society with their account number and name
-                of Bankers for remittance of installments
-              </td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Possession Certficate/Allottment Letter (for Flat)</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Original Share Certificate (in case of a Society)</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>NOC (in case of a Society)</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-            <tr>
-              <td>Title Search report - 30 years</td>
-              <td><span class="badge badge-pink p-1">Pending</span></td>
-              <td><span class="badge badge-secondary p-1">Upload</span></td>
-            </tr>
-          </tbody>
-        </table>
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          class="table table-borderless hover mb-0"
+        ></table>
       </div>
       <!-- end table-responsive-->
     </div>
+  </div>
+  <div class="card-disabled" *ngIf="!loaded">
+    <div class="card-portlets-loader"></div>
   </div>
 </div>

@@ -33,6 +33,10 @@ const generateinvoice = `${apiUrl}Property/rent/generate/invoice/`;
 const uploadInvoice = `${apiUrl}property/rent/Upload/invoice/`;
 const generateReceipt = `${apiUrl}property/rent/generate/receipt/`;
 const getLoanType = `${apiUrl}loan/application/types`;
+const getLoanpropertyType = `${apiUrl}loan/Property/types`;
+const addLoanApplication = `${apiUrl}loan/application/create`;
+const getApplicationInformation = `${apiUrl}loan/application/View/details/`;
+const getDocumentList = `${apiUrl}loan/application/Documents/AppID/`;
 
 @Injectable({
   providedIn: 'root'
@@ -274,6 +278,18 @@ export class GeneralService {
     return this.http.get<any>(`${apiUrl}property/${id}/case/list`, httpOptions);
   }
   GetLoanTypes() {
-    return this.http.get<any>(`${getLoanType}`, httpOptions)
+    return this.http.get<any>(`${getLoanType}`, httpOptions);
+  }
+  GetLoanPropertyTypes() {
+    return this.http.get<any>(`${getLoanpropertyType}`, httpOptions);
+  }
+  AddLoanApplication(data) {
+    return this.http.post<any>(`${addLoanApplication}`, data, httpOptions);
+  }
+  GetApplicationInformation(id) {
+    return this.http.get<any>(`${getApplicationInformation}${id}`, httpOptions);
+  }
+  GetDocumentList(id): any {
+    return this.http.get<any>(`${getDocumentList}${id}`, httpOptions);
   }
 }

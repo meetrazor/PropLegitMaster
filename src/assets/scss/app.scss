@@ -145,3 +145,9 @@ a.paginate_button.current {
 thead {
   background-color: rgb(241, 245, 247);
 }
+.accordion > .card > .card-header {
+  margin: 5px 1px !important;
+}
+.btn-link {
+  color: black !important;
+}
