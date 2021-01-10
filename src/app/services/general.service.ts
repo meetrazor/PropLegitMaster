@@ -37,6 +37,7 @@ const getLoanpropertyType = `${apiUrl}loan/Property/types`;
 const addLoanApplication = `${apiUrl}loan/application/create`;
 const getApplicationInformation = `${apiUrl}loan/application/View/details/`;
 const getDocumentList = `${apiUrl}loan/application/Documents/AppID/`;
+const savePVR = `${apiUrl}/loan/pvr/createBy/`;
 
 @Injectable({
   providedIn: 'root'
@@ -291,5 +292,8 @@ export class GeneralService {
   }
   GetDocumentList(id): any {
     return this.http.get<any>(`${getDocumentList}${id}`, httpOptions);
+  }
+  SavePVR(data, id) {
+    return this.http.post<any>(`${savePVR}${id}`, data, httpOptions);
   }
 }

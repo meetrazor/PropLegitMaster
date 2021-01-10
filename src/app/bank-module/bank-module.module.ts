@@ -18,9 +18,10 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ViewDocumentComponent } from './view-document/view-document.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { PvrReportComponent } from './pvr-report/pvr-report.component';
 
 @NgModule({
-  declarations: [ApplicantDashboardComponent, ApplicationComponent, DashboardComponent, AddApplicationComponent, ViewDocumentComponent, UploadDocumentComponent],
+  declarations: [ApplicantDashboardComponent, ApplicationComponent, DashboardComponent, AddApplicationComponent, ViewDocumentComponent, UploadDocumentComponent, PvrReportComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
     BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule,

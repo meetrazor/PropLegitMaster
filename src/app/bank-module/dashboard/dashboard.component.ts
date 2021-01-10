@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralService } from 'src/app/services/general.service';
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
 
   @ViewChild('dp', { static: true }) datePicker: any;
-  constructor(private router: Router, private service: GeneralService) { }
+  constructor(private router: Router, private service: GeneralService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
@@ -122,7 +122,8 @@ export class DashboardComponent implements OnInit {
       }, {
         title: 'Document',
         data: null, render: (data, type, row) => {
-          return `<a href="loan/title-search/${row.AppID}">View</a>`;
+          return `<a class="btn text-primary" viewID = "${row.AppID}">View</a>`
+          // return `<a href="loan/title-search/${row.AppID}">View</a>`;
         }
       }
       ],
@@ -212,5 +213,12 @@ export class DashboardComponent implements OnInit {
 
   redirect() {
     // this.router.navigate(['/titlesearch/dashboard']);
+  }
+  ngAfterViewInit(): void {
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute("viewID")) {
+        this.router.navigate(["/loan/title-search/" + event.target.getAttribute("viewID")]);
+      }
+    });
   }
 }

@@ -30,7 +30,7 @@ const handlerequired = (control: AbstractControl) => {
   styleUrls: ['./add-property.component.scss']
 })
 export class AddPropertyComponent implements OnInit {
-  currentUser:any;
+  currentUser: any;
   returnvalue;
   public myForm: FormGroup;
   Array5: any[];
@@ -54,7 +54,7 @@ export class AddPropertyComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
     console.log(this.currentUser.UserID);
-    
+
     this.isUpdate = false;
     this.isLoading = false;
     this.propertyID = this.route.snapshot.params.id;
@@ -391,14 +391,12 @@ export class AddPropertyComponent implements OnInit {
   }
 
   save() {
-    console.log(this.myForm.value);
-
     this.handleChange();
     this.submitted = true;
     if (this.myForm.invalid) {
       return;
     }
-        // return;
+    // return;
     if (!this.isUpdate) {
       this.isLoading = true;
       this.service.addproperty(this.myForm.value)
@@ -695,7 +693,7 @@ export class AddPropertyComponent implements OnInit {
               const control = this.myForm.controls.OwnerShip as FormArray;
               control.push(this.initOwner(i));
             }
-      
+
             this.isLoading = false;
           }
         }

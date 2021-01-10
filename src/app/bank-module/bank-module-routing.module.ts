@@ -1,3 +1,4 @@
+import { PvrReportComponent } from './pvr-report/pvr-report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { AddApplicationComponent } from './add-application/add-application.component';
 
@@ -30,6 +31,9 @@ const routes: Routes = [
   }, {
     path: 'uploaddocument/:Appid',
     component: UploadDocumentComponent
+  }, {
+    path: 'PVRreport/:Appid',
+    component: PvrReportComponent
   }
 ];
 
