@@ -1,8 +1,11 @@
 <app-page-title
-  title="Rahul Sharma's Dashboard"
+  *ngIf="loaded"
+  title="{{ applicationData.FirstName }} {{
+    applicationData.LastName
+  }}'s Dashboard"
   [breadcrumbItems]="breadCrumbItems"
 ></app-page-title>
-<div class="row">
+<div class="row" *ngIf="loaded">
   <div class="col-xl-4">
     <div class="card-box">
       <div class="widget-chart text-center" dir="ltr" *ngIf="loaded">
@@ -184,7 +187,7 @@
     <!-- end card-box -->
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="loaded">
   <div class="col-xl-4">
     <div class="card-box" style="height: 100%" *ngIf="loaded">
       <h4>Primary Contact</h4>
@@ -231,7 +234,7 @@
       <!-- end table-responsive-->
     </div>
   </div>
-  <div class="card-disabled" *ngIf="!loaded">
-    <div class="card-portlets-loader"></div>
-  </div>
+</div>
+<div class="card-disabled" *ngIf="!loaded">
+  <div class="card-portlets-loader"></div>
 </div>

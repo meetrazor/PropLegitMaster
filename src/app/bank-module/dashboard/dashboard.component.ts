@@ -102,7 +102,7 @@ export class DashboardComponent implements OnInit {
     this.hidden = true;
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }];
     this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Admin/${this.currentUser.UserID}` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
         title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
           return meta.row + 1;
@@ -122,7 +122,8 @@ export class DashboardComponent implements OnInit {
       }, {
         title: 'Document',
         data: null, render: (data, type, row) => {
-          return `<a class="btn text-primary" viewID = "${row.AppID}">View</a>`
+          return `<a class="btn text-primary" title="View Application"
+          viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
           // return `<a href="loan/title-search/${row.AppID}">View</a>`;
         }
       }
@@ -216,8 +217,8 @@ export class DashboardComponent implements OnInit {
   }
   ngAfterViewInit(): void {
     this.renderer.listen('document', 'click', (event) => {
-      if (event.target.hasAttribute("viewID")) {
-        this.router.navigate(["/loan/title-search/" + event.target.getAttribute("viewID")]);
+      if (event.target.hasAttribute('viewID')) {
+        this.router.navigate(['/loan/title-search/' + event.target.getAttribute('viewID')]);
       }
     });
   }

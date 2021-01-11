@@ -34,7 +34,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.selected = '7/1/2020-7/8/2020';
     this.hidden = true;
     this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Admin/${this.currentUser.UserID}` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
         title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
           return meta.row + 1;
@@ -60,7 +60,8 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
       }, {
         title: 'Document',
         data: null, render: (data, type, row) => {
-          return `<a class="btn text-primary" viewID = "${row.AppID}">View</a>`;
+          return `<a class="btn text-primary" title="View Application"
+          viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
         }
       }
       ],
@@ -92,7 +93,9 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
       }, {
         title: 'Document',
         render: (data: any, type: any, full: any) => {
-          return `<a class="btn text-primary" appID = "${full.AppID}">Add PVR Report</a>`
+          return `<a class="btn text-primary" title="Add PVR Report"
+          appID = "${full.AppID}"><i class="mdi mdi-file-upload font-18 text-secondary"
+           appID = "${full.AppID}" aria-hidden="false"></i></a>`;
         }
         // data: null, render: (data, type, row) => {
         //   return `<a routerLink="loan/PVRreport/${row.AppID}">Add PVR</a>`;
@@ -131,13 +134,13 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.renderer.listen('document', 'click', (event) => {
-      if (event.target.hasAttribute("appID")) {
-        this.router.navigate(["/loan/PVRreport/" + event.target.getAttribute("appID")]);
+      if (event.target.hasAttribute('appID')) {
+        this.router.navigate(['/loan/PVRreport/' + event.target.getAttribute('appID')]);
       }
     });
     this.renderer.listen('document', 'click', (event) => {
-      if (event.target.hasAttribute("viewID")) {
-        this.router.navigate(["/loan/title-search/" + event.target.getAttribute("viewID")]);
+      if (event.target.hasAttribute('viewID')) {
+        this.router.navigate(['/loan/title-search/' + event.target.getAttribute('viewID')]);
       }
     });
   }
