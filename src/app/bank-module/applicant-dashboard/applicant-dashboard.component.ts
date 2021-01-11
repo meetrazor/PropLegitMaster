@@ -2,9 +2,10 @@ import { DatePipe } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-applicant-dashboard',
@@ -24,8 +25,9 @@ export class ApplicantDashboardComponent implements OnInit {
   applicationData: any;
   revenueRadialChart: any;
 
-  constructor(private service: GeneralService, private Route: ActivatedRoute, private router: Router) {
-
+  constructor(
+    private service: GeneralService, private Route: ActivatedRoute, private router: Router,
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -63,7 +65,15 @@ export class ApplicantDashboardComponent implements OnInit {
         data: 'DocumentName',
       }, {
         title: 'Status',
-        data: 'Status'
+        render: (data, type, row) => {
+          if (row.Status === 'Pending') {
+            return `<span class="badge badge-danger p-1">${row.Status}</span>`;
+          } else if (row.Status === 'Under Review') {
+            return `<span class="badge badge-primary p-1">${row.Status}</span>`;
+          } else {
+            return `<span class="badge badge-success p-1">${row.Status}</span>`;
+          }
+        }
       }, {
         title: 'Action',
         data: null

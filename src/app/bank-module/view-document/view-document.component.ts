@@ -22,8 +22,6 @@ export class ViewDocumentComponent implements OnInit {
     // this.url = this.Route.snapshot.params.url;
     // this.url = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
     // this.filetype = this.Route.snapshot.params.filetype.toLowerCase();
-    console.log(this.Route.snapshot.params.id);
-    console.log(this.Route.snapshot.params.propertyid);
     this.service.getDocument(this.Route.snapshot.params.propertyid, this.Route.snapshot.params.id).subscribe((res) => {
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(res.data[0].FileURL);
       this.isLoading = true;

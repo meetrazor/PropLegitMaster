@@ -19,14 +19,17 @@ import { ViewDocumentComponent } from './view-document/view-document.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { PvrReportComponent } from './pvr-report/pvr-report.component';
+import { GeneratePVRReportComponent } from './generate-pvr-report/generate-pvr-report.component';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 
 @NgModule({
   declarations: [ApplicantDashboardComponent, ApplicationComponent,
-    DashboardComponent, AddApplicationComponent, ViewDocumentComponent, UploadDocumentComponent, PvrReportComponent],
+    DashboardComponent, AddApplicationComponent, ViewDocumentComponent,
+    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
     BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule,
-    ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule,
+    ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule, PDFExportModule,
     PdfViewerModule,
   ]
 })

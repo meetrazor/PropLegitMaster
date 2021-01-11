@@ -33,14 +33,14 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.data = {
       PropertyManaged: 0
-    }
+    };
     this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
-    if (!this.currentUser.UserID) {
-      this.router.navigate(['/account/login']);
-    }
-    if (this.currentUser.UserType) {
-      this.router.navigate(['/loan']);
-    }
+    // if (!this.currentUser.UserID) {
+    //   this.router.navigate(['/account/login']);
+    // }
+    // if (this.currentUser.UserType) {
+    //   this.router.navigate(['/loan']);
+    // }
     // this.isLoading = true;
     // this.service.getDashboard().subscribe((res) => {
     //   this.data = res.data[0];

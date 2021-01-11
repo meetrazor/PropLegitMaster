@@ -11,6 +11,8 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+
 
 
 
@@ -24,7 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     LayoutsModule,
     AppRoutingModule,
-    ReactiveFormsModule, DataTablesModule
+    ReactiveFormsModule, DataTablesModule, PDFExportModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

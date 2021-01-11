@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Observable, Subject, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -37,7 +38,8 @@ const getLoanpropertyType = `${apiUrl}loan/Property/types`;
 const addLoanApplication = `${apiUrl}loan/application/create`;
 const getApplicationInformation = `${apiUrl}loan/application/View/details/`;
 const getDocumentList = `${apiUrl}loan/application/Documents/AppID/`;
-const savePVR = `${apiUrl}/loan/pvr/createBy/`;
+const savePVR = `${apiUrl}loan/pvr/createBy/`;
+const getPVRData = `${apiUrl}loan/pvr/View/`;
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +51,7 @@ export class GeneralService {
   // tslint:disable-next-line: variable-name
   private _refresh = new Subject<void>();
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) { }
 
   userRegister(userData): any {
     return this.http.post(register, userData, httpOptions);
@@ -295,5 +297,8 @@ export class GeneralService {
   }
   SavePVR(data, id) {
     return this.http.post<any>(`${savePVR}${id}`, data, httpOptions);
+  }
+  GetPVRData(id): any {
+    return this.http.get<any>(`${getPVRData}${id}`, httpOptions);
   }
 }
