@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { GeneralService } from 'src/app/services/general.service';
 
@@ -93,9 +93,22 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
       }, {
         title: 'Document',
         render: (data: any, type: any, full: any) => {
-          return `<a class="btn text-primary" title="Add PVR Report"
-          appID = "${full.AppID}"><i class="mdi mdi-file-upload font-18 text-secondary"
-           appID = "${full.AppID}" aria-hidden="false"></i></a>`;
+          // generate PDF
+          if (full.PVRID && !full.PVRDocumentID) {
+            return `<a class="btn text-primary" title="Generate PVR Report"
+            PVRappID = "${full.AppID}"><i class="dripicons-document-edit font-18 text-secondary"
+             PVRappID = "${full.AppID}" aria-hidden="false"></i></a>`;
+            // Upload PDF
+          } else if (full.PVRID && full.PVRDocumentID) {
+            return `<a class="btn text-primary" title="Upload PVR Report"
+            UploadPVRappID = "${full.AppID}"><i class="mdi mdi-file-upload-outline font-18 text-secondary"
+            UploadPVRappID = "${full.AppID}" aria-hidden="false"></i></a>`;
+            // view PDF
+          } else {
+            return `<a class="btn text-primary" title="Add PVR Report"
+            appID = "${full.AppID}"><i class="mdi mdi-plus-box font-18 text-secondary"
+             appID = "${full.AppID}" aria-hidden="false"></i></a>`;
+          }
         }
         // data: null, render: (data, type, row) => {
         //   return `<a routerLink="loan/PVRreport/${row.AppID}">Add PVR</a>`;
@@ -141,6 +154,18 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('viewID')) {
         this.router.navigate(['/loan/title-search/' + event.target.getAttribute('viewID')]);
+      }
+    });
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('PVRappID')) {
+        console.log(event.target.getAttribute('PVRappID'));
+        // this.router.navigate(['/loan/generatePVR/' + event.target.getAttribute('PVRappID')]);
+      }
+    });
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('UploadPVRappID')) {
+        console.log(event.target.getAttribute('UploadPVRappID'));
+        // this.router.navigate(['/loan/generatePVR/' + event.target.getAttribute('PVRappID')]);
       }
     });
   }

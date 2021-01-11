@@ -6,7 +6,14 @@
   <div class="card">
     <h4 class="header-title p-3 pb-0 mb-0">Document</h4>
     <div class="container mt-5">
-      <pdf-viewer
+      <embed
+        *ngIf="isLoading"
+        [src]="url"
+        width="100%"
+        height=""
+        appSlimScroll
+      />
+      <!-- <pdf-viewer
         [src]="url"
         *ngIf="filetype == 'pdf'"
         style="display: block"
@@ -18,7 +25,7 @@
         style="max-height: 70vh; max-width: 70vh; display: block; margin: auto"
         *ngIf="filetype == 'photo'"
         alt="receipt"
-      />
+      /> -->
     </div>
   </div>
 </div>

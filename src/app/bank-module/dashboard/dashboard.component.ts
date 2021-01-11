@@ -101,34 +101,37 @@ export class DashboardComponent implements OnInit {
     this.selected = '7/1/2020-7/8/2020';
     this.hidden = true;
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }];
-    this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
-      columns: [{
-        title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
-          return meta.row + 1;
-        }
-      }, {
-        title: 'Name',
-        data: '', render: (data, type, row) => {
-          return `${row.FirstName} ${row.LastName}`;
+    if (this.currentUser.UserType === 'Bank Manager') {
+      this.dtOptions = {
+        ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
+        columns: [{
+          title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
+            return meta.row + 1;
+          }
+        }, {
+          title: 'Name',
+          data: '', render: (data, type, row) => {
+            return `${row.FirstName} ${row.LastName}`;
 
+          }
+        }, {
+          title: 'Loan Type',
+          data: 'Type_of_Loan'
+        }, {
+          title: 'Amount (₹)',
+          data: 'LoanAmount'
+        }, {
+          title: 'Document',
+          data: null, render: (data, type, row) => {
+            return `<a class="btn text-primary" title="View Application"
+            viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
+            // return `<a href="loan/title-search/${row.AppID}">View</a>`;
+          }
         }
-      }, {
-        title: 'Loan Type',
-        data: 'Type_of_Loan'
-      }, {
-        title: 'Amount (₹)',
-        data: 'LoanAmount'
-      }, {
-        title: 'Document',
-        data: null, render: (data, type, row) => {
-          return `<a class="btn text-primary" title="View Application"
-          viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
-          // return `<a href="loan/title-search/${row.AppID}">View</a>`;
-        }
-      }
-      ],
-    };
+        ],
+      };
+    }
+
     this.ChartType = {
       type: 'donut',
       height: 260,

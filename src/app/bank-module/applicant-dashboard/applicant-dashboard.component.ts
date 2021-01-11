@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
@@ -99,25 +100,26 @@ export class ApplicantDashboardComponent implements OnInit {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
   }
   onViewDocument(id) {
+    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
     // this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
-    this.service.getDocument(this.applicationData.PropertyID, id).subscribe((res) => {
-      if (res.status === 200) {
-        const data = res.data[0];
-        if (data) {
-          if (data.FileType === 'DOC') {
-            window.location.href = data.FileURL;
-          } else {
-            this.router.navigate(['loan/viewdocument', data.FileURL, data.FileType]);
-          }
-        } else {
-          Swal.fire({
-            title: 'Error',
-            text: 'Something\'s Wrong',
-            type: 'error'
-          });
-        }
-      }
-    });
+    // this.service.getDocument(this.applicationData.PropertyID, id).subscribe((res) => {
+    //   if (res.status === 200) {
+    //     const data = res.data[0];
+    //     if (data) {
+    //       if (data.FileType === 'DOC') {
+    //         window.location.href = data.FileURL;
+    //       } else {
+    //         this.router.navigate(['loan/viewdocument', data.FileURL, data.FileType]);
+    //       }
+    //     } else {
+    //       Swal.fire({
+    //         title: 'Error',
+    //         text: 'Something\'s Wrong',
+    //         type: 'error'
+    //       });
+    //     }
+    //   }
+    // });
   }
   onRequestingDocument(id) {
     console.log('Requesting ' + id);

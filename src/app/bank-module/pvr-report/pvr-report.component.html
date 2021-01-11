@@ -7,15 +7,242 @@
   <div class="card" *ngIf="!isLoading">
     <div class="card-body">
       <div class="row">
-        <div class="col-md-3">
-          <!-- <app-portlet
+        <div class="col-12">
+          <app-portlet
             loading="0"
-            title="Owner information"
+            title="Application Information"
             color="light"
             collapsed="0"
             headerClass="title header-title "
-          >
-          </app-portlet> -->
+            ><div class="row">
+              <div class="col-md-4">
+                <table class="table table-borderless hover">
+                  <tr>
+                    <th>Application Number</th>
+                    <td>
+                      {{
+                        applicationData.ApplicationID
+                          ? applicationData.ApplicationID
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Applicant Name</th>
+                    <td>
+                      {{
+                        applicationData.FirstName && applicationData.LastName
+                          ? applicationData.FirstName +
+                            " " +
+                            applicationData.LastName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Email Address</th>
+                    <td>
+                      {{
+                        applicationData.EmailAddress
+                          ? applicationData.EmailAddress
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Mobile Number</th>
+                    <td>
+                      {{
+                        applicationData.MobileNumber
+                          ? applicationData.MobileNumber
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Application Status</th>
+                    <td>
+                      {{
+                        applicationData.ApplicationStatus
+                          ? applicationData.ApplicationStatus
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Bank Name</th>
+                    <td>
+                      {{
+                        applicationData.BankName
+                          ? applicationData.BankName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Branch Name</th>
+                    <td>
+                      {{
+                        applicationData.BranchCode
+                          ? applicationData.BranchCode
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Loan Amount</th>
+                    <td>
+                      {{
+                        applicationData.LoanAmount
+                          ? applicationData.LoanAmount
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Type of Loan</th>
+                    <td>
+                      {{
+                        applicationData.Type_of_Loan
+                          ? applicationData.Type_of_Loan
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-4">
+                <table class="table table-borderless hover">
+                  <tr>
+                    <th>District</th>
+                    <td>
+                      {{
+                        applicationData.DistrictName
+                          ? applicationData.DistrictName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Taluka</th>
+                    <td>
+                      {{
+                        applicationData.TalukaName
+                          ? applicationData.TalukaName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Village</th>
+                    <td>
+                      {{
+                        applicationData.VillageName
+                          ? applicationData.VillageName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Survey No</th>
+                    <td>
+                      {{
+                        applicationData.SurveyNo
+                          ? applicationData.SurveyNo
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>FP No</th>
+                    <td>
+                      {{ applicationData.FPNo ? applicationData.FPNo : "-" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>TP No</th>
+                    <td>
+                      {{ applicationData.TPNo ? applicationData.TPNo : "-" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Loan Property Type</th>
+                    <td>
+                      {{
+                        applicationData.Loan_Property_Type
+                          ? applicationData.Loan_Property_Type
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Postal Address</th>
+                    <td>
+                      {{
+                        applicationData.PostalAddress
+                          ? applicationData.PostalAddress
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-md-4">
+                <table class="table table-borderless hover">
+                  <tr>
+                    <th>Is Owner Same</th>
+                    <td>{{ applicationData.IsOwnerSame ? "Yes" : "No" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Property Owner(s)</th>
+                    <td>
+                      {{
+                        applicationData.PropertyOwners.length > 0
+                          ? getusers()
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Is Lien</th>
+                    <td>
+                      {{ applicationData.IsLien ? "Yes" : "No" }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Lien Person Name</th>
+                    <td>
+                      {{
+                        applicationData.LienPersonName
+                          ? applicationData.LienPersonName
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>Lien Date</th>
+                    <td>
+                      {{
+                        applicationData.LienDate
+                          ? (applicationData.LienDate | date: "dd-MM-yyyy")
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>LienFrom</th>
+                    <td>
+                      {{
+                        applicationData.LienFrom
+                          ? applicationData.LienFrom
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </app-portlet>
         </div>
       </div>
       <form

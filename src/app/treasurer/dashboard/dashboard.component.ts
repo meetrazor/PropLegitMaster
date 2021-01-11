@@ -38,6 +38,9 @@ export class DashboardComponent implements OnInit {
     if (!this.currentUser.UserID) {
       this.router.navigate(['/account/login']);
     }
+    if (this.currentUser.UserType) {
+      this.router.navigate(['/loan']);
+    }
     // this.isLoading = true;
     // this.service.getDashboard().subscribe((res) => {
     //   this.data = res.data[0];

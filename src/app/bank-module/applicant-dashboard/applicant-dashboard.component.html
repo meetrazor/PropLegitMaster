@@ -9,6 +9,7 @@
   <div class="col-xl-4">
     <div class="card-box">
       <div class="widget-chart text-center" dir="ltr" *ngIf="loaded">
+        <h2 class="h2">Document Status</h2>
         <apx-chart
           [chart]="revenueRadialChart.chart"
           [series]="revenueRadialChart.series"
@@ -22,7 +23,7 @@
             <tbody>
               <tr>
                 <td class="h4">
-                  Document Received
+                  Received
                   <span class="text-success">{{ received }}</span>
                 </td>
                 <td>
@@ -35,7 +36,7 @@
               </tr>
               <tr>
                 <td class="h4">
-                  Document Verified
+                  Verified
                   <span class="text-success">{{ reviewd }}</span>
                 </td>
                 <td>
@@ -48,7 +49,7 @@
               </tr>
               <tr>
                 <td class="h4">
-                  Document Pending
+                  Pending
                   <span class="text-danger">{{ pending }}</span>
                 </td>
                 <td>
@@ -69,8 +70,8 @@
           >
         </h5>
         <h4><a href="" class="">VIEW COMMENTS</a></h4>
-        <h2>Ownership Verification</h2>
-        <div class="row mt-3">
+        <!-- <h2>Ownership Verification</h2> -->
+        <!-- <div class="row mt-3">
           <div class="col-4">
             <p class="text-muted font-15 mb-1 text-truncate"></p>
             <h4><a href="">VIEW</a></h4>
@@ -83,13 +84,14 @@
             <p class="text-muted font-15 mb-1 text-truncate"></p>
             <h4><a href="">REQUEST</a></h4>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- end card-box -->
   </div>
   <div class="col-xl-4">
     <div class="card-box">
+      <h2 class="text-center">Ownership Verification</h2>
       <app-portlet
         loading="0"
         title="PropLegit PVR Summary"
@@ -139,24 +141,44 @@
             <table class="table table-borderless mb-0" *ngIf="loaded">
               <tbody>
                 <tr>
-                  <th class="h4">Property Village</th>
-                  <td>{{ applicationData.VillageName }}</td>
+                  <th class="h4">Village</th>
+                  <td>
+                    {{
+                      applicationData.VillageName
+                        ? applicationData.VillageName
+                        : "-"
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <th class="h4">Property Address</th>
-                  <td>{{ applicationData.PostalAddress }}</td>
+                  <th class="h4">Address</th>
+                  <td>
+                    {{
+                      applicationData.PostalAddress
+                        ? applicationData.PostalAddress
+                        : "-"
+                    }}
+                  </td>
                 </tr>
                 <tr>
                   <th class="h4">SurveyNo</th>
-                  <td>{{ applicationData.SurveyNo }}</td>
+                  <td>
+                    {{
+                      applicationData.SurveyNo ? applicationData.SurveyNo : "-"
+                    }}
+                  </td>
                 </tr>
                 <tr>
                   <th class="h4">TP NO</th>
-                  <td>{{ applicationData.TPNo }}</td>
+                  <td>
+                    {{ applicationData.TPNo ? applicationData.TPNo : "-" }}
+                  </td>
                 </tr>
                 <tr>
                   <th class="h4">FP NO</th>
-                  <td>{{ applicationData.FPNo }}</td>
+                  <td>
+                    {{ applicationData.FPNo ? applicationData.FPNo : "-" }}
+                  </td>
                 </tr>
               </tbody>
             </table>

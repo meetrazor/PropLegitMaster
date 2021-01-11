@@ -18,7 +18,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
-
   }
 
   ngAfterViewInit() {

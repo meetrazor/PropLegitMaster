@@ -15,7 +15,7 @@ const httpFileUploadOptions = {
 };
 //  const baseurl = `https://api.proplegit.com/`;
 const baseurl = `http://devapi.proplegit.com/`;
-//  const baseurl = `http://qaapi.proplegit.com/`;
+// const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;

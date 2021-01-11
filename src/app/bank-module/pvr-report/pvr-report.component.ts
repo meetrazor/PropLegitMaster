@@ -29,7 +29,6 @@ export class PvrReportComponent implements OnInit {
     this.submitted = false;
     this.currentUser = this.service.getcurrentUser();
     this.service.GetApplicationInformation(this.appID).subscribe((res) => {
-      console.log(res.data[0]);
       this.applicationData = res.data[0];
       this.isLoading = false;
       this.PVRForm = this.Fb.group({
@@ -155,5 +154,12 @@ export class PvrReportComponent implements OnInit {
   addOwnerDetails() {
     const control = this.PVRForm.controls.OwnerCoOwnersName as FormArray;
     control.push(this.initOwner());
+  }
+  getusers() {
+    let names = '';
+    this.applicationData.PropertyOwners.forEach(owner => {
+      names += ` ${owner.OwnerName}`;
+    });
+    return names;
   }
 }

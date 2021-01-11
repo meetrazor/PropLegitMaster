@@ -99,7 +99,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.loading = false;
       if (res.status === 200) {
         this.submitted = false;
-        this.router.navigate([this.returnUrl]);
+        if (res.data[0].UserType !== null) {
+          this.router.navigate(['/loan']);
+        } else {
+          this.router.navigate([this.returnUrl]);
+        }
       } else {
         this.error = res.error;
       }

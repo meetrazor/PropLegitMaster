@@ -2,7 +2,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from './../shared/ui/ui.module';
-import { NgbAccordionModule, NgbAlertConfig, NgbDatepickerModule, NgbProgressbarModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbDatepickerModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -21,10 +21,12 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { PvrReportComponent } from './pvr-report/pvr-report.component';
 
 @NgModule({
-  declarations: [ApplicantDashboardComponent, ApplicationComponent, DashboardComponent, AddApplicationComponent, ViewDocumentComponent, UploadDocumentComponent, PvrReportComponent],
+  declarations: [ApplicantDashboardComponent, ApplicationComponent,
+    DashboardComponent, AddApplicationComponent, ViewDocumentComponent, UploadDocumentComponent, PvrReportComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
-    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule,
+    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule,
+    ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule,
     PdfViewerModule,
   ]
 })
