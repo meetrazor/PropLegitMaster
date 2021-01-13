@@ -208,23 +208,11 @@
               "
             >
               <ul>
-                <li>Dineshbhai Jivrajbhai Chauhan</li>
-                <li>Shyam Sundar Panday</li>
+                <li *ngFor="let owner of PVRData.PVROwnerDetails">
+                  {{ owner.OwnerName }}
+                </li>
               </ul>
             </span>
-
-            <span
-              style="
-                float: left;
-                width: 100%;
-                font-size: 16px;
-                color: #939598;
-                font-family: 'RobotoCondensed-Regular';
-                margin-bottom: 5px;
-              "
-            >
-              Ownership Type: <span style="color: #000">Freehold</span></span
-            >
           </div>
         </div>
         <div class="col-lg-6">
@@ -274,10 +262,7 @@
                 margin-bottom: 10px;
               "
             >
-              Flat No A/7, Admeasuring about 90 sq yds on
-              <b>third floor of Savita Park Scheme Standing</b>/ constructed on
-              land Final Plot No 14 of T.P. Scheme No 39 (Alloted in Lieu of
-              R.S. No. 54/2 situated lying and B
+              {{ PVRData.PropertyRemarks }}
             </div>
             <div
               class="col-lg-12"
@@ -290,7 +275,9 @@
               "
             >
               Type :
-              <span style="color: #000; font-weight: bold">Residential</span>
+              <span style="color: #000; font-weight: bold">{{
+                PVRData.Loan_Property_Type
+              }}</span>
             </div>
 
             <div
@@ -328,6 +315,7 @@
             </div>
           </div>
         </div>
+
         <div
           class="col-lg-12"
           style="
@@ -343,84 +331,10 @@
               margin-left: 15px;
               width: 3%;
             "
-            ><img src="../assets/PVR/cross.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b>Claimed Owner’s Name,</b> who is also a co-borrower,
-            <b style="color: #d2232a; font-size: 18px">does not appear</b>
-            <b>in Government Land Record</b> as on:
-            <b style="color: #d2232a; font-size: 20px">26-2-2019</b></span
-          >
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 15px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/information.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b>Additional Document are required to prove ownership,</b> such as
-            Registered Sale Deed, etc.
-          </span>
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 10px;
-            margin-bottom: 10px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/cross.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%; font-weight: 500"
-            >Government record states an Application No. 9436 is in progress and
-            this is suggested to be investigated to asertain further effect on
-            current Ownership Status
-          </span>
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 25px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/tick.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b>Claimed Owner’s Name,</b> who is also a co-borrower
-            <b style="color: #00994d; font-size: 18px">appears</b>
-            <b> in Government Land Record</b> as on:
-            <b style="color: #00994d; font-size: 20px">26-2-2019</b></span
-          >
+          ></span>
+          <span style="float: left; width: 88%">{{
+            PVRData.OwnerRemarks
+          }}</span>
         </div>
 
         <div class="col-lg-12">
@@ -443,186 +357,190 @@
             </div>
           </div>
         </div>
+        <div
+          class="col-lg-12"
+          style="
+            font-size: 18px;
+            font-family: 'RobotoCondensed-Regular';
+            margin-bottom: 10px;
+          "
+        >
+          <div class="row" style="padding: 1px">
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                padding-left: 30px;
+                margin-top: 25px;
+                font-weight: bold;
+              "
+            >
+              Location:
+            </div>
 
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            padding-left: 30px;
-            margin-top: 25px;
-            font-weight: bold;
-          "
-        >
-          Location:
-        </div>
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            font-weight: bold;
-            margin-top: 25px;
-          "
-        >
-          <!--{To be fetched from the input data}-->
-        </div>
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-top: 25px;
-          "
-        >
-          Survey No. :
-        </div>
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            font-weight: bold;
-            margin-top: 25px;
-          "
-        >
-          {{ PVRData.SurveyNo }}
-          <!--{To be fetched from the input data}-->
-        </div>
-        <div
-          class="col-lg-4"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            margin-top: 25px;
-            font-family: 'RobotoCondensed-Regular';
-          "
-        >
-          Total Land Size :
-          <span style="color: #000">{{ PVRData.TotalLandSize }} sq meters</span>
-        </div>
-        <div
-          class="col-lg-4"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            padding-left: 30px;
-          "
-        >
-          Village: <span style="color: #000">{{ PVRData.VillageName }}</span>
-        </div>
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #000;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                font-weight: bold;
+                margin-top: 25px;
+              "
+            >
+              <!--{To be fetched from the input data}-->
+            </div>
 
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-          "
-        >
-          T.P. No :
-        </div>
-        <!-- <div class="col-lg-2" style="font-size:16px; color:#000; margin-bottom:15px;  font-family: 'RobotoCondensed-Regular'; font-weight:bold; margin-top:25px;">3 <!--{To be fetched from the input data}--</div>
-     <div class="col-lg-2" style="font-size:16px; color:#666; margin-bottom:15px;  font-family: 'RobotoCondensed-Regular'; margin-top:25px;">FP :</div>-->
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            font-weight: bold;
-          "
-        >
-          3
-          <!--{To be fetched from the input data}-->
-        </div>
-        <div
-          class="col-lg-4"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-          "
-        >
-          Land Use :<span style="color: #000"> Agriculture</span>
-        </div>
-        <div
-          class="col-lg-4"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            padding-left: 30px;
-          "
-        >
-          Taluka : <span style="color: #000">Maninagar</span>
-        </div>
-        <div
-          class="col-lg-2"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-          "
-        >
-          F.P. No:
-        </div>
-        <div
-          class="col-lg-6"
-          style="
-            font-size: 16px;
-            color: #000;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            font-weight: bold;
-          "
-        >
-          3B
-          <!--{To be fetched from the input data}-->
-        </div>
-        <!-- <div class="col-lg-2" style="font-size:16px; color:#000; margin-bottom:15px;  font-family: 'RobotoCondensed-Regular'; font-weight:bold; margin-top:25px;">3 <!--{To be fetched from the input data}--</div>
-     <div class="col-lg-2" style="font-size:16px; color:#666; margin-bottom:15px;  font-family: 'RobotoCondensed-Regular'; margin-top:25px;">FP :</div>-->
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                margin-top: 25px;
+              "
+            >
+              Survey No. :
+            </div>
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #000;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                font-weight: bold;
+                margin-top: 25px;
+              "
+            >
+              {{ PVRData.SurveyNo }}
+              <!--{To be fetched from the input data}-->
+            </div>
 
-        <div
-          class="col-lg-4"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-            padding-left: 30px;
-          "
-        >
-          District: <span style="color: #000">Ahmedabad</span>
-        </div>
-        <div
-          class="col-lg-8"
-          style="
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            font-family: 'RobotoCondensed-Regular';
-          "
-        >
-          Other Remarks :<span style="color: #000">
-            Non Agriculture use 1225 sq meters</span
-          >
+            <div
+              class="col-lg-4"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                margin-top: 25px;
+                font-family: 'RobotoCondensed-Regular';
+              "
+            >
+              Total Land Size :
+              <span style="color: #000">{{ PVRData.TotalLandSize }}</span>
+            </div>
+
+            <div
+              class="col-lg-4"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                padding-left: 30px;
+              "
+            >
+              Village:
+              <span style="color: #000">{{ PVRData.VillageName }}</span>
+            </div>
+
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+              "
+            >
+              T.P. No :
+            </div>
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #000;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                font-weight: bold;
+              "
+            >
+              {{ PVRData.TPNo }}
+              <!--{To be fetched from the input data}-->
+            </div>
+
+            <div
+              class="col-lg-4"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+              "
+            >
+              Land Use :<span style="color: #000">
+                {{ PVRData.Loan_Property_Type }}</span
+              >
+            </div>
+
+            <div
+              class="col-lg-4"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                padding-left: 30px;
+              "
+            >
+              Taluka : <span style="color: #000">{{ PVRData.TalukaName }}</span>
+            </div>
+
+            <div
+              class="col-lg-2"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+              "
+            >
+              F.P. No:
+            </div>
+            <div
+              class="col-lg-6"
+              style="
+                font-size: 16px;
+                color: #000;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                font-weight: bold;
+              "
+            >
+              {{ PVRData.FPNo }}
+              <!--{To be fetched from the input data}-->
+            </div>
+
+            <div
+              class="col-lg-4"
+              style="
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 15px;
+                font-family: 'RobotoCondensed-Regular';
+                padding-left: 30px;
+              "
+            >
+              District:
+              <span style="color: #000">{{ PVRData.DistrictName }}</span>
+            </div>
+          </div>
         </div>
 
         <div class="col-lg-12">
@@ -665,39 +583,10 @@
               margin-left: 15px;
               width: 3%;
             "
-            ><img src="../assets/PVR/cross.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b>No Specific area demarcation found </b>for Flat No A/7. Further
-            the Land use is marked as Agriculture and area available
-            <b>for construction is unclear as per</b> Government Record of the
-            said date.</span
-          >
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 15px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/information.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b
-              >Additional Document are required to prove Property status, area
-              demarcaton</b
-            >
-            such as Court orders, etc.</span
-          >
+          ></span>
+          <span style="float: left; width: 88%">{{
+            PVRData.PropertyRemarks
+          }}</span>
         </div>
 
         <div class="col-lg-12">
@@ -741,110 +630,12 @@
               margin-left: 15px;
               width: 3%;
             "
-            ><img src="../assets/PVR/cross.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b style="color: #ae1b1f">No Specific Record found </b>for mortage
-            of this property to State Bank of India, as claimed by the Bank in
-            their SARFAESI Symbolic</span
-          >
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 15px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/information.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            ><b
-              >Atleast 62 different instances of claims have been found on this
-              property's Government Record, though non of them claim for the
-              Particular flat no A/7, Third Floor of Savita Park(Said
-              Property)</b
-            >
-          </span>
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 10px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            >&nbsp;</span
-          >
-          <span style="float: left; width: 88%"
-            >There are also several dispute cases found on this property’s
-            Government record</span
-          >
+          ></span>
+          <span style="float: left; width: 88%">{{
+            PVRData.EncumbranceRemarks
+          }}</span>
         </div>
 
-        <div class="col-lg-12">
-          <div
-            style="
-              float: left;
-              width: 100%;
-              border-bottom: 1px solid #bcbec0;
-              margin-bottom: 25px;
-              margin-top: 25px;
-            "
-          >
-            <div
-              style="
-                width: 400px;
-                float: left;
-                padding: 10px;
-                background: #e2e3e4;
-                font-size: 20px;
-                color: #000;
-                font-family: 'RobotoCondensed-Regular';
-                font-weight: bold;
-              "
-            >
-              Analysis of Past Public Notices:
-            </div>
-          </div>
-        </div>
-        <div
-          class="col-lg-12"
-          style="
-            font-size: 18px;
-            font-family: 'RobotoCondensed-Regular';
-            margin-bottom: 10px;
-          "
-        >
-          <span
-            style="
-              float: left;
-              margin-right: 15px;
-              margin-left: 15px;
-              width: 3%;
-            "
-            ><img src="../assets/PVR/information_suceess.png" alt=""
-          /></span>
-          <span style="float: left; width: 88%"
-            >No Public Notices were found in the past 5 year search.</span
-          >
-        </div>
         <div class="col-lg-12">
           <div
             style="
@@ -880,12 +671,16 @@
           "
         >
           <ul style="margin-left: 35px">
-            <li>The Land / Property is <b>Provisionally Verified</b>.</li>
             <li>
-              This Land/Property status as on record retrieval date can be rated
-              as “<b>Poor</b>”.
+              The Land / Property is <b>{{ PVRData.PVRStatus }}</b
+              >.
             </li>
             <li>
+              This Land/Property status as on record retrieval date can be rated
+              as “<b>{{ PVRData.PVRRiskMeterStatus }}</b
+              >”.
+            </li>
+            <li *ngIf="PVRData.PVRRiskMeterStatus != 'Excellent'">
               The rating can be futher upgraded to “<b>Excellent</b>” provided
               that a detailed analysis of last 30 years registered search report
               is made report is made to find out whether any other critical
@@ -896,7 +691,11 @@
           </ul>
         </div>
 
-        <div class="col-lg-12" style="border-top: 2px solid #ccc">
+        <div
+          class="col-lg-12"
+          style="border-top: 2px solid #ccc"
+          *ngIf="PVRData.PVRStatus == 'Not Verified'"
+        >
           <span
             style="
               font-size: 30px;
@@ -920,6 +719,67 @@
               text-align: center;
             "
             >unless further documents are provided</span
+          >
+        </div>
+        <div
+          class="col-lg-12"
+          style="border-top: 2px solid #ccc"
+          *ngIf="PVRData.PVRStatus == 'Verified'"
+        >
+          <span
+            style="
+              font-size: 30px;
+              color: #287a10;
+              font-family: 'RobotoCondensed-Regular';
+              width: 100%;
+              float: left;
+              margin-top: 25px;
+              text-align: center;
+              font-weight: bold;
+            "
+            >Certified Valuation Recommended for LAP</span
+          >
+          <span
+            style="
+              font-size: 30px;
+              color: #000;
+              font-family: 'RobotoCondensed-Regular';
+              width: 100%;
+              float: left;
+              text-align: center;
+            "
+            >post Physical Verification</span
+          >
+        </div>
+        <div
+          class="col-lg-12"
+          style="border-top: 2px solid #ccc"
+          *ngIf="PVRData.PVRStatus == 'Provisional Verified'"
+        >
+          <span
+            style="
+              font-size: 30px;
+              color: #ae1b1f;
+              font-family: 'RobotoCondensed-Regular';
+              width: 100%;
+              float: left;
+              margin-top: 25px;
+              text-align: center;
+              font-weight: bold;
+            "
+            >Property Not Recommended for LAP</span
+          >
+          <span
+            style="
+              font-size: 30px;
+              color: #000;
+              font-family: 'RobotoCondensed-Regular';
+              width: 100%;
+              float: left;
+              text-align: center;
+            "
+            >post Physical Verification and review of claims and disclaimers,
+            unless further investigation proves otherwise</span
           >
         </div>
         <div

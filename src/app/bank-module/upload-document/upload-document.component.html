@@ -1,6 +1,9 @@
 <div class="container-fluid">
   <app-page-title
-    title="Upload Documents"
+    *ngIf="!isLoading"
+    title="Upload {{ applicationData.FirstName }} {{
+      applicationData.LastName
+    }}'s Documents"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
   <div class="card p-4">
@@ -15,7 +18,7 @@
               autocomplete="off"
               (change)="Changedocument($event)"
               placeholder="
-            Select State"
+            Select Document"
               [ngClass]="{
                 'is-invalid': submited && f.selectDocument.errors
               }"
@@ -114,7 +117,7 @@
           </div>
 
           <div class="col-md-12 mb-3">
-            <h4 class="header-title">File Description *</h4>
+            <h4 class="header-title">File Description</h4>
 
             <textarea
               class="form-control"

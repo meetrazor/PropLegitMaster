@@ -1,9 +1,6 @@
-import { DatePipe } from '@angular/common';
-
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -12,9 +9,17 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   templateUrl: './applicant-dashboard.component.html',
   styleUrls: ['./applicant-dashboard.component.scss']
 })
-export class ApplicantDashboardComponent implements OnInit {
+export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   breadCrumbItems: Array<{}>;
+  interval;
   reviewd = 0;
+  lawyerInfo: any;
+  IsLawyerLoaded: boolean;
+  index = 0;
+  PVRData: any;
+  PVRDetailsLoaded: boolean;
+  statusList = ['Village Level Officer has received the request',
+    'Village Level Officer has fetched the latest Govt. Land Records', 'Documents are under review by PropLegit'];
   meth: any;
   totaldocument = 0;
   pending = 0;
@@ -29,12 +34,30 @@ export class ApplicantDashboardComponent implements OnInit {
     private service: GeneralService, private Route: ActivatedRoute, private router: Router,
     private formBuilder: FormBuilder) {
   }
-
+  ngOnDestroy() {
+    clearInterval(this.interval);
+  }
   ngOnInit() {
     this.loaded = false;
+    this.IsLawyerLoaded = false;
     this.breadCrumbItems = [{ label: 'Title Search', path: '/' }, { label: 'Dashboard', path: '/', active: true }];
     this.service.GetApplicationInformation(this.Route.snapshot.params.id).subscribe((res) => {
       this.applicationData = res.data[0];
+      if (this.applicationData.PVRDocumentID === null) {
+        this.PVRDetailsLoaded = false;
+        this.statusChange();
+      } else {
+        this.service.GetPVRData(this.Route.snapshot.params.id).subscribe((PVRData) => {
+          this.PVRDetailsLoaded = true;
+          this.PVRData = PVRData.data;
+        });
+      }
+      if (this.applicationData.LawyerID) {
+        this.service.viewLawyer(this.applicationData.LawyerID).subscribe((lawyerInfo) => {
+          this.lawyerInfo = lawyerInfo.data[0];
+          this.IsLawyerLoaded = true;
+        });
+      }
       this.service.GetDocumentList(this.Route.snapshot.params.id).subscribe((Response) => {
         this.propertyDocumentData = Response.data;
         if (this.propertyDocumentData.length > 0) {
@@ -50,7 +73,6 @@ export class ApplicantDashboardComponent implements OnInit {
           });
         }
         this.LoadChart();
-
         this.loaded = true;
       });
     });
@@ -91,6 +113,14 @@ export class ApplicantDashboardComponent implements OnInit {
           btn += '<a href="javascript:void(0)" class="viewDocument m-1" title="View Document" receipt-id="' + data.DocumentID + '">';
           btn += '<i class="mdi mdi-eye font-18 text-secondary" aria-hidden="false" receipt-id="' + data.DocumentID + '"></i>';
           btn += '</a>';
+          if (data.Status !== 'Reviewed') {
+            btn += '<a href="javascript:void(0)" class="uploadDocument m-1" title="Upload Document" receipt-id="' + data.ID + '">';
+            btn += '<i class="mdi mdi-file-upload-outline font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
+            btn += '</a>';
+            btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
+            btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
+            btn += '</a>';
+          }
         }
         $('td:eq(3)', row).html(btn);
       }, drawCallback: () => {
@@ -105,6 +135,15 @@ export class ApplicantDashboardComponent implements OnInit {
         });
       }
     };
+  }
+  statusChange() {
+    this.interval = setInterval(() => {
+      this.index++;
+      document.getElementById('status').innerHTML = this.statusList[this.index];
+      if ((this.index + 1) >= this.statusList.length) {
+        clearInterval(this.interval);
+      }
+    }, 15000);
   }
   onUploadDocument() {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);

@@ -560,8 +560,8 @@
     </ul>
     <ul class="metismenu" id="side-menu" #sideMenu *ngIf="currentUser.UserType">
       <!-- <li class="menu-title">Navigation</li> -->
-
-      <li>
+      <li class="menu-title"><i class="mdi mdi-bank"></i> PropLegit</li>
+      <li *ngIf="currentUser.UserType !== 'Lawyer'">
         <a
           href="javascript: void(0);"
           class="waves-effect"
@@ -615,7 +615,7 @@
           <span class="menu-arrow"></span>
         </a>
         <ul class="nav-second-level collapse" aria-expanded="false">
-          <li>
+          <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/titlesearch/dashboard"
               routerLinkActive="active"
@@ -623,7 +623,15 @@
               >Dashboard</a
             >
           </li>
-          <li>
+          <li *ngIf="currentUser.UserType === 'Lawyer'">
+            <a
+              routerLink="/loan/dashboard"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Dashboard</a
+            >
+          </li>
+          <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/apps/calendar"
               routerLinkActive="active"
@@ -631,7 +639,15 @@
               >Ownership Records</a
             >
           </li>
-          <li>
+          <li *ngIf="currentUser.UserType === 'Lawyer'">
+            <a
+              routerLink="/loan/assignment"
+              routerLinkActive="active"
+              class="side-nav-link-ref"
+              >Assignments</a
+            >
+          </li>
+          <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/apps/contacts"
               routerLinkActive="active"
@@ -639,7 +655,7 @@
               >Liens & Encumberances</a
             >
           </li>
-          <li>
+          <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/apps/projects"
               routerLinkActive="active"
@@ -663,7 +679,7 @@
               >Title Clear</a
             >
           </li>
-          <li>
+          <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/titlesearch/assignlawyer"
               routerLinkActive="active"
@@ -674,13 +690,13 @@
         </ul>
       </li>
 
-      <li>
+      <li *ngIf="currentUser.UserType !== 'Lawyer'">
         <a href="javascript: void(0);" class="waves-effect">
           <i class="fe-users"></i>
           <span> Property Valuation </span>
         </a>
       </li>
-      <li>
+      <li *ngIf="currentUser.UserType !== 'Lawyer'">
         <a href="javascript: void(0);" class="waves-effect">
           <i class="fe-users"></i>
           <span> FraudGaurd Mortgage </span>

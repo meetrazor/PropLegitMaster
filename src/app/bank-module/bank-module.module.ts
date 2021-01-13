@@ -1,10 +1,11 @@
+import { LawyersComponent } from './lawyers/lawyers.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from './../shared/ui/ui.module';
-import { NgbAccordionModule, NgbDatepickerModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbDatepickerModule, NgbProgressbarModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { BankModuleRoutingModule } from './bank-module-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,16 +22,18 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { PvrReportComponent } from './pvr-report/pvr-report.component';
 import { GeneratePVRReportComponent } from './generate-pvr-report/generate-pvr-report.component';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { AssignmentsComponent } from './assignments/assignments.component';
+
 
 @NgModule({
   declarations: [ApplicantDashboardComponent, ApplicationComponent,
-    DashboardComponent, AddApplicationComponent, ViewDocumentComponent,
-    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent],
+    DashboardComponent, AddApplicationComponent, ViewDocumentComponent, LawyersComponent,
+    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent, AssignmentsComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
-    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule,
+    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, NgbModalModule,
     ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule, PDFExportModule,
     PdfViewerModule,
-  ]
+  ], providers: [DatePipe]
 })
 export class BankModuleModule { }

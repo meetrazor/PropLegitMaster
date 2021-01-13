@@ -3,29 +3,45 @@
     title="View Document"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
-  <div class="card">
-    <h4 class="header-title p-3 pb-0 mb-0">Document</h4>
-    <div class="container mt-5">
-      <embed
-        *ngIf="isLoading"
-        [src]="url"
-        width="100%"
-        height=""
-        appSlimScroll
-      />
-      <!-- <pdf-viewer
-        [src]="url"
-        *ngIf="filetype == 'pdf'"
-        style="display: block"
-      ></pdf-viewer>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="card">
+        <h4 class="header-title p-3 pb-0 mb-0">Document</h4>
+        <div
+          class="mt-3 pb-3"
+          style="max-height: 60vh; overflow-y: scroll"
+          appSlimScroll
+        >
+          <!-- <embed
+            *ngIf="isLoading"
+            [src]="url"
+            width="100%"
+            height=""
+            appSlimScroll
+          /> -->
+          <pdf-viewer
+            [src]="url"
+            *ngIf="filetype == 'PDF'"
+            style="display: block"
+          ></pdf-viewer>
 
-      <img
-        class=""
-        [src]="url"
-        style="max-height: 70vh; max-width: 70vh; display: block; margin: auto"
-        *ngIf="filetype == 'photo'"
-        alt="receipt"
-      /> -->
+          <img
+            class=""
+            [src]="url"
+            style="
+              max-height: 70vh;
+              max-width: 70vh;
+              display: block;
+              margin: auto;
+            "
+            *ngIf="filetype == 'photo'"
+            alt="receipt"
+          />
+        </div>
+      </div>
+      <div class="text-center">
+        <a class="btn btn-success" href="{{ url }}">Download this Document</a>
+      </div>
     </div>
   </div>
 </div>

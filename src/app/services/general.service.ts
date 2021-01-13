@@ -40,6 +40,9 @@ const getApplicationInformation = `${apiUrl}loan/application/View/details/`;
 const getDocumentList = `${apiUrl}loan/application/Documents/AppID/`;
 const savePVR = `${apiUrl}loan/pvr/createBy/`;
 const getPVRData = `${apiUrl}loan/pvr/View/`;
+const getPVRBankList = `${apiUrl}loan/bank/list`;
+const UploadPVR = `${apiUrl}loan/pvr/Genrate/`;
+const assignLawyer = `${apiUrl}loan/assign/lawyer/`;
 
 @Injectable({
   providedIn: 'root'
@@ -300,5 +303,14 @@ export class GeneralService {
   }
   GetPVRData(id): any {
     return this.http.get<any>(`${getPVRData}${id}`, httpOptions);
+  }
+  GetPVRBankList(): any {
+    return this.http.get<any>(`${getPVRBankList}`, httpOptions);
+  }
+  UploadPVR(Appid, data): any {
+    return this.http.post(`${UploadPVR}${Appid}`, data, httpFileUploadOptions);
+  }
+  AssignLawyer(AppId, LawyerID): any {
+    return this.http.put(`${assignLawyer}${AppId}/${LawyerID}`, null, httpOptions);
   }
 }

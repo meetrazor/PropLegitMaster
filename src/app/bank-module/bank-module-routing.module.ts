@@ -1,3 +1,6 @@
+import { AssignmentsComponent } from './assignments/assignments.component';
+import { LawyersComponent } from './lawyers/lawyers.component';
+
 import { GeneratePVRReportComponent } from './generate-pvr-report/generate-pvr-report.component';
 import { PvrReportComponent } from './pvr-report/pvr-report.component';
 import { UploadDocumentComponent } from './upload-document/upload-document.component';
@@ -41,6 +44,13 @@ const routes: Routes = [
   }, {
     path: 'GeneratePVR/:AppID',
     component: GeneratePVRReportComponent
+  }, {
+    path: 'Lawyers/:AppID',
+    component: LawyersComponent
+  }
+  , {
+    path: 'assignment',
+    component: AssignmentsComponent
   }
 ];
 

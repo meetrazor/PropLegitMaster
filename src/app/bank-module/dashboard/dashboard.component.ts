@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
           title: 'Amount (₹)',
           data: 'LoanAmount'
         }, {
-          title: 'Document',
+          title: 'Action',
           data: null, render: (data, type, row) => {
             return `<a class="btn text-primary" title="View Application"
             viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;

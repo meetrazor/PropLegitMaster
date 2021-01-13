@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { DatePipe } from '@angular/common';
 
 
 

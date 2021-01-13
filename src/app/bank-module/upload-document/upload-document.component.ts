@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import Swal from 'sweetalert2';
+import { roLocale } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-upload-document',
@@ -22,12 +23,11 @@ export class UploadDocumentComponent implements OnInit {
   fileExtension: string;
   @ViewChild('Files', { static: false }) files: any;
   constructor(private generalService: GeneralService, private router: Router, private route: ActivatedRoute) {
-    this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Upload Documents', path: '/', active: true }];
     this.currentUser = this.generalService.getcurrentUser();
     this.photographForm = new FormGroup({
       FileName: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9]*$')]),
       FileType: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required),
+      Description: new FormControl(''),
       uploadfile: new FormControl(null, Validators.required),
       DocumentSubTypeId: new FormControl(null, Validators.required),
       UserID: new FormControl(this.currentUser.UserID, Validators.required),
@@ -42,9 +42,15 @@ export class UploadDocumentComponent implements OnInit {
     this.isLoading = true;
     this.generalService.GetApplicationInformation(this.route.snapshot.params.Appid).subscribe((res) => {
       this.applicationData = res.data[0];
-      this.generalService.GetDocumentList(this.route.snapshot.params.Appid).subscribe((res) => {
+      this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Applications', path: '/loan/applications' }
+        , {
+        label: `${this.applicationData.FirstName} ${this.applicationData.LastName}`,
+        path: `/loan/title-search/${this.applicationData.AppID}`
+      }
+        , { label: 'Upload Documents', path: '/', active: true }];
+      this.generalService.GetDocumentList(this.route.snapshot.params.Appid).subscribe((resp) => {
         this.isLoading = false;
-        res.data.map((data) => {
+        resp.data.map((data) => {
           if (data.Status !== 'reviewed') {
             this.DocumentList.push(data);
           }
@@ -115,7 +121,6 @@ export class UploadDocumentComponent implements OnInit {
     if (this.photographForm.valid) {
       // 1 is Property ID
       this.isLoading = true;
-      console.log(this.photographForm.value);
 
       this.generalService.Addphotograph(this.applicationData.PropertyID, this.prepareSave())
         .subscribe(data => {
@@ -125,11 +130,11 @@ export class UploadDocumentComponent implements OnInit {
             this.submited = false;
             Swal.fire({
               title: 'Uploaded',
-              text: data.message,
+              text: 'Document Upload Successfully',
               type: 'success',
               timer: 2000
             }).then(() => {
-              location.reload();
+              this.router.navigate(['loan/title-search/' + this.route.snapshot.params.Appid]);
             });
           } else {
             Swal.fire({
@@ -149,7 +154,6 @@ export class UploadDocumentComponent implements OnInit {
       this.f.DocumentSubTypeId.setValue(null);
       this.f.DocumentTypeId.setValue(null);
     }
-    console.log(e);
 
   }
 }

@@ -1,7 +1,7 @@
 <div class="container-fluid pb-5">
   <!-- start page title -->
   <app-page-title
-    title="PVR Report"
+    title="Add PVR Report"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
   <div class="card" *ngIf="!isLoading">
@@ -269,7 +269,7 @@
           >
             <div class="form-row" [formGroupName]="i">
               <div class="form-group col-md-6">
-                <label>Loan Taken By*</label>
+                <label>Loan Taken By</label>
                 <input
                   type="text"
                   class="form-control"
@@ -310,7 +310,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Loan Given By*</label>
+                <label>Loan Given By</label>
                 <input
                   type="text"
                   class="form-control"
@@ -351,7 +351,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Loan Amount*</label>
+                <label>Loan Amount</label>
                 <input
                   type="number"
                   class="form-control"
@@ -383,7 +383,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Loan Taken On*</label>
+                <label>Loan Taken On</label>
                 <input
                   type="date"
                   class="form-control"
@@ -451,7 +451,7 @@
           >
             <div class="form-row" [formGroupName]="i">
               <div class="form-group col-md-6">
-                <label>Season*</label>
+                <label>Season</label>
                 <input
                   type="text"
                   class="form-control"
@@ -490,7 +490,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Crop*</label>
+                <label>Crop</label>
                 <input
                   type="text"
                   class="form-control"
@@ -529,7 +529,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Area*</label>
+                <label>Area</label>
                 <input
                   type="number"
                   class="form-control"
@@ -559,7 +559,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>MSP*</label>
+                <label>MSP</label>
                 <input
                   type="number"
                   class="form-control"
@@ -589,7 +589,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label>Year*</label>
+                <label>Year</label>
                 <input
                   type="date"
                   class="form-control"
@@ -641,7 +641,7 @@
           class="header-title mb-0"
           style="color: rgb(34, 30, 30); font-size: 18px"
         >
-          OwnerCoOwners Information
+          Owner/CoOwners Information
         </h5>
         <hr />
         <div formArrayName="OwnerCoOwnersName" class="mb-3">
@@ -683,7 +683,7 @@
                         .errors.required
                     "
                   >
-                    OwnersName is Required
+                    Owners Name is Required
                   </div>
                   <div
                     *ngIf="
@@ -724,7 +724,7 @@
         </h5>
         <hr />
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label>Total Land Size*</label>
             <input
               type="text"
@@ -740,11 +740,11 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.TotalLandSize.errors.required">
-                TotalLandSize is Required
+                Total Land Size is Required
               </div>
             </div>
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label>PVR Status*</label>
             <ng-select
               class="form-control"
@@ -768,7 +768,35 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PVRStatus.errors.required">
-                PVRStatus is Required
+                PVR Status is Required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Risk Meter*</label>
+            <ng-select
+              class="form-control"
+              formControlName="PVRRiskMeterStatus"
+              autocomplete="off"
+              placeholder="
+          Select Risk Meter"
+              [ngClass]="{
+                'is-invalid': submitted && f.PVRRiskMeterStatus.errors
+              }"
+            >
+              <ng-option
+                *ngFor="let item of PVRRiskMeterList"
+                [value]="item"
+                [id]="item"
+                >{{ item }}</ng-option
+              >
+            </ng-select>
+            <div
+              *ngIf="submitted && f.PVRRiskMeterStatus.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.PVRRiskMeterStatus.errors.required">
+                PVR Risk Meter Status is Required
               </div>
             </div>
           </div>
@@ -799,7 +827,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.OwnerRemarks.errors.required">
-                OwnerRemarks is Required
+                Owner Remarks is Required
               </div>
             </div>
           </div>
@@ -821,7 +849,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PropertyRemarks.errors.required">
-                PropertyRemarks is Required
+                Property Remarks is Required
               </div>
             </div>
           </div>
@@ -843,7 +871,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.EncumbranceRemarks.errors.required">
-                PropertyRemarks is Required
+                Encumbrance Remarks is Required
               </div>
             </div>
           </div>

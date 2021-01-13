@@ -17,6 +17,7 @@ export class AddApplicationComponent implements OnInit {
   keyword = 'Area';
   areas: string[];
   propertyType: any;
+  bankList: any;
   initialValue = '';
   loanTypes: any;
   currentUser: any;
@@ -36,6 +37,9 @@ export class AddApplicationComponent implements OnInit {
     this.service.GetLoanTypes().subscribe((res) => {
       this.loanTypes = res.data;
     });
+    this.service.GetPVRBankList().subscribe((res) => {
+      this.bankList = res.data;
+    });
     this.service.GetLoanPropertyTypes().subscribe((res) => {
       this.propertyType = res.data;
 
@@ -46,30 +50,30 @@ export class AddApplicationComponent implements OnInit {
       ]),
       ApplicationNo: new FormControl('', Validators.required),
       taluka: new FormControl('', Validators.required),
-      BankName: new FormControl('', Validators.required),
+      BankID: new FormControl(null, Validators.required),
       BranchCode: new FormControl('', Validators.required),
       ApplicantFirstName: new FormControl('', Validators.required),
       ApplicantLastName: new FormControl('', Validators.required),
       MobileNo: new FormControl('', Validators.required),
       Email: new FormControl('', Validators.required),
       LoanPropertyTypeID: new FormControl('', Validators.required),
-      IsOwnerSame: new FormControl('True', Validators.required),
+      IsOwnerSame: new FormControl('False', Validators.required),
       PropertyAddress: new FormControl('', Validators.required),
       TypeOfLoan: new FormControl('', Validators.required),
-      IsLien: new FormControl('True'),
+      IsLien: new FormControl('False'),
       TalukaID: new FormControl('', Validators.required),
       VillageID: new FormControl('', Validators.required),
-      DistrictID: new FormControl('', Validators.required),
+      DistrictID: new FormControl(null, Validators.required),
       SurveyNo: new FormControl('', Validators.required),
-      TPNo: new FormControl(''),
-      FPNo: new FormControl(''),
+      TpNo: new FormControl(''),
+      FpNo: new FormControl(''),
       LienAmount: new FormControl(''),
       LienDate: new FormControl(''),
       LienPersonName: new FormControl(''),
       LienFrom: new FormControl(''),
       LoanAmount: new FormControl('', Validators.required),
       CreatedBy: new FormControl(this.currentUser.UserID),
-      StateID: new FormControl('', Validators.required),
+      StateID: new FormControl(null, Validators.required),
     });
     this.fetchstatelist();
   }
@@ -89,10 +93,10 @@ export class AddApplicationComponent implements OnInit {
         } else {
           Swal.fire({
             title: 'Success',
-            text: res.message,
+            text: 'Application Added Successfully',
             type: 'success'
           }).then(() => {
-            this.router.navigate(['/loan']);
+            this.router.navigate(['/loan/applications']);
           });
         }
         this.isLoading = false;

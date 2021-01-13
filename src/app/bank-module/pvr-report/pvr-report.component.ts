@@ -15,7 +15,8 @@ export class PvrReportComponent implements OnInit {
   applicationData: any;
   submitted: boolean;
   isLoading: boolean;
-  PVRStatusList = ['Verified', 'Partially Verified', 'Not Verified'];
+  PVRStatusList = ['Verified', 'Provisionally Verified', 'Not Verified'];
+  PVRRiskMeterList = ['Excellent', 'Good', 'Average', 'Poor'];
   PVRForm: FormGroup;
   currentUser: any;
   constructor(private service: GeneralService, private route: ActivatedRoute, private Fb: FormBuilder, private router: Router) {
@@ -42,11 +43,12 @@ export class PvrReportComponent implements OnInit {
           this.initCropDetails()
         ]),
         TotalLandSize: new FormControl('', Validators.required),
+        PVRRiskMeterStatus: new FormControl('', Validators.required),
         OwnerRemarks: new FormControl('', Validators.required),
         PropertyRemarks: new FormControl('', Validators.required),
         PVRStatus: new FormControl('', Validators.required),
         EncumbranceRemarks: new FormControl('', Validators.required),
-        CreatedBy: new FormControl(this.currentUser.UserID),
+        CreatedBy: new FormControl(this.currentUser.UserID, Validators.required),
       });
     });
 
@@ -65,36 +67,36 @@ export class PvrReportComponent implements OnInit {
   initEncumbranceDetails(i?) {
     if (i && i !== undefined) {
       return this.Fb.group({
-        LoanTakenBy: new FormControl(i.LoanTakenBy, Validators.required),
-        LoanAmount: new FormControl(i.LoanAmount, Validators.required),
-        LoanTakenOn: new FormControl(i.LoanTakenOn, Validators.required),
-        LoanGivenBy: new FormControl(i.LoanGivenBy, Validators.required)
+        LoanTakenBy: new FormControl(i.LoanTakenBy),
+        LoanAmount: new FormControl(i.LoanAmount),
+        LoanTakenOn: new FormControl(i.LoanTakenOn),
+        LoanGivenBy: new FormControl(i.LoanGivenBy)
       });
     } else {
       return this.Fb.group({
-        LoanTakenBy: new FormControl('', Validators.required),
-        LoanAmount: new FormControl('', Validators.required),
-        LoanTakenOn: new FormControl('', Validators.required),
-        LoanGivenBy: new FormControl('', Validators.required)
+        LoanTakenBy: new FormControl(''),
+        LoanAmount: new FormControl(''),
+        LoanTakenOn: new FormControl(''),
+        LoanGivenBy: new FormControl('')
       });
     }
   }
   initCropDetails(i?) {
     if (i && i !== undefined) {
       return this.Fb.group({
-        Year: new FormControl(i.Year, Validators.required),
-        Season: new FormControl(i.Season, Validators.required),
-        Crop: new FormControl(i.Crop, Validators.required),
-        Area: new FormControl(i.Area, Validators.required),
-        MSP: new FormControl(i.MSP, Validators.required)
+        Year: new FormControl(i.Year),
+        Season: new FormControl(i.Season),
+        Crop: new FormControl(i.Crop),
+        Area: new FormControl(i.Area),
+        MSP: new FormControl(i.MSP)
       });
     } else {
       return this.Fb.group({
-        Year: new FormControl('', Validators.required),
-        Season: new FormControl('', Validators.required),
-        Crop: new FormControl('', Validators.required),
-        Area: new FormControl('', Validators.required),
-        MSP: new FormControl('', Validators.required)
+        Year: new FormControl(''),
+        Season: new FormControl(''),
+        Crop: new FormControl(''),
+        Area: new FormControl(''),
+        MSP: new FormControl('')
       });
     }
   }
@@ -118,7 +120,7 @@ export class PvrReportComponent implements OnInit {
             text: res.message,
             type: 'success'
           }).then(() => {
-            this.router.navigate(['/loan']);
+            this.router.navigate(['/loan/applications']);
           });
         }
         this.isLoading = false;
