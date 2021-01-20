@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -20,7 +20,7 @@ export class GeneratePVRReportComponent implements OnInit {
   public get keepTogether(): string {
     return this.breakParagraphs ? '' : 'tr';
   }
-  constructor(private service: GeneralService, private route: ActivatedRoute) {
+  constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) {
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Applications', path: '/loan/applications' },
     { label: 'Generate PVR', path: '/', active: true }];
   }
@@ -37,6 +37,9 @@ export class GeneratePVRReportComponent implements OnInit {
     this.isLoading = true;
     const d = new Date();
     pdf.saveAs(`PVR_Statement_${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}_${d.getHours()}-${d.getMinutes()}.pdf`);
+    setTimeout(() => {
+      this.router.navigate(['/loan/applications']);
+    }, 3000);
     this.isLoading = false;
   }
 }

@@ -1,3 +1,4 @@
+import { NgxEditorModule } from 'ngx-editor';
 import { LawyersComponent } from './lawyers/lawyers.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DataTablesModule } from 'angular-datatables';
@@ -23,17 +24,24 @@ import { PvrReportComponent } from './pvr-report/pvr-report.component';
 import { GeneratePVRReportComponent } from './generate-pvr-report/generate-pvr-report.component';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { AssignmentsComponent } from './assignments/assignments.component';
+import { AssignmentComponent } from './assignment/assignment.component';
+import { PublicNoticesComponent } from './public-notices/public-notices.component';
+import { PublicNoticeComponent } from './public-notice/public-notice.component';
+import { TitleClearListComponent } from './title-clear-list/title-clear-list.component';
+import { TitleClearComponent } from './title-clear/title-clear.component';
+import { PublicNoticeViewComponent } from './public-notice-view/public-notice-view.component';
+import { TitleClearCompleteComponent } from './title-clear-complete/title-clear-complete.component';
 
 
 @NgModule({
   declarations: [ApplicantDashboardComponent, ApplicationComponent,
     DashboardComponent, AddApplicationComponent, ViewDocumentComponent, LawyersComponent,
-    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent, AssignmentsComponent],
+    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent, AssignmentsComponent, AssignmentComponent, PublicNoticesComponent, PublicNoticeComponent, TitleClearListComponent, TitleClearComponent, PublicNoticeViewComponent, TitleClearCompleteComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
     BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, NgbModalModule,
     ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule, PDFExportModule,
-    PdfViewerModule,
+    PdfViewerModule, NgxEditorModule
   ], providers: [DatePipe]
 })
 export class BankModuleModule { }

@@ -48,7 +48,9 @@ export class LawyersComponent implements OnInit {
           text: 'Lawyer Assigned Successfully',
           type: 'success'
         }).then(() => {
-          this.router.navigate(['/loan/title-search/' + this.Appid]);
+          this.service.changeStatus(this.Appid, 'Search In Progress').subscribe(() => {
+            this.router.navigate(['/loan/title-search/' + this.Appid]);
+          });
         });
       }
     });

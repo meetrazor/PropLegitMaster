@@ -26,7 +26,7 @@ export class AddApplicationComponent implements OnInit {
   public loan: FormGroup;
   submitted: boolean;
   constructor(private service: GeneralService, private Fb: FormBuilder, private router: Router) {
-    this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' },
+    this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Applications', path: '/loan/applications' },
     { label: 'Add New Application', path: '/loan/addapplication', active: true }];
     this.isLoading = false;
   }
@@ -64,7 +64,8 @@ export class AddApplicationComponent implements OnInit {
       TalukaID: new FormControl('', Validators.required),
       VillageID: new FormControl('', Validators.required),
       DistrictID: new FormControl(null, Validators.required),
-      SurveyNo: new FormControl('', Validators.required),
+      SurveyNo: new FormControl(''),
+      CitySurveyNumber: new FormControl(''),
       TpNo: new FormControl(''),
       FpNo: new FormControl(''),
       LienAmount: new FormControl(''),

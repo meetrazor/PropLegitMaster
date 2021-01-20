@@ -14,7 +14,7 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
-//  const baseurl = `https://api.proplegit.com/`;
+// const baseurl = `https://api.proplegit.com/`;
 const baseurl = `http://devapi.proplegit.com/`;
 // const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
@@ -43,6 +43,10 @@ const getPVRData = `${apiUrl}loan/pvr/View/`;
 const getPVRBankList = `${apiUrl}loan/bank/list`;
 const UploadPVR = `${apiUrl}loan/pvr/Genrate/`;
 const assignLawyer = `${apiUrl}loan/assign/lawyer/`;
+const markasReviewed = `${apiUrl}loan/property/document/reviewed/`;
+const fordemo = `${apiUrl}loan/Property/all/Document/Upload/`;
+const fordemochangestatus = `${apiUrl}loan/application/status/`;
+const Dashboard = `${apiUrl}loan/Dashboard/Count`;
 
 @Injectable({
   providedIn: 'root'
@@ -312,5 +316,17 @@ export class GeneralService {
   }
   AssignLawyer(AppId, LawyerID): any {
     return this.http.put(`${assignLawyer}${AppId}/${LawyerID}`, null, httpOptions);
+  }
+  MarkAsReviewed(PropertyId, DocumentId) {
+    return this.http.put(`${markasReviewed}${PropertyId}/${DocumentId}`, null, httpOptions);
+  }
+  ForDemo(AppID): any {
+    return this.http.get(`${fordemo}${AppID}`, httpOptions);
+  }
+  getLoanDashboard(data): any {
+    return this.http.post(Dashboard, data, httpOptions);
+  }
+  changeStatus(appID,status):any{
+    return this.http.put(fordemochangestatus + appID,{ ApplicationStatus : status }, httpOptions);
   }
 }

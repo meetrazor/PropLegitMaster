@@ -18,11 +18,13 @@
               (click)="hidden = !hidden"
               name="daterange"
               autocomplete="off"
+              (keydown)="callback()"
               [(ngModel)]="selected"
             />
 
             <ngb-datepicker
               #dp
+              style="margin-top: 40px; max-width: 100%; overflow-x: scroll;"
               (select)="onDateSelection($event)"
               [displayMonths]="2"
               [dayTemplate]=""
@@ -31,7 +33,11 @@
             >
             </ngb-datepicker>
             <div class="input-group-btn">
-              <button class="btn btn-primary" type="submit">
+              <button
+                (click)="hidden = !hidden"
+                class="btn btn-primary"
+                type="submit"
+              >
                 <i class="far fa-calendar-alt"></i>
               </button>
             </div>
@@ -41,11 +47,20 @@
       <div class="col-md-3 mt-1 mb-1">
         <div class="input-group">
           <ng-select
-            [items]="allLoanTypes"
-            class="form-control"
-            [placeholder]="'All Loan Types'"
-            style="margin: 0; padding: 0"
-          ></ng-select>
+          class="form-control"
+          autocomplete="off"
+          (change)="ChangeLoan($event)"
+          placeholder="
+        Select Loan Type"
+        >
+          <ng-option
+            *ngFor="let item of allLoanTypes"
+            [value]="item.DropDownItemID"
+            [id]="item.DropDownItemID"
+            >{{ item.DropDownValue }}</ng-option
+          >
+        </ng-select>
+
           <div class="input-group-btn">
             <button class="btn btn-primary" type="submit">
               <i class="mdi mdi-filter-variant"></i>
@@ -56,11 +71,13 @@
       <div class="col-md-3 mt-1 mb-1">
         <form role="search">
           <div class="input-group">
+    
             <ng-select
               [items]="allStatus"
               class="form-control"
               [placeholder]="'All Status'"
               style="margin: 0; padding: 0"
+              (change)="onstatusChange($event)"
             ></ng-select>
             <div class="input-group-btn">
               <button class="btn btn-primary" type="submit">
@@ -70,14 +87,23 @@
           </div>
         </form>
       </div>
+ 
       <div class="col-md-3 mt-1 mb-1">
         <div class="input-group">
           <ng-select
-            [items]="allProperty"
-            class="form-control"
-            [placeholder]="'Any Property'"
-            style="margin: 0; padding: 0"
-          ></ng-select>
+          class="form-control"
+          autocomplete="off"
+          (change)="ChangePropertyType($event)"
+          placeholder="
+        Select Property Type"
+        >
+          <ng-option
+            *ngFor="let item of allProperty"
+            [value]="item.DropDownItemID"
+            [id]="item.DropDownItemID"
+            >{{ item.DropDownValue }}</ng-option
+          >
+        </ng-select>
           <div class="input-group-btn">
             <button class="btn btn-primary" type="submit">
               <i class="mdi mdi-filter-variant"></i>
@@ -86,20 +112,20 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="!isFilterLoading">
       <div class="col-md-4 mt-3">
         <div class="card-box">
-          <h4 class="mt-0 font-16">Applications Received</h4>
+          <h4 class="mt-0 font-16" >Applications Received</h4>
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">42</a>
+            <a routerLink="/loan/applications">{{countData.ApplicationsReceived.CountWithFilter}}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Application Received<span class="float-right">500</span>
+              Total Application Received<span class="float-right">{{countData.ApplicationsReceived.Count}}</span>
             </h6>
             <ngb-progressbar
               [type]="'success'"
-              [value]="8"
+              [value]="(countData.ApplicationsReceived.CountWithFilter /countData.ApplicationsReceived.Count)*100"
               height="5px"
               class="m-0"
             >
@@ -111,15 +137,15 @@
         <div class="card-box">
           <h4 class="mt-0 font-16">Documents Pending</h4>
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">2</a>
+            <a routerLink="/loan/applications">{{countData.DocumentsPending.CountWithFilter}}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Documents Pending<span class="float-right">50</span>
+              Total Documents Pending<span class="float-right">{{countData.DocumentsPending.Count}}</span>
             </h6>
             <ngb-progressbar
               [type]="'blue'"
-              [value]="50"
+              [value]="(countData.DocumentsPending.CountWithFilter /countData.DocumentsPending.Count)*100"
               height="5px"
               class="m-0"
             >
@@ -131,15 +157,15 @@
         <div class="card-box">
           <h4 class="mt-0 font-16">Lawyer Assignment Pending</h4>
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">20</a>
+            <a routerLink="/loan/applications">{{countData.LawyerAssignmentPending.CountWithFilter}}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Lawyer Assignment Pending<span class="float-right">30</span>
+              Total Lawyer Assignment Pending<span class="float-right">{{countData.LawyerAssignmentPending.Count}}</span>
             </h6>
             <ngb-progressbar
               [type]="'warning'"
-              [value]="33"
+              [value]="(countData.LawyerAssignmentPending.CountWithFilter /countData.LawyerAssignmentPending.Count)*100"
               height="5px"
               class="m-0"
             >
@@ -211,7 +237,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row mt-3" >
       <div class="col-md-4" *ngIf="currentUser.UserType === 'Bank Manager'">
         <div class="card-box">
           <h3 class="header-title" style="font-size: x-large">
@@ -812,5 +838,8 @@
         <!-- end widget-rounded-circle-->
       </div>
     </div>
+  </div>
+  <div class="card-disabled" *ngIf="isLoading || isFilterLoading">
+    <div class="card-portlets-loader"></div>
   </div>
 </section>

@@ -42,7 +42,8 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.isLoading = false;
     this.submitted = false;
-    this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Applications', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'Dashboard', path: '/' },
+    { label: 'Applications', path: '/', active: true }];
     this.currentUser = this.service.getcurrentUser();
     this.selected = '7/1/2020-7/8/2020';
     this.hidden = true;
@@ -116,7 +117,10 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
           } else if (full.PVRID && full.PVRDocumentID) {
             return `<a class="btn text-primary" title="View PVR"
             viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" ><i class="mdi mdi-eye font-18 text-secondary"
-            viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" aria-hidden="false"></i></a>`;
+            viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" aria-hidden="false"></i></a>
+            <a class="btn text-primary" title="Upload All Documents"
+            UploadDocAppID = "${full.AppID}"><i class="mdi mdi-file-document-box-multiple font-18 text-secondary"
+            UploadDocAppID = "${full.AppID}" aria-hidden="false"></i></a>`;
             // view PDF
           } else {
             return `<a class="btn text-primary" title="Add PVR Report"
@@ -160,6 +164,22 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/loan/addapplication']);
   }
   ngAfterViewInit(): void {
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('UploadDocAppID')) {
+        this.service.ForDemo(event.target.getAttribute('UploadDocAppID')).subscribe((res) => {
+          Swal.fire({
+            title: 'Success',
+            text: res.message,
+            type: 'success',
+            timer: 2000
+          }).then(() => {
+            this.service.changeStatus(event.target.getAttribute('UploadDocAppID'), 'Search In Complete').subscribe(() => {
+              location.reload();
+            });
+          });
+        });
+      }
+    });
     this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('appID')) {
         this.router.navigate(['/loan/PVRreport/' + event.target.getAttribute('appID')]);
@@ -218,8 +238,10 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                location.reload();
-                this.PVRForm.controls.uploadfile.setValue([]);
+                this.service.changeStatus(this.currentAppId, 'Assign Lawyer Pending').subscribe(() => {
+                  location.reload();
+                  this.PVRForm.controls.uploadfile.setValue([]);
+                });
               });
             }
           });

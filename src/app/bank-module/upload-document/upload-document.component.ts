@@ -13,6 +13,7 @@ import { roLocale } from 'ngx-bootstrap';
 })
 export class UploadDocumentComponent implements OnInit {
   photographForm: FormGroup;
+  @Input() appid: any;
   breadCrumbItems: any;
   applicationData: any;
   currentUser: any;
@@ -42,16 +43,28 @@ export class UploadDocumentComponent implements OnInit {
     this.isLoading = true;
     this.generalService.GetApplicationInformation(this.route.snapshot.params.Appid).subscribe((res) => {
       this.applicationData = res.data[0];
-      this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Applications', path: '/loan/applications' }
-        , {
-        label: `${this.applicationData.FirstName} ${this.applicationData.LastName}`,
-        path: `/loan/title-search/${this.applicationData.AppID}`
+      if (!this.appid) {
+        if (this.currentUser.UserType === 'Bank Manager') {
+          this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Applications', path: '/loan/applications' }
+            , {
+            label: `${this.applicationData.FirstName} ${this.applicationData.LastName}`,
+            path: `/loan/title-search/${this.applicationData.AppID}`
+          }
+            , { label: 'Upload Documents', path: '/', active: true }];
+        } else if (this.currentUser.UserType === 'Lawyer') {
+          this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }, { label: 'Applications', path: '/loan/assignment' }
+            , {
+            label: `${this.applicationData.FirstName} ${this.applicationData.LastName}`,
+            path: `/loan/assignment/${this.applicationData.AppID}`
+          }
+            , { label: 'Upload Documents', path: '/', active: true }];
+        }
+
       }
-        , { label: 'Upload Documents', path: '/', active: true }];
       this.generalService.GetDocumentList(this.route.snapshot.params.Appid).subscribe((resp) => {
         this.isLoading = false;
         resp.data.map((data) => {
-          if (data.Status !== 'reviewed') {
+          if (data.Status !== 'Reviewed') {
             this.DocumentList.push(data);
           }
         });
@@ -96,6 +109,7 @@ export class UploadDocumentComponent implements OnInit {
       this.fileExtension = '';
     }
   }
+
   setform(fileName, filetype, extension) {
     if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
       (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
@@ -117,6 +131,8 @@ export class UploadDocumentComponent implements OnInit {
     }
   }
   onSubmit() {
+    console.log(this.photographForm);
+
     this.submited = true;
     if (this.photographForm.valid) {
       // 1 is Property ID
@@ -125,7 +141,7 @@ export class UploadDocumentComponent implements OnInit {
       this.generalService.Addphotograph(this.applicationData.PropertyID, this.prepareSave())
         .subscribe(data => {
           this.isLoading = false;
-          this.photographForm.reset();
+          this.ResetForm();
           if (data.status === 200) {
             this.submited = false;
             Swal.fire({
@@ -134,7 +150,7 @@ export class UploadDocumentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.router.navigate(['loan/title-search/' + this.route.snapshot.params.Appid]);
+              location.reload();
             });
           } else {
             Swal.fire({
@@ -147,6 +163,7 @@ export class UploadDocumentComponent implements OnInit {
     }
   }
   Changedocument(e) {
+    this.ResetForm();
     if (e) {
       this.f.DocumentSubTypeId.setValue(e.DocumentSubType);
       this.f.DocumentTypeId.setValue(e.DocumentType);
@@ -155,5 +172,11 @@ export class UploadDocumentComponent implements OnInit {
       this.f.DocumentTypeId.setValue(null);
     }
 
+  }
+  ResetForm() {
+    this.photographForm.controls.FileType.setValue('');
+    this.photographForm.controls.FileName.setValue('');
+    this.photographForm.controls.Description.setValue('');
+    this.photographForm.controls.uploadfile.setValue([]);
   }
 }

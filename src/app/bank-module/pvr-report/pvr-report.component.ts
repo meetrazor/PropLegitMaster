@@ -20,7 +20,7 @@ export class PvrReportComponent implements OnInit {
   PVRForm: FormGroup;
   currentUser: any;
   constructor(private service: GeneralService, private route: ActivatedRoute, private Fb: FormBuilder, private router: Router) {
-    this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' },
+    this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Applications', path: '/loan/applications' },
     { label: 'PVR Report', path: '/', active: true }];
     this.appID = this.route.snapshot.params.Appid;
   }
@@ -45,6 +45,8 @@ export class PvrReportComponent implements OnInit {
         TotalLandSize: new FormControl('', Validators.required),
         PVRRiskMeterStatus: new FormControl('', Validators.required),
         OwnerRemarks: new FormControl('', Validators.required),
+        PVRStatusLine1: new FormControl('', Validators.required),
+        PVRStatusLine2: new FormControl('', Validators.required),
         PropertyRemarks: new FormControl('', Validators.required),
         PVRStatus: new FormControl('', Validators.required),
         EncumbranceRemarks: new FormControl('', Validators.required),
@@ -120,7 +122,7 @@ export class PvrReportComponent implements OnInit {
             text: res.message,
             type: 'success'
           }).then(() => {
-            this.router.navigate(['/loan/applications']);
+              this.router.navigate(['/loan/applications']);
           });
         }
         this.isLoading = false;

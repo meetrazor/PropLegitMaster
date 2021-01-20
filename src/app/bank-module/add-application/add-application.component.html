@@ -28,7 +28,7 @@
             <hr />
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="">Applicant First Name*</label>
+                <label for="">Applicant First Name *</label>
                 <input
                   class="form-control"
                   placeholder="Enter First Name"
@@ -50,7 +50,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Applicant Last Name*</label>
+                <label for="">Applicant Last Name *</label>
                 <input
                   class="form-control"
                   autocomplete="off"
@@ -72,7 +72,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Application No*</label>
+                <label for="">Application No *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Application No"
@@ -94,7 +94,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Applicant Mobile No*</label>
+                <label for="">Applicant Mobile No *</label>
                 <input
                   class="form-control"
                   placeholder="Enter MobileNo"
@@ -116,7 +116,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Applicant Email*</label>
+                <label for="">Applicant Email *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Email"
@@ -228,7 +228,7 @@
             <hr />
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="">States*</label>
+                <label for="">States *</label>
                 <ng-select
                   class="form-control"
                   formControlName="StateID"
@@ -272,7 +272,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Districts*</label>
+                <label for="">Districts *</label>
                 <ng-select
                   class="form-control"
                   autocomplete="off"
@@ -316,7 +316,7 @@
               </div>
 
               <div class="col-md-6">
-                <label for="">Village/Pincode*</label>
+                <label for="">Village/Pincode *</label>
                 <!-- <div class="form-group"> -->
                 <ng-autocomplete
                   style="width: 100%; margin: 0; padding: 0"
@@ -358,7 +358,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">PropertyType*</label>
+                <label for="">PropertyType *</label>
                 <select
                   class="custom-select"
                   autocomplete="off"
@@ -385,7 +385,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">PropertyAddress*</label>
+                <label for="">PropertyAddress *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Property Address"
@@ -407,7 +407,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Survey No *</label>
+                <label for="">Survey No </label>
                 <input
                   class="form-control"
                   placeholder="Enter Survey No"
@@ -424,6 +424,27 @@
                 >
                   <div *ngIf="f.SurveyNo.errors.required">
                     Survey No is required
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="">City Survey No </label>
+                <input
+                  class="form-control"
+                  placeholder="Enter City Survey No"
+                  formControlName="CitySurveyNumber"
+                  autocomplete="off"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.CitySurveyNumber.errors
+                  }"
+                  (paste)="(false)"
+                />
+                <div
+                  *ngIf="submitted && f.CitySurveyNumber.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.CitySurveyNumber.errors.required">
+                    City Survey No is required
                   </div>
                 </div>
               </div>
@@ -460,7 +481,7 @@
             <hr />
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="">Bank Name*</label>
+                <label for="">Bank Name *</label>
                 <ng-select
                   class="form-control"
                   autocomplete="off"
@@ -488,7 +509,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Branch Name*</label>
+                <label for="">Branch Name *</label>
                 <input
                   type="text"
                   class="form-control"
@@ -519,7 +540,7 @@
             <hr />
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="">Type Of Loan*</label>
+                <label for="">Type Of Loan *</label>
                 <select
                   class="custom-select"
                   formControlName="TypeOfLoan"
@@ -546,7 +567,7 @@
               </div>
 
               <div class="form-group col-md-6">
-                <label for="">Loan Amount*</label>
+                <label for="">Loan Amount *</label>
                 <input
                   type="number"
                   class="form-control"
@@ -578,7 +599,7 @@
             <hr />
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="">Is There Know Lien on Property?</label><br />
+                <label for="">Is There Known Lien on Property?</label><br />
                 <span>
                   <input type="radio" formControlName="IsLien" value="True" />
                   Yes</span

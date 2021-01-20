@@ -1,6 +1,7 @@
+import { Router } from '@angular/router';
 
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
@@ -8,11 +9,11 @@ import { GeneralService } from 'src/app/services/general.service';
   templateUrl: './assignments.component.html',
   styleUrls: ['./assignments.component.scss']
 })
-export class AssignmentsComponent implements OnInit {
+export class AssignmentsComponent implements OnInit, AfterViewInit {
   breadCrumbItems: any;
   currentUser: any;
   dtOptions: DataTables.Settings = {};
-  constructor(private service: GeneralService, private datepipe: DatePipe) {
+  constructor(private service: GeneralService, private datepipe: DatePipe, private renderer: Renderer2, private router: Router) {
     this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' },
     { label: 'Assignments', path: '/loan/assignment', active: true }];
   }
@@ -20,7 +21,8 @@ export class AssignmentsComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
     this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/${this.currentUser.UserID}` }, responsive: true,
+      // ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/${this.currentUser.UserID}` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/4` }, responsive: true,
       columns: [{
         title: 'Applicant',
         data: '', render: (data, type, row) => {
@@ -36,7 +38,7 @@ export class AssignmentsComponent implements OnInit {
         title: 'Documents',
         render: (data, type, row) => {
           return `<a class="btn text-primary" title="View Documents"
-          viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>
+          OpenID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" OpenID = "${row.AppID}" aria-hidden="false"></i></a>
           <a class="btn text-primary" title="Upload Documents"
           UploadID = "${row.AppID}"><i class="mdi mdi-file-upload-outline font-18 text-secondary"
           UploadID = "${row.AppID}" aria-hidden="false"></i></a>`;
@@ -63,5 +65,14 @@ export class AssignmentsComponent implements OnInit {
       ],
     };
   }
-
+  ngAfterViewInit(): void {
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('UploadID')) {
+        this.router.navigate(['/loan/uploaddocument/' + event.target.getAttribute('UploadID')]);
+      }
+      if (event.target.hasAttribute('OpenID')) {
+        this.router.navigate(['/loan/assignment/' + event.target.getAttribute('OpenID')]);
+      }
+    });
+  }
 }

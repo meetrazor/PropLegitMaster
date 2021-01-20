@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2 } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { filter } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
@@ -8,13 +10,25 @@ import { GeneralService } from 'src/app/services/general.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   breadCrumbItems: Array<{}>;
+  countData:any;
+  isLoading:boolean;
+  isFilterLoading:boolean;
+  filterobj:{
+    FilterStartDate: string,
+    FilterEndDate : string,
+    TypeOfLoan : number,
+    LoanPropertyTypeID:number,
+    ApplicationStatus:string,
+    UserID: string,
+    CompanyUserMasterID:string
+    }
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
-  allLoanTypes = ['Personal Loan', 'Auto Loan', 'Home Loan', 'Business Loan', 'MSME Loan', 'Industrial Loan', 'Mudra Loan'];
+  allLoanTypes :any;
   allStatus = ['Applications Received', 'Pending Title Search', 'Pending Valuation', 'Pending Review', 'Pending Lawyer Assignment'];
-  allProperty = ['Buildings', 'Open Land', 'Bungalows', 'Flats', 'Factory'];
+  allProperty:any;
   allBanks = ['State Bank of India', 'Bank of Baroda', 'Union Bank of India', 'Canara Bank'];
   allIndia = ['Maharashtra', 'Punjab', 'Gujarat'];
   selected: any;
@@ -94,13 +108,32 @@ export class DashboardComponent implements OnInit {
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
 
   @ViewChild('dp', { static: true }) datePicker: any;
-  constructor(private router: Router, private service: GeneralService, private renderer: Renderer2) { }
+  constructor(private router: Router, private service: GeneralService, private renderer: Renderer2,private datePipe:DatePipe) {
+    this.isLoading = true;
+    this.isFilterLoading = true;
+   }
 
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
-    this.selected = '7/1/2020-7/8/2020';
     this.hidden = true;
     this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }];
+    this.filterobj={
+      FilterStartDate: "",
+      FilterEndDate : "",
+      TypeOfLoan : null,
+      LoanPropertyTypeID:null,
+      ApplicationStatus:"",
+      UserID: this.currentUser.UserID,
+      CompanyUserMasterID:this.currentUser.CompanyUserMasterID
+      }
+    this.service.GetLoanPropertyTypes().subscribe((res)=>{
+      this.allProperty = res.data;
+      this.service.GetLoanTypes().subscribe((data)=>{
+        this.allLoanTypes = data.data;
+        this.isLoading = false;
+      })
+    })
+    this.filterCount();
     if (this.currentUser.UserType === 'Bank Manager') {
       this.dtOptions = {
         ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
@@ -192,6 +225,8 @@ export class DashboardComponent implements OnInit {
   }
 
   onDateSelection(date: NgbDate) {
+    this.filterobj.FilterStartDate = '';
+    this.filterobj.FilterEndDate = '';
     if (!this.fromDate && !this.toDate) {
       this.fromNGDate = date;
       this.fromDate = new Date(date.year, date.month - 1, date.day);
@@ -201,20 +236,27 @@ export class DashboardComponent implements OnInit {
       this.toDate = new Date(date.year, date.month - 1, date.day);
       this.hidden = true;
       this.selected = this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString();
-
+      this.filterobj.FilterStartDate = this.datePipe.transform(this.fromDate,'yyyy-MM-dd');
+      this.filterobj.FilterEndDate = this.datePipe.transform(this.toDate,'yyyy-MM-dd');
       this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
       this.fromDate = null;
       this.toDate = null;
       this.fromNGDate = null;
       this.toNGDate = null;
-
+      this.filterCount();
     } else {
       this.fromNGDate = date;
       this.fromDate = new Date(date.year, date.month - 1, date.day);
       this.selected = '';
     }
   }
-
+  filterCount(){
+    this.isFilterLoading = true;
+    this.service.getLoanDashboard(this.filterobj).subscribe((res)=>{
+      this.countData = res.data;
+      this.isFilterLoading = false;
+    });
+  }
   redirect() {
     // this.router.navigate(['/titlesearch/dashboard']);
   }
@@ -224,5 +266,35 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(['/loan/title-search/' + event.target.getAttribute('viewID')]);
       }
     });
+  }
+  callback(){
+    this.selected = ''
+    this.filterobj.FilterStartDate = '';
+    this.filterobj.FilterEndDate = '';
+    this.filterCount()
+  }
+  ChangeLoan(e){
+    if (e=== undefined) {
+      this.filterobj.TypeOfLoan =null
+    }else{
+      this.filterobj.TypeOfLoan = e
+    }
+    this.filterCount()
+  }
+  onstatusChange(e){
+    if (e=== undefined) {
+      this.filterobj.ApplicationStatus =null
+    }else{
+      this.filterobj.ApplicationStatus = e
+    }
+    this.filterCount()
+  }
+  ChangePropertyType(e){
+    if (e=== undefined) {
+      this.filterobj.LoanPropertyTypeID =null
+    }else{
+      this.filterobj.LoanPropertyTypeID = e
+    }
+    this.filterCount()
   }
 }

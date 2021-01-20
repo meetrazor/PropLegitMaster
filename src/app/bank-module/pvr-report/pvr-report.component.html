@@ -154,6 +154,16 @@
                     </td>
                   </tr>
                   <tr>
+                    <th>City Survey No</th>
+                    <td>
+                      {{
+                        applicationData.CitySurveyNumber
+                          ? applicationData.CitySurveyNumber
+                          : "-"
+                      }}
+                    </td>
+                  </tr>
+                  <tr>
                     <th>FP No</th>
                     <td>
                       {{ applicationData.FPNo ? applicationData.FPNo : "-" }}
@@ -241,6 +251,20 @@
                   </tr>
                 </table>
               </div>
+            </div>
+          </app-portlet>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <app-portlet
+            loading="0"
+            title="Upload Documents"
+            color="light"
+            collapsed="0"
+            headerClass="title header-title "
+            ><div>
+              <app-upload-document [appid]="appID"></app-upload-document>
             </div>
           </app-portlet>
         </div>
@@ -872,6 +896,52 @@
             >
               <div *ngIf="f.EncumbranceRemarks.errors.required">
                 Encumbrance Remarks is Required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Status Line 1*</label>
+            <textarea
+              formControlName="PVRStatusLine1"
+              class="form-control"
+              id="PVRStatusLine1"
+              [ngClass]="{
+                'is-invalid': submitted && f.PVRStatusLine1.errors
+              }"
+              cols="30"
+              rows="5"
+            ></textarea>
+
+            <div
+              *ngIf="submitted && f.PVRStatusLine1.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.PVRStatusLine1.errors.required">
+                PVR Status Line1 is Required
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Status Line 2*</label>
+            <textarea
+              formControlName="PVRStatusLine2"
+              class="form-control"
+              id="PVRStatusLine2"
+              [ngClass]="{
+                'is-invalid': submitted && f.PVRStatusLine2.errors
+              }"
+              cols="30"
+              rows="5"
+            ></textarea>
+
+            <div
+              *ngIf="submitted && f.PVRStatusLine2.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.PVRStatusLine2.errors.required">
+                PVR Status Line2 is Required
               </div>
             </div>
           </div>

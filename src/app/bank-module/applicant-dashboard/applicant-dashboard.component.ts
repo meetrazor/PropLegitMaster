@@ -19,7 +19,8 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   PVRData: any;
   PVRDetailsLoaded: boolean;
   statusList = ['Village Level Officer has received the request',
-    'Village Level Officer has fetched the latest Govt. Land Records', 'Documents are under review by PropLegit'];
+    'Village Level Officer has fetched the latest Govt. Land Records', 'Latest Land Record Document being uploaded',
+    'Documents are under review by PropLegit', 'PVR getting finalized'];
   meth: any;
   totaldocument = 0;
   pending = 0;
@@ -40,7 +41,8 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loaded = false;
     this.IsLawyerLoaded = false;
-    this.breadCrumbItems = [{ label: 'Title Search', path: '/' }, { label: 'Dashboard', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'Dashboard', path: '/' },
+    { label: 'Applications', path: '/loan/applications' }, { label: 'Title Search', path: '/', active: true }];
     this.service.GetApplicationInformation(this.Route.snapshot.params.id).subscribe((res) => {
       this.applicationData = res.data[0];
       if (this.applicationData.PVRDocumentID === null) {
@@ -143,7 +145,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
       if ((this.index + 1) >= this.statusList.length) {
         clearInterval(this.interval);
       }
-    }, 15000);
+    }, 30000);
   }
   onUploadDocument() {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
