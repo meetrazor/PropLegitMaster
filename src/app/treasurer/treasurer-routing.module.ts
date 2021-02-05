@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LawyerComponent } from './lawyer/lawyer.component';
 import { RentComponent } from './rent/rent.component'
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'dashboard',
     component: DashboardComponent

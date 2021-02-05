@@ -50,6 +50,9 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.dtOptions = {
       ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
+        title: 'id',
+        data: 'AppID'
+      },{
         title: 'Name',
         data: '', render: (data, type, row) => {
           return `${row.FirstName} ${row.LastName}`;
@@ -66,7 +69,17 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         data: 'BranchCode'
       }, {
         title: 'Status',
-        data: 'ApplicationStatus'
+        data: 'ApplicationStatus',render:(data)=>{
+          if (data === 'Pending') {
+            return `<span class="badge badge-danger p-1">${data}</span>`;
+          }else if(data ==='Title Clear Complete'){
+            return `<span class="badge badge-success p-1">${data}</span>`;
+          }else if(data){
+            return `<span class="badge badge-secondary p-1">${data}</span>`;
+          }else{
+            return data;
+          }
+        }
       }, {
         title: 'Amount (₹)',
         data: 'LoanAmount'
@@ -77,11 +90,14 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
           viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
         }
       }
-      ],
+      ],order:[[0,'desc']],columnDefs:[{targets:0 ,visible:false}]
     };
     this.dtOptionsforPVR = {
       ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Admin/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
+        title: 'id',
+        data: 'AppID'
+      },{
         title: 'Name',
         data: '', render: (data, type, row) => {
           return `${row.FirstName} ${row.LastName}`;
@@ -97,8 +113,18 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         title: 'Branch Name',
         data: 'BranchCode'
       }, {
-        title: 'Status',
-        data: 'ApplicationStatus'
+        title:'Status',
+        data:'ApplicationStatus',render:(data)=>{
+          if (data === 'Pending') {
+            return `<span class="badge badge-danger p-1">${data}</span>`;
+          }else if(data ==='Title Clear Complete'){
+            return `<span class="badge badge-success p-1">${data}</span>`;
+          }else if(data){
+            return `<span class="badge badge-secondary p-1">${data}</span>`;
+          }else{
+            return data;
+          }
+        }
       }, {
         title: 'Amount (₹)',
         data: 'LoanAmount'
@@ -120,7 +146,10 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
             viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" aria-hidden="false"></i></a>
             <a class="btn text-primary" title="Upload All Documents"
             UploadDocAppID = "${full.AppID}"><i class="mdi mdi-file-document-box-multiple font-18 text-secondary"
-            UploadDocAppID = "${full.AppID}" aria-hidden="false"></i></a>`;
+            UploadDocAppID = "${full.AppID}" aria-hidden="false"></i></a>
+            <a class="btn text-primary" title="Upload Single Documents"
+            UploadSingleDocAppID = "${full.AppID}"><i class="mdi mdi-file-upload font-18 text-secondary"
+            UploadSingleDocAppID = "${full.AppID}" aria-hidden="false"></i></a>`;
             // view PDF
           } else {
             return `<a class="btn text-primary" title="Add PVR Report"
@@ -132,7 +161,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         //   return `<a routerLink="loan/PVRreport/${row.AppID}">Add PVR</a>`;
         // }
       }
-      ],
+      ],order:[[0,'desc']],columnDefs:[{ targets: 0, visible: false}]
     };
     // this.tabledata = data;
   }
@@ -183,6 +212,11 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('appID')) {
         this.router.navigate(['/loan/PVRreport/' + event.target.getAttribute('appID')]);
+      }
+    });
+    this.renderer.listen('document', 'click', (event) => {
+      if (event.target.hasAttribute('UploadSingleDocAppID')) {
+        this.router.navigate(['/loan/uploaddocument/' + event.target.getAttribute('UploadSingleDocAppID')]);
       }
     });
     this.renderer.listen('document', 'click', (event) => {

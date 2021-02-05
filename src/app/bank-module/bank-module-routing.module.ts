@@ -37,10 +37,10 @@ const routes: Routes = [
     path: 'addapplication',
     component: AddApplicationComponent
   }, {
-    //   path: 'viewdocument/:url/:filetype',
-    //   component: ViewDocumentComponent
-    // }, {
     path: 'viewdocument/:propertyid/:id',
+    component: ViewDocumentComponent
+  }, {
+    path: 'viewdocument/:propertyid/:id/:AppID',
     component: ViewDocumentComponent
   }, {
     path: 'uploaddocument/:Appid',

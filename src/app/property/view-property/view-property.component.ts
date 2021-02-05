@@ -17,7 +17,7 @@ export class ViewPropertyComponent implements OnInit {
   ngOnInit() {
     this.service.propertytype().subscribe((Res) => {
       this.loading = true;
-      this.propertyType = Res.data.find(item => item.PropertyTypeID = this.data.PropertyTypeID);
+      this.propertyType = Res.data.find(item => item.PropertyTypeID = this.data.PropertyTypeID );
       this.loading = false;
     });
   }

@@ -12,23 +12,23 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   breadCrumbItems: Array<{}>;
-  countData:any;
-  isLoading:boolean;
-  isFilterLoading:boolean;
+  countData: any;
+  isLoading: boolean;
+  isFilterLoading: boolean;
   filterobj:{
     FilterStartDate: string,
-    FilterEndDate : string,
-    TypeOfLoan : number,
-    LoanPropertyTypeID:number,
-    ApplicationStatus:string,
+    FilterEndDate: string,
+    TypeOfLoan: number,
+    LoanPropertyTypeID: number,
+    ApplicationStatus: string,
     UserID: string,
-    CompanyUserMasterID:string
+    CompanyUserMasterID: string
     }
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
-  allLoanTypes :any;
-  allStatus = ['Applications Received', 'Pending Title Search', 'Pending Valuation', 'Pending Review', 'Pending Lawyer Assignment'];
-  allProperty:any;
+  allLoanTypes: any;
+  allStatus = ['Pending', 'Pending Valuation', 'Pending Review', 'Assign Lawyer Pending'];
+  allProperty: any;
   allBanks = ['State Bank of India', 'Bank of Baroda', 'Union Bank of India', 'Canara Bank'];
   allIndia = ['Maharashtra', 'Punjab', 'Gujarat'];
   selected: any;
@@ -116,7 +116,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
     this.hidden = true;
-    this.breadCrumbItems = [{ label: 'Dashboard', path: '/loan' }];
+    this.breadCrumbItems = [];
     this.filterobj={
       FilterStartDate: "",
       FilterEndDate : "",
@@ -136,12 +136,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.filterCount();
     if (this.currentUser.UserType === 'Bank Manager') {
       this.dtOptions = {
-        ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` }, responsive: true,
+        ajax: { url: this.service.GetBaseUrl() + `loan/application/View/BankManager/${this.currentUser.UserID}` },
         columns: [{
-          title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {
-            return meta.row + 1;
-          }
-        }, {
+          title: 'id',
+          data: 'AppID'
+        },{
           title: 'Name',
           data: '', render: (data, type, row) => {
             return `${row.FirstName} ${row.LastName}`;
@@ -150,6 +149,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Loan Type',
           data: 'Type_of_Loan'
+        },{
+          title:'Status',
+          data:'ApplicationStatus',render:(data)=>{
+            if (data === 'Pending') {
+              return `<span class="badge badge-danger p-1">${data}</span>`;
+            }else if(data ==='Title Clear Complete'){
+              return `<span class="badge badge-success p-1">${data}</span>`;
+            }else if(data){
+              return `<span class="badge badge-secondary p-1">${data}</span>`;
+            }else{
+              return data;
+            }
+          }
         }, {
           title: 'Amount (₹)',
           data: 'LoanAmount'
@@ -161,7 +173,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             // return `<a href="loan/title-search/${row.AppID}">View</a>`;
           }
         }
-        ],
+        ],order:[[0,'desc']],columnDefs:[{targets:0 ,visible:false}]
       };
     }
 
@@ -272,6 +284,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.filterobj.FilterStartDate = '';
     this.filterobj.FilterEndDate = '';
     this.filterCount()
+    this.hidden = true;
   }
   ChangeLoan(e){
     if (e=== undefined) {

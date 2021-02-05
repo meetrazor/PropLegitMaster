@@ -23,6 +23,9 @@
             [src]="url"
             *ngIf="filetype == 'PDF'"
             style="display: block"
+            [autoresize] = true
+            [show-all] = true
+            [original-size]="false"
           ></pdf-viewer>
 
           <img

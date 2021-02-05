@@ -151,7 +151,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
   }
   onViewDocument(id) {
-    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
+    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id +'/'+this.applicationData.AppID]);
     // this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
     // this.service.getDocument(this.applicationData.PropertyID, id).subscribe((res) => {
     //   if (res.status === 200) {

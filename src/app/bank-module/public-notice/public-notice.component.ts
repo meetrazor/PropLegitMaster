@@ -29,13 +29,13 @@ export class PublicNoticeComponent implements OnInit {
     }
   }
   onsave(){
-    this.service.changeStatus(this.route.snapshot.params.AppID,'Notice In Progress').subscribe(()=>{
+    this.service.changeStatus(this.route.snapshot.params.AppID,'Public Notice In Progress').subscribe(()=>{
       location.reload();
     })
   }
   onpublish(){
     this.service.changeStatus(this.route.snapshot.params.AppID,'Public Notice Issued').subscribe(()=>{
-      location.reload();
+      this.showInfo = true
     })
   }
 }

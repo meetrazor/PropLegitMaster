@@ -7,8 +7,8 @@
   ></app-page-title>
 
   <div class="card-box" *ngIf="!isloading">
-    <ngb-tabset justify="justified" type="pills">
-      <ngb-tab title="Property" class="nav-item">
+    <ngb-tabset #tabs justify="justified" type="pills">
+      <ngb-tab title="Property" class="nav-item" id="property">
         <ng-template ngbTabContent class="nav-item">
           <app-view-property
             propertyId="{{ propertyID }} "
@@ -16,12 +16,12 @@
           ></app-view-property>
         </ng-template>
       </ngb-tab>
-      <ngb-tab title="Alert" class="nav-item">
+      <ngb-tab title="Alert" class="nav-item" id="alert">
         <ng-template ngbTabContent
-          ><app-coming-soon></app-coming-soon>
+          ><app-alert PropertyId="{{propertyID}}"></app-alert>
         </ng-template>
       </ngb-tab>
-      <ngb-tab title="Photographs" class="nav-item">
+      <ngb-tab title="Documents / Photographs" class="nav-item">
         <ng-template ngbTabContent
           ><app-view-photograph propertyId="{{ propertyID }}">
           </app-view-photograph

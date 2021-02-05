@@ -16,22 +16,40 @@ export class ViewDocumentComponent implements OnInit {
   currentUser: any;
   filetype: string;
   isLoading: boolean;
+
   constructor(private service: GeneralService, private Route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.currentUser = this.service.getcurrentUser();
   }
 
   ngOnInit() {
     this.isLoading = true;
-    this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Applications', path: 'loan/applications' },
-    { label: 'View Documents', path: '/', active: true }];
-    // this.url = this.Route.snapshot.params.url;
-    // this.url = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
-    // this.filetype = this.Route.snapshot.params.filetype.toLowerCase();
     this.service.getDocument(this.Route.snapshot.params.propertyid, this.Route.snapshot.params.id).subscribe((res) => {
-      this.url = res.data[0].FileURL;
-      this.data = res.data[0];
-      this.filetype = res.data[0].FileType;
-      this.isLoading = false;
+      if(this.Route.snapshot.params.AppID){
+        this.service.GetApplicationInformation(this.Route.snapshot.params.AppID).subscribe((Response)=>{
+          if (this.currentUser.UserType === 'Lawyer') {
+            this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Assignments', path: '/loan/assignment' },
+            {label: `${Response.data[0].FirstName} ${Response.data[0].LastName}` 
+            , path: `/loan/assignment/${this.Route.snapshot.params.AppID}`}
+            ,{ label: 'View Documents', path: '/', active: true }];
+          } else if (this.currentUser.UserType === 'Bank Manager'){
+            this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Applications', path: 'loan/applications' },
+            {label: `${Response.data[0].FirstName} ${Response.data[0].LastName}` ,
+             path: `/loan/title-search/${this.Route.snapshot.params.AppID}`}
+            ,{ label: 'View Documents', path: '/', active: true }];
+          }
+          this.url = res.data[0].FileURL;
+          this.data = res.data[0];
+          this.filetype = res.data[0].FileType;
+          this.isLoading = false;
+        });
+      } else {
+        this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Applications', path: 'loan/applications' },
+        { label: 'View Documents', path: '/', active: true }];
+        this.url = res.data[0].FileURL;
+        this.data = res.data[0];
+        this.filetype = res.data[0].FileType;
+        this.isLoading = false;
+      }
     });
 
   }

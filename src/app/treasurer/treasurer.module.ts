@@ -15,14 +15,15 @@ import { RentComponent } from './rent/rent.component';
 import { RentDetailsComponent } from './rent/rent-details/rent-details.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
-  declarations: [DashboardComponent, PropertyComponent, LawyerComponent, RentComponent, RentDetailsComponent],
+  declarations: [DashboardComponent, PropertyComponent, LawyerComponent, RentComponent, RentDetailsComponent, AlertComponent],
   imports: [
     CommonModule,
     TreasurerRoutingModule, ReactiveFormsModule, NgSelectModule, FileUploadModule,
     NgbDatepickerModule, FormsModule, UIModule, NgbPaginationModule, DataTablesModule, SharedModule, DataTablesModule,
     NgbTypeaheadModule, RentModule, NgbModalModule
-  ], exports: [RentComponent, LawyerComponent], providers: [DatePipe]
+  ], exports: [RentComponent, LawyerComponent,AlertComponent], providers: [DatePipe]
 })
 export class TreasurerModule { }

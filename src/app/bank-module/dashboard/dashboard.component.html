@@ -3,6 +3,13 @@
     title="Dashboard"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
+  <div style="margin-bottom: 2.5rem !important;" *ngIf="currentUser.UserType === 'Bank Manager'">
+    <button
+    class="btn btn-info float-right mr-3"
+    routerLink = "/loan/addapplication"
+  >
+    Add Application
+  </button></div>
   <div
     class="loan-dashboard-body m-3"
     *ngIf="currentUser.UserType !== 'Lawyer'"
@@ -293,9 +300,9 @@
       <!-- end col -->
       <div class="col-md-8" *ngIf="currentUser.UserType === 'Bank Manager'">
         <div class="card-box">
-          <h3 class="header-title" style="font-size: x-large">
-            Loan Applications Received Status
-          </h3>
+            <h3 class="header-title" style="font-size: x-large">
+              Loan Applications Received Status
+            </h3>
           <div
             class="table-responsive"
             appSlimScroll
@@ -320,6 +327,7 @@
           title="Marketshare by Loan Amount"
           color="white"
           headerClass="title header-title border-0 mt-1"
+          collapsed="1"
         >
           <div class="card">
             <div class="card-body">
@@ -345,6 +353,7 @@
           loading="0"
           title="Market Share by Loan Type"
           color="white"
+          collapsed="1"
           headerClass="title header-title border-0 mt-1"
         >
           <div class="card">
@@ -372,6 +381,7 @@
           loading="0"
           title="Property Value Marketshare"
           color="white"
+          collapsed="1"
           headerClass="title header-title border-0 mt-1"
         >
           <div class="card">
@@ -396,9 +406,46 @@
     </div>
   </div>
   <div
-    class="loan-dashboard-body m-3"
+    class="loan-dashboard-body mx-3"
     *ngIf="currentUser.UserType === 'Lawyer'"
-  >
+  ><div class="row mb-3"><div class="col-9"></div>
+      <div class="col-3">
+        <form class="navbar-form" role="search">
+          <div class="input-group float-right">
+            <input
+              type="text"
+              class="form-control date"
+              placeholder="All Time"
+              (click)="hidden = !hidden"
+              name="daterange"
+              autocomplete="off"
+              (keydown)="callback()"
+              [(ngModel)]="selected"
+            />
+
+            <ngb-datepicker
+              #dp
+              style="margin-top: 40px; max-width: 100%; overflow-x: scroll;"
+              (select)="onDateSelection($event)"
+              [displayMonths]="2"
+              [dayTemplate]=""
+              outsideDays="hidden"
+              [hidden]="hidden"
+            >
+            </ngb-datepicker>
+            <div class="input-group-btn">
+              <button
+                (click)="hidden = !hidden"
+                class="btn btn-primary"
+                type="submit"
+              >
+                <i class="far fa-calendar-alt"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
     <div class="row">
       <div class="col-12">
         <div class="card-box">
@@ -436,6 +483,7 @@
                   ><button
                     type="button"
                     class="btn btn-outline-info waves-effect waves-light mr-1"
+                    routerLink="/loan/assignment"
                   >
                     <span aria-hidden="true"
                       ><i class="mdi mdi-home-circle mr-1"></i>1 New
@@ -454,7 +502,7 @@
       </div>
       <!-- end col-->
     </div>
-    <div class="row">
+    <div class="row" *ngIf="!isFilterLoading">
       <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card-box">
           <div class="row">
@@ -471,7 +519,7 @@
               <div class="text-right">
                 <h3 class="mt-1">
                   &nbsp;<a class="text-body" routerLink="/loan/assignment"
-                    ><span data-plugin="counterup">110</span></a
+                    ><span data-plugin="counterup">{{countData.LoanAssignmentReceived.Count}}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -488,10 +536,10 @@
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Completed<span class="float-right">100</span></a
+                >Completed<span class="float-right">{{countData.LoanAssignmentReceived.CountWithFilter}}</span></a
               >
             </h6>
-            <div class="progress progress-sm m-0">
+            <!-- <div class="progress progress-sm m-0">
               <div
                 class="progress-bar bg-blue"
                 role="progressbar"
@@ -501,8 +549,14 @@
                 style="width: 90%"
               >
                 <span class="sr-only">100 Assignments Complete</span>
-              </div>
-            </div>
+              </div> -->
+              <ngb-progressbar
+              [value]="(countData.LoanAssignmentReceived.CountWithFilter /countData.LoanAssignmentReceived.Count)*100"
+              height="5px"
+              class="m-0 bg-blue"
+            >
+            </ngb-progressbar>
+            <!-- </div> -->
           </div>
         </div>
         <!-- end widget-rounded-circle-->
@@ -525,7 +579,7 @@
               <div class="text-right">
                 <h3 class="text-dark mt-1">
                   <a routerLink="/loan/assignment" class="text-body">
-                    <span data-plugin="counterup">10</span></a
+                    <span data-plugin="counterup">{{countData.LoanSearchInProgress.Count}}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -542,21 +596,15 @@
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >In Final Stages<span class="float-right">3</span></a
+                >In Final Stages<span class="float-right">{{countData.LoanSearchInProgress.CountWithFilter}}</span></a
               >
             </h6>
-            <div class="progress progress-sm m-0">
-              <div
-                class="progress-bar bg-success"
-                role="progressbar"
-                aria-valuenow="30"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style="width: 30%"
-              >
-                <span class="sr-only">3 Assignments in Final Stage</span>
-              </div>
-            </div>
+            <ngb-progressbar
+            [value]="(countData.LoanSearchInProgress.CountWithFilter /countData.LoanSearchInProgress.Count)*100"
+            height="5px"
+            class="m-0 bg-success"
+          >
+          </ngb-progressbar>
           </div>
         </div>
         <!-- end widget-rounded-circle-->
@@ -581,7 +629,7 @@
               <div class="text-right">
                 <h3 class="mt-1">
                   &nbsp;<a class="text-body" routerLink="/loan/assignment"
-                    ><span data-plugin="counterup">2</span></a
+                    ><span data-plugin="counterup">{{countData.PublicNoticeInProgress.Count}}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -598,21 +646,15 @@
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Issued<span class="float-right">1</span></a
+                >Issued<span class="float-right">{{countData.PublicNoticeInProgress.CountWithFilter}}</span></a
               >
             </h6>
-            <div class="progress progress-sm m-0">
-              <div
-                class="progress-bar bg-secondary"
-                role="progressbar"
-                aria-valuenow="50"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style="width: 50%"
-              >
-                <span class="sr-only">1 Public Notice Issued</span>
-              </div>
-            </div>
+            <ngb-progressbar
+            [value]="(countData.PublicNoticeInProgress.CountWithFilter /countData.PublicNoticeInProgress.Count)*100"
+            height="5px"
+            class="m-0 bg-secondary"
+          >
+          </ngb-progressbar>
           </div>
         </div>
         <!-- end widget-rounded-circle-->
@@ -637,7 +679,7 @@
               <div class="text-right">
                 <h3 class="text-dark mt-1">
                   <a routerLink="/loan/assignment" class="text-body">
-                    <span data-plugin="counterup">1</span></a
+                    <span data-plugin="counterup">{{countData.TitleClearInProgress.Count}}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -654,21 +696,15 @@
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Pending<span class="float-right">3</span></a
+                >Pending<span class="float-right">{{countData.TitleClearInProgress.CountWithFilter}}</span></a
               >
             </h6>
-            <div class="progress progress-sm m-0">
-              <div
-                class="progress-bar bg-blue"
-                role="progressbar"
-                aria-valuenow="33"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style="width: 33%"
-              >
-                <span class="sr-only">2 Title Clear Coming Soon</span>
-              </div>
-            </div>
+            <ngb-progressbar
+            [value]="(countData.TitleClearInProgress.CountWithFilter /countData.TitleClearInProgress.Count)*100"
+            height="5px"
+            class="m-0 bg-blue"
+          >
+          </ngb-progressbar>
           </div>
         </div>
         <!-- end widget-rounded-circle-->

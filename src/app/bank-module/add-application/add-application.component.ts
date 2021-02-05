@@ -185,17 +185,8 @@ export class AddApplicationComponent implements OnInit {
       });
       return;
     }
-
-    if (!this.loan.controls.DistrictID.value) {
-      Swal.fire({
-        title: 'Error',
-        text: 'Please Select District',
-        type: 'error'
-      });
-      return;
-    }
     if (search !== undefined && search.length >= 3) {
-      this.service.areabystateid(this.loan.controls.StateID.value, this.loan.controls.DistrictID.value, search)
+      this.service.areabystateid(this.loan.controls.StateID.value, search)
         .pipe(first())
         .subscribe(
           data => {

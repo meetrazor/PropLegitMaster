@@ -156,7 +156,6 @@ export class RentDetailsComponent implements OnInit, OnChanges, AfterViewInit, A
   generateInvocie(id) {
     this.Loading = true;
     this.service.GenerateInvoice(id, this.currentUser.UserID).subscribe((res) => {
-      console.log(res);
       this.rerender();
       this.Loading = false;
       if (res.error) {

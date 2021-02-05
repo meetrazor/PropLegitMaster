@@ -24,7 +24,7 @@ export class DatatableComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.isLoading = true;
     this.dtOptions = {
-      ajax: { url: this.service.GetBaseUrl() + `property/list/${this.item.StateID}` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `property/list/${this.service.getcurrentUser().UserID}/${this.item.StateID}` }, responsive: true,
       columns: [
         {
           title: 'Sr No.', data: 'row', render: (data, type, row, meta) => {

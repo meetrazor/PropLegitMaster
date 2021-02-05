@@ -98,7 +98,7 @@ export class AssignmentComponent implements OnInit {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
   }
   onViewDocument(id) {
-    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
+    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id+ '/' +this.applicationData.AppID]);
   }
   onRequestingDocument(id) {
 

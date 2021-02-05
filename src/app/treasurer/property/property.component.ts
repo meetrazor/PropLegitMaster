@@ -14,7 +14,7 @@ export class PropertyComponent implements OnInit {
   tableLoad: boolean;
   breadCrumbItems: Array<{}>;
   stateList: Array<
-    { StateName: string, NoOfProperty: number, StateID: number, data: Array<any>, collapsed: number, loading: number }
+    { StateName: string, NoOfProperty: number, StateID: number, data: Array<any>, collapsed: number, loading: number ,tableLoad:boolean}
   >;
   constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) { }
 
@@ -26,19 +26,22 @@ export class PropertyComponent implements OnInit {
       this.stateList.map(data => {
         data.collapsed = 0;
         data.loading = 0;
+        data.tableLoad = false;
       });
     });
   }
 
   onShow(event) {
+    
     // tslint:disable-next-line: triple-equals
     const obj = this.stateList.find(x => x.StateID == event);
+    
     obj.loading = 1;
     // this.service.getPropertyListByState(event).subscribe((res) => {
     //   obj.data = res.data;
     obj.collapsed = 1;
     obj.loading = 0;
-    this.tableLoad = true;
+    obj.tableLoad = true;
     // });
   }
   tableLoading(status) {

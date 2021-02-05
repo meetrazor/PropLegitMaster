@@ -15,7 +15,7 @@
                 loading="0"
                 title="Search Status"
                 color="light"
-                collapsed="0"
+                collapsed="1"
                 headerClass="title header-title "
               >
                 <ul class="list-unstyled timeline-sm">
@@ -38,6 +38,9 @@
                     <h5 class="hover mt-0 pb-1">
                       <a
                         class="text-body"
+                        [ngClass]="{
+                          disable: !Compaire()
+                        }"
                         routerLink="/loan/publicnotice/{{ appID }}"
                         >Public Notice</a
                       >
@@ -47,6 +50,9 @@
                     <h5 class="hover mt-0 pb-1">
                       <a
                         class="text-body"
+                        [ngClass]="{
+                          disable: !Compaire()
+                        }"
                         routerLink="/loan/titleclear/{{ appID }}"
                         >Title Clear Certificate</a
                       >
@@ -64,7 +70,7 @@
                 loading="0"
                 title="PropLegit PVR Summary"
                 color="light"
-                collapsed="0"
+                collapsed="1"
                 headerClass="title header-title "
               >
                 <ngb-accordion
@@ -124,7 +130,7 @@
                 loading="0"
                 title="Assignment contacts"
                 color="light"
-                collapsed="0"
+                collapsed="1"
                 headerClass="title header-title "
               >
                 <div class="table-responsive table-hover">

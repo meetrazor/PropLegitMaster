@@ -6,7 +6,7 @@
       class="metismenu"
       id="side-menu"
       #sideMenu
-      *ngIf="!currentUser.UserType"
+      *ngIf="currentUser.CompanyID === 1"
     >
       <!-- <ul
       class="metismenu"
@@ -29,7 +29,7 @@
         <ul class="nav-second-level collapse" aria-expanded="false">
           <li>
             <a
-              routerLink="/dashboard/"
+              routerLink="/AICC/dashboard/"
               routerLinkActive="active"
               class="side-nav-link-ref"
               >Dashboard</a
@@ -37,7 +37,7 @@
           </li>
           <li>
             <a
-              routerLink="/property"
+              routerLink="/AICC/property"
               routerLinkActive="active"
               class="side-nav-link-ref"
               >Properties</a
@@ -558,7 +558,7 @@
                 </ul>
             </li> -->
     </ul>
-    <ul class="metismenu" id="side-menu" #sideMenu *ngIf="currentUser.UserType">
+    <ul class="metismenu" id="side-menu" #sideMenu *ngIf="currentUser.CompanyID === 2">
       <!-- <li class="menu-title">Navigation</li> -->
       <li class="menu-title"><i class="mdi mdi-bank"></i> PropLegit</li>
       <li *ngIf="currentUser.UserType !== 'Lawyer'">
@@ -687,6 +687,7 @@
               >Lawyers</a
             >
           </li>
+          <button class="btn btn-primary mt-5" *ngIf="currentUser.UserType === 'Lawyer'" (click)="switchUser()">Swith to Bank Manager</button>
         </ul>
       </li>
 
@@ -1368,6 +1369,7 @@
             </li>
           </ul>
         </li> -->
+        <button class="btn btn-primary mt-5 ml-4" *ngIf="currentUser.UserType === 'Bank Manager'" (click)="switchUser()">Swith to Lawyer</button>
     </ul>
   </div>
   <!-- End Sidebar -->

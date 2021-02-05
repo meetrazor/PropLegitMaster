@@ -176,7 +176,8 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              this.refreshrent.emit();
+              location.reload()
+              // this.refreshrent.emit();
             });
           } else {
             Swal.fire({

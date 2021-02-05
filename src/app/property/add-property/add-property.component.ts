@@ -62,7 +62,7 @@ export class AddPropertyComponent implements OnInit {
     this.style += 'line-height: 1.5; color: #6c757d; background-color: #fff; background-clip: ';
     this.style += 'padding-box; border-radius: 4px;';
     if (!this.isUpdate) {
-      this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
+      this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/AICC/property' },
       { label: 'Add New Property', path: '/property/create', active: true }];
     }
     document.querySelector('.autocomplete-container').setAttribute('style',
@@ -160,7 +160,7 @@ export class AddPropertyComponent implements OnInit {
       this.fetchpropertytype();
       this.myForm.controls.ModifiedBy.setValue(this.currentUser.UserID);
       this.myForm.controls.UserID.setValue(this.currentUser.UserID);
-      this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/property' },
+      this.breadCrumbItems = [{ label: 'Dashboard', path: '/' }, { label: 'Property List', path: '/AICC/property' },
       { label: 'Edit Property', path: '/property/create', active: true }];
       this.fetchUpdateMode();
 
@@ -418,7 +418,7 @@ export class AddPropertyComponent implements OnInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                this.router.navigate(['property']);
+                this.router.navigate(['/']);
               });
             }
           });
@@ -444,7 +444,7 @@ export class AddPropertyComponent implements OnInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                this.router.navigate(['property']);
+                this.router.navigate(['/']);
               });
             }
           });
@@ -587,7 +587,7 @@ export class AddPropertyComponent implements OnInit {
       return;
     }
     if (search !== undefined && search.length >= 3) {
-      this.service.areabystateid(this.myForm.controls.StateID.value, this.myForm.controls.DistrictID.value, search)
+      this.service.areabystateid(this.myForm.controls.StateID.value,search, this.myForm.controls.DistrictID.value)
         .pipe(first())
         .subscribe(
           data => {

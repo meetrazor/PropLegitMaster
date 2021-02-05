@@ -85,7 +85,11 @@ export class ConfirmComponent implements OnInit, AfterViewInit {
         });
         this.loading = false;
         this.cookieservice.setCookie('currentUser', JSON.stringify(res.data), 1);
-        this.router.navigate(['/dashboard']);
+        if (res.data[0].CompanyID === 1) {
+          this.router.navigate(['/AICC']);
+        } else {
+          this.router.navigate(['/loan/dashboard']);
+        }
       }
 
     });

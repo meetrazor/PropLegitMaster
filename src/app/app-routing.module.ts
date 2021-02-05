@@ -7,7 +7,10 @@ import { LayoutComponent } from './layouts/layout.component';
 
 
 const routes: Routes = [{
-  path: '', redirectTo: 'loan', pathMatch: 'full'
+  path: '', redirectTo: 'AICC', pathMatch: 'full'
+},
+{
+  path: 'property', redirectTo: 'AICC/property', pathMatch: 'full'
 },
 { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
 {

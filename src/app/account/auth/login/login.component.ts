@@ -99,10 +99,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.loading = false;
       if (res.status === 200) {
         this.submitted = false;
-        if (res.data[0].UserType !== null) {
+        if (res.data[0].CompanyID === 2) {
           this.router.navigate(['/loan']);
         } else {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigate(['/AICC']);
         }
       } else {
         this.error = res.error;

@@ -24,6 +24,9 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
       // ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/${this.currentUser.UserID}` }, responsive: true,
       ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/4` }, responsive: true,
       columns: [{
+        title: 'id',
+        data: 'AppID'
+      },{
         title: 'Applicant',
         data: '', render: (data, type, row) => {
           return `${row.FirstName} ${row.LastName}`;
@@ -35,21 +38,26 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
         title: 'Amount',
         data: 'LoanAmount'
       }, {
-        title: 'Documents',
-        render: (data, type, row) => {
-          return `<a class="btn text-primary" title="View Documents"
-          OpenID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" OpenID = "${row.AppID}" aria-hidden="false"></i></a>
-          <a class="btn text-primary" title="Upload Documents"
-          UploadID = "${row.AppID}"><i class="mdi mdi-file-upload-outline font-18 text-secondary"
-          UploadID = "${row.AppID}" aria-hidden="false"></i></a>`;
-        }
-      }, {
         title: 'Status',
-        data: 'ApplicationStatus'
+        data: 'ApplicationStatus',render:(data)=>{
+          if (data === 'Pending') {
+            return `<span class="badge badge-danger p-1">${data}</span>`;
+          }else if(data ==='Title Clear Complete'){
+            return `<span class="badge badge-success p-1">${data}</span>`;
+          }else if(data){
+            return `<span class="badge badge-secondary p-1">${data}</span>`;
+          }else{
+            return data;
+          }
+        }
       }, {
         title: 'Action',
         data: null, render: (data, type, row) => {
-          return `<a class="btn btn-xs btn-light" title="Continue Work"
+          return `
+          <a class="btn text-primary" title="Upload Documents"
+          UploadID = "${row.AppID}"><i class="mdi mdi-file-upload-outline font-18 text-secondary"
+          UploadID = "${row.AppID}" aria-hidden="false"></i></a>
+          <a class="btn btn-xs btn-light" title="Continue Work"
           OpenID = "${row.AppID}"><i class="mdi mdi-pencil font-18 text-secondary" OpenID = "${row.AppID}" aria-hidden="false"></i></a>`;
         }
       }, {
@@ -62,7 +70,7 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
         title: 'Bank Name',
         data: 'BankName'
       }
-      ],
+      ],order:[[0,'desc']],columnDefs:[{targets:0 ,visible:false}]
     };
   }
   ngAfterViewInit(): void {

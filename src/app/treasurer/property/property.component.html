@@ -19,7 +19,7 @@
     (onLoad)="onShow($event)"
   >
     <app-datatable
-      *ngIf="tableLoad"
+      *ngIf="item.tableLoad"
       [item]="item"
       (isloading)="tableLoading($event)"
     ></app-datatable>

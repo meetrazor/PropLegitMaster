@@ -1,6 +1,8 @@
+import { GeneralService } from './../../services/general.service';
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
 import MetisMenu from 'metismenujs/dist/metismenujs';
 import { CookieService } from 'src/app/core/services/cookie.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,7 +16,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   currentUser: any;
   @ViewChild('sideMenu', { static: false }) sideMenu: ElementRef;
 
-  constructor(private cookie: CookieService) { }
+  constructor(private cookie: CookieService,private service:GeneralService , private router:Router) { }
 
   ngOnInit() {
     this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
@@ -126,5 +128,25 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
   }
-
+  switchUser(){
+    if(this.currentUser.UserType === 'Bank Manager'){
+      this.currentUser.UserType = 'Lawyer'
+      this.cookie.deleteCookie('currentUser')
+      this.service.saveCookie(this.currentUser);
+      if(this.router.url === '/loan/dashboard'){
+        location.reload()
+      }else{
+        this.router.navigate(['/loan/dashboard']);
+      }
+    }else if(this.currentUser.UserType === 'Lawyer'){
+      this.currentUser.UserType = 'Bank Manager'
+      this.cookie.deleteCookie('currentUser')
+      this.service.saveCookie(this.currentUser);
+      if(this.router.url === '/loan/dashboard'){
+        location.reload()
+      }else{
+        this.router.navigate(['/loan/dashboard']);
+      }
+    }
+  }
 }

@@ -14,15 +14,16 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders()
 };
+// const baseurl = `http://localhost:3000/`;
 // const baseurl = `https://api.proplegit.com/`;
-const baseurl = `http://devapi.proplegit.com/`;
-// const baseurl = `http://qaapi.proplegit.com/`;
+// const baseurl = `http://devapi.proplegit.com/`;
+const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
 const validateOTP = `${apiUrl}validate/otp/`;
 const login = `${apiUrl}login/verify`;
-const stateWiseProperty = `${apiUrl}property/list`;
+const stateWiseProperty = `${apiUrl}property/list/`;
 const PropertyListByState = `${apiUrl}property/list/`;
 const deleteProperty = `${apiUrl}property/delete/`;
 const stateInfo = `${apiUrl}state/list`;
@@ -148,8 +149,8 @@ export class GeneralService {
     return JSON.parse(this.cookieService.getCookie('currentUser'));
   }
 
-  getStateWisePropertyCount(): any {
-    return this.http.get(stateWiseProperty, httpOptions);
+  getStateWisePropertyCount(userId): any {
+    return this.http.get(stateWiseProperty + userId, httpOptions);
   }
 
   getPropertyListByState(id): any {
@@ -225,7 +226,6 @@ export class GeneralService {
   updateLawyer(data, LawyerId): any {
     return this.http.put<any>(`${apiUrl}lawyer/update/${LawyerId}`, data, httpOptions);
   }
-
   listTenant(id): any {
     return this.http.get<any>(`${apiUrl}property/${id}/rent/list`, httpOptions);
   }
@@ -244,8 +244,12 @@ export class GeneralService {
   fetchstatelist() {
     return this.http.get<any>(stateInfo, httpOptions);
   }
-  areabystateid(StateId, DistrictId, Search): any {
-    return this.http.get(`${apiUrl}area/list/state/${StateId}/district/${DistrictId}/area/${Search}`);
+  areabystateid(StateId, Search,DistrictId?): any {
+    if (DistrictId) {
+      return this.http.get(`${apiUrl}area/list/state/${StateId}/district/area/${Search}?DistrictId=${DistrictId}`);
+    } else {
+      return this.http.get(`${apiUrl}area/list/state/${StateId}/district/area/${Search}`);
+    }
   }
 
   uploadTaxReceipt(propertyid, taxid, data): any {
@@ -264,13 +268,13 @@ export class GeneralService {
     return this.http.put(`${forgotPassword}/update`, data, httpOptions);
   }
   getpropertytaxtypeList(id): any {
-    return this.http.get(`${propertyTaxType}/${id}`, httpOptions);
+    return this.http.get(`${propertyTaxType}${id}`, httpOptions);
   }
   getRentList(id): any {
     return this.http.get(`${apiUrl}property/rent/view/${id}`, httpOptions);
   }
   GenerateInvoice(id, userId): any {
-    return this.http.post(`${generateinvoice}/${id}`, { CreatedBy: userId }, httpOptions);
+    return this.http.post(`${generateinvoice}${id}`, { CreatedBy: userId }, httpOptions);
   }
   UploadInvoice(PropertyRentID, data): any {
     return this.http.post(`${uploadInvoice}${PropertyRentID}`, data, httpFileUploadOptions);
@@ -279,7 +283,7 @@ export class GeneralService {
     return this.http.post(`${uploadInvoice}${PropertyRentID}?FileExistenceCheck=0`, data, httpFileUploadOptions);
   }
   GenerateReceipt(id, data): any {
-    return this.http.post(`${generateReceipt}/${id}`, data, httpOptions);
+    return this.http.post(`${generateReceipt}${id}`, data, httpOptions);
   }
   addLegalCase(PropertyID, data) {
     return this.http.post<any>(`${apiUrl}property/${PropertyID}/case/add`, data, httpOptions);

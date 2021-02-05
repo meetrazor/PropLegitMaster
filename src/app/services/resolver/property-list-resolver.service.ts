@@ -8,9 +8,10 @@ import { GeneralService } from '../general.service';
 })
 export class PropertyListResolverService implements Resolve<any> {
 
-  constructor(private service: GeneralService) { }
+  constructor(private service: GeneralService) { 
+  }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-    return this.service.getStateWisePropertyCount();
+    return this.service.getStateWisePropertyCount(this.service.getcurrentUser().UserID);
   }
 
 }

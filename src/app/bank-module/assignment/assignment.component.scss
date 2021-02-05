@@ -4,3 +4,8 @@
 .timeline-sm-item.completed {
   border-color: #6658dd !important;
 }
+.text-body.disable {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
