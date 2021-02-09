@@ -29,7 +29,8 @@
                 </td>
                 <td>
                   <a
-                    href="assets/Sample_Documents_Home_Loan/06-08-19_Sale Deed of Bahiyal.pdf"
+                    [routerLink] = "'/loan/View-Documents/'+AppID"
+                    [queryParams]="{type: 'Under Review'}"
                     class="text-success h4"
                     >VIEW</a
                   >
@@ -42,7 +43,8 @@
                 </td>
                 <td>
                   <a
-                    href="assets/Sample_Documents_Home_Loan/DRAFT ALLOTMENT LETTER.pdf"
+                  [routerLink] = "'/loan/View-Documents/'+AppID"
+                  [queryParams]="{type: 'reviewed'}"
                     class="text-success h4"
                     >VIEW</a
                   >
@@ -54,8 +56,10 @@
                   <span class="text-danger">{{ pending }}</span>
                 </td>
                 <td>
-                  <a href="" class="text-success h4">Request </a>|
-                  <a href="" class="text-success h4"> Upload </a>
+                  <a [routerLink] = "'/loan/View-Documents/'+AppID"
+                  [queryParams]="{type: 'pending'}" class="text-success h4">Request </a>|
+                  <a [routerLink] = "'/loan/View-Documents/'+AppID"
+                  [queryParams]="{type: 'pending'}" class="text-success h4"> Upload </a>
                 </td>
               </tr>
             </tbody>

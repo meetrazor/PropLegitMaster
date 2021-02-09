@@ -236,6 +236,7 @@
                   (change)="ChangeState($event)"
                   placeholder="
                 Select State"
+                
                   [ngClass]="{
                     'is-invalid': submitted && f.StateID.errors
                   }"
@@ -586,11 +587,11 @@
               <div class="form-group col-md-6">
                 <label for="">Is There Known Lien on Property?</label><br />
                 <span>
-                  <input type="radio" formControlName="IsLien" value="True" />
+                  <input type="radio" formControlName="IsLien" value="True" (change)="onChangeLien($event.target.value)"/>
                   Yes</span
                 >
                 <span
-                  ><input type="radio" formControlName="IsLien" value="False" />
+                  ><input type="radio" formControlName="IsLien" value="False" (change)="onChangeLien($event.target.value)"/>
                   No</span
                 >
               </div>
@@ -599,7 +600,7 @@
                 *ngIf="f.IsLien.value === 'True'"
                 class="form-group col-md-6"
               >
-                <label for="">Lien Person Name</label>
+                <label for="">Lien Person Name *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Lien Person Name"
@@ -624,7 +625,7 @@
                 *ngIf="f.IsLien.value === 'True'"
                 class="form-group col-md-6"
               >
-                <label for="">Lien From</label>
+                <label for="">Lien From *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Lien From Name"
@@ -649,7 +650,7 @@
                 *ngIf="f.IsLien.value === 'True'"
                 class="form-group col-md-6"
               >
-                <label for="">Lien Amount</label>
+                <label for="">Lien Amount *</label>
                 <input
                   class="form-control"
                   placeholder="Enter Lien Amount"
@@ -674,7 +675,7 @@
                 *ngIf="f.IsLien.value === 'True'"
                 class="form-group col-md-6"
               >
-                <label for="">Lien Date</label>
+                <label for="">Lien Date *</label>
                 <input
                   class="form-control"
                   type="date"

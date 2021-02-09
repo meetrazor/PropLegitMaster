@@ -14,7 +14,10 @@ export class LawyersComponent implements OnInit {
   isLoading: boolean;
   applicationData: any;
   LawyeList: any;
-  constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) { }
+  currentUser: any;
+  constructor(private service: GeneralService, private route: ActivatedRoute, private router: Router) {
+    this.currentUser = this.service.getcurrentUser();
+  }
 
   ngOnInit() {
     this.Appid = this.route.snapshot.params.AppID;
@@ -29,11 +32,11 @@ export class LawyersComponent implements OnInit {
         this.isLoading = false;
       });
     });
-
   }
+
   onSelect(id) {
     this.isLoading = true;
-    this.service.AssignLawyer(this.Appid, id).subscribe((res) => {
+    this.service.AssignLawyer(this.Appid, this.currentUser.UserID).subscribe((res) => {
       this.isLoading = false;
       if (res.error) {
         Swal.fire({

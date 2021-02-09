@@ -1,3 +1,4 @@
+import { ViewFilterDocumentsComponent } from './view-filter-documents/view-filter-documents.component';
 import { TitleClearCompleteComponent } from './title-clear-complete/title-clear-complete.component';
 import { PublicNoticeViewComponent } from './public-notice-view/public-notice-view.component';
 import { TitleClearComponent } from './title-clear/title-clear.component';
@@ -79,6 +80,9 @@ const routes: Routes = [
   }, {
     path: 'titleclearcompleted/:AppID',
     component: TitleClearCompleteComponent
+  }, {
+    path: 'View-Documents/:AppID',
+    component: ViewFilterDocumentsComponent
   }
 ];
 

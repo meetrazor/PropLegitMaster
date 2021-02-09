@@ -131,8 +131,6 @@ export class UploadDocumentComponent implements OnInit {
     }
   }
   onSubmit() {
-    console.log(this.photographForm);
-
     this.submited = true;
     if (this.photographForm.valid) {
       // 1 is Property ID
@@ -147,10 +145,13 @@ export class UploadDocumentComponent implements OnInit {
             Swal.fire({
               title: 'Uploaded',
               text: 'Document Upload Successfully',
-              type: 'success',
-              timer: 2000
+              type: 'success'
             }).then(() => {
-              location.reload();
+              if (this.currentUser.UserType === 'Bank Manager') {
+                  this.router.navigate([`/loan/title-search/${this.route.snapshot.params.Appid}`]);
+                } else if (this.currentUser.UserType === 'Lawyer') {
+                  this.router.navigate([`/loan/assignment/${this.route.snapshot.params.Appid}`]);
+                }
             });
           } else {
             Swal.fire({

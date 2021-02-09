@@ -25,6 +25,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   totaldocument = 0;
   pending = 0;
   received = 0;
+  AppID: any;
   dtOptions: DataTables.Settings = {};
   propertyDocumentData: any;
   loaded: boolean;
@@ -34,6 +35,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private service: GeneralService, private Route: ActivatedRoute, private router: Router,
     private formBuilder: FormBuilder) {
+      this.AppID = this.Route.snapshot.params.id;
   }
   ngOnDestroy() {
     clearInterval(this.interval);
@@ -65,9 +67,9 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
         if (this.propertyDocumentData.length > 0) {
           this.propertyDocumentData.filter((data) => {
             this.totaldocument++;
-            if (data.FileURL && data.Status === 'Under Review') {
+            if (data.Status === 'Under Review') {
               this.received++;
-            } else if (data.FileURL && data.Status !== 'Under Review') {
+            } else if (data.Status === 'Reviewed') {
               this.reviewd++;
             } else if (!data.FileURL) {
               this.pending++;
@@ -151,7 +153,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
   }
   onViewDocument(id) {
-    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id +'/'+this.applicationData.AppID]);
+    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id + '/' + this.applicationData.AppID]);
     // this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
     // this.service.getDocument(this.applicationData.PropertyID, id).subscribe((res) => {
     //   if (res.status === 200) {

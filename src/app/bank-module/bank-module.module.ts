@@ -31,12 +31,15 @@ import { TitleClearListComponent } from './title-clear-list/title-clear-list.com
 import { TitleClearComponent } from './title-clear/title-clear.component';
 import { PublicNoticeViewComponent } from './public-notice-view/public-notice-view.component';
 import { TitleClearCompleteComponent } from './title-clear-complete/title-clear-complete.component';
+import { ViewFilterDocumentsComponent } from './view-filter-documents/view-filter-documents.component';
 
 
 @NgModule({
   declarations: [ApplicantDashboardComponent, ApplicationComponent,
     DashboardComponent, AddApplicationComponent, ViewDocumentComponent, LawyersComponent,
-    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent, AssignmentsComponent, AssignmentComponent, PublicNoticesComponent, PublicNoticeComponent, TitleClearListComponent, TitleClearComponent, PublicNoticeViewComponent, TitleClearCompleteComponent],
+    UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent,
+    AssignmentsComponent, AssignmentComponent, PublicNoticesComponent, PublicNoticeComponent,
+    TitleClearListComponent, TitleClearComponent, PublicNoticeViewComponent, TitleClearCompleteComponent, ViewFilterDocumentsComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
     BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, NgbModalModule,

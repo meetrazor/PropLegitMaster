@@ -68,17 +68,36 @@ export class AddApplicationComponent implements OnInit {
       CitySurveyNumber: new FormControl(''),
       TpNo: new FormControl(''),
       FpNo: new FormControl(''),
-      LienAmount: new FormControl(''),
-      LienDate: new FormControl(''),
-      LienPersonName: new FormControl(''),
-      LienFrom: new FormControl(''),
+      LienAmount: new FormControl('', Validators.required),
+      LienDate: new FormControl('', Validators.required),
+      LienPersonName: new FormControl('', Validators.required),
+      LienFrom: new FormControl('', Validators.required),
       LoanAmount: new FormControl('', Validators.required),
       CreatedBy: new FormControl(this.currentUser.UserID),
       StateID: new FormControl(null, Validators.required),
     });
     this.fetchstatelist();
   }
+  onChangeLien(e){
+  if (e == true) {
+    this.f.LienAmount.enable();
+    this.f.LienDate.enable();
+    this.f.LienPersonName.enable();
+    this.f.LienFrom.enable();
+  } else {
+    this.f.LienAmount.disable();
+    this.f.LienDate.disable();
+    this.f.LienPersonName.disable();
+    this.f.LienFrom.disable();
+  }
+  }
+  // searchcountry(term: string, item: any){
+  //   term = term.toLocaleLowerCase();
+  //   console.log(term,item);
+  // //  return item.countrycode.toLocaleLowerCase().indexOf(term) > -1 || item.countryname.toLocaleLowerCase().includes(term);
+  // }
   save() {
+    this.onChangeLien(this.f.IsLien.value);
     this.submitted = true;
     if (this.loan.valid) {
       this.isLoading = true;
