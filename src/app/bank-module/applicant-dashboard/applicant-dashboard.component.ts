@@ -71,7 +71,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
               this.received++;
             } else if (data.Status === 'Reviewed') {
               this.reviewd++;
-            } else if (!data.FileURL) {
+            } else if (data.Status === 'Pending') {
               this.pending++;
             }
           });
