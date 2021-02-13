@@ -22,7 +22,7 @@ export class AssignmentsComponent implements OnInit, AfterViewInit {
     this.currentUser = this.service.getcurrentUser();
     this.dtOptions = {
       // ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/${this.currentUser.UserID}` }, responsive: true,
-      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/4` }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Lawyer/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
         title: 'id',
         data: 'AppID'

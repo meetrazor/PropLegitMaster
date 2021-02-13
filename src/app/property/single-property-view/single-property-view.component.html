@@ -16,9 +16,9 @@
           ></app-view-property>
         </ng-template>
       </ngb-tab>
-      <ngb-tab title="Alert" class="nav-item" id="alert">
+      <ngb-tab title="Alert / Remainder" class="nav-item" id="alert">
         <ng-template ngbTabContent
-          ><app-alert PropertyId="{{propertyID}}"></app-alert>
+          ><app-alert PropertyId="{{ propertyID }}"></app-alert>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Documents / Photographs" class="nav-item">
@@ -61,6 +61,7 @@
               <app-add-rent
                 (refreshrent)="refresh()"
                 propertyId="{{ propertyID }}"
+                [PropertyData]="data"
               ></app-add-rent>
             </div>
           </div>
@@ -75,7 +76,8 @@
         <ng-template ngbTabContent>
           <div class="row">
             <div class="col-md-8">
-              <app-view-legal-case> </app-view-legal-case>
+              <app-view-legal-case [PropertyID]="propertyID">
+              </app-view-legal-case>
             </div>
             <div class="col-md-4">
               <app-add-legal-case PropertyID="{{ propertyID }}">

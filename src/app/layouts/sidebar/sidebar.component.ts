@@ -130,20 +130,20 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
   switchUser(){
     if(this.currentUser.UserType === 'Bank Manager'){
-      this.currentUser.UserType = 'Lawyer'
-      this.cookie.deleteCookie('currentUser')
+      this.currentUser.UserType = 'Lawyer';
+      this.cookie.deleteCookie('currentUser');
       this.service.saveCookie(this.currentUser);
       if(this.router.url === '/loan/dashboard'){
-        location.reload()
+        location.reload();
       }else{
         this.router.navigate(['/loan/dashboard']);
       }
     }else if(this.currentUser.UserType === 'Lawyer'){
-      this.currentUser.UserType = 'Bank Manager'
-      this.cookie.deleteCookie('currentUser')
+      this.currentUser.UserType = 'Bank Manager';
+      this.cookie.deleteCookie('currentUser');
       this.service.saveCookie(this.currentUser);
       if(this.router.url === '/loan/dashboard'){
-        location.reload()
+        location.reload();
       }else{
         this.router.navigate(['/loan/dashboard']);
       }

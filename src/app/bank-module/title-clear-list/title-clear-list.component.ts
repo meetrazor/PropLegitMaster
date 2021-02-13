@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./title-clear-list.component.scss']
 })
 export class TitleClearListComponent implements OnInit {
-  breadCrumbItems:any;
+  breadCrumbItems: any;
   constructor() {
     this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Assignments', path: '/loan/assignment' },
     { label: 'Title Clear', path: '', active: true }];

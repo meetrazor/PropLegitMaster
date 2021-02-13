@@ -77,18 +77,19 @@ export class AddApplicationComponent implements OnInit {
       StateID: new FormControl(null, Validators.required),
     });
     this.fetchstatelist();
+    this.onChangeLien('False')
   }
   onChangeLien(e){
-  if (e == true) {
-    this.f.LienAmount.enable();
-    this.f.LienDate.enable();
-    this.f.LienPersonName.enable();
-    this.f.LienFrom.enable();
-  } else {
+  if (e === 'False') {
     this.f.LienAmount.disable();
     this.f.LienDate.disable();
     this.f.LienPersonName.disable();
     this.f.LienFrom.disable();
+  } else {
+    this.f.LienAmount.enable();
+    this.f.LienDate.enable();
+    this.f.LienPersonName.enable();
+    this.f.LienFrom.enable();
   }
   }
   // searchcountry(term: string, item: any){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { GeneralService } from 'src/app/services/general.service';
@@ -10,18 +10,21 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class ViewLegalCaseComponent implements OnInit {
   datasource: any[];
+  @Input() PropertyID: any;
   isLoaded = false;
   hearingData: any[] = [];
   actData: any[] = [];
   lawyerData: any[] = [];
   lawyerList = [];
+  isloading: boolean;
   constructor(private route: ActivatedRoute, private service: GeneralService) { }
 
   ngOnInit() {
+    this.isloading = true;
     this.hearingData = [];
     this.actData = [];
     this.lawyerData = [];
-    this.service.listLegalcase(56)
+    this.service.listLegalcase(this.PropertyID)
       .pipe(first())
       .subscribe(
         data => {
@@ -36,12 +39,13 @@ export class ViewLegalCaseComponent implements OnInit {
             //   this.getLawyers(item.LegalCaseID);
             // }
           }
+          this.isloading = false;
         });
   }
   fetchLawyerlist() {
     this.service.listLawyers().
       subscribe(data => {
-        if (data.status == 200) {
+        if (data.status === 200) {
           this.lawyerList = data.data;
         } else {
           console.log(data.error);

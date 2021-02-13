@@ -18,9 +18,9 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders(),
 };
-// const baseurl = `http://localhost:3000/`;
+const baseurl = `http://localhost:3000/`;
 // const baseurl = `https://api.proplegit.com/`;
-const baseurl = `http://devapi.proplegit.com/`;
+// const baseurl = `http://devapi.proplegit.com/`;
 // const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
@@ -52,6 +52,9 @@ const markasReviewed = `${apiUrl}loan/property/document/reviewed/`;
 const fordemo = `${apiUrl}loan/Property/all/Document/Upload/`;
 const fordemochangestatus = `${apiUrl}loan/application/status/`;
 const Dashboard = `${apiUrl}loan/Dashboard/Count`;
+const cancelContract = `${apiUrl}property/tenant/ContractCancel/`;
+const propertyTaxAlert = `${apiUrl}propertyAlerts/tax/Property/`;
+const propertyRentAlert = `${apiUrl}propertyAlerts/rent/Property/`;
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +70,7 @@ export class GeneralService {
     private http: HttpClient,
     private cookieService: CookieService,
     private router: Router,
-  ) {}
+  ) { }
 
   userRegister(userData): any {
     return this.http.post(register, userData, httpOptions);
@@ -423,5 +426,14 @@ export class GeneralService {
       { ApplicationStatus: status },
       httpOptions,
     );
+  }
+  CancelRentContract(tenantId): any {
+    return this.http.put(`${cancelContract}${tenantId}`, null, httpOptions);
+  }
+  GetPropertyTaxAlert(PropertyID): any {
+    return this.http.get(`${propertyTaxAlert}${PropertyID}`, httpOptions);
+  }
+  GetPropertyRentAlert(PropertyID): any {
+    return this.http.get(`${propertyRentAlert}${PropertyID}`, httpOptions);
   }
 }

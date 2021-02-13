@@ -12,12 +12,16 @@ import Swal from 'sweetalert2';
 export class AddLegalCaseComponent implements OnInit {
   legalcaseForm: FormGroup;
   submitted = false;
+  currentUser: any;
   @Input() PropertyID;
+  isloading: boolean;
   constructor(
     private formBuilder: FormBuilder, private router: Router,
     private route: ActivatedRoute, private service: GeneralService) { }
 
   ngOnInit() {
+    this.isloading = true;
+    this.currentUser = this.service.getcurrentUser();
     this.legalcaseForm = this.formBuilder.group({
       PropertyId: new FormControl(this.route.snapshot.params.id, Validators.required),
       CaseNumber: new FormControl('', Validators.required),
@@ -25,16 +29,16 @@ export class AddLegalCaseComponent implements OnInit {
       CourtName: new FormControl(null, [Validators.required, Validators.maxLength(25)]),
       CourtAddress: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       CaseDescription: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      DistrictID: new FormControl(5, Validators.required),
-      Status: new FormControl(1, Validators.required),
-      CaseStatus: new FormControl(null, Validators.required),
+      Status: new FormControl('1', Validators.required),
       Judge: new FormControl(null, [Validators.required, Validators.maxLength(25)]),
       FilingNumber: new FormControl('', Validators.required),
       FilingDate: new FormControl('', Validators.required),
       RegistrationNumber: new FormControl('', Validators.required),
       RegistrationDate: new FormControl('', Validators.required),
-      CNRNumber: new FormControl('', Validators.required)
+      CNRNumber: new FormControl('', Validators.required),
+      CreatedBy: new FormControl(this.currentUser.UserID, Validators.required)
     });
+    this.isloading = false;
   }
   isValid(event) {
     if ((event.keyCode >= 48 && event.keyCode <= 57) && event.target.value.length < 10) {
@@ -45,13 +49,12 @@ export class AddLegalCaseComponent implements OnInit {
   get f() { return this.legalcaseForm.controls; }
 
   onSubmit() {
-
     this.submitted = true;
-    console.log(this.legalcaseForm);
-
     if (this.legalcaseForm.valid) {
+      this.isloading = true;
       this.service.addLegalCase(this.route.snapshot.params.id, this.legalcaseForm.value)
         .subscribe(data => {
+          this.isloading = false;
           this.submitted = false;
           this.legalcaseForm.reset();
           if (data.status === 200) {
@@ -73,4 +76,5 @@ export class AddLegalCaseComponent implements OnInit {
         });
     }
   }
+
 }

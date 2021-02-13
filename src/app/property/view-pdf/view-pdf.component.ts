@@ -20,6 +20,7 @@ export class ViewPdfComponent implements OnInit {
 
   }
   ngOnInit() {
+    console.log(this.url);
 
 
   }

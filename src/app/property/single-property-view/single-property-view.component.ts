@@ -8,14 +8,14 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './single-property-view.component.html',
   styleUrls: ['./single-property-view.component.scss']
 })
-export class SinglePropertyViewComponent implements OnInit,AfterViewInit,OnChanges {
+export class SinglePropertyViewComponent implements OnInit, AfterViewInit, OnChanges {
   breadCrumbItems: Array<any>;
-  @ViewChild('tabs',{static:false}) tabs:NgbTabset;
+  @ViewChild('tabs', {static: false}) tabs: NgbTabset;
   propertyID: number;
   isloading: boolean;
   data: any;
   count: number;
-  tabsInitialized:boolean;
+  tabsInitialized: boolean;
 
   constructor(private route: ActivatedRoute, private service: GeneralService) { }
 
@@ -37,6 +37,6 @@ export class SinglePropertyViewComponent implements OnInit,AfterViewInit,OnChang
   refresh() {
     this.count++;
   }
-  ngOnChanges(){
+  ngOnChanges() {
   }
 }

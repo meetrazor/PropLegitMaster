@@ -52,36 +52,37 @@
     </div>
   </div>
 </div> -->
-<div class="container-fluid ">
-<div class="col-md-12 table-responsive py-3">
-  <h4 class="header-title">Rent Receivables</h4>
-  <hr>
-  <h4 class="header-title">Premises</h4>
-  <table
-    datatable
-    [dtOptions]="dtOptions[0]"
-    [dtTrigger]="dtTrigger"
-    class="table row-border hover thead-dark"
-  ></table>
+<div class="container-fluid row">
+  <div class="col-md-12 table-responsive py-3">
+    <h4 class="header-title">Rent Receivables</h4>
+    <hr />
+    <h4 class="header-title">Premises</h4>
+    <table
+      datatable
+      [dtOptions]="dtOptions[0]"
+      [dtTrigger]="dtTrigger"
+      class="table row-border hover thead-dark"
+    ></table>
+  </div>
+  <div class="col-md-12 table-responsive py-3">
+    <h4 class="header-title">Rent Payables</h4>
+    <hr />
+    <h4 class="header-title">Premises</h4>
+    <table
+      datatable
+      [dtOptions]="dtOptions[1]"
+      [dtTrigger]="dtTrigger2"
+      class="table row-border hover thead-dark"
+    ></table>
+  </div>
+  <div class="card-disabled" *ngIf="!isLoaded">
+    <div class="card-portlets-loader"></div>
+  </div>
 </div>
-<div class="col-md-12 table-responsive py-3">
-  <h4 class="header-title">Rent Payables</h4>
-  <hr>
-  <h4 class="header-title">Premises</h4>
-  <table
-    datatable
-    [dtOptions]="dtOptions[1]"
-    [dtTrigger]="dtTrigger2"
-    class="table row-border hover thead-dark"
-  ></table>
-</div>
-<div class="card-disabled" *ngIf="!isLoaded">
-  <div class="card-portlets-loader"></div>
-</div>
-</div>
+
 <ng-template #generateReceipt let-modal="close">
   <div class="modal-header">
-    <h4 class="modal-title">Invoice Upload</h4>
+    <h4 class="modal-title">Generate Receipt</h4>
     <button
       type="button"
       class="close"
@@ -138,10 +139,7 @@
                 'is-invalid': submited && e.ChequeNo.errors
               }"
             />
-            <div
-              *ngIf="submited && e.ChequeNo.errors"
-              class="invalid-feedback"
-            >
+            <div *ngIf="submited && e.ChequeNo.errors" class="invalid-feedback">
               <div *ngIf="e.ChequeNo.errors.required">
                 Cheque No is Required
               </div>
@@ -190,10 +188,7 @@
                 'is-invalid': submited && e.BankName.errors
               }"
             />
-            <div
-              *ngIf="submited && e.BankName.errors"
-              class="invalid-feedback"
-            >
+            <div *ngIf="submited && e.BankName.errors" class="invalid-feedback">
               <div *ngIf="e.BankName.errors.required">
                 Bank Name is Required
               </div>
@@ -274,28 +269,6 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12 mb-3">
-            <h4 class="header-title">Amount *</h4>
-            <input
-              type="number"
-              class="form-control"
-              id="example-input"
-              placeholder="Enter Amount"
-              formControlName="AmountPay"
-              maxlength="225"
-              [ngClass]="{
-                'is-invalid': submited && e.AmountPay.errors
-              }"
-            />
-            <div
-              *ngIf="submited && e.AmountPay.errors"
-              class="invalid-feedback"
-            >
-              <div *ngIf="e.AmountPay.errors.required">
-                Amount is Required
-              </div>
-            </div>
-          </div>
         </div>
         <div class="row">
           <div class="col-md-12 mb-3">
@@ -322,7 +295,7 @@
         </div>
         <div class="row">
           <div class="col-md-12 mb-3">
-            <h4 class="header-title">Amount From Advance *</h4>
+            <h4 class="header-title">Amount From Advance</h4>
             <input
               class="form-control"
               placeholder="Enter Amount From Advance"
@@ -333,12 +306,19 @@
               }"
               min="0"
             />
+            <span
+              >Remaing Amount From Advance :
+              {{ tanentData.RemainingAdvanceAmount }}</span
+            >
             <div
               *ngIf="submited && e.AmountFromAdvance.errors"
               class="invalid-feedback"
             >
               <div *ngIf="submited && e.AmountFromAdvance.errors.required">
                 Amount From Advance is Required
+              </div>
+              <div *ngIf="submited && e.AmountFromAdvance.errors.max">
+                Amount cannot greter then remaining Amount from Advance
               </div>
             </div>
           </div>

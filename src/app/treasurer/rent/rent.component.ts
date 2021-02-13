@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, ViewChild, AfterViewInit, AfterContentChecked,
-   SimpleChanges, OnChanges, Renderer2, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component, Input, OnInit, ViewChild, AfterViewInit, AfterContentChecked,
+  SimpleChanges, OnChanges, Renderer2, QueryList, ViewChildren
+} from '@angular/core';
 import { first } from 'rxjs/operators';
 import { GeneralService } from '../../services/general.service';
 import Swal from 'sweetalert2';
@@ -18,21 +20,22 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterContentChecked {
   @Input() propertyID;
   @Input() refresh;
+  tenantData: any;
   datasource: null;
-  submitted:boolean
-  invoiceForm:FormGroup;
-  isLoading:boolean= false;
-  RentID:number;
-  submited:boolean = false;
-  Loading:boolean = false;
-  fileExtension:string;
+  submitted: boolean;
+  invoiceForm: FormGroup;
+  isLoading: boolean = false;
+  RentID: number;
+  submited: boolean = false;
+  Loading: boolean = false;
+  fileExtension: string;
   paymentMode = ['Cheque', 'NEFT/IMPS', 'Wallet', 'Cash'];
   @ViewChild('generateReceipt', { static: true }) generateReceiptModal;
   @ViewChild('uploadInvoice', { static: true }) uploadInvoiceModal;
   // showntable: boolean;
   // tenatID: number;
   isLoaded = false;
-  receiptForm:FormGroup;
+  receiptForm: FormGroup;
   dtOptions: DataTables.Settings[] = [];
   dtOptions2: DataTables.Settings = {};
   @ViewChildren(DataTableDirective)
@@ -50,52 +53,77 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
   ngOnInit() {
     this.currentUser = this.service.getcurrentUser();
     // this.showntable = false;
-    this.toady = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2);
+    this.toady = new Date().getFullYear() + '-' + ('0' + (new Date().getMonth() + 1))
+      .slice(-2) + '-' + ('0' + new Date().getDate()).slice(-2);
     this.dtOptions[0] = {
-      ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/tenant/list`,dataSrc: 'data.ReceivableTenant' }, responsive: true,
+      ajax: {
+        url: this.service.GetBaseUrl() + `property/${this.propertyID}/tenant/list`,
+        dataSrc: 'data.ReceivableTenant'
+      }, responsive: true,
       columns: [
         {
           title: 'Name', data: 'TenantName'
         }, {
           title: 'Status', render: (data: any, type: any, full: any) => {
-            return `${this.datepipe.transform(full.RentDueDate, 'MMM, dd yyyy')} <br>₹ ${full.MonthlyORDailyRent}`;
+            if (full.IsContractCancel) {
+              return `<span class="text-12 p-1 badge badge-danger"> Contract Terminated </span>`;
+            }
+            return `${this.datepipe.transform(full.RentDueDate, 'MMM dd,yyyy')} <br>₹ ${full.MonthlyORDailyRent}`;
           },
-        },  {
+        }, {
           title: 'Action', render: (data: any, type: any, full: any) => {
+            if (full.IsContractCancel) {
+              return `<span class="text-12 p-1 badge badge-danger"> Contract Terminated </span>`;
+            }
             let invoice = '';
+            let contract = '';
+            let cancel = '';
             let receipt = '';
+            if (full.RentContractID) {
+              contract += '<a class="btn ViewAgreement " title="View Rent Agreement" ViewInvocie-id="' + full.RentContractID + '">';
+              // tslint:disable-next-line: max-line-length
+              contract += '<i class="mdi mdi-eye-outline font-18 text-success" aria-hidden="false" ViewInvocie-id="' + full.RentContractID + '"></i>';
+              contract += '</a>';
+            }
             if (full.InvoiceDocumentID === null) {
               // tslint:disable-next-line: max-line-length
-              invoice += '<a class="btn GenerateInvocie m-1" title="Generate Invoice" GenerateInvocie-id="' + full.PropertyRentID + '">';
+              invoice += '<a class="btn GenerateInvocie " title="Generate Invoice" GenerateInvocie-id="' + full.PropertyRentID + '">';
               // tslint:disable-next-line: max-line-length
               invoice += '<i class="mdi mdi-file-compare font-18 text-warning" aria-hidden="false" GenerateInvocie-id="' + full.PropertyRentID + '"></i>';
               invoice += '</a>';
             } else {
-              invoice += '<a class="btn ViewInvocie m-1" title="View Invoice" ViewInvocie-id="' + full.InvoiceDocumentID + '">';
+              invoice += '<a class="btn ViewInvocie " title="View Invoice" ViewInvocie-id="' + full.InvoiceDocumentID + '">';
               // tslint:disable-next-line: max-line-length
               invoice += '<i class="mdi mdi-file-compare font-18 text-success" aria-hidden="false" ViewInvocie-id="' + full.InvoiceDocumentID + '"></i>';
               invoice += '</a>';
             }
             if (full.ReceiptDocumentID === null) {
               // tslint:disable-next-line: max-line-length
-              receipt += '<a class="btn GenerateReceipt m-1" title="Generate Receipt" GenerateReceipt-id="' + full.PropertyRentID + '">';
+              receipt += '<a class="btn GenerateReceipt " title="Generate Receipt" GenerateReceipt-id="' + full.PropertyRentID + '" GenerateReceiptTenant-id="' + full.PropertyTenantID + '">';
               // tslint:disable-next-line: max-line-length
-              receipt += '<i class="mdi mdi-clipboard-check-outline font-18 text-warning" aria-hidden="false" GenerateReceipt-id="' + full.PropertyRentID + '"></i>';
+              receipt += '<i class="mdi mdi-clipboard-check-outline font-18 text-warning" aria-hidden="false" GenerateReceipt-id="' + full.PropertyRentID + '" GenerateReceiptTenant-id="' + full.PropertyTenantID + '" ></i>';
               receipt += '</a>';
             } else {
-              receipt += '<a class="btn ViewReceipt m-1" title="View Receipt" ViewInvocie-id="' + full.ReceiptDocumentID + '">';
+              receipt += '<a class="btn ViewReceipt" title="View Receipt" ViewInvocie-id="' + full.ReceiptDocumentID + '">';
               // tslint:disable-next-line: max-line-length
               receipt += '<i class="mdi mdi-clipboard-check-outline font-18 text-success" aria-hidden="false" ViewInvocie-id="' + full.ReceiptDocumentID + '"></i>';
               receipt += '</a>';
             }
-            return `${invoice} ${receipt}`;
+            if (!full.IsContractCancel) {
+              cancel += '<a class="btn cancelcontract " title="Cancel Contract" cancel-id="' + full.PropertyTenantID + '">';
+              // tslint:disable-next-line: max-line-length
+              cancel += '<i class="mdi mdi-cancel font-18 text-danger" aria-hidden="false" cancel-id="' + full.PropertyTenantID + '"></i>';
+              cancel += '</a>';
+            }
+            return `${contract} ${invoice} ${receipt} ${cancel}`;
           },
         }, {
           title: 'Remarks', render: (data: any, type: any, full: any) => {
             return `<div style="font-size: 12px"; font-family: Nunito,sans-serif;>
             Cell : ${full.TenantMobile} <br> Email : ${full.TenantEmail}
             <br> Advance Deposite: ${full.AdvanceDeposite}
-            <br> Since : ${this.datepipe.transform(full.ContractStartDate, 'MMM, dd yyyy')} </div>` ;
+            <br> Since : ${this.datepipe.transform(full.ContractStartDate, 'MMM, dd yyyy')}
+            <br> Remaining Deposite : ${full.RemainingAdvanceAmount}</div>`;
           },
         },
       ],
@@ -104,23 +132,37 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
       columnDefs: [{ width: '18%', targets: [0, 1] }],
     };
     this.dtOptions[1] = {
-      ajax: { url: this.service.GetBaseUrl() +`property/${this.propertyID}/tenant/list`,dataSrc: 'data.PayableTenant' }, responsive: true,
+      ajax: { url: this.service.GetBaseUrl() + `property/${this.propertyID}/tenant/list`, dataSrc: 'data.PayableTenant' }, responsive: true,
       columns: [
         {
           title: 'Name', data: 'TenantName'
         }, {
           title: 'Status', render: (data: any, type: any, full: any) => {
+            if (full.IsContractCancel) {
+              return `<span class="text-12 p-1 badge badge-danger"> Contract Terminated </span>`;
+            }
             return `${this.datepipe.transform(full.RentDueDate, 'MMM, dd yyyy')} <br>₹ ${full.MonthlyORDailyRent}`;
           },
-        },  {
+        }, {
           title: 'Action', render: (data: any, type: any, full: any) => {
+            if (full.IsContractCancel) {
+              return `<span class="text-12 p-1 badge badge-danger"> Contract Terminated </span>`;
+            }
             let invoice = '';
             let receipt = '';
+            let contract = '';
+            let cancel = '';
+            if (full.RentContractID) {
+              contract += '<a class="btn ViewAgreement " title="View Rent Agreement" ViewInvocie-id="' + full.RentContractID + '">';
+              // tslint:disable-next-line: max-line-length
+              contract += '<i class="mdi mdi-eye-outline font-18 text-success" aria-hidden="false" ViewInvocie-id="' + full.RentContractID + '"></i>';
+              contract += '</a>';
+            }
             if (full.InvoiceDocumentID === null) {
               // tslint:disable-next-line: max-line-length
-              invoice += '<a class="btn UploadInvocie m-1" title="Upload Invoice" UploadInvocie-id="' + full.PropertyTenantID + '">';
+              invoice += '<a class="btn UploadInvocie m-1" title="Upload Invoice" UploadInvocie-id="' + full.PropertyRentID + '">';
               // tslint:disable-next-line: max-line-length
-              invoice += '<i class="mdi mdi-file-upload-outline font-18 text-warning" aria-hidden="false" UploadInvocie-id="' + full.PropertyTenantID + '"></i>';
+              invoice += '<i class="mdi mdi-file-upload-outline font-18 text-warning" aria-hidden="false" UploadInvocie-id="' + full.PropertyRentID + '"></i>';
               invoice += '</a>';
             } else {
               invoice += '<a class="btn ViewInvocie m-1" title="View Invoice" ViewInvocie-id="' + full.InvoiceDocumentID + '">';
@@ -140,14 +182,21 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
               receipt += '<i class="mdi mdi-clipboard-check-outline font-18 text-success" aria-hidden="false" ViewInvocie-id="' + full.ReceiptDocumentID + '"></i>';
               receipt += '</a>';
             }
-            return `${invoice} ${receipt}`;
+            if (!full.IsContractCancel) {
+              cancel += '<a class="btn cancelcontract m-1" title="Cancel Contract" cancel-id="' + full.PropertyTenantID + '">';
+              // tslint:disable-next-line: max-line-length
+              cancel += '<i class="mdi mdi-cancel font-18 text-danger" aria-hidden="false" cancel-id="' + full.PropertyTenantID + '"></i>';
+              cancel += '</a>';
+            }
+            return `${contract} ${invoice} ${receipt} ${cancel}`;
           },
         }, {
           title: 'Remarks', render: (data: any, type: any, full: any) => {
             return `<div style="font-size: 12px"; font-family: Nunito,sans-serif;>
             Cell : ${full.TenantMobile} <br> Email : ${full.TenantEmail}
             <br> Advance Deposite: ${full.AdvanceDeposite}
-            <br> Since : ${this.datepipe.transform(full.ContractStartDate, 'MMM, dd yyyy')} </div>` ;
+            <br> Since : ${this.datepipe.transform(full.ContractStartDate, 'MMM, dd yyyy')}
+            <br> Remaining Deposite : ${full.RemainingAdvanceAmount}</div>`;
           },
         },
       ],
@@ -171,6 +220,7 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
     //         this.isLoaded = true;
     //       }
     //     });
+
   }
   ngAfterViewInit() {
     this.dtTrigger.next();
@@ -182,8 +232,8 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
       if (event.target.hasAttribute('ViewInvocie-id')) {
         this.ViewDocument(event.target.getAttribute('ViewInvocie-id'));
       }
-      if (event.target.hasAttribute('GenerateReceipt-id')) {
-        this.GenerateReceipt(event.target.getAttribute('GenerateReceipt-id'));
+      if (event.target.hasAttribute('GenerateReceipt-id') && event.target.hasAttribute('GenerateReceiptTenant-id')) {
+        this.GenerateReceipt(event.target.getAttribute('GenerateReceipt-id'), event.target.getAttribute('GenerateReceiptTenant-id'));
       }
       if (event.target.hasAttribute('UploadInvocie-id')) {
         this.UploadInvoice(event.target.getAttribute('UploadInvocie-id'));
@@ -191,22 +241,35 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
       if (event.target.hasAttribute('UploadReceipt-id')) {
         this.UploadReceipt(event.target.getAttribute('UploadReceipt-id'));
       }
+      if (event.target.hasAttribute('cancel-id')) {
+        this.CancelContract(event.target.getAttribute('cancel-id'));
+      }
     });
   }
-  UploadReceipt(id){
+  CancelContract(id) {
+    this.service.CancelRentContract(id).subscribe((Res) => {
+      this.rerender();
+    });
+  }
+  UploadReceipt(id) {
     this.router.navigate([`rent/uploadreceipt/${this.propertyID}/${id}`]);
   }
-  UploadInvoice(id){
+  UploadInvoice(id) {
     this.uploadInvoiceForm(id);
     this.RentID = id;
     this.modalService.open(this.uploadInvoiceModal);
   }
-  GenerateReceipt(id){
-    this.generateReceiptForm();
-    this.RentID = id;
-    this.modalService.open(this.generateReceiptModal);
+  GenerateReceipt(id, tenantID) {
+    this.isLoaded = false;
+    this.service.viewTenant(tenantID).subscribe((res) => {
+      this.isLoaded = true;
+      this.tanentData = res.data.tenantinfo;
+      this.generateReceiptForm();
+      this.RentID = id;
+      this.modalService.open(this.generateReceiptModal);
+    });
   }
-  ViewDocument(id){
+  ViewDocument(id) {
     this.isLoaded = false;
     this.service.getDocument(this.propertyID, id).subscribe((res) => {
       this.isLoaded = true;
@@ -319,10 +382,10 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
   rerender(): void {
     this.dtElements.forEach((dtElement) => {
       dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      // Call the dtTrigger to rerender again
-    });
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+      });
     });
     this.dtTrigger.next();
     this.dtTrigger2.next();
@@ -355,7 +418,6 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
     this.receiptForm = this.formBuilder.group({
       ModeOfPayment: new FormControl(null, Validators.required),
       PaymentDate: new FormControl(null, Validators.required),
-      AmountPay: new FormControl(null, Validators.required),
       ChequeNo: new FormControl(null, Validators.required),
       ChequeName: new FormControl(null, Validators.required),
       BankName: new FormControl(null, Validators.required),
@@ -364,13 +426,12 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
       WalletName: new FormControl(null, Validators.required),
       CreatedBy: new FormControl(this.currentUser.UserID),
       ModifiedBy: new FormControl(null),
-      AmountFromAdvance: new FormControl(0),
+      AmountFromAdvance: new FormControl(0, Validators.max(this.tanentData.RemainingAdvanceAmount)),
     });
   }
   onGenerate() {
     this.submited = true;
     this.Loading = true;
-    console.log(this.receiptForm.value);
     if (this.receiptForm.valid) {
       this.service.GenerateReceipt(this.RentID, this.receiptForm.value).subscribe((res) => {
         this.submited = false;
@@ -381,6 +442,9 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
             title: res.error_code,
             text: res.error,
             type: 'error'
+          }).then(() => {
+            this.submited = false;
+            this.Loading = false;
           });
           return;
         } else {
@@ -395,11 +459,11 @@ export class RentComponent implements OnInit, OnChanges, AfterViewInit, AfterCon
         }
       });
     }
+    this.Loading = false;
   }
   resetReceiptForm() {
     this.e.ModeOfPayment.reset();
     this.e.PaymentDate.reset();
-    this.e.AmountPay.reset();
     this.e.ChequeNo.reset();
     this.e.ChequeName.reset();
     this.e.BankName.reset();

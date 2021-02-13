@@ -7,13 +7,16 @@
   headerClass="header-title"
   collapsed="{{ item.collapsed }}"
   loading="{{ item.loading }}"
-  color=""
+  color="{{ item.Status == 1 ? 'lite' : 'soft-success' }}"
   instyle="true"
   text="green"
   id="{{ item.StateID }}"
   (onLoad)="onShow($event)"
   courtname="{{ item.CourtName }}"
-  CaseStatus="{{ item.CaseStatus }}"
+  CaseStatus="{{ item.Status == 1 ? 'Ongoing' : 'Dispose' }}"
 >
   <app-details-legal-case></app-details-legal-case>
 </app-custom-partlet>
+<div class="card-disabled" *ngIf="isloading">
+  <div class="card-portlets-loader"></div>
+</div>

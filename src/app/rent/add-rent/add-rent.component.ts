@@ -14,6 +14,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AddRentComponent implements OnInit {
   @Input() propertyId;
+  @Input() PropertyData: any;
   @Input() fromDate: Date;
   @Input() toDate: Date;
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
@@ -26,18 +27,16 @@ export class AddRentComponent implements OnInit {
   hoveredDate: NgbDate;
   hidden: boolean;
   selected: any;
-  isdropdownShow: boolean = false;
+  isdropdownShow = false;
   tenantForm: FormGroup;
   submitted = false;
   error = '';
   isEdit = false;
   urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
-  propertyData = null;
   minDate: Date;
   maxDate: Date;
   isLoading: boolean;
   rentType = ['Receivable', 'Payable'];
-  rentBasedOn = ['Month wise', 'Day wise'];
   fileExtension: string;
   currentUser: any;
 
@@ -65,19 +64,30 @@ export class AddRentComponent implements OnInit {
       TenantName: new FormControl('', [Validators.required, Validators.maxLength(25)]),
       TenantAddress: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       RentType: new FormControl(null, Validators.required),
-      RentBasedOn: new FormControl(null, Validators.required),
+      RentBasedOn: new FormControl('Month wise', Validators.required),
       PropertyID: new FormControl(this.propertyId, Validators.required),
       TenantMobile: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]),
       TenantEmail: new FormControl(null, [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]),
-      RentedSpaceInSqmtr: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.min(1)]),
+      RentedSpaceInSqmtr: new FormControl('', [Validators.required, Validators.max(this.PropertyData.LandSize), Validators.min(1)]),
       RentedSpace: new FormControl('Whole', Validators.required),
-      RentDuration: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.min(1)]),
+      RentDuration: new FormControl(1, [Validators.required, Validators.maxLength(255), Validators.min(1)]),
       RentDueDay: new FormControl('', [Validators.required, Validators.maxLength(255), Validators.min(1)]),
       MonthlyORDailyRent: new FormControl('', [Validators.required, Validators.min(1)]),
       AdvanceDeposite: new FormControl(null, [Validators.required, Validators.min(1)]),
-      NoOfContractMonthsORDay: new FormControl(null, [Validators.required, Validators.min(1)]),
       ContractStartDate: new FormControl('', [Validators.required]),
-      ContractEndDate: new FormControl('',),
+      BankName: new FormControl(''),
+      BankAccountName: new FormControl(''),
+      GSTNumber: new FormControl(''),
+      BankAccountNumber: new FormControl(''),
+      IFSCCODE: new FormControl(''),
+      MICRCODE: new FormControl(''),
+      TransactionSMSMobileNo: new FormControl(''),
+      Cheque_Favour_OF: new FormControl(''),
+      SGST: new FormControl(''),
+      CGST: new FormControl(''),
+      IGST: new FormControl(''),
+      ContractEndDate: new FormControl(''),
+      ApplicableTax: new FormControl('No', [Validators.required]),
       CreatedBy: new FormControl(this.currentUser.UserID, Validators.required),
       ModifiedBy: new FormControl(''),
 
@@ -98,11 +108,11 @@ export class AddRentComponent implements OnInit {
   valid(e) {
     if (!((e.keyCode > 95 && e.keyCode < 106)
       || (e.keyCode > 47 && e.keyCode < 58)
-      || e.keyCode == 8)) {
+      || e.keyCode === 8)) {
       return false;
     }
     if (e.target.value.length > 7) {
-      if (e.keyCode != 8) {
+      if (e.keyCode !== 8) {
         return false;
       }
     }
@@ -115,18 +125,28 @@ export class AddRentComponent implements OnInit {
     input.append('FileType', this.tenantForm.get('FileType').value);
     input.append('uploadfile', (this.tenantForm.get('uploadfile').value)[0]);
     input.append('Description', this.tenantForm.get('Description').value);
+    input.append('RentBasedOn', this.tenantForm.get('RentBasedOn').value);
     input.append('CreatedBy', (this.tenantForm.get('CreatedBy').value));
     input.append('ModifiedBy', (this.tenantForm.get('ModifiedBy').value));
     input.append('RentType', (this.tenantForm.get('RentType').value));
-    input.append('RentBasedOn', (this.tenantForm.get('RentBasedOn').value));
     input.append('TenantName', (this.tenantForm.get('TenantName').value));
     input.append('TenantAddress', (this.tenantForm.get('TenantAddress').value));
     input.append('TenantEmail', (this.tenantForm.get('TenantEmail').value));
     input.append('TenantMobile', (this.tenantForm.get('TenantMobile').value));
+    input.append('BankName', (this.tenantForm.get('BankName').value));
+    input.append('BankAccountName', (this.tenantForm.get('BankAccountName').value));
+    input.append('GSTNumber', (this.tenantForm.get('GSTNumber').value));
+    input.append('BankAccountNumber', (this.tenantForm.get('BankAccountNumber').value));
+    input.append('IFSCCODE', (this.tenantForm.get('IFSCCODE').value));
+    input.append('MICRCODE', (this.tenantForm.get('MICRCODE').value));
+    input.append('TransactionSMSMobileNo', (this.tenantForm.get('TransactionSMSMobileNo').value));
+    input.append('Cheque_Favour_OF', (this.tenantForm.get('Cheque_Favour_OF').value));
+    input.append('IGST', (this.tenantForm.get('IGST').value));
+    input.append('CGST', (this.tenantForm.get('CGST').value));
+    input.append('SGST', (this.tenantForm.get('SGST').value));
     input.append('RentedSpaceInSqmtr', (this.tenantForm.get('RentedSpaceInSqmtr').value));
     input.append('AdvanceDeposite', (this.tenantForm.get('AdvanceDeposite').value));
     input.append('MonthlyORDailyRent', (this.tenantForm.get('MonthlyORDailyRent').value));
-    input.append('NoOfContractMonthsORDay', (this.tenantForm.get('NoOfContractMonthsORDay').value));
     input.append('ContractStartDate', this.contractStartDate);
     input.append('ContractEndDate', this.contractEndtDate);
     input.append('RentDuration', (this.tenantForm.get('RentDuration').value));
@@ -144,7 +164,6 @@ export class AddRentComponent implements OnInit {
       this.tenantForm.get('RentedSpace').setValue(Res.data[0].RentedSpace);
       this.tenantForm.get('RentedPart').setValue(Res.data[0].RentedPart);
       this.tenantForm.get('AdvanceDeposite').setValue(Res.data[0].AdvanceDeposite);
-      this.tenantForm.get('ContractMonths').setValue(Res.data[0].ContractMonths);
       this.tenantForm.get('ContractStartDate').setValue(moment(Res.data[0].ContractStartDate).format('YYYY-MM-DD'));
       this.tenantForm.get('ContractEndDate').setValue(moment(Res.data[0].ContractEndDate).format('YYYY-MM-DD'));
       this.tenantForm.get('PropertyID').setValue(Res.data[0].PropertyID);
@@ -176,7 +195,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              location.reload()
+              location.reload();
               // this.refreshrent.emit();
             });
           } else {
@@ -184,8 +203,9 @@ export class AddRentComponent implements OnInit {
               title: data.error_code,
               text: data.error,
               type: 'error'
+            }).then(() => {
+              location.reload();
             });
-            location.reload();
           }
         });
     } else if (this.tenantForm.valid && this.isEdit === true) {
@@ -200,7 +220,7 @@ export class AddRentComponent implements OnInit {
               type: 'success',
               timer: 2000
             }).then(() => {
-              location.reload()
+              location.reload();
             });
           } else {
             Swal.fire({
@@ -217,6 +237,9 @@ export class AddRentComponent implements OnInit {
   get f() { return this.tenantForm.controls; }
   onchange(e) {
     if (e && e.length > 0) {
+      if (e.length > 1) {
+        this.f.uploadfile.setValue(e.splice(1));
+      }
       const file = e[0];
       let fileName = file.name;
       fileName = fileName.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9]/g, '');
@@ -230,6 +253,7 @@ export class AddRentComponent implements OnInit {
       this.f.Description.setValue('');
       this.fileExtension = '';
     }
+
   }
   setform(fileName, filetype, extension) {
     if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
@@ -269,9 +293,9 @@ export class AddRentComponent implements OnInit {
       this.toDate = new Date(date.year, date.month - 1, date.day);
       this.hidden = true;
       this.f.ContractStartDate.setValue(this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString());
-      const offset = this.toDate.getTimezoneOffset()
-      const date2 = new Date(this.toDate.getTime() - (offset * 60 * 1000))
-      const date3 = new Date(this.fromDate.getTime() - (offset * 60 * 1000))
+      const offset = this.toDate.getTimezoneOffset();
+      const date2 = new Date(this.toDate.getTime() - (offset * 60 * 1000));
+      const date3 = new Date(this.fromDate.getTime() - (offset * 60 * 1000));
       this.contractEndtDate = date2.toISOString().split('T')[0];
       this.contractStartDate = date3.toISOString().split('T')[0];
       this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
@@ -326,5 +350,8 @@ export class AddRentComponent implements OnInit {
     } else {
       this.f.RentedSpaceInSqmtr.enable();
     }
+  }
+  onApplicableTaxChange(val) {
+
   }
 }

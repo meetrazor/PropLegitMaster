@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { GeneralService } from './../../services/general.service';
 import { Component, Input, OnInit, Output, ViewChild, AfterViewInit, AfterContentChecked, OnChanges, SimpleChanges } from '@angular/core';
@@ -17,7 +18,7 @@ export class ViewTaxComponent implements OnInit, AfterViewInit, AfterContentChec
   @Input() refresh: number;
   constructor(
     private service: GeneralService, private datepipe: DatePipe,
-    private router: Router
+    private router: Router, private sanitizer: DomSanitizer
   ) { }
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })

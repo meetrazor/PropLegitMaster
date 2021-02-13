@@ -20,31 +20,7 @@
       </div>
     </div>
   </div>
-  <div class="">
-    <div class="mb-3">
-      <h4 class="header-title">Rent Based on Type*</h4>
-      <ng-select
-        (change)="onRentChange($event)"
-        class="form-control"
-        formControlName="RentBasedOn"
-        placeholder="
-        Select Rent Based on Type"
-        [ngClass]="{
-          'is-invalid': submitted && f.RentBasedOn.errors
-        }"
-      >
-        <ng-option
-          *ngFor="let item of rentBasedOn"
-          [value]="item"
-          [id]="item"
-          >{{ item }}</ng-option
-        >
-      </ng-select>
-      <div *ngIf="submitted && f.RentBasedOn.errors" class="invalid-feedback">
-        <div *ngIf="f.RentBasedOn.errors.required">Rent Type is required</div>
-      </div>
-    </div>
-  </div>
+
   <div class="">
     <div class="mb-3">
       <h4 class="header-title">Tenant Name *</h4>
@@ -136,7 +112,7 @@
 
   <div class="">
     <div class="mb-3">
-      <span class="header-title">Rented Space</span>
+      <h4 class="header-title">Rented Space</h4>
       <span
         ><input
           (change)="onSpaceChange($event.target.value)"
@@ -178,7 +154,7 @@
         min="0"
         maxlength="7"
       />
-
+      <span>Total Land Size : {{ PropertyData.LandSize }} Sqmtr</span>
       <div
         *ngIf="submitted && f.RentedSpaceInSqmtr.errors"
         class="invalid-feedback"
@@ -187,7 +163,10 @@
           Property Size is required
         </div>
         <div *ngIf="f.RentedSpaceInSqmtr.errors.maxlength">
-          Property Size cannot exceed 50 characters.
+          Property Size cannot exceed 7 Digits.
+        </div>
+        <div *ngIf="f.RentedSpaceInSqmtr.errors.max">
+          Property Size Cannot exceed Total Land Size.
         </div>
         <div *ngIf="f.RentedSpaceInSqmtr.errors.min">
           Property Size cannot be 0.
@@ -256,7 +235,7 @@
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Monthly/Daily Rent (Rs.)*</h4>
+      <h4 class="header-title">Rent Amount(Rs.)*</h4>
       <input
         class="form-control"
         placeholder="Enter Monthly/Daily Rent"
@@ -282,33 +261,7 @@
 
   <div class="">
     <div class="mb-3">
-      <h4 class="header-title">Contract Months / Days*</h4>
-      <input
-        class="form-control"
-        placeholder="Enter Contract Months/Days"
-        formControlName="NoOfContractMonthsORDay"
-        (keypress)="isValid($event)"
-        [ngClass]="{
-          'is-invalid': submitted && f.NoOfContractMonthsORDay.errors
-        }"
-        maxlength="3"
-      />
-      <div
-        *ngIf="submitted && f.NoOfContractMonthsORDay.errors"
-        class="invalid-feedback"
-      >
-        <div *ngIf="f.NoOfContractMonthsORDay.errors.required">
-          ContractMonths/Days is required
-        </div>
-        <div *ngIf="f.NoOfContractMonthsORDay.errors.min">
-          ContractMonths/Days cannot be 0
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="">
-    <div class="mb-3">
-      <h4 class="header-title">Contract Date *</h4>
+      <h4 class="header-title">Contract Period *</h4>
       <div class="form-group">
         <div class="input-group input-group-sm">
           <ng-template #t let-date let-focused="focused">
@@ -364,7 +317,7 @@
             class="invalid-feedback"
           >
             <div *ngIf="f.ContractStartDate.errors.required">
-              ContractMonths/Days is required
+              Contract Period is required
             </div>
           </div>
         </div>
@@ -420,38 +373,6 @@
 
     <div class="">
       <div class="mb-3">
-        <h4 class="header-title">Rent Duration*</h4>
-        <input
-          class="form-control"
-          placeholder="Enter Rent Duration"
-          formControlName="RentDuration"
-          type="number"
-          (keypress)="valid($event)"
-          [ngClass]="{
-            'is-invalid': submitted && f.RentDuration.errors
-          }"
-          min="0"
-          maxlength="7"
-        />
-
-        <div
-          *ngIf="submitted && f.RentDuration.errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="f.RentDuration.errors.required">
-            Rent Duration is required
-          </div>
-          <div *ngIf="f.RentDuration.errors.maxlength">
-            Rent Duration cannot exceed 50 characters.
-          </div>
-          <div *ngIf="f.RentDuration.errors.min">
-            Rent Duration cannot be 0.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="" *ngIf="f.RentBasedOn.value == 'Month wise'">
-      <div class="mb-3">
         <h4 class="header-title">Rent Due Day*</h4>
         <input
           class="form-control"
@@ -475,14 +396,264 @@
         </div>
       </div>
     </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Bank Name</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Bank Name"
+          formControlName="BankName"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.BankName.errors
+          }"
+          maxlength="25"
+        />
+
+        <div *ngIf="submitted && f.BankName.errors" class="invalid-feedback">
+          <div *ngIf="f.BankName.errors.required">Bank Name is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Bank Account Name</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Bank Account Name"
+          formControlName="BankAccountName"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.BankAccountName.errors
+          }"
+          maxlength="25"
+        />
+
+        <div
+          *ngIf="submitted && f.BankAccountName.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.BankAccountName.errors.required">
+            Bank Account Name is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">GST Number</h4>
+        <input
+          class="form-control"
+          placeholder="Enter GST Number"
+          formControlName="GSTNumber"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.GSTNumber.errors
+          }"
+          maxlength="25"
+        />
+
+        <div *ngIf="submitted && f.GSTNumber.errors" class="invalid-feedback">
+          <div *ngIf="f.GSTNumber.errors.required">GST Number is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Bank Account Number</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Bank Account Number"
+          formControlName="BankAccountNumber"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.BankAccountNumber.errors
+          }"
+          maxlength="25"
+        />
+
+        <div
+          *ngIf="submitted && f.BankAccountNumber.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.BankAccountNumber.errors.required">
+            Bank Account Number is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">IFSC CODE</h4>
+        <input
+          class="form-control"
+          placeholder="Enter IFSC CODE"
+          formControlName="IFSCCODE"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.IFSCCODE.errors
+          }"
+          maxlength="25"
+        />
+
+        <div *ngIf="submitted && f.IFSCCODE.errors" class="invalid-feedback">
+          <div *ngIf="f.IFSCCODE.errors.required">IFSC CODE is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">MICR CODE</h4>
+        <input
+          class="form-control"
+          placeholder="Enter MICR CODE"
+          formControlName="MICRCODE"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.MICRCODE.errors
+          }"
+          maxlength="25"
+        />
+
+        <div *ngIf="submitted && f.MICRCODE.errors" class="invalid-feedback">
+          <div *ngIf="f.MICRCODE.errors.required">MICR CODE is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Transaction Mobile No</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Transaction Mobile No"
+          formControlName="TransactionSMSMobileNo"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.TransactionSMSMobileNo.errors
+          }"
+          maxlength="25"
+        />
+
+        <div
+          *ngIf="submitted && f.TransactionSMSMobileNo.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.TransactionSMSMobileNo.errors.required">
+            Transaction Mobile No is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Cheque Favour OF</h4>
+        <input
+          class="form-control"
+          placeholder="Enter Cheque Favour OF"
+          formControlName="Cheque_Favour_OF"
+          type="text"
+          [ngClass]="{
+            'is-invalid': submitted && f.Cheque_Favour_OF.errors
+          }"
+          maxlength="25"
+        />
+
+        <div
+          *ngIf="submitted && f.Cheque_Favour_OF.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.Cheque_Favour_OF.errors.required">
+            Cheque Favour OF is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <div class="mb-3">
+        <h4 class="header-title">Any Service Tax Aplicable ?</h4>
+        <span
+          ><input
+            (change)="onApplicableTaxChange($event.target.value)"
+            class="mx-1"
+            type="radio"
+            formControlName="ApplicableTax"
+            value="Yes"
+          />
+          Yes</span
+        >
+        <span
+          ><input
+            (change)="onApplicableTaxChange($event.target.value)"
+            class="mx-1"
+            type="radio"
+            formControlName="ApplicableTax"
+            value="No"
+          />
+          No</span
+        >
+        <div
+          *ngIf="submitted && f.ApplicableTax.errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f.ApplicableTax.errors.required">
+            Applicable Tax is required
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="f.ApplicableTax.value == 'Yes'">
+      <div class="form-group row pl-2">
+        <h4 class="col-6 col-sm-4 header-title">CGST :</h4>
+        <div class="col-6 col-sm-4">
+          <input
+            class="form-control"
+            placeholder="CGST"
+            formControlName="CGST"
+            maxlength="2"
+          />
+        </div>
+      </div>
+      <div class="form-group row pl-2">
+        <h4 class="col-6 col-sm-4 header-title">SGST :</h4>
+        <div class="col-6 col-sm-4">
+          <input
+            class="form-control"
+            placeholder="SGST"
+            formControlName="SGST"
+            maxlength="2"
+          />
+        </div>
+      </div>
+      <div class="form-group row pl-2">
+        <h4 class="col-6 col-sm-4 header-title">IGST :</h4>
+        <div class="col-6 col-sm-4">
+          <input
+            class="form-control"
+            placeholder="IGST"
+            formControlName="IGST"
+            maxlength="2"
+          />
+        </div>
+      </div>
+    </div>
+
     <div class="">
       <div class="mb-2">
-        <h4 class="header-title">Upload File *</h4>
-        <p class="text-muted font-13 m-b-30"></p>
+        <h4 class="header-title">Upload Rent Agrement File *</h4>
         <!-- file upload -->
         <file-upload
           class="dropzone"
-          multiple="false"
+          multiple="true"
           isAnimationDisabled="true"
           listVisible="true"
           zoomText="zoomOut"
@@ -523,31 +694,6 @@
           </div>
           <div *ngIf="submitted && f.FileName.errors.pattern">
             Only alphanumeric characters allowed
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="">
-      <div class="mb-3">
-        <h4 class="header-title">File Type *</h4>
-
-        <select
-          class="custom-select"
-          formControlName="FileType"
-          [ngClass]="{
-            'is-invalid': submitted && f.FileType.errors
-          }"
-        >
-          <option selected disabled>Select File Type *</option>
-          <option value="Photo">Photo</option>
-          <option value="Video">Video</option>
-          <option value="Audio">Audio</option>
-          <option value="PDF">PDF</option>
-          <option value="DOC">Document</option>
-        </select>
-        <div *ngIf="submitted && f.FileType.errors" class="invalid-feedback">
-          <div *ngIf="submitted && f.FileType.errors.required">
-            File Type is Required
           </div>
         </div>
       </div>

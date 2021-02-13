@@ -1,10 +1,7 @@
 <div class="card" *ngIf="isVisible" id="custom-partlet">
   <!-- card header -->
 
-  <div
-    class="card-header bg-{{ color }} text-{{ text }} {{ headerClass }}"
-    style="background-color: #f1f5f7 !important"
-  >
+  <div class="card-header bg-{{ color }} text-{{ text }} {{ headerClass }}">
     <a href="javascript: void(0);" (click)="onHeaderClick(id)">{{ title }}</a>
     <a
       class="ml-3 another text-{{ text }}"

@@ -11,7 +11,7 @@ export class TitleClearComponent implements OnInit {
   breadCrumbItems: any;
   data: any;
   edit: boolean;
-  constructor(private service:GeneralService,private route:ActivatedRoute ,private Router:Router) {
+  constructor(private service: GeneralService, private route: ActivatedRoute, private Router: Router) {
     this.breadCrumbItems = [{ label: 'Dashboard', path: 'loan' }, { label: 'Assignments', path: '/loan/assignment' },
     { label: 'Public Notice', path: '', active: true }];
     this.edit = true;
@@ -126,9 +126,9 @@ No. 7, it is relevant for this tide.
     this.edit = !this.edit;
 
   }
-  save(){
-    this.service.changeStatus(this.route.snapshot.params.AppID,'Title Clear In Progress').subscribe(()=>{
-      this.Router.navigate(['/loan/titleclearcompleted/'+this.route.snapshot.params.AppID])
+  save() {
+    this.service.changeStatus(this.route.snapshot.params.AppID, 'Title Clear In Progress').subscribe(() => {
+      this.Router.navigate(['/loan/titleclearcompleted/' + this.route.snapshot.params.AppID]);
     });
   }
 }
