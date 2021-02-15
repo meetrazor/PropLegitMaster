@@ -17,7 +17,9 @@ export class CustomPartletComponent implements OnInit, OnChanges {
   @Input() Icon: string;
   @Input() courtname: string;
   @Input() instyle: boolean;
+  @Input() hearingDate: any;
   @Input() CaseStatus: string;
+  @Input() status: any;
   // tslint:disable-next-line: no-output-on-prefix
   @Output() onContentRefresh: EventEmitter<any> = new EventEmitter();
   // tslint:disable-next-line: no-output-on-prefix

@@ -38,7 +38,15 @@
   <!-- info container -->
   <div class="info p-3">
     <h5>{{ courtname }}</h5>
-    <p>Status : {{ CaseStatus }}</p>
+    <p><span class="text-muted">Status</span> : {{ CaseStatus }}</p>
+    <p *ngIf="status == 1">
+      <span class="text-muted">Next Hearing</span> :
+      <span class="text-danger">{{ hearingDate }}</span>
+    </p>
+    <p *ngIf="status == 2">
+      <span class="text-muted">Case Disposed On </span> :
+      <span class="text-success">{{ hearingDate }}</span>
+    </p>
   </div>
   <hr />
   <!-- End card header -->
