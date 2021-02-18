@@ -19,27 +19,28 @@
 
   <div class="row">
     <div class="col-md-12 mb-3">
-      <h4 class="header-title">Status</h4>
-      <select class="form-control" formControlName="Status">
-        <option value="1">Ongoing</option>
-        <option value="2">Disposed</option>
-      </select>
-
-      <div *ngIf="submitted && f.Status.errors" class="invalid-feedback">
-        <div *ngIf="f.Status.errors.required">Status is required</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 mb-3">
       <h4 class="header-title">Case Type</h4>
-      <input
+      <ng-select
+        class="form-control"
+        formControlName="CaseType"
+        [ngClass]="{
+          'is-invalid': submitted && f.CaseType.errors
+        }"
+        placeholder="Select Case Type"
+      >
+        <ng-option
+          *ngFor="let item of caseTypes"
+          [value]="item.LegalCaseTypeID"
+          [id]="item.LegalCaseTypeID"
+          >{{ item.LegalCaseTypeName }}</ng-option
+        >
+      </ng-select>
+      <!-- <input
         class="form-control"
         placeholder="Enter Case Type"
         formControlName="CaseType"
         [ngClass]="{ 'is-invalid': submitted && f.CaseType.errors }"
-      />
+      /> -->
       <div *ngIf="submitted && f.CaseType.errors" class="invalid-feedback">
         <div *ngIf="f.CaseType.errors.required">Case Type is required</div>
       </div>
@@ -48,57 +49,18 @@
 
   <div class="row">
     <div class="col-md-12 mb-3">
-      <h4 class="header-title">Court Name</h4>
-      <input
-        class="form-control"
-        placeholder="Enter Court Name"
-        formControlName="CourtName"
-        [ngClass]="{
-          'is-invalid': submitted && f.CourtName.errors
-        }"
-      />
-      <div *ngIf="submitted && f.CourtName.errors" class="invalid-feedback">
-        <div *ngIf="f.CourtName.errors.required">Court Name is required</div>
-        <div *ngIf="f.CourtName.errors.maxlength">
-          Court Name cannot exceed 25 characters.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 mb-3">
-      <h4 class="header-title">Court Address</h4>
-      <textarea
-        class="form-control"
-        placeholder="Enter Court Address"
-        formControlName="CourtAddress"
-        [ngClass]="{
-          'is-invalid': submitted && f.CourtAddress.errors
-        }"
-      ></textarea>
-      <div *ngIf="submitted && f.CourtAddress.errors" class="invalid-feedback">
-        <div *ngIf="f.CourtAddress.errors.required">
-          Court Address is required
-        </div>
-        <div *ngIf="f.CourtAddress.errors.maxlength">
-          Court Address cannot exceed 255 characters.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 mb-3">
       <h4 class="header-title">Case Description</h4>
-      <input
+      <textarea
+        name=""
+        id=""
+        rows="3"
         class="form-control"
         placeholder="Enter Case Description"
         formControlName="CaseDescription"
         [ngClass]="{
           'is-invalid': submitted && f.CaseDescription.errors
         }"
-      />
+      ></textarea>
 
       <div
         *ngIf="submitted && f.CaseDescription.errors"
@@ -216,26 +178,6 @@
       />
       <div *ngIf="submitted && f.CNRNumber.errors" class="invalid-feedback">
         <div *ngIf="f.CNRNumber.errors.required">CNR Number is required</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 mb-3">
-      <h4 class="header-title">Judge</h4>
-      <input
-        class="form-control"
-        placeholder="Enter Judge"
-        formControlName="Judge"
-        [ngClass]="{
-          'is-invalid': submitted && f.Judge.errors
-        }"
-      />
-      <div *ngIf="submitted && f.Judge.errors" class="invalid-feedback">
-        <div *ngIf="f.Judge.errors.required">Judge is required</div>
-        <div *ngIf="f.Judge.errors.maxlength">
-          Judge name cannot exceed 25 characters.
-        </div>
       </div>
     </div>
   </div>

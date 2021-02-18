@@ -15,6 +15,7 @@ export class AddLegalCaseComponent implements OnInit {
   currentUser: any;
   @Input() PropertyID;
   isloading: boolean;
+  caseTypes: Array<any>;
   constructor(
     private formBuilder: FormBuilder, private router: Router,
     private route: ActivatedRoute, private service: GeneralService) { }
@@ -25,12 +26,9 @@ export class AddLegalCaseComponent implements OnInit {
     this.legalcaseForm = this.formBuilder.group({
       PropertyId: new FormControl(this.route.snapshot.params.id, Validators.required),
       CaseNumber: new FormControl('', Validators.required),
-      CaseType: new FormControl('', Validators.required),
-      CourtName: new FormControl(null, [Validators.required, Validators.maxLength(25)]),
-      CourtAddress: new FormControl('', [Validators.required, Validators.maxLength(255)]),
+      CaseType: new FormControl(null, Validators.required),
       CaseDescription: new FormControl('', [Validators.required, Validators.maxLength(255)]),
-      Status: new FormControl('1', Validators.required),
-      Judge: new FormControl(null, [Validators.required, Validators.maxLength(25)]),
+      Status: new FormControl(1, Validators.required),
       FilingNumber: new FormControl('', Validators.required),
       FilingDate: new FormControl('', Validators.required),
       RegistrationNumber: new FormControl('', Validators.required),
@@ -38,6 +36,9 @@ export class AddLegalCaseComponent implements OnInit {
       CNRNumber: new FormControl('', Validators.required),
       CreatedBy: new FormControl(this.currentUser.UserID, Validators.required)
     });
+    this.service.GetPropertyLegalCaseTypes().subscribe(Res => {
+      this.caseTypes = Res.data;
+    })
     this.isloading = false;
   }
   isValid(event) {

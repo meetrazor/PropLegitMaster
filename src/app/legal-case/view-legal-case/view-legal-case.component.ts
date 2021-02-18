@@ -32,6 +32,9 @@ export class ViewLegalCaseComponent implements OnInit {
             console.log(data.error);
             return;
           } else {
+            data.data.map((item) => {
+              item.isloaded = false;
+            })
             this.datasource = data.data;
             // for (const item of this.datasource) {
             //   this.getHearings(item.LegalCaseID);
@@ -129,6 +132,7 @@ export class ViewLegalCaseComponent implements OnInit {
 
   }
   onShow(e) {
-
+    const obj = this.datasource.find(x => x.LegalCaseID == e);
+    obj.isloaded = true;
   }
 }

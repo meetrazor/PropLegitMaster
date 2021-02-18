@@ -55,6 +55,8 @@ const Dashboard = `${apiUrl}loan/Dashboard/Count`;
 const cancelContract = `${apiUrl}property/tenant/ContractCancel/`;
 const propertyTaxAlert = `${apiUrl}propertyAlerts/tax/Property/`;
 const propertyRentAlert = `${apiUrl}propertyAlerts/rent/Property/`;
+const propertyCaseDetails = `${apiUrl}property/case/details/`;
+const propertyCaseTypes = `${apiUrl}property/legalcase/types/list`;
 
 @Injectable({
   providedIn: 'root',
@@ -435,5 +437,20 @@ export class GeneralService {
   }
   GetPropertyRentAlert(PropertyID): any {
     return this.http.get(`${propertyRentAlert}${PropertyID}`, httpOptions);
+  }
+  GetPropertyCaseDetails(caseID): any {
+    return this.http.get(`${propertyCaseDetails}${caseID}`, httpOptions);
+  }
+  GetPropertyLegalCaseTypes(): any {
+    return this.http.get(propertyCaseTypes, httpOptions);
+  }
+  AddLegalCaseAct(CaseID, data): any {
+    return this.http.post(`${apiUrl}property/case/${CaseID}/CaseActs`, data, httpOptions);
+  }
+  GetLegalCaseLastHearing(CaseID): any {
+    return this.http.get(`${apiUrl}property/case/${CaseID}/last-hearing`, httpOptions);
+  }
+  AddLegalCaseHearing(CaseID, data): any {
+    return this.http.post(`${apiUrl}property/case/${CaseID}/next-hearing`, data, httpOptions);
   }
 }

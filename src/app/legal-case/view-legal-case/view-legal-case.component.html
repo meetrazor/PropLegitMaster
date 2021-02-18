@@ -5,23 +5,25 @@
   anotherTitle="{{ item.RegistrationDate | date: 'MMM dd, yyyy' }}"
   Icon=""
   headerClass="header-title"
-  collapsed="{{ item.collapsed }}"
-  loading="{{ item.loading }}"
-  color="{{ item.Status == 1 ? 'lite' : 'soft-success' }}"
+  collapsed="0"
+  loading="0"
+  color="{{ item.Status == 1 ? 'light' : 'soft-success' }}"
   instyle="true"
   text="green"
-  id="{{ item.StateID }}"
+  id="{{ item.LegalCaseID }}"
   (onLoad)="onShow($event)"
   courtname="{{ item.CourtName }}"
   CaseStatus="{{ item.Status == 1 ? 'Ongoing' : 'Dispose' }}"
   hearingDate="{{
-    item.NextHearingDate
-      ? (item.NextHearingDate | date: 'MMM dd, yyyy')
-      : 'Jan 01, 2021'
+    item.HearingDate ? (item.HearingDate | date: 'MMM dd, yyyy') : ''
   }}"
   status="{{ item.Status }}"
 >
-  <app-details-legal-case></app-details-legal-case>
+  <app-details-legal-case
+    *ngIf="item.isloaded"
+    [CaseID]="item.LegalCaseID"
+    [status]="item.Status"
+  ></app-details-legal-case>
 </app-custom-partlet>
 <div class="card-disabled" *ngIf="isloading">
   <div class="card-portlets-loader"></div>

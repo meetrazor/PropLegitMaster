@@ -3,10 +3,14 @@
     <div class="col-xs-12 col-sm-11">
       <ngb-tabset justify="justified" type="pills">
         <ngb-tab title="Details & Acts" class="nav-item">
-          <ng-template ngbTabContent class="nav-item"> </ng-template>
+          <ng-template ngbTabContent class="nav-item"
+            ><app-case-details [CaseID]="CaseID"></app-case-details>
+          </ng-template>
         </ngb-tab>
         <ngb-tab title="Status" class="nav-item">
-          <ng-template ngbTabContent> </ng-template>
+          <ng-template ngbTabContent>
+            <app-case-status [CaseID]="CaseID"></app-case-status>
+          </ng-template>
         </ngb-tab>
         <ngb-tab title="Petitioner & Advocate" class="nav-item">
           <ng-template ngbTabContent></ng-template>
@@ -20,7 +24,7 @@
       </ngb-tabset>
     </div>
     <div class="col-xs-12 col-sm-1">
-      <div class="float-right dropdown" id="dots" ngbDropdown>
+      <div class="float-right dropdown mt-2" id="dots" ngbDropdown>
         <a
           href="javascript: void(0);"
           class="dropdown-toggle arrow-none"
@@ -31,10 +35,35 @@
           <i class="mdi mdi-dots-vertical m-0 text-muted h3"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-          <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-          <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-          <a class="dropdown-item" href="javascript:void(0);">Add Members</a>
-          <a class="dropdown-item" href="javascript:void(0);">Add Due Date</a>
+          <a
+            class="dropdown-item"
+            [ngClass]="{
+              disabled: status == 2
+            }"
+            href="javascript:void(0);"
+            (click)="AddHearing()"
+            >Add Or Change Hearing Date</a
+          >
+          <a
+            class="dropdown-item"
+            [ngClass]="{
+              disabled: status == 2
+            }"
+            href="javascript:void(0);"
+            (click)="AddAct()"
+            >Add Act</a
+          >
+
+          <a class="dropdown-item" href="javascript:void(0);">Add Petitioner</a>
+          <a class="dropdown-item" href="javascript:void(0);">Add Respondent</a>
+          <a
+            class="dropdown-item"
+            [ngClass]="{
+              disabled: status == 2
+            }"
+            href="javascript:void(0);"
+            >Case Dispose</a
+          >
         </div>
       </div>
     </div>
@@ -44,3 +73,264 @@
 <!-- <div class="card-disabled" >
   <div class="card-portlets-loader"></div>
 </div> -->
+<ng-template #ActForm let-modal="close">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Act</h4>
+    <button
+      type="button"
+      class="close"
+      (click)="modal('Cross click')"
+      aria-hidden="true"
+    >
+      <i class="mdi mdi-close"></i>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <div class="container-fuild">
+      <form [formGroup]="actForm" (ngSubmit)="onSaveAct()">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Under Act*</h4>
+            <input
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Under Act"
+              formControlName="UnderAct"
+              maxlength="55"
+              [ngClass]="{
+                'is-invalid': submited && e.UnderAct.errors
+              }"
+            />
+            <div *ngIf="submited && e.UnderAct.errors" class="invalid-feedback">
+              <div *ngIf="e.UnderAct.errors.required">
+                Under Act is Required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Under Section *</h4>
+            <input
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Under Section"
+              formControlName="UnderSection"
+              maxlength="55"
+              [ngClass]="{
+                'is-invalid': submited && e.UnderSection.errors
+              }"
+            />
+            <div
+              *ngIf="submited && e.UnderSection.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="e.UnderSection.errors.required">
+                Under Section is Required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-disabled" *ngIf="Loading">
+          <div class="card-portlets-loader"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary waves-effect"
+      (click)="modal('Cross click')"
+    >
+      Close
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary waves-effect waves-light"
+      (click)="onSaveAct()"
+    >
+      Add
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #HearingForm let-modal="close">
+  <div class="modal-header">
+    <h4 class="modal-title">Add Hearing</h4>
+    <button
+      type="button"
+      class="close"
+      (click)="modal('Cross click')"
+      aria-hidden="true"
+    >
+      <i class="mdi mdi-close"></i>
+    </button>
+  </div>
+  <div class="modal-body p-4">
+    <div class="container-fuild">
+      <form
+        [formGroup]="hearingForm"
+        (ngSubmit)="onSaveHearing()"
+        *ngIf="!isFormLoading"
+      >
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Hearing Date *</h4>
+            <input
+              type="date"
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Hearing Date"
+              formControlName="HearingDate"
+              (keypress)="callback()"
+              (keydown)="callback()"
+              min="{{ today | date: 'yyyy-MM-dd' }}"
+              [ngClass]="{
+                'is-invalid': submited && f.HearingDate.errors
+              }"
+            />
+            <div
+              *ngIf="submited && f.HearingDate.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.HearingDate.errors.required">
+                Hearing Date is Required
+              </div>
+              <div *ngIf="f.HearingDate.errors.min">
+                Hearing Date cannot be in Past
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Is Judge and Court Details Change ? *</h4>
+            <span
+              ><input
+                (change)="isDetailsChange($event.target.value)"
+                class="mx-1"
+                type="radio"
+                formControlName="IsDetailsChange"
+                value="0"
+              />
+              No</span
+            >
+            <span
+              ><input
+                (change)="isDetailsChange($event.target.value)"
+                class="mx-1"
+                type="radio"
+                formControlName="IsDetailsChange"
+                value="1"
+              />
+              Yes</span
+            >
+            <div
+              *ngIf="submited && f.IsDetailsChange.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.IsDetailsChange.errors.required">
+                RentedSpace is required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Judge *</h4>
+            <input
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Judge Name"
+              formControlName="Judge"
+              maxlength="55"
+              [ngClass]="{
+                'is-invalid': submited && f.Judge.errors
+              }"
+            />
+            <div *ngIf="submited && f.Judge.errors" class="invalid-feedback">
+              <div *ngIf="f.Judge.errors.required">Judge Name is Required</div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Court Name *</h4>
+            <input
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Court Name"
+              formControlName="CourtName"
+              maxlength="55"
+              [ngClass]="{
+                'is-invalid': submited && f.CourtName.errors
+              }"
+            />
+            <div
+              *ngIf="submited && f.CourtName.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.CourtName.errors.required">
+                Court Name is Required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Court Number *</h4>
+            <input
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Court Number"
+              formControlName="CourtNumber"
+              maxlength="55"
+              [ngClass]="{
+                'is-invalid': submited && f.CourtNumber.errors
+              }"
+            />
+            <div
+              *ngIf="submited && f.CourtNumber.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.CourtNumber.errors.required">
+                Court Number is Required
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-3">
+            <h4 class="header-title">Court Address *</h4>
+            <textarea
+              class="form-control"
+              id="example-input"
+              placeholder="Enter Court Address"
+              formControlName="CourtAddress"
+              rows="3"
+              [ngClass]="{
+                'is-invalid': submited && f.CourtAddress.errors
+              }"
+            ></textarea>
+            <div
+              *ngIf="submited && f.CourtAddress.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.CourtAddress.errors.required">
+                Court Address is Required
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="card-disabled" *ngIf="Loading || isFormLoading">
+        <div class="card-portlets-loader"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary waves-effect"
+      (click)="modal('Cross click')"
+    >
+      Close
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary waves-effect waves-light"
+      (click)="onSaveHearing()"
+    >
+      Add
+    </button>
+  </div>
+</ng-template>
