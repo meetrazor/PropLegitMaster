@@ -236,7 +236,6 @@
                   (change)="ChangeState($event)"
                   placeholder="
                 Select State"
-                
                   [ngClass]="{
                     'is-invalid': submitted && f.StateID.errors
                   }"
@@ -328,7 +327,11 @@
                   <a [innerHTML]="item.Area"></a>
                 </ng-template>
 
-                <ng-template #notFoundTemplate let-notFound>
+                <ng-template
+                  *ngIf="!notfoundshow"
+                  #notFoundTemplate
+                  let-notFound
+                >
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
@@ -587,11 +590,21 @@
               <div class="form-group col-md-6">
                 <label for="">Is There Known Lien on Property?</label><br />
                 <span>
-                  <input type="radio" formControlName="IsLien" value="True" (change)="onChangeLien($event.target.value)"/>
+                  <input
+                    type="radio"
+                    formControlName="IsLien"
+                    value="True"
+                    (change)="onChangeLien($event.target.value)"
+                  />
                   Yes</span
                 >
                 <span
-                  ><input type="radio" formControlName="IsLien" value="False" (change)="onChangeLien($event.target.value)"/>
+                  ><input
+                    type="radio"
+                    formControlName="IsLien"
+                    value="False"
+                    (change)="onChangeLien($event.target.value)"
+                  />
                   No</span
                 >
               </div>

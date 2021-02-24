@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, Renderer2, AfterViewInit, OnChanges, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, RouterLinkWithHref } from '@angular/router';
 import { NgbDate, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 import { GeneralService } from 'src/app/services/general.service';
 import Swal from 'sweetalert2';
 
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: './application.component.html',
   styleUrls: ['./application.component.scss']
 })
-export class ApplicationComponent implements OnInit, AfterViewInit {
+export class ApplicationComponent implements OnInit, AfterViewInit, OnDestroy {
   breadCrumbItems: Array<{}>;
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
@@ -29,6 +30,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
   selected: any;
   dtOptions: DataTables.Settings = {};
   dtOptionsforPVR: DataTables.Settings = {};
+
   hidden: boolean;
   @ViewChild('dp', { static: true }) datePicker: any;
   allLoanTypes = ['Personal Loan', 'Auto Loan', 'Home Loan', 'Business Loan', 'MSME Loan', 'Industrial Loan', 'Mudra Loan'];
@@ -52,7 +54,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
       columns: [{
         title: 'id',
         data: 'AppID'
-      },{
+      }, {
         title: 'Name',
         data: '', render: (data, type, row) => {
           return `${row.FirstName} ${row.LastName}`;
@@ -69,14 +71,21 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         data: 'BranchCode'
       }, {
         title: 'Status',
-        data: 'ApplicationStatus',render:(data)=>{
-          if (data === 'Pending') {
-            return `<span class="badge badge-danger p-1">${data}</span>`;
-          }else if(data ==='Title Clear Complete'){
+        data: 'ApplicationStatus', render: (data) => {
+          // if (data === 'Pending') {
+          //   return `<span class="badge badge-danger p-1">${data}</span>`;
+          // } else if (data === 'iPVR Sent') {
+          //   return `<span class="badge badge-success p-1">${data}</span>`;
+          // } else if (data) {
+          //   return `<span class="badge badge-secondary p-1">${data}</span>`;
+          // } else {
+          //   return data;
+          // }
+          if (data === 'iPVR Sent') {
             return `<span class="badge badge-success p-1">${data}</span>`;
-          }else if(data){
+          } else if (data) {
             return `<span class="badge badge-secondary p-1">${data}</span>`;
-          }else{
+          } else {
             return data;
           }
         }
@@ -90,14 +99,14 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
           viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
         }
       }
-      ],order:[[0,'desc']],columnDefs:[{targets:0 ,visible:false}]
+      ], order: [[0, 'desc']], columnDefs: [{ targets: 0, visible: false }]
     };
     this.dtOptionsforPVR = {
       ajax: { url: this.service.GetBaseUrl() + `loan/application/View/Admin/${this.currentUser.UserID}` }, responsive: true,
       columns: [{
         title: 'id',
         data: 'AppID'
-      },{
+      }, {
         title: 'Name',
         data: '', render: (data, type, row) => {
           return `${row.FirstName} ${row.LastName}`;
@@ -113,15 +122,22 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         title: 'Branch Name',
         data: 'BranchCode'
       }, {
-        title:'Status',
-        data:'ApplicationStatus',render:(data)=>{
-          if (data === 'Pending') {
-            return `<span class="badge badge-danger p-1">${data}</span>`;
-          }else if(data ==='Title Clear Complete'){
+        title: 'Status',
+        data: 'ApplicationStatus', render: (data) => {
+          // if (data === 'Pending') {
+          //   return `<span class="badge badge-danger p-1">${data}</span>`;
+          // } else if (data === 'iPVR Sent') {
+          //   return `<span class="badge badge-success p-1">${data}</span>`;
+          // } else if (data) {
+          //   return `<span class="badge badge-secondary p-1">${data}</span>`;
+          // } else {
+          //   return data;
+          // }
+          if (data === 'iPVR Sent') {
             return `<span class="badge badge-success p-1">${data}</span>`;
-          }else if(data){
+          } else if (data) {
             return `<span class="badge badge-secondary p-1">${data}</span>`;
-          }else{
+          } else {
             return data;
           }
         }
@@ -134,11 +150,11 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
           // generate PDF
           if (full.PVRID && !full.PVRDocumentID) {
             return `<a class="btn text-primary" title="Generate PVR Report"
-            PVRappID = "${full.AppID}"><i class="dripicons-document-edit font-18 text-secondary"
-             PVRappID = "${full.AppID}" aria-hidden="false"></i></a>
-             <a class="btn text-primary" title="Upload PVR Report"
-            UploadPVRappID = "${full.AppID}"><i class="mdi mdi-file-upload-outline font-18 text-secondary"
-            UploadPVRappID = "${full.AppID}" aria-hidden="false"></i></a>`;
+            PVRappID1 = "${full.AppID}"><i PVRappID1 = "${full.AppID}" class="dripicons-document-edit font-18 text-secondary"
+            aria-hidden="false"></i></a>
+            <a class="btn text-primary" title="Upload Single Documents"
+            UploadSingleDocAppID = "${full.AppID}"><i class="mdi mdi-file-upload font-18 text-secondary"
+            UploadSingleDocAppID = "${full.AppID}" aria-hidden="false"></i></a>`;
             // Upload PDF
           } else if (full.PVRID && full.PVRDocumentID) {
             return `<a class="btn text-primary" title="View PVR"
@@ -154,14 +170,14 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
           } else {
             return `<a class="btn text-primary" title="Add PVR Report"
             appID = "${full.AppID}"><i class="mdi mdi-plus-box font-18 text-secondary"
-             appID = "${full.AppID}" aria-hidden="false"></i></a>`;
+            appID = "${full.AppID}" aria-hidden="false"></i></a>`;
           }
         }
         // data: null, render: (data, type, row) => {
         //   return `<a routerLink="loan/PVRreport/${row.AppID}">Add PVR</a>`;
         // }
       }
-      ],order:[[0,'desc']],columnDefs:[{ targets: 0, visible: false}]
+      ], order: [[0, 'desc']], columnDefs: [{ targets: 0, visible: false }]
     };
     // this.tabledata = data;
   }
@@ -193,6 +209,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/loan/addapplication']);
   }
   ngAfterViewInit(): void {
+
     this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('UploadDocAppID')) {
         this.service.ForDemo(event.target.getAttribute('UploadDocAppID')).subscribe((res) => {
@@ -202,34 +219,21 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
             type: 'success',
             timer: 2000
           }).then(() => {
-            this.service.changeStatus(event.target.getAttribute('UploadDocAppID'), 'Search In Complete').subscribe(() => {
-              location.reload();
-            });
+            // this.service.changeStatus(event.target.getAttribute('UploadDocAppID'), 'Search In Complete').subscribe(() => {
+            location.reload();
+            // });
           });
         });
       }
-    });
-    this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('appID')) {
         this.router.navigate(['/loan/PVRreport/' + event.target.getAttribute('appID')]);
       }
-    });
-    this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('UploadSingleDocAppID')) {
         this.router.navigate(['/loan/uploaddocument/' + event.target.getAttribute('UploadSingleDocAppID')]);
       }
-    });
-    this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('viewID')) {
         this.router.navigate(['/loan/title-search/' + event.target.getAttribute('viewID')]);
       }
-    });
-    this.renderer.listen('document', 'click', (event) => {
-      if (event.target.hasAttribute('PVRappID')) {
-        this.router.navigate(['/loan/GeneratePVR/' + event.target.getAttribute('PVRappID')]);
-      }
-    });
-    this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('UploadPVRappID')) {
         if (!this.modalService.hasOpenModals()) {
           this.currentAppId = event.target.getAttribute('UploadPVRappID');
@@ -239,15 +243,52 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
         // console.log(event.target.getAttribute('UploadPVRappID'));
         // this.router.navigate(['/loan/generatePVR/' + event.target.getAttribute('PVRappID')]);
       }
-    });
-    this.renderer.listen('document', 'click', (event) => {
       if (event.target.hasAttribute('viewPVRID') && event.target.hasAttribute('propertyID')) {
         this.router.navigate(['loan/viewdocument/' + event.target.getAttribute('propertyID')
           + '/' + event.target.getAttribute('viewPVRID')]);
         // this.router.navigate(['/loan/generatePVR/' + event.target.getAttribute('PVRappID')]);
       }
+      if (event.target.hasAttribute('PVRappID1')) {
+        this.ongenerate(event.target.getAttribute('PVRappID1'))
+        // this.router.navigate(['/loan/GeneratePVR/' + event.target.getAttribute('PVRappID')]);
+      } else if (event.target.hasAttribute('PVRappID2')) {
+        this.ongenerate(event.target.getAttribute('PVRappID2'))
+        // this.router.navigate(['/loan/GeneratePVR/' + event.target.getAttribute('PVRappID')]);
+      }
     });
   }
+  ongenerate(Appid) {
+    this.isLoading = true;
+    this.service.GetDocumentList(Appid).subscribe((list) => {
+      if (list.data.every(x => x.DocumentID == null && x.Status == 'Pending')) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'There Is No Document Attached With this PVR, Are You Sure You Want To Generate PVR Without Document Attached ?',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+          confirmButtonClass: 'btn btn-danger mt-2',
+          cancelButtonClass: 'btn btn-success ml-2 mt-2',
+          buttonsStyling: false
+        }).then((result) => {
+          if (result.value) {
+            this.service.GeneratePVR(Appid).subscribe((res) => {
+              location.reload();
+            });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            this.router.navigate(['/loan/uploaddocument/' + Appid]);
+          }
+        });
+      } else {
+        this.isLoading = true;
+        this.service.GeneratePVR(Appid).subscribe((res) => {
+          location.reload();
+        });
+      }
+    })
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.PVRForm.valid) {
@@ -272,7 +313,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
                 type: 'success',
                 timer: 2000
               }).then(() => {
-                this.service.changeStatus(this.currentAppId, 'Assign Lawyer Pending').subscribe(() => {
+                this.service.changeStatus(this.currentAppId, 'iPVR Sent').subscribe(() => {
                   location.reload();
                   this.PVRForm.controls.uploadfile.setValue([]);
                 });
@@ -348,4 +389,8 @@ export class ApplicationComponent implements OnInit, AfterViewInit {
     });
     this.PVRForm.controls.FileType.disable();
   }
+  ngOnDestroy() {
+    this.renderer.destroy()
+  }
 }
+

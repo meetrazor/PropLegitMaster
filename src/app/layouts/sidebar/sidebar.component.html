@@ -558,7 +558,12 @@
                 </ul>
             </li> -->
     </ul>
-    <ul class="metismenu" id="side-menu" #sideMenu *ngIf="currentUser.CompanyID === 2">
+    <ul
+      class="metismenu"
+      id="side-menu"
+      #sideMenu
+      *ngIf="currentUser.CompanyID === 2"
+    >
       <!-- <li class="menu-title">Navigation</li> -->
       <li class="menu-title"><i class="mdi mdi-bank"></i> PropLegit</li>
       <li *ngIf="currentUser.UserType !== 'Lawyer'">
@@ -589,7 +594,7 @@
               >Applications & Documents</a
             >
           </li>
-          <li>
+          <!-- <li>
             <a
               routerLink="/dashboards/dashboard-3"
               routerLinkActive="active"
@@ -604,11 +609,11 @@
               class="side-nav-link-ref"
               >Key Contacts</a
             >
-          </li>
+          </li> -->
         </ul>
       </li>
 
-      <li>
+      <li *ngIf="currentUser.UserType === 'Lawyer'">
         <a href="javascript: void(0);" class="waves-effect">
           <i class="fe-pocket"></i>
           <span> Title Search </span>
@@ -663,7 +668,7 @@
               >Transaction History</a
             >
           </li>
-          <li>
+          <!-- <li>
             <a
               routerLink="/loan/publicnotices"
               routerLinkActive="active"
@@ -678,7 +683,7 @@
               class="side-nav-link-ref"
               >Title Clear</a
             >
-          </li>
+          </li> -->
           <li *ngIf="currentUser.UserType !== 'Lawyer'">
             <a
               routerLink="/titlesearch/assignlawyer"
@@ -687,11 +692,17 @@
               >Lawyers</a
             >
           </li>
-          <button class="btn btn-primary mt-5" *ngIf="currentUser.UserType === 'Lawyer'" (click)="switchUser()">Swith to Bank Manager</button>
+          <!-- <button
+            class="btn btn-primary mt-5"
+            *ngIf="currentUser.UserType === 'Lawyer'"
+            (click)="switchUser()"
+          >
+            Swith to Bank Manager
+          </button> -->
         </ul>
       </li>
 
-      <li *ngIf="currentUser.UserType !== 'Lawyer'">
+      <!-- <li *ngIf="currentUser.UserType !== 'Lawyer'">
         <a href="javascript: void(0);" class="waves-effect">
           <i class="fe-users"></i>
           <span> Property Valuation </span>
@@ -702,7 +713,7 @@
           <i class="fe-users"></i>
           <span> FraudGaurd Mortgage </span>
         </a>
-      </li>
+      </li> -->
       <!--  
         <li>
           <a href="javascript: void(0);" class="waves-effect">
@@ -1369,7 +1380,13 @@
             </li>
           </ul>
         </li> -->
-        <button class="btn btn-primary mt-5 ml-4" *ngIf="currentUser.UserType === 'Bank Manager'" (click)="switchUser()">Swith to Lawyer</button>
+      <!-- <button
+        class="btn btn-primary mt-5 ml-4"
+        *ngIf="currentUser.UserType === 'Bank Manager'"
+        (click)="switchUser()"
+      >
+        Swith to Lawyer
+      </button> -->
     </ul>
   </div>
   <!-- End Sidebar -->

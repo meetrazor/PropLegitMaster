@@ -1,3 +1,4 @@
+import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
 import { ViewFilterDocumentsComponent } from './view-filter-documents/view-filter-documents.component';
 import { TitleClearCompleteComponent } from './title-clear-complete/title-clear-complete.component';
 import { PublicNoticeViewComponent } from './public-notice-view/public-notice-view.component';
@@ -83,6 +84,9 @@ const routes: Routes = [
   }, {
     path: 'View-Documents/:AppID',
     component: ViewFilterDocumentsComponent
+  }, {
+    path: 'bulkupload',
+    component: BulkUploadComponent
   }
 ];
 

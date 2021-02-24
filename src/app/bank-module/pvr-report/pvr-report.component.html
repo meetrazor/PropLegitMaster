@@ -772,12 +772,12 @@
             <label>PVR Status*</label>
             <ng-select
               class="form-control"
-              formControlName="PVRStatus"
+              formControlName="PVRPropertyStatus"
               autocomplete="off"
               placeholder="
-          Select Status"
+          Select PVR Status"
               [ngClass]="{
-                'is-invalid': submitted && f.PVRStatus.errors
+                'is-invalid': submitted && f.PVRPropertyStatus.errors
               }"
             >
               <ng-option
@@ -788,10 +788,10 @@
               >
             </ng-select>
             <div
-              *ngIf="submitted && f.PVRStatus.errors"
+              *ngIf="submitted && f.PVRPropertyStatus.errors"
               class="invalid-feedback"
             >
-              <div *ngIf="f.PVRStatus.errors.required">
+              <div *ngIf="f.PVRPropertyStatus.errors.required">
                 PVR Status is Required
               </div>
             </div>

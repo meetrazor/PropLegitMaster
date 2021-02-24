@@ -18,14 +18,16 @@ export class ViewFilterDocumentsComponent implements OnInit {
     this.type = this.route.snapshot.queryParams.type;
     this.AppID = this.route.snapshot.params.AppID;
     this.loaded = false;
-   }
+  }
 
   ngOnInit() {
     this.service.GetApplicationInformation(this.AppID).subscribe((res) => {
       this.applicationData = res.data[0];
       this.breadCrumbItems = [{ label: 'Dashboard', path: '/' },
-      { label: 'Applications', path: '/loan/applications' }, { label: `${this.applicationData.FirstName}
-      ${this.applicationData.LastName}`, path: `/loan/title-search/${this.AppID}` },
+      { label: 'Applications', path: '/loan/applications' }, {
+        label: `${this.applicationData.FirstName}
+      ${this.applicationData.LastName}`, path: `/loan/title-search/${this.AppID}`
+      },
       { label: 'Documents', path: '/', active: true }];
       this.loaded = true;
     });
@@ -42,9 +44,14 @@ export class ViewFilterDocumentsComponent implements OnInit {
       }, {
         title: 'Status',
         render: (data, type, row) => {
+          // if (row.Status === 'Pending') {
+          //   return `<span class="badge badge-danger p-1">${row.Status}</span>`;
+          // } else if (row.Status === 'Under Review') {
+          //   return `<span class="badge badge-primary p-1">${row.Status}</span>`;
+          // } else {
+          //   return `<span class="badge badge-success p-1">${row.Status}</span>`;
+          // }
           if (row.Status === 'Pending') {
-            return `<span class="badge badge-danger p-1">${row.Status}</span>`;
-          } else if (row.Status === 'Under Review') {
             return `<span class="badge badge-primary p-1">${row.Status}</span>`;
           } else {
             return `<span class="badge badge-success p-1">${row.Status}</span>`;

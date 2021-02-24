@@ -4,7 +4,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UIModule } from './../shared/ui/ui.module';
-import { NgbAccordionModule, NgbDatepickerModule, NgbProgressbarModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbDatepickerModule, NgbProgressbarModule, NgbModalModule, NgbAlertModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -32,6 +32,7 @@ import { TitleClearComponent } from './title-clear/title-clear.component';
 import { PublicNoticeViewComponent } from './public-notice-view/public-notice-view.component';
 import { TitleClearCompleteComponent } from './title-clear-complete/title-clear-complete.component';
 import { ViewFilterDocumentsComponent } from './view-filter-documents/view-filter-documents.component';
+import { BulkUploadComponent } from './bulk-upload/bulk-upload.component';
 
 
 @NgModule({
@@ -39,10 +40,10 @@ import { ViewFilterDocumentsComponent } from './view-filter-documents/view-filte
     DashboardComponent, AddApplicationComponent, ViewDocumentComponent, LawyersComponent,
     UploadDocumentComponent, PvrReportComponent, GeneratePVRReportComponent,
     AssignmentsComponent, AssignmentComponent, PublicNoticesComponent, PublicNoticeComponent,
-    TitleClearListComponent, TitleClearComponent, PublicNoticeViewComponent, TitleClearCompleteComponent, ViewFilterDocumentsComponent],
+    TitleClearListComponent, TitleClearComponent, PublicNoticeViewComponent, TitleClearCompleteComponent, ViewFilterDocumentsComponent, BulkUploadComponent],
   imports: [
     CommonModule, LayoutsModule, UIModule, FormsModule, NgSelectModule, NgbProgressbarModule, NgApexchartsModule, NgbAccordionModule,
-    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, NgbModalModule,
+    BankModuleRoutingModule, NgbDatepickerModule, DataTablesModule, NgbModalModule, NgbAlertModule, NgbDropdownModule,
     ReactiveFormsModule, FormsModule, AutocompleteLibModule, FileUploadModule, PDFExportModule,
     PdfViewerModule, NgxEditorModule
   ], providers: [DatePipe]

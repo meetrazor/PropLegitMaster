@@ -48,7 +48,7 @@ export class PvrReportComponent implements OnInit {
         PVRStatusLine1: new FormControl('', Validators.required),
         PVRStatusLine2: new FormControl('', Validators.required),
         PropertyRemarks: new FormControl('', Validators.required),
-        PVRStatus: new FormControl('', Validators.required),
+        PVRPropertyStatus: new FormControl('', Validators.required),
         EncumbranceRemarks: new FormControl('', Validators.required),
         CreatedBy: new FormControl(this.currentUser.UserID, Validators.required),
       });
@@ -107,26 +107,79 @@ export class PvrReportComponent implements OnInit {
     this.submitted = true;
     if (this.PVRForm.valid) {
       this.isLoading = true;
-      this.service.SavePVR(this.PVRForm.value, this.appID).subscribe((res) => {
-        this.isLoading = false;
-        if (res.error) {
+      this.service.GetDocumentList(this.appID).subscribe((list) => {
+        if (list.data.every(x => x.DocumentID == null && x.Status == 'Pending')) {
+          this.isLoading = false;
           Swal.fire({
-            title: res.error_code,
-            text: res.message,
-            type: 'error'
+            title: 'Are you sure?',
+            text: 'There Is No Document Attached With this PVR, Are You Sure You Want To Generate PVR Without Document Attached ?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            confirmButtonClass: 'btn btn-danger mt-2',
+            cancelButtonClass: 'btn btn-success ml-2 mt-2',
+            buttonsStyling: false
+          }).then((result) => {
+            if (result.value) {
+              this, this.isLoading = true;
+              this.service.SavePVR(this.PVRForm.value, this.appID).subscribe((res) => {
+                this.isLoading = false;
+                if (res.error) {
+                  Swal.fire({
+                    title: res.error_code,
+                    text: res.message,
+                    type: 'error'
+                  });
+                  return;
+                } else {
+                  this.isLoading = true
+                  this.service.GeneratePVR(this.appID).subscribe((res) => {
+                    this.isLoading = false;
+                    Swal.fire({
+                      title: 'Success',
+                      text: 'PVR generated',
+                      type: 'success'
+                    }).then(() => {
+                      this.service.changeStatus(this.appID, 'iPVR Sent').subscribe(() => {
+                        this.router.navigate(['/loan/applications']);
+                      })
+                    })
+                  })
+                }
+              });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              return false;
+            }
           });
-          return;
         } else {
-          Swal.fire({
-            title: 'Success',
-            text: res.message,
-            type: 'success'
-          }).then(() => {
-              this.router.navigate(['/loan/applications']);
+          this.service.SavePVR(this.PVRForm.value, this.appID).subscribe((res) => {
+            if (res.error) {
+              Swal.fire({
+                title: res.error_code,
+                text: res.message,
+                type: 'error'
+              });
+              return;
+            } else {
+              this.service.GeneratePVR(this.appID).subscribe((res) => {
+                Swal.fire({
+                  title: 'Success',
+                  text: 'PVR generated',
+                  type: 'success'
+                }).then(() => {
+                  this.service.changeStatus(this.appID, 'iPVR Sent').subscribe(() => {
+                    this.router.navigate(['/loan/applications']);
+                  })
+                })
+
+              })
+            }
           });
+          this.isLoading = true;
         }
-        this.isLoading = false;
-      });
+      })
+
     } else {
       Swal.fire({
         title: 'Invalid',

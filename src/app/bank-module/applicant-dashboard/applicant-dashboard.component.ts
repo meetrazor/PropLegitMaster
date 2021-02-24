@@ -35,7 +35,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private service: GeneralService, private Route: ActivatedRoute, private router: Router,
     private formBuilder: FormBuilder) {
-      this.AppID = this.Route.snapshot.params.id;
+    this.AppID = this.Route.snapshot.params.id;
   }
   ngOnDestroy() {
     clearInterval(this.interval);
@@ -67,13 +67,18 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
         if (this.propertyDocumentData.length > 0) {
           this.propertyDocumentData.filter((data) => {
             this.totaldocument++;
-            if (data.Status === 'Under Review') {
-              this.received++;
-            } else if (data.Status === 'Reviewed') {
-              this.reviewd++;
-            } else if (data.Status === 'Pending') {
+            if (data.Status === 'Pending') {
               this.pending++;
+            } else {
+              this.received++;
             }
+            // if (data.Status === 'Under Review') {
+            //   this.received++;
+            // } else if (data.Status === 'Reviewed') {
+            //   this.reviewd++;
+            // } else if (data.Status === 'Pending') {
+            //   this.pending++;
+            // }
           });
         }
         this.LoadChart();
@@ -92,9 +97,14 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
       }, {
         title: 'Status',
         render: (data, type, row) => {
+          // if (row.Status === 'Pending') {
+          //   return `<span class="badge badge-danger p-1">${row.Status}</span>`;
+          // } else if (row.Status === 'Under Review') {
+          //   return `<span class="badge badge-primary p-1">${row.Status}</span>`;
+          // } else {
+          //   return `<span class="badge badge-success p-1">${row.Status}</span>`;
+          // }
           if (row.Status === 'Pending') {
-            return `<span class="badge badge-danger p-1">${row.Status}</span>`;
-          } else if (row.Status === 'Under Review') {
             return `<span class="badge badge-primary p-1">${row.Status}</span>`;
           } else {
             return `<span class="badge badge-success p-1">${row.Status}</span>`;
@@ -110,9 +120,9 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
           btn += '<a href="javascript:void(0)" class="uploadDocument m-1" title="Upload Document" receipt-id="' + data.ID + '">';
           btn += '<i class="mdi mdi-file-upload-outline font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
           btn += '</a>';
-          btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
-          btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
-          btn += '</a>';
+          // btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
+          // btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
+          // btn += '</a>';
         } else if (data.FileURL !== null) {
           btn += '<a href="javascript:void(0)" class="viewDocument m-1" title="View Document" receipt-id="' + data.DocumentID + '">';
           btn += '<i class="mdi mdi-eye font-18 text-secondary" aria-hidden="false" receipt-id="' + data.DocumentID + '"></i>';
@@ -121,9 +131,9 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
             btn += '<a href="javascript:void(0)" class="uploadDocument m-1" title="Upload Document" receipt-id="' + data.ID + '">';
             btn += '<i class="mdi mdi-file-upload-outline font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
             btn += '</a>';
-            btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
-            btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
-            btn += '</a>';
+            // btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
+            // btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
+            // btn += '</a>';
           }
         }
         $('td:eq(3)', row).html(btn);
@@ -205,10 +215,22 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['rgb(29, 173, 56)'],
-      series: [this.totaldocument ? ((this.reviewd / this.totaldocument) * 100).toFixed() : 0],
+      series: [this.totaldocument ? ((this.received / this.totaldocument) * 100).toFixed() : 0],
       stroke: {
         lineCap: 'round',
       },
     };
+  }
+  EcChange() {
+    this.loaded = false;
+    this.service.ChangeECResponce(this.AppID).subscribe(() => {
+      this.loaded = true;
+      Swal.fire({
+        title: 'Request Received',
+        text: 'EC will be delivered shortly',
+        type: 'success',
+      }).then(() => { location.reload() })
+
+    })
   }
 }

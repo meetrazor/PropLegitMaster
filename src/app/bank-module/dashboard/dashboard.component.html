@@ -3,13 +3,55 @@
     title="Dashboard"
     [breadcrumbItems]="breadCrumbItems"
   ></app-page-title>
-  <div style="margin-bottom: 2.5rem !important;" *ngIf="currentUser.UserType === 'Bank Manager'">
-    <button
-    class="btn btn-info float-right mr-3"
-    routerLink = "/loan/addapplication"
+  <div
+    style="margin-bottom: 2.5rem !important"
+    *ngIf="currentUser.UserType === 'Bank Manager'"
   >
-    Add Application
-  </button></div>
+    <div ngbDropdown class="dropdown d-inline float-right mr-3">
+      <button
+        type="button"
+        class="btn btn-info ml-1"
+        id="btn={index}"
+        ngbDropdownToggle
+      >
+        Add Application
+        <i class="mdi mdi-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu" ngbDropdownMenu>
+        <a class="dropdown-item" routerLink="/loan/addapplication"
+          >Single Application</a
+        >
+        <a class="dropdown-item" routerLink="/loan/bulkupload"
+          >Bulk Applications</a
+        >
+      </div>
+    </div>
+    <!-- <div class="btn btn-info float-right mr-3">
+      <button
+        type="button"
+        class="btn btn-info waves-effect waves-light mr-1 dropdown-toggle"
+        data-toggle="dropdown"
+        aria-expanded="false"
+        (click)="isdropdownShow = !isdropdownShow"
+      >
+        Add Application <i class="mdi mdi-chevron-down"></i>
+      </button>
+      <div class="dropdown-menu" [ngClass]="{ show: isdropdownShow }">
+        <a class="dropdown-item" href="Task">Task</a>
+        <a class="dropdown-item" href="Maintenance">Maintenance</a>
+      </div>
+    </div> -->
+
+    <!-- <button
+      class="btn btn-info float-right mr-3"
+      routerLink="/loan/addapplication"
+    >
+      Add Application
+    </button>
+    <button class="btn btn-info float-right mr-3" routerLink="/loan/bulkupload">
+      Bulk Upload Application
+    </button> -->
+  </div>
   <div
     class="loan-dashboard-body m-3"
     *ngIf="currentUser.UserType !== 'Lawyer'"
@@ -31,7 +73,7 @@
 
             <ngb-datepicker
               #dp
-              style="margin-top: 40px; max-width: 100%; overflow-x: scroll;"
+              style="margin-top: 40px; max-width: 100%; overflow-x: scroll"
               (select)="onDateSelection($event)"
               [displayMonths]="2"
               [dayTemplate]=""
@@ -54,19 +96,19 @@
       <div class="col-md-3 mt-1 mb-1">
         <div class="input-group">
           <ng-select
-          class="form-control"
-          autocomplete="off"
-          (change)="ChangeLoan($event)"
-          placeholder="
+            class="form-control"
+            autocomplete="off"
+            (change)="ChangeLoan($event)"
+            placeholder="
         Select Loan Type"
-        >
-          <ng-option
-            *ngFor="let item of allLoanTypes"
-            [value]="item.DropDownItemID"
-            [id]="item.DropDownItemID"
-            >{{ item.DropDownValue }}</ng-option
           >
-        </ng-select>
+            <ng-option
+              *ngFor="let item of allLoanTypes"
+              [value]="item.DropDownItemID"
+              [id]="item.DropDownItemID"
+              >{{ item.DropDownValue }}</ng-option
+            >
+          </ng-select>
 
           <div class="input-group-btn">
             <button class="btn btn-primary" type="submit">
@@ -78,7 +120,6 @@
       <div class="col-md-3 mt-1 mb-1">
         <form role="search">
           <div class="input-group">
-    
             <ng-select
               [items]="allStatus"
               class="form-control"
@@ -94,23 +135,23 @@
           </div>
         </form>
       </div>
- 
+
       <div class="col-md-3 mt-1 mb-1">
         <div class="input-group">
           <ng-select
-          class="form-control"
-          autocomplete="off"
-          (change)="ChangePropertyType($event)"
-          placeholder="
+            class="form-control"
+            autocomplete="off"
+            (change)="ChangePropertyType($event)"
+            placeholder="
         Select Property Type"
-        >
-          <ng-option
-            *ngFor="let item of allProperty"
-            [value]="item.DropDownItemID"
-            [id]="item.DropDownItemID"
-            >{{ item.DropDownValue }}</ng-option
           >
-        </ng-select>
+            <ng-option
+              *ngFor="let item of allProperty"
+              [value]="item.DropDownItemID"
+              [id]="item.DropDownItemID"
+              >{{ item.DropDownValue }}</ng-option
+            >
+          </ng-select>
           <div class="input-group-btn">
             <button class="btn btn-primary" type="submit">
               <i class="mdi mdi-filter-variant"></i>
@@ -122,17 +163,25 @@
     <div class="row" *ngIf="!isFilterLoading">
       <div class="col-md-4 mt-3">
         <div class="card-box">
-          <h4 class="mt-0 font-16" >Applications Received</h4>
+          <h4 class="mt-0 font-16">Applications Received</h4>
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">{{countData.ApplicationsReceived.CountWithFilter}}</a>
+            <a routerLink="/loan/applications">{{
+              countData.ApplicationsReceived.CountWithFilter
+            }}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Application Received<span class="float-right">{{countData.ApplicationsReceived.Count}}</span>
+              Total Application Received<span class="float-right">{{
+                countData.ApplicationsReceived.Count
+              }}</span>
             </h6>
             <ngb-progressbar
               [type]="'success'"
-              [value]="(countData.ApplicationsReceived.CountWithFilter /countData.ApplicationsReceived.Count)*100"
+              [value]="
+                (countData.ApplicationsReceived.CountWithFilter /
+                  countData.ApplicationsReceived.Count) *
+                100
+              "
               height="5px"
               class="m-0"
             >
@@ -144,15 +193,23 @@
         <div class="card-box">
           <h4 class="mt-0 font-16">Documents Pending</h4>
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">{{countData.DocumentsPending.CountWithFilter}}</a>
+            <a routerLink="/loan/applications">{{
+              countData.DocumentsPending.CountWithFilter
+            }}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Documents Pending<span class="float-right">{{countData.DocumentsPending.Count}}</span>
+              Total Documents Pending<span class="float-right">{{
+                countData.DocumentsPending.Count
+              }}</span>
             </h6>
             <ngb-progressbar
               [type]="'blue'"
-              [value]="(countData.DocumentsPending.CountWithFilter /countData.DocumentsPending.Count)*100"
+              [value]="
+                (countData.DocumentsPending.CountWithFilter /
+                  countData.DocumentsPending.Count) *
+                100
+              "
               height="5px"
               class="m-0"
             >
@@ -162,17 +219,31 @@
       </div>
       <div class="col-md-4 mt-3">
         <div class="card-box">
-          <h4 class="mt-0 font-16">Lawyer Assignment Pending</h4>
+          <h4 class="mt-0 font-16">EC Request (12 years and Above)</h4>
+          <!-- <h4 class="mt-0 font-16">Lawyer Assignment Pending</h4> -->
           <h2 class="text-primary text-center">
-            <a routerLink="/loan/applications">{{countData.LawyerAssignmentPending.CountWithFilter}}</a>
+            <a routerLink="/loan/applications">{{
+              countData.LawyerAssignmentPending.CountWithFilter
+            }}</a>
           </h2>
           <div class="mt-3">
             <h6 class="text-uppercase">
-              Total Lawyer Assignment Pending<span class="float-right">{{countData.LawyerAssignmentPending.Count}}</span>
+              Total EC Request Pending<span class="float-right">{{
+                countData.LawyerAssignmentPending.Count
+              }}</span>
             </h6>
+            <!-- <h6 class="text-uppercase">
+              Total Lawyer Assignment Pending<span class="float-right">{{
+                countData.LawyerAssignmentPending.Count
+              }}</span>
+            </h6> -->
             <ngb-progressbar
               [type]="'warning'"
-              [value]="(countData.LawyerAssignmentPending.CountWithFilter /countData.LawyerAssignmentPending.Count)*100"
+              [value]="
+                (countData.LawyerAssignmentPending.CountWithFilter /
+                  countData.LawyerAssignmentPending.Count) *
+                100
+              "
               height="5px"
               class="m-0"
             >
@@ -180,7 +251,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4 mt-3">
+      <!-- <div class="col-md-4 mt-3">
         <div class="card-box">
           <h4 class="mt-0 font-16">Approved for Physical Verification</h4>
           <h2 class="text-primary text-center">
@@ -202,8 +273,8 @@
             </ngb-progressbar>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 mt-3">
+      </div> -->
+      <!-- <div class="col-md-4 mt-3">
         <div class="card-box">
           <h4 class="mt-0 font-16">Protection Notices</h4>
           <h2 class="text-primary text-center">
@@ -222,8 +293,8 @@
             </ngb-progressbar>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 mt-3">
+      </div> -->
+      <!-- <div class="col-md-4 mt-3">
         <div class="card-box">
           <h4 class="mt-0 font-16">Pending Valuation</h4>
           <h2 class="text-primary text-center">
@@ -242,9 +313,9 @@
             </ngb-progressbar>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="row mt-3" >
+    <div class="row mt-3">
       <div class="col-md-4" *ngIf="currentUser.UserType === 'Bank Manager'">
         <div class="card-box">
           <h3 class="header-title" style="font-size: x-large">
@@ -300,9 +371,9 @@
       <!-- end col -->
       <div class="col-md-8" *ngIf="currentUser.UserType === 'Bank Manager'">
         <div class="card-box">
-            <h3 class="header-title" style="font-size: x-large">
-              Loan Applications Received Status
-            </h3>
+          <h3 class="header-title" style="font-size: x-large">
+            Loan Applications Received Status
+          </h3>
           <div
             class="table-responsive"
             appSlimScroll
@@ -408,7 +479,9 @@
   <div
     class="loan-dashboard-body mx-3"
     *ngIf="currentUser.UserType === 'Lawyer'"
-  ><div class="row mb-3"><div class="col-9"></div>
+  >
+    <div class="row mb-3">
+      <div class="col-9"></div>
       <div class="col-3">
         <form class="navbar-form" role="search">
           <div class="input-group float-right">
@@ -425,7 +498,7 @@
 
             <ngb-datepicker
               #dp
-              style="margin-top: 40px; max-width: 100%; overflow-x: scroll;"
+              style="margin-top: 40px; max-width: 100%; overflow-x: scroll"
               (select)="onDateSelection($event)"
               [displayMonths]="2"
               [dayTemplate]=""
@@ -444,8 +517,8 @@
             </div>
           </div>
         </form>
+      </div>
     </div>
-  </div>
     <div class="row">
       <div class="col-12">
         <div class="card-box">
@@ -519,7 +592,9 @@
               <div class="text-right">
                 <h3 class="mt-1">
                   &nbsp;<a class="text-body" routerLink="/loan/assignment"
-                    ><span data-plugin="counterup">{{countData.LoanAssignmentReceived.Count}}</span></a
+                    ><span data-plugin="counterup">{{
+                      countData.LoanAssignmentReceived.Count
+                    }}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -536,7 +611,9 @@
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Completed<span class="float-right">{{countData.LoanAssignmentReceived.CountWithFilter}}</span></a
+                >Completed<span class="float-right">{{
+                  countData.LoanAssignmentReceived.CountWithFilter
+                }}</span></a
               >
             </h6>
             <!-- <div class="progress progress-sm m-0">
@@ -550,8 +627,12 @@
               >
                 <span class="sr-only">100 Assignments Complete</span>
               </div> -->
-              <ngb-progressbar
-              [value]="(countData.LoanAssignmentReceived.CountWithFilter /countData.LoanAssignmentReceived.Count)*100"
+            <ngb-progressbar
+              [value]="
+                (countData.LoanAssignmentReceived.CountWithFilter /
+                  countData.LoanAssignmentReceived.Count) *
+                100
+              "
               height="5px"
               class="m-0 bg-blue"
             >
@@ -562,7 +643,7 @@
         <!-- end widget-rounded-circle-->
       </div>
       <!-- end col-->
-
+      <!-- 
       <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card-box">
           <div class="row">
@@ -579,11 +660,13 @@
               <div class="text-right">
                 <h3 class="text-dark mt-1">
                   <a routerLink="/loan/assignment" class="text-body">
-                    <span data-plugin="counterup">{{countData.LoanSearchInProgress.Count}}</span></a
+                    <span data-plugin="counterup">{{
+                      countData.LoanSearchInProgress.Count
+                    }}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
-                  <!-- text-truncate --><small
+                  <small
                     ><a routerLink="/loan/assignment" class="text-body"
                       >Search in Progress</a
                     ></small
@@ -592,26 +675,32 @@
               </div>
             </div>
           </div>
-          <!-- end row-->
+    
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >In Final Stages<span class="float-right">{{countData.LoanSearchInProgress.CountWithFilter}}</span></a
+                >In Final Stages<span class="float-right">{{
+                  countData.LoanSearchInProgress.CountWithFilter
+                }}</span></a
               >
             </h6>
             <ngb-progressbar
-            [value]="(countData.LoanSearchInProgress.CountWithFilter /countData.LoanSearchInProgress.Count)*100"
-            height="5px"
-            class="m-0 bg-success"
-          >
-          </ngb-progressbar>
+              [value]="
+                (countData.LoanSearchInProgress.CountWithFilter /
+                  countData.LoanSearchInProgress.Count) *
+                100
+              "
+              height="5px"
+              class="m-0 bg-success"
+            >
+            </ngb-progressbar>
           </div>
         </div>
-        <!-- end widget-rounded-circle-->
-      </div>
+       
+      </div> -->
       <!-- end col-->
 
-      <div class="col-md-6 col-xl-3">
+      <!-- <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card-box">
           <div class="row">
             <div class="col-6">
@@ -629,7 +718,9 @@
               <div class="text-right">
                 <h3 class="mt-1">
                   &nbsp;<a class="text-body" routerLink="/loan/assignment"
-                    ><span data-plugin="counterup">{{countData.PublicNoticeInProgress.Count}}</span></a
+                    ><span data-plugin="counterup">{{
+                      countData.PublicNoticeInProgress.Count
+                    }}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
@@ -642,26 +733,31 @@
               </div>
             </div>
           </div>
-          <!-- end row-->
+
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Issued<span class="float-right">{{countData.PublicNoticeInProgress.CountWithFilter}}</span></a
+                >Issued<span class="float-right">{{
+                  countData.PublicNoticeInProgress.CountWithFilter
+                }}</span></a
               >
             </h6>
             <ngb-progressbar
-            [value]="(countData.PublicNoticeInProgress.CountWithFilter /countData.PublicNoticeInProgress.Count)*100"
-            height="5px"
-            class="m-0 bg-secondary"
-          >
-          </ngb-progressbar>
+              [value]="
+                (countData.PublicNoticeInProgress.CountWithFilter /
+                  countData.PublicNoticeInProgress.Count) *
+                100
+              "
+              height="5px"
+              class="m-0 bg-secondary"
+            >
+            </ngb-progressbar>
           </div>
         </div>
-        <!-- end widget-rounded-circle-->
-      </div>
+      </div> -->
       <!-- end col-->
 
-      <div class="col-md-6 col-xl-3">
+      <!-- <div class="col-md-6 col-xl-3">
         <div class="widget-rounded-circle card-box">
           <div class="row">
             <div class="col-6">
@@ -679,11 +775,13 @@
               <div class="text-right">
                 <h3 class="text-dark mt-1">
                   <a routerLink="/loan/assignment" class="text-body">
-                    <span data-plugin="counterup">{{countData.TitleClearInProgress.Count}}</span></a
+                    <span data-plugin="counterup">{{
+                      countData.TitleClearInProgress.Count
+                    }}</span></a
                   >
                 </h3>
                 <p class="text-muted mb-1">
-                  <!-- text-truncate --><small
+      <small
                     ><a routerLink="/loan/assignment" class="text-body">
                       Title Clear in Progress</a
                     ></small
@@ -692,23 +790,28 @@
               </div>
             </div>
           </div>
-          <!-- end row-->
+
           <div class="mt-3">
             <h6 class="text-uppercase">
               <a class="text-body" routerLink="/loan/assignment"
-                >Pending<span class="float-right">{{countData.TitleClearInProgress.CountWithFilter}}</span></a
+                >Pending<span class="float-right">{{
+                  countData.TitleClearInProgress.CountWithFilter
+                }}</span></a
               >
             </h6>
             <ngb-progressbar
-            [value]="(countData.TitleClearInProgress.CountWithFilter /countData.TitleClearInProgress.Count)*100"
-            height="5px"
-            class="m-0 bg-blue"
-          >
-          </ngb-progressbar>
+              [value]="
+                (countData.TitleClearInProgress.CountWithFilter /
+                  countData.TitleClearInProgress.Count) *
+                100
+              "
+              height="5px"
+              class="m-0 bg-blue"
+            >
+            </ngb-progressbar>
           </div>
         </div>
-        <!-- end widget-rounded-circle-->
-      </div>
+      </div> -->
       <!-- end col-->
     </div>
     <div class="row">

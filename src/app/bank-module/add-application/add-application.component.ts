@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class AddApplicationComponent implements OnInit {
   breadCrumbItems: any;
+  notfoundshow: boolean;
   isLoading: boolean;
   keyword = 'Area';
   areas: string[];
@@ -32,6 +33,7 @@ export class AddApplicationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.notfoundshow = false;
     this.submitted = false;
     this.currentUser = this.service.getcurrentUser();
     this.service.GetLoanTypes().subscribe((res) => {
@@ -79,18 +81,18 @@ export class AddApplicationComponent implements OnInit {
     this.fetchstatelist();
     this.onChangeLien('False')
   }
-  onChangeLien(e){
-  if (e === 'False') {
-    this.f.LienAmount.disable();
-    this.f.LienDate.disable();
-    this.f.LienPersonName.disable();
-    this.f.LienFrom.disable();
-  } else {
-    this.f.LienAmount.enable();
-    this.f.LienDate.enable();
-    this.f.LienPersonName.enable();
-    this.f.LienFrom.enable();
-  }
+  onChangeLien(e) {
+    if (e === 'False') {
+      this.f.LienAmount.disable();
+      this.f.LienDate.disable();
+      this.f.LienPersonName.disable();
+      this.f.LienFrom.disable();
+    } else {
+      this.f.LienAmount.enable();
+      this.f.LienDate.enable();
+      this.f.LienPersonName.enable();
+      this.f.LienFrom.enable();
+    }
   }
   // searchcountry(term: string, item: any){
   //   term = term.toLocaleLowerCase();
@@ -214,10 +216,12 @@ export class AddApplicationComponent implements OnInit {
               return;
             } else {
               this.areas = data.data;
+              this.notfoundshow = true;
             }
           });
     } else if (search !== undefined && search.length === 0) {
       this.areas = null;
+      this.notfoundshow = false;
     }
   }
   onclear() {

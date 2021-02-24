@@ -18,9 +18,9 @@ const httpOptions = {
 const httpFileUploadOptions = {
   headers: new HttpHeaders(),
 };
-const baseurl = `http://localhost:3000/`;
+// const baseurl = `http://localhost:3000/`;
 // const baseurl = `https://api.proplegit.com/`;
-// const baseurl = `http://devapi.proplegit.com/`;
+const baseurl = `http://devapi.proplegit.com/`;
 // const baseurl = `http://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
@@ -57,6 +57,9 @@ const propertyTaxAlert = `${apiUrl}propertyAlerts/tax/Property/`;
 const propertyRentAlert = `${apiUrl}propertyAlerts/rent/Property/`;
 const propertyCaseDetails = `${apiUrl}property/case/details/`;
 const propertyCaseTypes = `${apiUrl}property/legalcase/types/list`;
+const generatePVR = `${apiUrl}loan/pvr/Genrate/merge/`;
+const getallLoanID = `${apiUrl}loan/application/ALL/ID`;
+const resendLoginOPT = `${apiUrl}single/generate/otp/`;
 
 @Injectable({
   providedIn: 'root',
@@ -396,6 +399,9 @@ export class GeneralService {
   GetPVRData(id): any {
     return this.http.get<any>(`${getPVRData}${id}`, httpOptions);
   }
+  GeneratePVR(appid): any {
+    return this.http.get<any>(`${generatePVR}${appid}`, httpOptions);
+  }
   GetPVRBankList(): any {
     return this.http.get<any>(`${getPVRBankList}`, httpOptions);
   }
@@ -452,5 +458,26 @@ export class GeneralService {
   }
   AddLegalCaseHearing(CaseID, data): any {
     return this.http.post(`${apiUrl}property/case/${CaseID}/next-hearing`, data, httpOptions);
+  }
+  AddPetitionerAndLawyer(CaseID, data): any {
+    return this.http.post(`${apiUrl}property/case/${CaseID}/petitioner`, data, httpOptions);
+  }
+  AddRespondentAndLawyer(CaseID, data): any {
+    return this.http.post(`${apiUrl}property/case/${CaseID}/respondent`, data, httpOptions);
+  }
+  GetPetitionerAndLawyer(CaseID): any {
+    return this.http.get(`${apiUrl}property/case/${CaseID}/petitionersandlawyer`, httpOptions);
+  }
+  GetRespondentAndLawyer(CaseID): any {
+    return this.http.get(`${apiUrl}property/case/${CaseID}/respondentsandlawyer`, httpOptions);
+  }
+  GetAllLoanID(StateName, DistrictName, TalukaName, VillageName, BankName, LoanType, LoanPropertyType): any {
+    return this.http.post(`${getallLoanID}`, { StateName, DistrictName, TalukaName, VillageName, BankName, LoanType, LoanPropertyType }, httpOptions);
+  }
+  ChangeECResponce(CaseID): any {
+    return this.http.put(`${apiUrl}loan/application/ECRequest/${CaseID}`, null, httpOptions);
+  }
+  ResendLoginOTP(UserID): any {
+    return this.http.get(`${resendLoginOPT}/${UserID}`, httpOptions);
   }
 }

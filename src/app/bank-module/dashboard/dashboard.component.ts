@@ -14,8 +14,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   breadCrumbItems: Array<{}>;
   countData: any;
   isLoading: boolean;
+  isdropdownShow: boolean;
   isFilterLoading: boolean;
-  filterobj:{
+  filterobj: {
     FilterStartDate: string,
     FilterEndDate: string,
     TypeOfLoan: number,
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     ApplicationStatus: string,
     UserID: string,
     CompanyUserMasterID: string
-    }
+  }
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
   allLoanTypes: any;
@@ -108,27 +109,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
 
   @ViewChild('dp', { static: true }) datePicker: any;
-  constructor(private router: Router, private service: GeneralService, private renderer: Renderer2,private datePipe:DatePipe) {
+  constructor(private router: Router, private service: GeneralService, private renderer: Renderer2, private datePipe: DatePipe) {
     this.isLoading = true;
     this.isFilterLoading = true;
-   }
+  }
 
   ngOnInit() {
+    this.isdropdownShow = false;
     this.currentUser = this.service.getcurrentUser();
     this.hidden = true;
     this.breadCrumbItems = [];
-    this.filterobj={
+    this.filterobj = {
       FilterStartDate: "",
-      FilterEndDate : "",
-      TypeOfLoan : null,
-      LoanPropertyTypeID:null,
-      ApplicationStatus:"",
+      FilterEndDate: "",
+      TypeOfLoan: null,
+      LoanPropertyTypeID: null,
+      ApplicationStatus: "",
       UserID: this.currentUser.UserID,
-      CompanyUserMasterID:this.currentUser.CompanyUserMasterID
-      }
-    this.service.GetLoanPropertyTypes().subscribe((res)=>{
+      CompanyUserMasterID: this.currentUser.CompanyUserMasterID
+    }
+    this.service.GetLoanPropertyTypes().subscribe((res) => {
       this.allProperty = res.data;
-      this.service.GetLoanTypes().subscribe((data)=>{
+      this.service.GetLoanTypes().subscribe((data) => {
         this.allLoanTypes = data.data;
         this.isLoading = false;
       })
@@ -140,7 +142,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         columns: [{
           title: 'id',
           data: 'AppID'
-        },{
+        }, {
           title: 'Name',
           data: '', render: (data, type, row) => {
             return `${row.FirstName} ${row.LastName}`;
@@ -149,16 +151,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Loan Type',
           data: 'Type_of_Loan'
-        },{
-          title:'Status',
-          data:'ApplicationStatus',render:(data)=>{
+        }, {
+          title: 'Status',
+          data: 'ApplicationStatus', render: (data) => {
             if (data === 'Pending') {
               return `<span class="badge badge-danger p-1">${data}</span>`;
-            }else if(data ==='Title Clear Complete'){
+            } else if (data === 'iPVR Sent') {
               return `<span class="badge badge-success p-1">${data}</span>`;
-            }else if(data){
+            } else if (data) {
               return `<span class="badge badge-secondary p-1">${data}</span>`;
-            }else{
+            } else {
               return data;
             }
           }
@@ -173,7 +175,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             // return `<a href="loan/title-search/${row.AppID}">View</a>`;
           }
         }
-        ],order:[[0,'desc']],columnDefs:[{targets:0 ,visible:false}]
+        ], order: [[0, 'desc']], columnDefs: [{ targets: 0, visible: false }]
       };
     }
 
@@ -248,8 +250,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.toDate = new Date(date.year, date.month - 1, date.day);
       this.hidden = true;
       this.selected = this.fromDate.toLocaleDateString() + '-' + this.toDate.toLocaleDateString();
-      this.filterobj.FilterStartDate = this.datePipe.transform(this.fromDate,'yyyy-MM-dd');
-      this.filterobj.FilterEndDate = this.datePipe.transform(this.toDate,'yyyy-MM-dd');
+      this.filterobj.FilterStartDate = this.datePipe.transform(this.fromDate, 'yyyy-MM-dd');
+      this.filterobj.FilterEndDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
       this.dateRangeSelected.emit({ fromDate: this.fromDate, toDate: this.toDate });
       this.fromDate = null;
       this.toDate = null;
@@ -262,9 +264,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.selected = '';
     }
   }
-  filterCount(){
+  filterCount() {
     this.isFilterLoading = true;
-    this.service.getLoanDashboard(this.filterobj).subscribe((res)=>{
+    this.service.getLoanDashboard(this.filterobj).subscribe((res) => {
       this.countData = res.data;
       this.isFilterLoading = false;
     });
@@ -279,33 +281,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  callback(){
+  callback() {
     this.selected = ''
     this.filterobj.FilterStartDate = '';
     this.filterobj.FilterEndDate = '';
     this.filterCount()
     this.hidden = true;
   }
-  ChangeLoan(e){
-    if (e=== undefined) {
-      this.filterobj.TypeOfLoan =null
-    }else{
+  ChangeLoan(e) {
+    if (e === undefined) {
+      this.filterobj.TypeOfLoan = null
+    } else {
       this.filterobj.TypeOfLoan = e
     }
     this.filterCount()
   }
-  onstatusChange(e){
-    if (e=== undefined) {
-      this.filterobj.ApplicationStatus =null
-    }else{
+  onstatusChange(e) {
+    if (e === undefined) {
+      this.filterobj.ApplicationStatus = null
+    } else {
       this.filterobj.ApplicationStatus = e
     }
     this.filterCount()
   }
-  ChangePropertyType(e){
-    if (e=== undefined) {
-      this.filterobj.LoanPropertyTypeID =null
-    }else{
+  ChangePropertyType(e) {
+    if (e === undefined) {
+      this.filterobj.LoanPropertyTypeID = null
+    } else {
       this.filterobj.LoanPropertyTypeID = e
     }
     this.filterCount()

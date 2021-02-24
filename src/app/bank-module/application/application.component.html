@@ -90,13 +90,39 @@
             Loan Applications & Documents Received Status
           </h3>
         </div>
-        <button
+        <div ngbDropdown class="dropdown d-inline float-right mr-3">
+          <button
+            type="button"
+            class="btn btn-info ml-1"
+            id="btn={index}"
+            ngbDropdownToggle
+          >
+            Add Application
+            <i class="mdi mdi-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <a class="dropdown-item" routerLink="/loan/addapplication"
+              >Single Application</a
+            >
+            <a class="dropdown-item" routerLink="/loan/bulkupload"
+              >Bulk Applications</a
+            >
+          </div>
+        </div>
+        <!-- <button
           class="btn btn-info float-right mr-3"
           (click)="redirect()"
           *ngIf="currentUser.UserType === 'Bank Manager'"
         >
           Add Application
         </button>
+        <button
+          class="btn btn-info float-right mr-3"
+          *ngIf="currentUser.UserType === 'Bank Manager'"
+          routerLink="/loan/bulkupload"
+        >
+          Bulk Upload Application
+        </button> -->
         <div class="mt-3" *ngIf="currentUser.UserType === 'Bank Manager'">
           <table
             datatable
@@ -204,7 +230,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 mt-3">
+        <!-- <div class="col-md-4 mt-3">
           <div class="card-box">
             <h4 class="mt-0 font-16">Pending Title Search</h4>
             <h2 class="text-primary text-center"><a href="">22</a></h2>
@@ -221,8 +247,8 @@
               </ngb-progressbar>
             </div>
           </div>
-        </div>
-        <div class="col-md-4 mt-3">
+        </div> -->
+        <!-- <div class="col-md-4 mt-3">
           <div class="card-box">
             <h4 class="mt-0 font-16">Protection Notices</h4>
             <h2 class="text-primary text-center"><a href="">3</a></h2>
@@ -239,7 +265,7 @@
               </ngb-progressbar>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-md-4 mt-3">
           <div class="card-box">
             <h4 class="mt-0 font-16">Pending Review</h4>
@@ -262,14 +288,18 @@
         </div>
         <div class="col-md-4 mt-3">
           <div class="card-box">
-            <h4 class="mt-0 font-16">Pending Lawyer Assignment</h4>
+            <h4 class="mt-0 font-16">EC Request (12 years and Above)</h4>
+            <!-- <h4 class="mt-0 font-16">Pending Lawyer Assignment</h4> -->
             <h2 class="text-primary text-center"><a href="">12</a></h2>
             <div class="mt-3">
               <h6 class="text-uppercase">
+                Total EC Request Assignment<span class="float-right">20</span>
+              </h6>
+              <!-- <h6 class="text-uppercase">
                 Total Pending Lawyer Assignment<span class="float-right"
                   >20</span
                 >
-              </h6>
+              </h6> -->
               <ngb-progressbar
                 [type]="'info'"
                 [value]="50"
@@ -280,7 +310,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4 mt-3">
+        <!-- <div class="col-md-4 mt-3">
           <div class="card-box">
             <h4 class="mt-0 font-16">Pending Valuation</h4>
             <h2 class="text-primary text-center"><a href="">5</a></h2>
@@ -297,7 +327,7 @@
               </ngb-progressbar>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

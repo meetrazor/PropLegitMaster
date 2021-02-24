@@ -18,7 +18,7 @@
           [stroke]="revenueRadialChart.stroke"
         >
         </apx-chart>
-        <h5 class="text-muted">DOCUMENTS REVIEWED</h5>
+        <h5 class="text-muted">DOCUMENTS RECEIVED</h5>
         <div class="table-responsive">
           <table class="table table-borderless mb-0">
             <tbody>
@@ -29,43 +29,52 @@
                 </td>
                 <td>
                   <a
-                    [routerLink] = "'/loan/View-Documents/'+AppID"
-                    [queryParams]="{type: 'Under Review'}"
+                    [routerLink]="'/loan/View-Documents/' + AppID"
+                    [queryParams]="{ type: 'Received' }"
                     class="text-success h4"
                     >VIEW</a
                   >
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td class="h4">
                   Reviewed
                   <span class="text-success">{{ reviewd }}</span>
                 </td>
                 <td>
                   <a
-                  [routerLink] = "'/loan/View-Documents/'+AppID"
-                  [queryParams]="{type: 'reviewed'}"
+                    [routerLink]="'/loan/View-Documents/' + AppID"
+                    [queryParams]="{ type: 'reviewed' }"
                     class="text-success h4"
                     >VIEW</a
                   >
                 </td>
-              </tr>
+              </tr> -->
               <tr>
                 <td class="h4">
                   Pending
-                  <span class="text-danger">{{ pending }}</span>
+                  <span class="text-primary">{{ pending }}</span>
                 </td>
                 <td>
-                  <a [routerLink] = "'/loan/View-Documents/'+AppID"
-                  [queryParams]="{type: 'pending'}" class="text-success h4">Request </a>|
-                  <a [routerLink] = "'/loan/View-Documents/'+AppID"
-                  [queryParams]="{type: 'pending'}" class="text-success h4"> Upload </a>
+                  <!-- <a
+                    [routerLink]="'/loan/View-Documents/' + AppID"
+                    [queryParams]="{ type: 'pending' }"
+                    class="text-success h4"
+                    >Request </a
+                  >| -->
+                  <a
+                    [routerLink]="'/loan/View-Documents/' + AppID"
+                    [queryParams]="{ type: 'pending' }"
+                    class="text-success h4"
+                  >
+                    Upload
+                  </a>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        <h4><a href="" class="">VIEW COMMENTS</a></h4>
+        <!-- <h4><a href="" class="">VIEW COMMENTS</a></h4> -->
         <!-- <h2>Ownership Verification</h2> -->
         <!-- <div class="row mt-3">
           <div class="col-4">
@@ -87,7 +96,8 @@
   </div>
   <div class="col-xl-4">
     <div class="card-box">
-      <h2 class="text-center pb-2">Ownership Verification</h2>
+      <h2 class="text-center pb-2">iPVR</h2>
+      <!-- <h2 class="text-center pb-2">Ownership Verification</h2> -->
       <app-portlet
         *ngIf="applicationData.PVRDocumentID"
         loading="0"
@@ -205,10 +215,9 @@
         </div>
       </div>
     </div>
-    <div class="card-box" *ngIf="applicationData.PVRDocumentID">
+    <!-- <div class="card-box" *ngIf="applicationData.PVRDocumentID">
       <div class="widget-chart text-center" dir="ltr">
         <h2>Title Certificate</h2>
-        <!-- <h4 class="text-danger">Lawyer Assignment Pending</h4> -->
         <h4 *ngIf="!applicationData.LawyerID">
           <a [routerLink]="'/loan/Lawyers/' + applicationData.AppID"
             >Assign a Lawyer</a
@@ -243,6 +252,21 @@
             </div>
           </div>
         </div>
+        <h4>
+          <a class="text-success">{{ applicationData.ApplicationStatus }}</a>
+        </h4>
+      </div>
+    </div> -->
+    <div class="card-box" *ngIf="applicationData.PVRDocumentID">
+      <div class="widget-chart text-center" dir="ltr">
+        <h2>EC Request</h2>
+        <!-- <h4 class="text-danger">Lawyer Assignment Pending</h4> -->
+        <h4 *ngIf="!applicationData.EC_Request">
+          <a class="text-primary" (click)="EcChange()">EC Request Pending</a>
+        </h4>
+        <h4 *ngIf="applicationData.EC_Request">
+          <a class="text-primary">EC Requested</a>
+        </h4>
         <h4>
           <a class="text-success">{{ applicationData.ApplicationStatus }}</a>
         </h4>
