@@ -23,8 +23,8 @@
             [src]="url"
             *ngIf="filetype == 'PDF'"
             style="display: block"
-            [autoresize] = true
-            [show-all] = true
+            [autoresize]="true"
+            [show-all]="true"
             [original-size]="false"
           ></pdf-viewer>
 
@@ -57,4 +57,7 @@
       </div>
     </div>
   </div>
+</div>
+<div class="card-disabled" *ngIf="isLoading">
+  <div class="card-portlets-loader"></div>
 </div>

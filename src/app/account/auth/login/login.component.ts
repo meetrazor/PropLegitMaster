@@ -4,6 +4,7 @@ import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,17 @@ import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-
+  resendOTP: boolean;
   loginForm: FormGroup;
   confirmForm: FormGroup;
   submitted = false;
   returnUrl: string;
+  userId;
   error = '';
   success = '';
   loading = false;
+  time = 5 * 60;
+
   @ViewChild('OtpInput', { static: false }) OtpRef: any;
   @ViewChild('wizardForm', { static: false }) wizard: BaseWizardComponent;
 
@@ -27,6 +31,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router, private service: GeneralService) { }
 
   ngOnInit() {
+    this.userId = null;
     this.loginForm = this.formBuilder.group({
       EmailORMobile: ['', [Validators.required,
       Validators.pattern(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})|^([0-9]{10})+$/)]],
@@ -80,8 +85,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.submitted = false;
             this.error = '';
             this.success = data.message;
+            this.userId = data.data.UserID;
             this.e.OTPLogID.setValue(data.data.OTPLogID);
             this.wizard.navigation.goToNextStep();
+            this.timer();
           }
         });
   }
@@ -112,5 +119,34 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   onOtpChange(event) {
     this.e.OTP.setValue(event);
+  }
+  reSendOTP() {
+    this.cleanOTPBox();
+    this.time = 5 * 60;
+    this.resendOTP = false;
+    this.timer();
+    this.service.ResendLoginOTP(this.userId).subscribe((res) => {
+      this.e.OTPLogID.setValue(res.data.OTPLogID);
+      Swal.fire({
+        position: 'top-end',
+        type: 'success',
+        title: res.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    });
+  }
+  timer() {
+    const intervel = setInterval(() => {
+      if (this.time > 0.5) {
+        this.time -= 1;
+      } else {
+        clearInterval(intervel);
+        this.resendOTP = true;
+      }
+    }, 1000);
+  }
+  cleanOTPBox() {
+    this.OtpRef.setValue('');
   }
 }

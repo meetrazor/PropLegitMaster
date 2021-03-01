@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   fromNGDate: NgbDate;
   toNGDate: NgbDate;
   allLoanTypes: any;
-  allStatus = ['Pending', 'Pending Valuation', 'Pending Review', 'Assign Lawyer Pending'];
+  allStatus = ['iPVR sent', 'iPVR in Progress'];
   allProperty: any;
   allBanks = ['State Bank of India', 'Bank of Baroda', 'Union Bank of India', 'Canara Bank'];
   allIndia = ['Maharashtra', 'Punjab', 'Gujarat'];
@@ -106,6 +106,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @Input() toDate: Date;
   dtOptions: DataTables.Settings = {};
   currentUser: any;
+  loanTypeData: Array<any>;
+  loanTypes: Array<string>;
+  loanapp: Array<number>;
   @Output() dateRangeSelected: EventEmitter<{}> = new EventEmitter();
 
   @ViewChild('dp', { static: true }) datePicker: any;
@@ -119,6 +122,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.currentUser = this.service.getcurrentUser();
     this.hidden = true;
     this.breadCrumbItems = [];
+    this.loanTypes = [];
+    this.loanapp = [];
     this.filterobj = {
       FilterStartDate: "",
       FilterEndDate: "",
@@ -132,7 +137,73 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.allProperty = res.data;
       this.service.GetLoanTypes().subscribe((data) => {
         this.allLoanTypes = data.data;
-        this.isLoading = false;
+        this.service.GetLoanTypePVRStatus(this.currentUser.UserID).subscribe((Res) => {
+          this.loanTypeData = Res.data;
+          this.isLoading = false;
+          this.loanTypeData.forEach((x) => {
+            this.loanTypes.push(x.Type_of_Loan)
+            this.loanapp.push(+x.Count_App_By_LoanType)
+          })
+          this.ChartType = {
+            type: 'donut',
+            height: 260,
+            series: [42, 30, 28],
+            labels: ['5 Lacs to 10 Lacs', 'Below 5 Lacs', 'Above 10 Lacs'],
+            colors: ['#26c6e1', '#6658dd', '#ebeff2'],
+            dataLabels: {
+              enabled: true
+            },
+            legend: {
+              show: false
+            }, options: {
+              maintainAspectRatio: false,
+              cutoutPercentage: 70,
+              legend: {
+                display: true
+              }
+            }
+          };
+          this.ChartType2 = {
+            type: 'donut',
+            height: 260,
+            series: this.loanapp,
+            labels: this.loanTypes,
+            colors: ['#26c6e1', '#6658dd', '#d9847e', '#ebeff2', '#9483de', '#7fe393'],
+            dataLabels: {
+              enabled: true
+            },
+            legend: {
+              show: false
+            }, options: {
+              maintainAspectRatio: false,
+              cutoutPercentage: 70,
+              legend: {
+                display: true
+              }
+            }
+          };
+          this.ChartType3 = {
+            type: 'donut',
+            height: 260,
+            series: [400, 500, 200, 314, 314],
+            labels: ['Buildings', 'Open Land', 'Bungalows', 'Flats', 'Factory'],
+            colors: ['#26c6e1', '#6658dd', '#ebeff2', '#d9847e', '#9483de'],
+            dataLabels: {
+              enabled: true
+            },
+            legend: {
+              show: false
+            }, options: {
+              maintainAspectRatio: false,
+              cutoutPercentage: 70,
+              legend: {
+                display: true
+              }
+            }
+          };
+
+        })
+
       })
     })
     this.filterCount();
@@ -170,8 +241,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         }, {
           title: 'Action',
           data: null, render: (data, type, row) => {
-            return `<a class="btn text-primary" title="View Application"
-            viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
+            if (row.FileURL) {
+              return `<a class="btn text-primary" title="View Application"
+              viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>
+              <a href="${row.FileURL}" target="_blank" class="m-1" title="Download iPVR">
+              <i class="mdi mdi-file-download font-18 text-secondary" aria-hidden="false"></i>
+              </a>`;
+            } else {
+              return `<a class="btn text-primary" title="View Application"
+              viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
+            }
             // return `<a href="loan/title-search/${row.AppID}">View</a>`;
           }
         }
@@ -179,63 +258,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       };
     }
 
-    this.ChartType = {
-      type: 'donut',
-      height: 260,
-      series: [42, 30, 28],
-      labels: ['5 Lacs to 10 Lacs', 'Below 5 Lacs', 'Above 10 Lacs'],
-      colors: ['#26c6e1', '#6658dd', '#ebeff2'],
-      dataLabels: {
-        enabled: true
-      },
-      legend: {
-        show: false
-      }, options: {
-        maintainAspectRatio: false,
-        cutoutPercentage: 70,
-        legend: {
-          display: true
-        }
-      }
-    };
-    this.ChartType2 = {
-      type: 'donut',
-      height: 260,
-      series: [6000, 7000, 6500, 5000, 8000, 17512],
-      labels: ['Business', 'Home', 'Auto', 'Personal', 'Mudra', 'MSME'],
-      colors: ['#26c6e1', '#6658dd', '#ebeff2', '#d9847e', '#9483de', '#7fe393'],
-      dataLabels: {
-        enabled: true
-      },
-      legend: {
-        show: false
-      }, options: {
-        maintainAspectRatio: false,
-        cutoutPercentage: 70,
-        legend: {
-          display: true
-        }
-      }
-    };
-    this.ChartType3 = {
-      type: 'donut',
-      height: 260,
-      series: [400, 500, 200, 314, 314],
-      labels: ['Buildings', 'Open Land', 'Bungalows', 'Flats', 'Factory'],
-      colors: ['#26c6e1', '#6658dd', '#ebeff2', '#d9847e', '#9483de'],
-      dataLabels: {
-        enabled: true
-      },
-      legend: {
-        show: false
-      }, options: {
-        maintainAspectRatio: false,
-        cutoutPercentage: 70,
-        legend: {
-          display: true
-        }
-      }
-    };
+
   }
 
   onDateSelection(date: NgbDate) {

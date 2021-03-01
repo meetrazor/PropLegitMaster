@@ -90,7 +90,11 @@
             Loan Applications & Documents Received Status
           </h3>
         </div>
-        <div ngbDropdown class="dropdown d-inline float-right mr-3">
+        <div
+          ngbDropdown
+          class="dropdown d-inline float-right mr-3"
+          *ngIf="currentUser.UserType === 'Bank Manager'"
+        >
           <button
             type="button"
             class="btn btn-info ml-1"

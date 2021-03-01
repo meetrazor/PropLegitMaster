@@ -78,6 +78,25 @@
 
   <div class="row">
     <div class="col-md-12 mb-3">
+      <h4 class="header-title">I am ? *</h4>
+      <span
+        ><input class="mx-1" type="radio" formControlName="Iam" value="R" />
+        Respondent</span
+      >
+      <span
+        ><input class="mx-1" type="radio" formControlName="Iam" value="P" />
+        Petitioner</span
+      >
+      <div *ngIf="submitted && f.Iam.errors" class="invalid-feedback">
+        <div *ngIf="f.Iam.errors.required">
+          Please Select You are Respondent Or Petitioner
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
       <h4 class="header-title">Filing Number</h4>
       <input
         class="form-control"

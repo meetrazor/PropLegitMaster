@@ -202,9 +202,18 @@
         aria-labelledby="profileDropdown"
         ngbDropdownMenu
       >
-        <!-- <div class="dropdown-header noti-title">
-          <h6 class="text-overflow m-0">Welcome !</h6>
-        </div> -->
+        <div class="dropdown-header noti-title">
+          <h6 class="text-overflow m-0">
+            Welcome ! {{ currentUser.FirstName }} {{ currentUser.LastName }}
+          </h6>
+        </div>
+        <div
+          class="dropdown-header noti-title"
+          *ngIf="!isLoading && data.BankName && data.BankBranchName"
+        >
+          <h6 class="text-overflow m-0">{{ data.BankName }}</h6>
+          <h6 class="text-overflow m-0">{{ data.BankBranchName }}</h6>
+        </div>
 
         <!-- item-->
         <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">

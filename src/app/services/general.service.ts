@@ -16,12 +16,12 @@ const httpOptions = {
 };
 
 const httpFileUploadOptions = {
-  headers: new HttpHeaders(),
+  headers: new HttpHeaders()
 };
 // const baseurl = `http://localhost:3000/`;
 // const baseurl = `https://api.proplegit.com/`;
 const baseurl = `http://devapi.proplegit.com/`;
-// const baseurl = `http://qaapi.proplegit.com/`;
+// const baseurl = `https://qaapi.proplegit.com/`;
 const apiUrl = `${baseurl}api/`;
 const register = `${apiUrl}login/register`;
 const generateOTP = `${apiUrl}generate/otp/`;
@@ -60,6 +60,9 @@ const propertyCaseTypes = `${apiUrl}property/legalcase/types/list`;
 const generatePVR = `${apiUrl}loan/pvr/Genrate/merge/`;
 const getallLoanID = `${apiUrl}loan/application/ALL/ID`;
 const resendLoginOPT = `${apiUrl}single/generate/otp/`;
+const excelExport = `${apiUrl}area/list/Distict/`;
+const UserList = `${apiUrl}user/list/`;
+const loanTypePVRStatus = `${apiUrl}loan/Dashboard/loantype/PVR/status/`;
 
 @Injectable({
   providedIn: 'root',
@@ -478,6 +481,15 @@ export class GeneralService {
     return this.http.put(`${apiUrl}loan/application/ECRequest/${CaseID}`, null, httpOptions);
   }
   ResendLoginOTP(UserID): any {
-    return this.http.get(`${resendLoginOPT}/${UserID}`, httpOptions);
+    return this.http.post(`${resendLoginOPT}${UserID}`, null, httpOptions);
+  }
+  GetExcelExportData(StateID): any {
+    return this.http.get(`${excelExport}${StateID}`, httpOptions)
+  }
+  GetUser(UserID): any {
+    return this.http.get(`${UserList}${UserID}`, httpOptions)
+  }
+  GetLoanTypePVRStatus(UserID): any {
+    return this.http.get(`${loanTypePVRStatus}${UserID}`, httpOptions)
   }
 }

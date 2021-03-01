@@ -23,7 +23,8 @@ export class TopbarComponent implements OnInit {
     flag?: string,
     name: string
   };
-
+  isLoading: boolean;
+  data: any;
   openMobileMenu: boolean;
   currentUser: any;
   @Output() settingsButtonClicked = new EventEmitter();
@@ -32,7 +33,12 @@ export class TopbarComponent implements OnInit {
   constructor(private router: Router, private service: GeneralService, private cookie: CookieService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.currentUser = JSON.parse(this.cookie.getCookie('currentUser'));
+    this.service.GetUser(this.currentUser.UserID).subscribe((Res) => {
+      this.data = Res.data[0];
+      this.isLoading = false;
+    })
     // get the notifications
     this._fetchNotifications();
     this.openMobileMenu = false;

@@ -34,7 +34,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit, OnDestroy {
   hidden: boolean;
   @ViewChild('dp', { static: true }) datePicker: any;
   allLoanTypes = ['Personal Loan', 'Auto Loan', 'Home Loan', 'Business Loan', 'MSME Loan', 'Industrial Loan', 'Mudra Loan'];
-  allStatus = ['Received', 'Pending Title Search', 'Pending Valuation', 'Pending Review', 'Pending Lawyer Assignment'];
+  allStatus = ['iPVR sent', 'iPVR in Progress'];
   allApplicationNos = ['1', '2', '3', '4', '5', '6'];
   tabledata: any;
   constructor(
@@ -95,8 +95,17 @@ export class ApplicationComponent implements OnInit, AfterViewInit, OnDestroy {
       }, {
         title: 'Action',
         data: null, render: (data, type, row) => {
-          return `<a class="btn text-primary" title="View Application"
-          viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
+          if (row.FileURL) {
+            return `<a class="btn text-primary" title="View Application"
+            viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>
+            <a href="${row.FileURL}" class="m-1" target="_blank" title="Download iPVR">
+            <i class="mdi mdi-file-download font-18 text-secondary" aria-hidden="false"></i>
+            </a>`;
+          } else {
+            return `<a class="btn text-primary" title="View Application"
+            viewID = "${row.AppID}"><i class="mdi mdi-eye font-18 text-secondary" viewID = "${row.AppID}" aria-hidden="false"></i></a>`;
+          }
+
         }
       }
       ], order: [[0, 'desc']], columnDefs: [{ targets: 0, visible: false }]
@@ -158,7 +167,7 @@ export class ApplicationComponent implements OnInit, AfterViewInit, OnDestroy {
             // Upload PDF
           } else if (full.PVRID && full.PVRDocumentID) {
             return `<a class="btn text-primary" title="View PVR"
-            viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" ><i class="mdi mdi-eye font-18 text-secondary"
+            viewPVRID = "${full.PVRDocumentID}" target="_blank" propertyID ="${full.PropertyID}" ><i class="mdi mdi-eye font-18 text-secondary"
             viewPVRID = "${full.PVRDocumentID}" propertyID ="${full.PropertyID}" aria-hidden="false"></i></a>
             <a class="btn text-primary" title="Upload All Documents"
             UploadDocAppID = "${full.AppID}"><i class="mdi mdi-file-document-box-multiple font-18 text-secondary"

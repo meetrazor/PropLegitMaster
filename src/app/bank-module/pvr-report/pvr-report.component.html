@@ -275,7 +275,7 @@
         (ngSubmit)="save()"
         (keydown.enter)="$event.preventDefault()"
       >
-        <h5
+        <!-- <h5
           class="header-title mb-0"
           style="color: rgb(34, 30, 30); font-size: 18px"
         >
@@ -458,8 +458,8 @@
               <i class="mdi mdi-account-multiple-plus"></i>
             </a>
           </div>
-        </div>
-        <h5
+        </div> -->
+        <!-- <h5
           class="header-title mb-0"
           style="color: rgb(34, 30, 30); font-size: 18px"
         >
@@ -660,7 +660,7 @@
               <i class="mdi mdi-account-multiple-plus"></i>
             </a>
           </div>
-        </div>
+        </div> -->
         <h5
           class="header-title mb-0"
           style="color: rgb(34, 30, 30); font-size: 18px"
@@ -769,13 +769,13 @@
             </div>
           </div>
           <div class="form-group col-md-4">
-            <label>PVR Status*</label>
+            <label>iPVR Status*</label>
             <ng-select
               class="form-control"
               formControlName="PVRPropertyStatus"
               autocomplete="off"
               placeholder="
-          Select PVR Status"
+          Select iPVR Status"
               [ngClass]="{
                 'is-invalid': submitted && f.PVRPropertyStatus.errors
               }"
@@ -792,7 +792,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PVRPropertyStatus.errors.required">
-                PVR Status is Required
+                iPVR Status is Required
               </div>
             </div>
           </div>
@@ -820,7 +820,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PVRRiskMeterStatus.errors.required">
-                PVR Risk Meter Status is Required
+                iPVR Risk Meter Status is Required
               </div>
             </div>
           </div>
@@ -919,7 +919,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PVRStatusLine1.errors.required">
-                PVR Status Line1 is Required
+                iPVR Status Line1 is Required
               </div>
             </div>
           </div>
@@ -941,7 +941,7 @@
               class="invalid-feedback"
             >
               <div *ngIf="f.PVRStatusLine2.errors.required">
-                PVR Status Line2 is Required
+                iPVR Status Line2 is Required
               </div>
             </div>
           </div>
@@ -956,7 +956,7 @@
             aria-controls="collapseExample"
             type="submit"
           >
-            Add PVR
+            Add iPVR
           </button>
         </div>
       </form>

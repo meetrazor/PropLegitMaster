@@ -45,6 +45,8 @@
     "core-js": "^2.5.4",
     "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.22",
+    "exceljs": "^4.2.0",
+    "file-saver": "^2.0.5",
     "jquery": "^3.5.1",
     "metismenujs": "^1.0.3",
     "moment": "^2.29.1",

@@ -178,9 +178,24 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="form-group mb-0 text-center">
-                    <button class="btn btn-primary btn-block" type="submit">
+                  <div class="form-group mb-0 text-center mt-3">
+                    <button
+                      (click)="reSendOTP()"
+                      class="btn btn-primary"
+                      [disabled]="!resendOTP"
+                    >
+                      <i class="mdi mdi-refresh mr-1"></i>Resend OTP
+                    </button>
+                    <div *ngIf="!resendOTP">
+                      Resend OTP in {{ time | time: "m:s" }}
+                    </div>
+                  </div>
+                  <div class="form-group mb-0 mt-4 text-center">
+                    <button
+                      class="btn btn-primary btn-block"
+                      [disabled]="e.OTP.errors"
+                      type="submit"
+                    >
                       Submit
                     </button>
                   </div>

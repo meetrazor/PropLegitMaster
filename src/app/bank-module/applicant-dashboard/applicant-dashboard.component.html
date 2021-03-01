@@ -96,7 +96,9 @@
   </div>
   <div class="col-xl-4">
     <div class="card-box">
-      <h2 class="text-center pb-2">iPVR</h2>
+      <h2 class="text-center pb-2">
+        <span class="text-danger m-0">i</span>PVR
+      </h2>
       <!-- <h2 class="text-center pb-2">Ownership Verification</h2> -->
       <app-portlet
         *ngIf="applicationData.PVRDocumentID"
@@ -259,10 +261,12 @@
     </div> -->
     <div class="card-box" *ngIf="applicationData.PVRDocumentID">
       <div class="widget-chart text-center" dir="ltr">
-        <h2>EC Request</h2>
+        <h2>EC Request <span class="font-15">(12 years or above)</span></h2>
         <!-- <h4 class="text-danger">Lawyer Assignment Pending</h4> -->
         <h4 *ngIf="!applicationData.EC_Request">
-          <a class="text-primary" (click)="EcChange()">EC Request Pending</a>
+          <a class="btn font-16 text-primary" (click)="EcChange()"
+            >Request Now</a
+          >
         </h4>
         <h4 *ngIf="applicationData.EC_Request">
           <a class="text-primary">EC Requested</a>

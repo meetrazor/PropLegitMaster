@@ -11,6 +11,33 @@
       >To Download Sample Excel File, All (*) Marked columns are mandatory in
       excel.
     </div>
+    <div class="px-4 my-2">
+      <p>Download Datasheet for bulk upload</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <ng-select
+              class="form-control"
+              autocomplete="off"
+              placeholder="Select state"
+              [(ngModel)]="stateId"
+            >
+              <ng-option
+                *ngFor="let item of statedata"
+                [value]="item.StateID"
+                [id]="item.StateID"
+                >{{ item.StateName }}</ng-option
+              >
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button (click)="exportToExcel()" class="btn btn-info">
+            Download Data
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="card m-3 p-3" *ngIf="ResponseData.length <= 0">
       <h4 class="header-title">Select Excel File *</h4>
       <p class="text-muted font-13 m-b-30"></p>

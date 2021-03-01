@@ -111,13 +111,7 @@ export class UploadDocumentComponent implements OnInit {
   }
 
   setform(fileName, filetype, extension) {
-    if ((filetype.toLowerCase() === 'image/jpeg' && (extension.toLowerCase() === 'jpg' || extension.toLowerCase() === 'jpeg')) ||
-      (filetype.toLowerCase() === 'image/gif' && extension.toLowerCase() === 'gif') ||
-      (filetype.toLowerCase() === 'image/png' && extension.toLowerCase() === 'png')) {
-      this.photographForm.controls.FileType.setValue('Photo');
-      this.photographForm.controls.FileName.setValue(fileName);
-      this.fileExtension = extension.toLowerCase();
-    } else if ((filetype.toLowerCase() === 'application/pdf' && extension.toLowerCase() === 'pdf')) {
+    if ((filetype.toLowerCase() === 'application/pdf' && extension.toLowerCase() === 'pdf')) {
       this.photographForm.controls.FileType.setValue('PDF');
       this.photographForm.controls.FileName.setValue(fileName);
       this.fileExtension = extension.toLowerCase();
@@ -147,11 +141,11 @@ export class UploadDocumentComponent implements OnInit {
               text: 'Document Upload Successfully',
               type: 'success'
             }).then(() => {
-              if (this.currentUser.UserType === 'Bank Manager') {
-                  this.router.navigate([`/loan/title-search/${this.route.snapshot.params.Appid}`]);
-                } else if (this.currentUser.UserType === 'Lawyer') {
-                  this.router.navigate([`/loan/assignment/${this.route.snapshot.params.Appid}`]);
-                }
+              if (this.currentUser.UserType === 'Bank Manager') {
+                this.router.navigate([`/loan/title-search/${this.route.snapshot.params.Appid}`]);
+              } else if (this.currentUser.UserType === 'Lawyer') {
+                this.router.navigate([`/loan/assignment/${this.route.snapshot.params.Appid}`]);
+              }
             });
           } else {
             Swal.fire({

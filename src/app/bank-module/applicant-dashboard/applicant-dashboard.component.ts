@@ -3,6 +3,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { WindowRef } from '@agm/core/utils/browser-globals';
 
 @Component({
   selector: 'app-applicant-dashboard',
@@ -128,8 +129,8 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
           btn += '<i class="mdi mdi-eye font-18 text-secondary" aria-hidden="false" receipt-id="' + data.DocumentID + '"></i>';
           btn += '</a>';
           if (data.Status !== 'Reviewed') {
-            btn += '<a href="javascript:void(0)" class="uploadDocument m-1" title="Upload Document" receipt-id="' + data.ID + '">';
-            btn += '<i class="mdi mdi-file-upload-outline font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
+            btn += '<a href="' + data.FileURL + '" class="m-1" title="Download This Document">';
+            btn += '<i class="mdi mdi-file-download font-18 text-secondary" aria-hidden="false"></i>';
             btn += '</a>';
             // btn += '<a href="javascript:void(0)" class="requestDocument m-1" title="Request this Document" receipt-id="' + data.ID + '">';
             // btn += '<i class="mdi mdi mdi-file-question font-18 text-secondary" aria-hidden="false" receipt-id="' + data.ID + '"></i>';
@@ -163,7 +164,9 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
     this.router.navigate(['loan/uploaddocument/' + this.applicationData.AppID]);
   }
   onViewDocument(id) {
-    this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id + '/' + this.applicationData.AppID]);
+    let path = window.location.origin + '/loan/viewdocument/' + this.applicationData.PropertyID + '/' + id + '/' + this.applicationData.AppID
+    // this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id + '/' + this.applicationData.AppID]);
+    window.open(path, '_black')
     // this.router.navigate(['loan/viewdocument/' + this.applicationData.PropertyID + '/' + id]);
     // this.service.getDocument(this.applicationData.PropertyID, id).subscribe((res) => {
     //   if (res.status === 200) {
@@ -215,7 +218,7 @@ export class ApplicantDashboardComponent implements OnInit, OnDestroy {
         }
       },
       colors: ['rgb(29, 173, 56)'],
-      series: [this.totaldocument ? ((this.received / this.totaldocument) * 100).toFixed() : 0],
+      series: [this.totaldocument ? (((this.received >= 3 ? 3 : this.received) / 3) * 100).toFixed() : 0],
       stroke: {
         lineCap: 'round',
       },

@@ -34,6 +34,7 @@ export class AddLegalCaseComponent implements OnInit {
       RegistrationNumber: new FormControl('', Validators.required),
       RegistrationDate: new FormControl('', Validators.required),
       CNRNumber: new FormControl('', Validators.required),
+      Iam: new FormControl('P', Validators.required),
       CreatedBy: new FormControl(this.currentUser.UserID, Validators.required)
     });
     this.service.GetPropertyLegalCaseTypes().subscribe(Res => {
@@ -77,5 +78,7 @@ export class AddLegalCaseComponent implements OnInit {
         });
     }
   }
+  onIamChange(val) {
 
+  }
 }
